@@ -1,6 +1,2 @@
-# environment variable file
 .env
-
-# File format files
 .DS_Store
-
