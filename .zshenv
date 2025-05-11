@@ -1,0 +1,1 @@
+export ZSHDIR=$HOME/.config/zsh
