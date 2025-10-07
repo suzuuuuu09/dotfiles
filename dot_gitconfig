@@ -1,0 +1,26 @@
+[user]
+	name = suzuuuuu09
+	email = 140299273+suzuuuuu09@users.noreply.github.com
+[difftool "sourcetree"]
+	cmd = "'' "
+[mergetool "sourcetree"]
+	cmd = "'' "
+	trustExitCode = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[core]
+	autocrlf = true
+	excludesfile = ~/.global.gitignore
+	pager = delta
+	editor = nvim
+[merge]
+	conflictStyle = zdiff3
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+[ghq]
+	root=~/Documents/dev
