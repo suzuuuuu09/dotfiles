@@ -1,0 +1,73 @@
+# OhMyPosh Setup
+eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/nord-detailed.omp.json)"
+
+# zoxide Setup
+eval "$(zoxide init zsh)"
+
+# pyenv Setup
+eval "$(pyenv init -)"
+
+# mise Setup
+eval "$(mise activate zsh)"
+
+# zsh-autosuggestionsとzsh-syntax-highlightingの設定
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Enable complementary features
+# autoload -U compinit
+# compinit
+if typebrew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  source $(brew --predix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  autoload -U +X compinit && compinit
+fi
+
+# Fill the selected part of the completion list
+zstyle ':completion:*' menu select
+
+# 間違ったコマンドを補正する
+setopt correct
+
+# 同じコマンドを履歴に保存しない
+setopt hist_ignore_dups
+
+autoload -Uz colors && colors
+
+# ┌───────────────┐
+#   Path Settings 
+# └───────────────┘
+source "$ZSHDIR/path.zsh"
+
+# ┌──────────────────┐
+#   Aliases Settings 
+# └──────────────────┘
+source "$ZSHDIR/alias.zsh"
+
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zdharma/history-search-multi-word
