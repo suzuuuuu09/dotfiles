@@ -1,5 +1,5 @@
 # OhMyPosh Setup
-eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/nord-detailed.omp.json)"
+eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/themes/nord-detailed.omp.json)"
 
 # zoxide Setup
 eval "$(zoxide init zsh)"
