@@ -1,3 +1,0 @@
-export ZSHDIR=$HOME/.config/zsh
-export NVM_DIR=$HOME/.nvm
-
