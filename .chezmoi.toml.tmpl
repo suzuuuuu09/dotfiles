@@ -1,0 +1,5 @@
+{{ if (or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin")) }}
+mode = "symlink"
+{{ end }}
+[edit]
+command = "nvim"

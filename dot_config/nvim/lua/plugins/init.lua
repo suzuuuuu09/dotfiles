@@ -1,0 +1,18 @@
+return {
+	{ import = "plugins.ui" },
+	{ import = "plugins.colorscheme" },
+	{ import = "plugins.comment" },
+	{ import = "plugins.cmp" },
+	{ import = "plugins.lsp" },
+	{ import = "plugins.ai" },
+	{ import = "plugins.buffer" },
+	{ import = "plugins.git" },
+	{ import = "plugins.explorer" },
+	{ import = "plugins.fuzzy-finder" },
+	{ import = "plugins.debug" },
+	{ import = "plugins.coding" },
+	{ import = "plugins.jump" },
+	{ import = "plugins.treesitter" },
+	{ import = "plugins.terminal" },
+	{ import = "plugins.window" },
+}
