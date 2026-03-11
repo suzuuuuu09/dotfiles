@@ -6,7 +6,7 @@ CONFIG_DIR="$HOME/.config"
 # NOTE: dot_config内にあるフォルダだけ書く
 APPS=(
 		"nvim"
-		"wezterm"
+		# "wezterm"
 		"fish"
 		"gh"
 		"zsh"
