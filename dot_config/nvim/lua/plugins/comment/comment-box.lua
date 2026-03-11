@@ -1,6 +1,5 @@
 return {
 	"LudoPinelli/comment-box.nvim",
-	cmd = { "CBllbox", "CBllline", "CBd" },
 	event = { "BufReadPre", "BufNewFile" },
 	config = true,
 	keys = {

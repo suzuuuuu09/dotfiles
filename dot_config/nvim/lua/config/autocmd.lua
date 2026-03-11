@@ -5,39 +5,53 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local opts = { buffer = bufnr, silent = true }
 
 		-- キーマップ
-		vim.keymap.set("n", "K", vim.lsp.buf.hover,
-			vim.tbl_extend("force", opts, { desc = "Hover document" }))
+		--[[ vim.keymap.set("n", "K", vim.lsp.buf.hover,
+			vim.tbl_extend("force", opts, { desc = "Hover document" })) ]]
 
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition,
-			vim.tbl_extend("force", opts, { desc = "Go to definition" }))
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to definition" }))
 
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration,
-			vim.tbl_extend("force", opts, { desc = "Go to declaration" }))
+		vim.keymap.set(
+			"n",
+			"gD",
+			vim.lsp.buf.declaration,
+			vim.tbl_extend("force", opts, { desc = "Go to declaration" })
+		)
 
-		vim.keymap.set("n", "gi", vim.lsp.buf.implementation,
-			vim.tbl_extend("force", opts, { desc = "Go to implementation" }))
+		vim.keymap.set(
+			"n",
+			"gi",
+			vim.lsp.buf.implementation,
+			vim.tbl_extend("force", opts, { desc = "Go to implementation" })
+		)
 
-		vim.keymap.set("n", "gr", vim.lsp.buf.references,
-			vim.tbl_extend("force", opts, { desc = "Show references" }))
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "Show references" }))
 
-		vim.keymap.set({ "n", "v" }, "<leader>la",
+		vim.keymap.set(
+			{ "n", "v" },
+			"<leader>la",
 			require("tiny-code-action").code_action,
-			vim.tbl_extend("force", opts, { desc = "Code action" }))
+			vim.tbl_extend("force", opts, { desc = "Code action" })
+		)
 
-		vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename,
-			vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
+		vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
 
-		vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format,
-			vim.tbl_extend("force", opts, { desc = "Format buffer" }))
+		vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, vim.tbl_extend("force", opts, { desc = "Format buffer" }))
 
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev,
-			vim.tbl_extend("force", opts, { desc = "Previous diagnosti" }))
+		vim.keymap.set(
+			"n",
+			"[d",
+			vim.diagnostic.goto_prev,
+			vim.tbl_extend("force", opts, { desc = "Previous diagnosti" })
+		)
 
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next,
-			vim.tbl_extend("force", opts, { desc = "Next diagnostic" }))
+		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, vim.tbl_extend("force", opts, { desc = "Next diagnostic" }))
 
-		vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float,
-			vim.tbl_extend("force", opts, { desc = "Show diagnostic in float" }))
+		vim.keymap.set(
+			"n",
+			"<leader>ld",
+			vim.diagnostic.open_float,
+			vim.tbl_extend("force", opts, { desc = "Show diagnostic in float" })
+		)
 	end,
 })
 
@@ -102,12 +116,12 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHo
 
 -- コメント行の自動継続を無効にする
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
-  callback = function()
-    vim.opt_local.formatoptions:remove({
+	pattern = "*",
+	callback = function()
+		vim.opt_local.formatoptions:remove({
 			"c",
 			"r",
 			"o",
 		})
-  end,
+	end,
 })

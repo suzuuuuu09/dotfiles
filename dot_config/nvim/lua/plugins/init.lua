@@ -15,4 +15,5 @@ return {
 	{ import = "plugins.treesitter" },
 	{ import = "plugins.terminal" },
 	{ import = "plugins.window" },
+	{ import = "plugins.database" },
 }

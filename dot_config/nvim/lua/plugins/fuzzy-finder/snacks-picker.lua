@@ -32,7 +32,7 @@ return {
 		{
 			"<leader>fF",
 			function()
-				require("snacks.picker").files({ hidden = true, ignored = true })
+				require("snacks.picker").files({ hidden = true })
 			end,
 			desc = "Find hidden files",
 		},

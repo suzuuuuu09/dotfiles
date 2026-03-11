@@ -76,6 +76,7 @@ keymap.set({ "n", "v" }, "\\", "<CMD>split<CR>")
 -- Move to beginning and end of line
 keymap.set({ "n", "v" }, "gh", "^", opts)
 keymap.set({ "n", "v" }, "gl", "$", opts)
+keymap.set({ "n", "v" }, "gm", "%", opts)
 
 -- Center cursor
 -- keymap.set("n", "n", "nzzzv", opts)
@@ -83,3 +84,14 @@ keymap.set({ "n", "v" }, "gl", "$", opts)
 -- keymap.set("n", "J", "mzJ`z", opts)
 -- keymap.set("n", "<C-d>", "<C-d>zz", opts)
 -- keymap.set("n", "<C-u>", "<C-u>zz", opts)
+
+-- https://eiji.page/blog/nvim-hlslens-intro/
+keymap.set("n", "#", function()
+	local current_word = vim.fn.expand("<cword>")
+	vim.api.nvim_feedkeys(":%s/" .. current_word .. "//g", "n", false)
+	-- :%s/word/CURSOR/g
+	local ll = vim.api.nvim_replace_termcodes("<Left><Left>", true, true, true)
+	vim.api.nvim_feedkeys(ll, "n", false)
+	vim.opt.hlsearch = true
+	hlslens.start()
+end, opts)
