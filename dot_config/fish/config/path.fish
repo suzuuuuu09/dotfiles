@@ -1,3 +1,6 @@
+# Homebrew
+set -x PATH /opt/homebrew/bin $PATH
+
 # VSCode
 set -x PATH $PATH /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 
@@ -20,5 +23,4 @@ set -x PATH $HOME/.local/bin $PATH
 set -x BUN_INSTALL $HOME/.bun
 set -x PATH $BUN_INSTALL/bin $PATH
 
-# Homebrew
-set -x PATH /opt/homebrew/bin $PATH
+set -x PATH $PATH /Applications/Obsidian.app/Contents/MacOS

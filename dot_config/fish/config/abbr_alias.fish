@@ -1,7 +1,7 @@
 abbr -a sc "source $FISH_CONFIG_DIR/config.fish"
 
 # ls
-alias ls eza
+alias ls "eza --icons --git"
 abbr -a la "ls -aF"
 abbr -a ll "ls -lF"
 abbr -a lt "ls -TF"
@@ -15,9 +15,10 @@ abbr -a ... "z ../.."
 abbr -a .... "z ../../.."
 abbr -a ..... "z ../../../.."
 
-# Find
 alias find fd
 alias grep "rg --color=always"
+alias curl curlie
+alias rm gomi
 
 # Neovim
 alias vim nvim
@@ -33,3 +34,8 @@ abbr -a oc opencode
 abbr -a cm chezmoi
 abbr -a cma "chezmoi apply"
 abbr -a cmA "chezmoi add"
+
+abbr -a act "act --container-architecture linux/amd64"
+
+# @antfu/ni
+abbr -a nx nlx
