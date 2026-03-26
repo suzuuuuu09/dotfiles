@@ -1,0 +1,8 @@
+# environment variable file
+.env
+.env.keys
+
+# File format files
+.DS_Store
+
+

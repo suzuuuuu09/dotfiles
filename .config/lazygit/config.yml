@@ -1,0 +1,13 @@
+git:
+  pagers:
+    - colorArg: always
+      pager: delta --paging=never --true-color=auto --dark --syntax-theme=Nord --width=variable --navigate
+      # pager: delta --dark --paging=never
+gui:
+  language: "ja"
+  showIcons: true
+customCommands:
+  - command: czg
+    context: files
+    key: c
+    output: terminal

@@ -1,0 +1,15 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export FZF_ALT_C_COMMAND:fd\x20\x2d\x2dtype\x20d
+SETUVAR --export FZF_CTRL_T_COMMAND:fd\x20\x2d\x2dtype\x20f
+SETUVAR --export FZF_DEFAULT_COMMAND:fd\x20\x2d\x2dtype\x20f
+SETUVAR __fish_initialized:4300
+SETUVAR _fisher_decors_2F_fish_2D_ghq_files:\x7e/\x2econfig/fish/functions/__ghq_repository_search\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/ghq_key_bindings\x2efish\x1e\x7e/\x2econfig/fish/completions/ghq\x2efish
+SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fisher\x2efish\x1e\x7e/\x2econfig/fish/completions/fisher\x2efish
+SETUVAR _fisher_patrickf1_2F_fzf_2E_fish_files:\x7e/\x2econfig/fish/functions/_fzf_configure_bindings_help\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_extract_var_info\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_preview_changed_file\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_preview_file\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_report_diff_type\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_report_file_type\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_directory\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_git_log\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_git_status\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_history\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_processes\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_variables\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_wrapper\x2efish\x1e\x7e/\x2econfig/fish/functions/fzf_configure_bindings\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/fzf\x2efish\x1e\x7e/\x2econfig/fish/completions/fzf_configure_bindings\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1epatrickf1/fzf\x2efish\x1edecors/fish\x2dghq\x1eyuys13/fish\x2dautols\x1eyuys13/fish\x2dghq\x2dfzf
+SETUVAR _fisher_upgraded_to_4_4:\x1d
+SETUVAR _fisher_yuys13_2F_fish_2D_autols_files:\x7e/\x2econfig/fish/conf\x2ed/autols\x2efish
+SETUVAR _fisher_yuys13_2F_fish_2D_ghq_2D_fzf_files:\x7e/\x2econfig/fish/functions/__ghq\x2dfzf\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/ghq\x2dfzf\x2efish
+SETUVAR autols_cmd:eza\x1e\x2d\x2dicons\x1e\x2daF
+SETUVAR fish_user_paths:/Users/k25012kk/\x2ecargo/bin\x1e/Applications/Obsidian\x2eapp/Contents/MacOS\x1e/etc/profiles/per\x2duser/k25012kk/bin\x1e/Users/k25012kk/\x2elocal/bin\x1e/Users/k25012kk/go/bin\x1e/Users/k25012kk/\x2ebun/bin\x1e/Users/k25012kk/\x2enodebrew/current/bin\x1e/Applications/Visual\x20Studio\x20Code\x2eapp/Contents/Resources/app/bin\x1e/run/current\x2dsystem/sw/bin
