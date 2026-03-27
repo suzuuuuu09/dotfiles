@@ -16,6 +16,21 @@
 
     # homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
+    agent-skills.url = "github:Kyure-A/agent-skills-nix";
+
+    vercel-skills = {
+      url = "github:vercel-labs/skills";
+      flake = false;
+    };
+    vercel-agent-skills = {
+      url = "github:vercel-labs/agent-skills";
+      flake = false;
+    };
+    anthropics-skills = {
+      url = "github:anthropics/skills";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -24,14 +39,16 @@
     nixpkgs,
     home-manager,
     nix-homebrew,
+    agent-skills,
     ...
-  }: let
+  } @ inputs: let
+    # TODO: 将来的にはArchlinuxもサポートする予定
     targetSystem = "aarch64-darwin";
     isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
   in {
     darwinConfigurations."suzuMac" = nix-darwin.lib.darwinSystem {
       system = targetSystem;
-      specialArgs = {inherit self;};
+      specialArgs = {inherit self inputs;};
       modules =
         (nixpkgs.lib.optionals isDarwin [./darwin])
         ++ [
@@ -41,6 +58,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = {inherit inputs;};
             home-manager.users.k25012kk = import ./home-manager;
           }
         ];

@@ -7,6 +7,7 @@
   imports = [
     ./packages.nix
     ./dotfiles.nix
+    ./agent-skills.nix
   ];
 
   programs = {
