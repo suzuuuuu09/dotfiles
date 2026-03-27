@@ -42,3 +42,6 @@ abbr -a nx nlx
 
 # lazygit
 abbr -a lg lazygit
+
+# Nix
+abbr -a nix-clean "nix-collect-garbage -d && nix-store --optimize"
