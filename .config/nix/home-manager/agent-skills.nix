@@ -1,13 +1,7 @@
 # https://github.com/Kyure-A/agent-skills-nix
 # Agent Skillsを管理している
 # ~/.agents/skills (デフォルトの配置) にスキルを配置するための設定
-{
-  inputs,
-  config,
-  ...
-}: let
-  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
-in {
+{inputs, ...}: {
   imports = [
     inputs.agent-skills.homeManagerModules.default
   ];
@@ -37,8 +31,7 @@ in {
 
       # 自作のスキル (ローカルパスから参照)
       personal = {
-        path = dotfilesPath;
-        subdir = "skills";
+        path = "${inputs.self}/skills";
       };
     };
 
