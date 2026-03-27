@@ -29,9 +29,15 @@
         subdir = "skills";
       };
 
+      agent-browser = {
+        path = inputs.agent-browser;
+        subdir = "skills";
+      };
+
       # 自作のスキル (ローカルパスから参照)
       personal = {
-        path = "${inputs.self}/skills";
+        # path = "${inputs.self}/skills";
+        path = inputs.local-skills;
       };
     };
 
@@ -44,6 +50,7 @@
         "find-skills"
         "frontend-design"
         "web-design-guidelines"
+        "agent-browser"
       ];
     };
 

@@ -19,6 +19,10 @@
 
     agent-skills.url = "github:Kyure-A/agent-skills-nix";
 
+    local-skills = {
+      url = "path:../../skills";
+      flake = false;
+    };
     vercel-skills = {
       url = "github:vercel-labs/skills";
       flake = false;
@@ -29,6 +33,10 @@
     };
     anthropics-skills = {
       url = "github:anthropics/skills";
+      flake = false;
+    };
+    agent-browser = {
+      url = "github:vercel-labs/agent-browser";
       flake = false;
     };
   };

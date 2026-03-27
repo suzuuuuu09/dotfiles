@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "agent-browser": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774584066,
+        "narHash": "sha256-8WWq9HJVIEb7C+pr6OYv8+2LbvCMFQSnDzUmy6lNptg=",
+        "owner": "vercel-labs",
+        "repo": "agent-browser",
+        "rev": "a95bc0f75a45560f953594b155cc1ff57f1a0170",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vercel-labs",
+        "repo": "agent-browser",
+        "type": "github"
+      }
+    },
     "agent-skills": {
       "inputs": {
         "home-manager": "home-manager",
@@ -94,6 +110,18 @@
         "type": "github"
       }
     },
+    "local-skills": {
+      "flake": false,
+      "locked": {
+        "path": "../../skills",
+        "type": "path"
+      },
+      "original": {
+        "path": "../../skills",
+        "type": "path"
+      },
+      "parent": []
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -167,9 +195,11 @@
     },
     "root": {
       "inputs": {
+        "agent-browser": "agent-browser",
         "agent-skills": "agent-skills",
         "anthropics-skills": "anthropics-skills",
         "home-manager": "home-manager_2",
+        "local-skills": "local-skills",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_2",
