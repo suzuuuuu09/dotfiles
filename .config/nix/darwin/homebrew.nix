@@ -21,12 +21,22 @@
       # cleanup = "zap";
     };
 
+    brews = [
+      "mas"
+    ];
+
     casks = [
       "battery"
       "cmd-eikana"
       "google-chrome"
       "wezterm@nightly"
       "vivaldi"
+      "amical"
+      "macskk"
     ];
+
+    masApps = {
+      "RunCat" = 1429033973;
+    };
   };
 }
