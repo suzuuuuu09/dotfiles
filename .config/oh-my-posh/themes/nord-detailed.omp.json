@@ -57,20 +57,6 @@
 					"background": "#B48EAD",
 					"leading_diamond": "\ue0b2",
 					"style": "diamond",
-					"template": "\ue753 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "angular"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\u03b1 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "aurelia"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
 					"template": "\ue7ad {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} ",
 					"type": "aws"
 				},
@@ -78,43 +64,8 @@
 					"background": "#B48EAD",
 					"leading_diamond": "\ue0b2",
 					"style": "diamond",
-					"template": "\uebd8 {{ .EnvironmentName }} ",
-					"type": "az"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\uf104<#EBCB8B>\uf0e7</>\uf105 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "azfunc"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\ue311  cds {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "cds"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\uE370 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "crystal"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
 					"template": "\uf40a  cf {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
 					"type": "cf"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\uf40a {{if .Org }}{{ .Org }}{{ end }}{{ if .Space }}/{{ .Space }}{{ end }} ",
-					"type": "cftarget"
 				},
 				{
 					"background": "#B48EAD",
@@ -155,22 +106,8 @@
 					"background": "#B48EAD",
 					"leading_diamond": "\ue0b2",
 					"style": "diamond",
-					"template": "\ue61f {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "haskell"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
 					"template": "\ue738 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
 					"type": "java"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\ue624</> {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "julia"
 				},
 				{
 					"background": "#B48EAD",
@@ -183,13 +120,6 @@
 					"background": "#B48EAD",
 					"leading_diamond": "\ue0b2",
 					"style": "diamond",
-					"template": "\uf308 {{.Context}} :: {{if .Namespace}}{{.Namespace}}{{else}}default{{end}} ",
-					"type": "kubectl"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
 					"template": "\ue620 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
 					"type": "lua"
 				},
@@ -197,51 +127,8 @@
 					"background": "#B48EAD",
 					"leading_diamond": "\ue0b2",
 					"style": "diamond",
-					"template": "Nx {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "nx"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\ue769 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "perl"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\ue73d {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "php"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "R {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "r"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\ue791 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-
-					"type": "ruby"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
 					"template": "\ue7a8 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
 					"type": "rust"
-				},
-				{
-					"background": "#B48EAD",
-					"leading_diamond": "\ue0b2",
-					"style": "diamond",
-					"template": "\ue755 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} ",
-					"type": "swift"
 				},
 				{
 					"background": "#A3BE8C",
