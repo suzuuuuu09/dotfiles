@@ -3,11 +3,11 @@
     "agent-browser": {
       "flake": false,
       "locked": {
-        "lastModified": 1774807227,
-        "narHash": "sha256-+RcP4Lb4zkgl25DRnXei/wo1nYYCLT2r9JewR9PcpjM=",
+        "lastModified": 1774808737,
+        "narHash": "sha256-E6IHEyd5voAyNXQyl4bCvyfeZQaSoztplXlKe449EEI=",
         "owner": "vercel-labs",
         "repo": "agent-browser",
-        "rev": "6dd53449e815fceca9441d0b281fe03997be877e",
+        "rev": "312db04e5e2e68a9c1725548b12352d0a55e84db",
         "type": "github"
       },
       "original": {
@@ -110,6 +110,38 @@
         "type": "github"
       }
     },
+    "homebrew-cask": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774842759,
+        "narHash": "sha256-FO4jlUN6NljXARWHFOn181uX5dFaUAWirHNj2yx7qsE=",
+        "owner": "homebrew",
+        "repo": "homebrew-cask",
+        "rev": "92c88f3d0cd5dbe6ddbc022b7917afea68859d19",
+        "type": "github"
+      },
+      "original": {
+        "owner": "homebrew",
+        "repo": "homebrew-cask",
+        "type": "github"
+      }
+    },
+    "homebrew-core": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774844353,
+        "narHash": "sha256-Ps33NX9ZDt8mIc1ZSl7TBGizqN0Qn9eucOTtQhXelzI=",
+        "owner": "homebrew",
+        "repo": "homebrew-core",
+        "rev": "ef6b96e054da88df734e443c7d501b784e8ad7db",
+        "type": "github"
+      },
+      "original": {
+        "owner": "homebrew",
+        "repo": "homebrew-core",
+        "type": "github"
+      }
+    },
     "local-skills": {
       "flake": false,
       "locked": {
@@ -199,6 +231,8 @@
         "agent-skills": "agent-skills",
         "anthropics-skills": "anthropics-skills",
         "home-manager": "home-manager_2",
+        "homebrew-cask": "homebrew-cask",
+        "homebrew-core": "homebrew-core",
         "local-skills": "local-skills",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",

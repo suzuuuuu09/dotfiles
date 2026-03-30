@@ -23,20 +23,34 @@
 
     brews = [
       "mas"
+      "neovim"
     ];
 
     casks = [
       "battery"
+      "battery-buddy"
       "cmd-eikana"
       "google-chrome"
       "wezterm@nightly"
       "vivaldi"
       "amical"
       "macskk"
+      "raycast"
+      "discord"
+      "slack"
+      "zoom"
+      "karabiner-elements"
+      "affinity"
+      "jordanbaird-ice"
+      "obsidian"
+      "parsec"
+      "claude"
+      # "FelixKratz/formulae/sketchybar"
     ];
 
     masApps = {
-      "RunCat" = 1429033973;
+      # "RunCat" = 1429033973;
+      # "Microsoft Outlook" = 985367838;
     };
   };
 }

@@ -18,6 +18,7 @@ in {
     "wezterm".source = mkLink ".config/wezterm";
     "btop".source = mkLink ".config/btop";
     "mise".source = mkLink ".config/mise";
+    "karabiner".source = mkLink ".config/karabiner";
   };
 
   # ~/ の直下に置くもの

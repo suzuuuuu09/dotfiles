@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # Editors / Shells / Prompt
-    neovim
+    # neovim
     fish
     oh-my-posh
 
@@ -56,9 +56,10 @@
     tdf
 
     # Fonts
+    udev-gothic
     udev-gothic-nf
 
     # GUI tools
-    obsidian
+    # obsidian
   ];
 }
