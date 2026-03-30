@@ -1,2 +1,6 @@
 # Nix
 .config/nix/result
+
+# Karabiner
+.config/karabiner/automatic_backups/
+.config/karabiner/assets/
