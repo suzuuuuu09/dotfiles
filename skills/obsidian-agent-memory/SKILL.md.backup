@@ -1,0 +1,769 @@
+---
+name: obsidian-agent-memory
+description: "Obsidian vault内にメモを保存・整理・検索する。 Triggers: 'remember this', 'save this', 'note this', 'what did we discuss about...', 'check your notes', 'clean up memories'。 有用な発見やプロジェクト情報を見つけたときは積極的に保存する。memories/フォルダに自動保存し、projects/配下でプロジェクト固有のメモを管理。必要に応じてカテゴリは自由に拡張可能。"
+---
+
+# Obsidian Agent Memory
+
+Obsidian vaultにメモを永続的に保存し、複数の会話にわたって知識を保持できるスキル。
+
+**Vault Location:** `~/Documents/Vault/`
+**Memory Folder:** `memories/`
+
+## 概要
+
+このスキルを使用して、メモの保存・整理・検索を行います。
+
+- **プロジェクト関連**: `memories/projects/` 配下に保存
+- **その他**: `memories/` 直下に自動分類フォルダを作成
+
+### Vault構造
+
+```
+~/Documents/Vault/
+├── memories/
+│   ├── projects/              # プロジェクト固有のメモ（各プロジェクトに独立）
+│   │   ├── project-a/
+│   │   │   ├── typescript/
+│   │   │   ├── database/
+│   │   │   ├── deployment/
+│   │   │   └── ...
+│   │   ├── project-b/
+│   │   └── project-c/
+│   │
+│   ├── reference/             # 汎用リファレンス・解決策（全プロジェクトで再利用）
+│   │   ├── nix-darwin/
+│   │   ├── react/
+│   │   ├── typescript/
+│   │   ├── database/
+│   │   └── ...
+│   ├── learning/              # 学習・発見・パターン（複数プロジェクトに応用可能）
+│   │   ├── nodejs/
+│   │   ├── performance/
+│   │   └── ...
+│   ├── troubleshooting/       # トラブルシューティング（共通の問題解決）
+│   ├── architecture/          # アーキテクチャ・設計パターン（再利用可能）
+│   ├── tools-commands/        # ツール・コマンド・スニペット集
+│   │   ├── docker/
+│   │   ├── git/
+│   │   ├── nix/
+│   │   └── ...
+│   └── inbox/                 # 未整理のメモ（後で汎用フォルダに分類）
+└── (その他のvault内容)
+```
+
+## 📌 重要：フォルダ構造の柔軟性
+
+このVaultの構造は**固定的ではありません**。必要に応じて、以下のような細分化や拡張を自由に行ってください。
+
+### 基本原則
+
+- ✅ **サブカテゴリフォルダを積極的に作成してください**
+- ✅ **深さに制限はありません** → `reference/frontend/react/hooks/` のような階層化も可
+- ✅ **不要なフォルダは削除・整理して OK**
+- ✅ **成長に合わせて構造を変更することを推奨します**
+
+### プロジェクト内での階層化
+
+```
+projects/my-app/
+├── typescript/
+│   ├── type-definitions.md
+│   └── generic-patterns.md
+├── database/
+│   ├── schema-design.md
+│   └── migrations.md
+├── deployment/
+│   ├── docker-setup.md
+│   └── ci-cd-pipeline.md
+├── frontend/
+│   └── react/
+│       ├── component-architecture.md
+│       ├── hooks-optimization.md
+│       └── styling-strategy.md
+└── backend/
+    ├── api/
+    │   ├── authentication-flow.md
+    │   └── error-handling.md
+    └── services/
+        └── database-layer.md
+```
+
+**ポイント**: 階層の深さは自由。プロジェクトの複雑さに応じて増やしたり減らしたりできます。
+
+### 汎用カテゴリの拡張
+
+```
+reference/
+├── nix-darwin/
+│   ├── home-manager-config.md
+│   ├── flake-best-practices.md
+│   └── module-composition.md
+├── react/
+│   ├── hooks/
+│   │   ├── custom-hooks-patterns.md
+│   │   └── hooks-performance.md
+│   ├── performance-optimization.md
+│   └── testing-strategies.md
+├── typescript/
+│   ├── advanced-types.md
+│   ├── generics/
+│   │   ├── generic-constraints.md
+│   │   └── conditional-types.md
+│   └── type-inference.md
+├── api-design/
+│   ├── rest-conventions.md
+│   └── graphql-patterns.md
+└── database/
+    ├── migrations.md
+    └── indexing-strategies.md
+```
+
+**ポイント**: 関連テーマをサブフォルダにグループ化することで、整理がしやすくなります。
+
+### learning フォルダの拡張例
+
+```
+learning/
+├── nodejs/
+│   ├── event-loop.md
+│   ├── streams.md
+│   └── worker-threads.md
+├── performance/
+│   ├── profiling-techniques.md
+│   └── optimization-patterns.md
+├── security/
+│   ├── authentication-methods.md
+│   └── data-encryption.md
+└── architecture/
+    ├── microservices.md
+    └── event-driven-design.md
+```
+
+### tools-commands の細分化
+
+```
+tools-commands/
+├── docker/
+│   ├── docker-compose.md
+│   ├── image-optimization.md
+│   └── networking.md
+├── git/
+│   ├── branching-strategy.md
+│   ├── cherry-pick-guide.md
+│   └── advanced-workflows.md
+├── nix/
+│   ├── flake-commands.md
+│   ├── nix-shell-setup.md
+│   └── package-management.md
+├── cli-tools/
+│   ├── jq-recipes.md
+│   ├── find-commands.md
+│   └── sed-awk-patterns.md
+└── terminal/
+    ├── tmux-config.md
+    └── shell-keybindings.md
+```
+
+**ポイント**: ツールごとにサブフォルダを作成することで、関連コマンドを一箇所に集約できます。
+
+## フォルダの説明
+
+### `projects/` - プロジェクト固有
+- **用途**: 特定のプロジェクトにのみ関連する情報
+- **例**: プロジェクトAの仕様書、実装ノート、プロジェクト固有の設定
+- **基本構造**: `projects/{project-name}/{topic}.md`
+- **拡張構造**: 必要に応じてサブカテゴリを自由に作成
+  - `projects/my-app/typescript/type-definitions.md`
+  - `projects/my-app/database/schema-design.md`
+  - `projects/my-app/frontend/react/component-patterns.md`
+  - `projects/my-app/backend/api/authentication-flow.md`
+- **寿命**: プロジェクト終了後、アーカイブまたは削除可能
+
+### `reference/` - 汎用リファレンス
+- **用途**: 複数プロジェクトで参照可能な解決策・方法論
+- **基本例**: 
+  - CORS エラーの解決方法
+  - API authentication パターン
+  - Database migration 手順
+- **拡張例**（自由に作成可能）:
+  - `reference/nix-darwin/` - NixOS/darwin設定ガイド
+  - `reference/react/` - React パターンと最適化
+  - `reference/typescript/` - TypeScript 高度な型テクニック
+- **特徴**: プロジェクトに依存しない一般的な知識
+- **拡張**: 技術スタックに応じてサブカテゴリを自由に追加
+
+### `learning/` - 学習・発見・パターン
+- **用途**: 技術的発見、パターン、ベストプラクティス
+- **例**:
+  - Node.js イベントループの仕組み
+  - React レンダリング最適化パターン
+  - TypeScript 型推論のコツ
+- **拡張例**:
+  - `learning/nodejs/` - Node.jsの深掘り学習
+  - `learning/performance/` - パフォーマンス最適化パターン
+  - `learning/security/` - セキュリティベストプラクティス
+- **特徴**: 複数プロジェクトに応用可能な知識
+
+### `troubleshooting/` - 共通問題解決
+- **用途**: 繰り返し出現する問題とその解決方法
+- **例**:
+  - メモリリーク診断方法
+  - ネットワークタイムアウト対応
+  - ビルドエラー解決ガイド
+
+### `architecture/` - 設計パターン・図面
+- **用途**: 再利用可能なアーキテクチャ設計
+- **例**:
+  - マイクロサービスパターン
+  - キャッシング戦略
+  - スケーリング方法論
+
+### `tools-commands/` - ツール・コマンド集
+- **用途**: よく使うコマンド、スクリプト、ツール設定
+- **基本例**:
+  - Docker コマンドチートシート
+  - Git ワークフロー
+  - CLI ツール設定
+  - useful one-liners
+- **拡張例**（自由に作成可能）:
+  - `tools-commands/docker/` - Dockerコマンド集
+  - `tools-commands/nix/` - Nixコマンド集とflakeの例
+  - `tools-commands/git/` - Gitワークフロー詳解
+  - `tools-commands/jq/` - jqレシピ集
+
+### `inbox/` - 未整理
+- **用途**: 一時的に保存されるメモ
+- **プロセス**: 定期的に適切なカテゴリに移動
+
+## 積極的な使用
+
+### 汎用メモを保存する場合（プロジェクトを超えて再利用）
+
+以下の場合、各カテゴリに自動的にメモを保存:
+
+- **Learning**: 技術的な発見、パターン、ベストプラクティス
+  - イベントループの仕組み、パフォーマンス最適化パターンなど
+- **Reference**: 解決策、手順、ハウツー
+  - エラー解決方法、API設定方法、設定ガイドなど
+  - **新規カテゴリも自由に作成**: react/, nix-darwin/, typescript/ など
+- **Troubleshooting**: 繰り返し出現する問題と解決方法
+  - メモリリーク診断、タイムアウト対応など
+- **Architecture**: 再利用可能な設計パターン
+  - マイクロサービスパターン、キャッシング戦略など
+- **Tools-Commands**: よく使うコマンド、スクリプト、設定
+  - Docker コマンド、Git ワークフロー、CLI設定など
+  - **新規ツールカテゴリも自由に作成**: docker/, nix/, jq/ など
+
+### プロジェクト固有のメモを保存する場合
+
+- プロジェクト特有の仕様、実装ノート、設定
+- 特定プロジェクトでのみ使用される情報
+- → `memories/projects/{project-name}/` に保存
+- **必要に応じてサブカテゴリを作成**: typescript/, database/, frontend/react/ など
+
+### メモを検索・参照する場合
+
+関連する汎用メモを確認:
+
+- 新しい技術を学習するとき → `learning/` を確認
+- エラーが出たとき → `troubleshooting/` を確認
+- 実装方法を知りたいとき → `reference/` を確認
+- アーキテクチャを設計するとき → `architecture/` を確認
+- コマンドを忘れたとき → `tools-commands/` を確認
+- 特定の技術スタック（React, Nix, TypeScriptなど）について → 対応するサブカテゴリを確認
+
+## ファイル形式
+
+すべてのメモには、Markdownフロントマター（YAML）が必須：
+
+```yaml
+---
+summary: "このメモが何を含むかの簡潔な説明（1-2行）"
+created: 2025-01-15  # YYYY-MM-DD format
+---
+```
+
+オプションフィールド:
+
+```yaml
+---
+summary: "Worker thread memory leak during large file processing - cause and solution"
+created: 2025-01-15
+updated: 2025-01-20
+status: in-progress  # in-progress | resolved | blocked | abandoned
+tags: [performance, worker, memory-leak]
+related: [src/core/file/fileProcessor.ts]
+---
+```
+
+## メモの保存
+
+### 基本的な流れ
+
+1. **メモの種類を判定**
+   - プロジェクト固有？ → `memories/projects/{project-name}/`
+   - 複数プロジェクトで再利用可能？ → 汎用フォルダに保存
+
+2. **汎用メモの場合、カテゴリを選ぶ**
+   - 技術的発見 → `learning/`
+   - 解決方法 → `reference/`
+   - 反復される問題 → `troubleshooting/`
+   - 設計パターン → `architecture/`
+   - コマンド・スクリプト → `tools-commands/`
+   - 不明 → `inbox/` (後で分類)
+   - **新しいカテゴリが必要？** 自由に作成してください
+
+3. **ファイルを作成**
+
+```bash
+# 汎用リファレンスの例（既存カテゴリ）
+mkdir -p ~/Documents/Vault/memories/reference/
+cat > ~/Documents/Vault/memories/reference/cors-error-fix.md << 'EOF'
+---
+summary: "CORS エラーの解決方法と設定ガイド"
+created: 2025-01-15
+tags: [cors, http, troubleshooting]
+---
+
+# CORS エラーの解決方法
+
+## 問題
+リクエストが CORS エラーで失敗する...
+EOF
+
+# 汎用リファレンスの例（新規カテゴリ作成）
+mkdir -p ~/Documents/Vault/memories/reference/nix-darwin/
+cat > ~/Documents/Vault/memories/reference/nix-darwin/home-manager-setup.md << 'EOF'
+---
+summary: "home-manager による dotfiles 管理とシステム設定"
+created: 2025-01-15
+tags: [nix, darwin, configuration]
+---
+
+# home-manager Setup Guide
+
+home-managerを使用した設定管理...
+EOF
+
+# 学習メモの例
+mkdir -p ~/Documents/Vault/memories/learning/
+cat > ~/Documents/Vault/memories/learning/nodejs-eventloop.md << 'EOF'
+---
+summary: "Node.js イベントループ: microtasks vs macrotasks"
+created: 2025-01-15
+status: resolved
+tags: [nodejs, eventloop, javascript]
+---
+
+# Node.js イベントループ
+
+Microtasks (Promises) は macrotasks (setTimeout) より先に実行される...
+EOF
+
+# プロジェクト固有メモの例（基本構造）
+mkdir -p ~/Documents/Vault/memories/projects/my-app/
+cat > ~/Documents/Vault/memories/projects/my-app/authentication-setup.md << 'EOF'
+---
+summary: "my-app の OAuth2 + JWT 認証実装"
+created: 2025-01-15
+status: in-progress
+tags: [auth, my-app]
+---
+
+# Authentication Setup for my-app
+
+このプロジェクト特有の認証実装について...
+EOF
+
+# プロジェクト固有メモの例（サブカテゴリ）
+mkdir -p ~/Documents/Vault/memories/projects/my-app/frontend/react/
+cat > ~/Documents/Vault/memories/projects/my-app/frontend/react/component-patterns.md << 'EOF'
+---
+summary: "my-app の React コンポーネント設計パターン"
+created: 2025-01-15
+tags: [react, components, my-app]
+---
+
+# React Component Patterns for my-app
+
+このプロジェクトで使用するコンポーネント設計...
+EOF
+
+# tools-commands の例（新規カテゴリ）
+mkdir -p ~/Documents/Vault/memories/tools-commands/nix/
+cat > ~/Documents/Vault/memories/tools-commands/nix/flake-commands.md << 'EOF'
+---
+summary: "Nix flake よく使うコマンド集"
+created: 2025-01-15
+tags: [nix, flake, cli]
+---
+
+# Nix Flake Commands Cheatsheet
+
+フレーク開発に必要なコマンド...
+EOF
+```
+
+### ファイル命名規則
+
+- kebab-caseを使用: `my-feature-name.md`
+- わかりやすく、内容を反映させる
+- 日付は必要ない（frontmatterに記録）
+
+## メモの検索
+
+### Obsidian内での検索
+
+Obsidianの検索機能を使用:
+
+1. **Quick Open** (`Cmd/Ctrl+P`): ファイル名で検索
+2. **Global Search** (`Cmd/Ctrl+Shift+F`): 全文検索
+3. **Link suggestions**: `[[` で関連ファイルを発見
+
+### コマンドラインでの検索
+
+ユーザーが手動で検索する場合用（参考）:
+
+```bash
+# summaryフィールドを確認
+grep -r "^summary:" ~/Documents/Vault/memories/ | head -20
+
+# キーワードで検索
+grep -r "keyword" ~/Documents/Vault/memories/ -i
+
+# 特定のタグを検索
+grep -r "tags:.*keyword" ~/Documents/Vault/memories/ -i
+
+# 特定のカテゴリ内で検索
+grep -r "keyword" ~/Documents/Vault/memories/reference/nix-darwin/ -i
+```
+
+## メモの管理
+
+### 更新
+
+情報が変更されたら、内容を更新し、frontmatterに`updated`フィールドを追加:
+
+```yaml
+---
+summary: "更新されたサマリー"
+created: 2025-01-15
+updated: 2025-01-20
+status: resolved
+---
+```
+
+### 削除
+
+不要になったメモは削除。空のフォルダもクリーンアップ。
+
+### 統合
+
+同じトピックの関連メモは、必要に応じて統合:
+
+```bash
+# ファイルを統合したら、古いファイルは削除
+rm ~/Documents/Vault/memories/category/old-file.md
+```
+
+### 再整理
+
+知識ベースが成長したら、メモを更に良いカテゴリに移動:
+
+```bash
+# 例1: inboxから適切なカテゴリへ
+mv ~/Documents/Vault/memories/inbox/note.md \
+   ~/Documents/Vault/memories/reference/note.md
+
+# 例2: 新しいサブカテゴリを作成して移動
+mkdir -p ~/Documents/Vault/memories/reference/react-hooks/
+mv ~/Documents/Vault/memories/reference/hooks-*.md \
+   ~/Documents/Vault/memories/reference/react-hooks/
+```
+
+## ガイドライン
+
+1. **自己完結的に書く**: 以前の知識がなくても理解できるように、完全な文脈を含める
+2. **summaryを決定的に**: summaryを読むだけで、詳細を読む必要があるかわかるように
+3. **最新に保つ**: 古い情報は更新または削除
+4. **実用的に**: 実際に有用なものだけを保存。すべてを保存する必要はない
+5. **積極的に拡張**: 新しいカテゴリが必要と感じたら、遠慮なく作成
+
+## メモの内容
+
+詳細なメモを書くときは、以下を検討:
+
+- **Context**: 目標、背景、制約
+- **State**: 何が終わったか、進行中か、ブロックされているか
+- **Details**: キーとなるファイル、コマンド、コードスニペット
+- **Next steps**: 次にすることは？未解決の質問は？
+
+すべてのメモが全セクションを必要とするわけではない。関連するものだけを使用してください。
+
+## 例
+
+### プロジェクトメモ（基本）
+
+```markdown
+---
+summary: "Authentication flow implementation with OAuth2 and JWT tokens"
+created: 2025-01-15
+updated: 2025-01-20
+status: in-progress
+tags: [auth, oauth2, jwt, security]
+related: [src/auth/oauth.ts, src/auth/jwt.ts]
+---
+
+# OAuth2 + JWT Authentication Flow
+
+## Context
+Project X requires secure authentication with external service integration.
+
+## Implementation Details
+- OAuth2 authorization code flow for user login
+- JWT tokens for API authentication
+- Refresh token rotation every 7 days
+
+## Current State
+- OAuth2 provider setup: DONE
+- JWT token generation: DONE
+- Token refresh endpoint: IN PROGRESS
+
+## Files Modified
+- `src/auth/oauth.ts` - OAuth2 handler
+- `src/auth/jwt.ts` - JWT utilities
+- `src/middleware/auth.ts` - Auth middleware
+
+## Next Steps
+- Implement token refresh endpoint
+- Add logout endpoint
+- Write integration tests
+```
+
+### プロジェクトメモ（階層構造）
+
+```markdown
+---
+summary: "my-app フロントエンド: React コンポーネント設計方針"
+created: 2025-01-15
+status: in-progress
+tags: [react, components, frontend, my-app]
+---
+
+# React Component Architecture for my-app
+
+## 設計原則
+- Presentational / Container パターン
+- Custom hooks による状態管理
+- Props Drilling を避ける
+
+## コンポーネント構成
+```
+src/components/
+├── common/       # 再利用可能な UI コンポーネント
+├── pages/        # ページレベルのコンポーネント
+└── features/     # 機能別グループ
+```
+
+## 例
+[実装例...]
+```
+
+### 学習メモ
+
+```markdown
+---
+summary: "Node.js event loop: microtasks vs macrotasks execution order"
+created: 2025-01-15
+status: resolved
+tags: [nodejs, eventloop, javascript]
+---
+
+# Node.js Event Loop Order
+
+## Key Insight
+Microtasks (Promises, async/await) execute BEFORE macrotasks (setTimeout, setInterval).
+
+## Order of Execution
+1. Synchronous code
+2. Microtasks (Promises)
+3. Render (browsers only)
+4. Macrotasks (setTimeout, etc)
+
+## Example
+```javascript
+// Microtask before macrotask
+Promise.resolve().then(() => console.log('microtask'));
+setTimeout(() => console.log('macrotask'), 0);
+// Output: microtask, macrotask
+```
+```
+
+### リファレンスメモ（既存カテゴリ）
+
+```markdown
+---
+summary: "Solution: Fix CORS errors with specific headers configuration"
+created: 2025-01-15
+status: resolved
+tags: [cors, http, debugging]
+---
+
+# CORS Error Fix
+
+## Problem
+Request failed with CORS error when calling external API.
+
+## Root Cause
+API endpoint wasn't configured with proper Access-Control-Allow-Origin headers.
+
+## Solution
+Add these headers to response:
+```
+Access-Control-Allow-Origin: https://your-domain.com
+Access-Control-Allow-Methods: GET, POST, OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization
+```
+
+## Prevention
+Always check CORS headers in API responses before assuming client-side issue.
+```
+
+### リファレンスメモ（新規カテゴリ）
+
+```markdown
+---
+summary: "Nix darwin 環境: home-manager による完全な dotfiles 管理"
+created: 2025-01-15
+updated: 2025-01-20
+status: resolved
+tags: [nix, darwin, configuration, home-manager]
+---
+
+# home-manager Setup on macOS
+
+## 前提
+- Nix is installed
+- macOS with Apple Silicon または Intel
+
+## インストール
+[インストール手順...]
+
+## 設定ファイル構成
+```
+flake.nix
+├── inputs: home-manager
+└── outputs: homeConfigurations
+```
+
+## よくある設定
+- Zsh / Fish シェル設定
+- Tmux / Neovim 設定
+- 開発環境（Node, Python, Rust など）
+
+## 実装例
+[実装例...]
+
+## Tips
+- Generational rollback が可能
+- 複数マシンで共有可能
+```
+
+### tools-commands メモ（新規カテゴリ）
+
+```markdown
+---
+summary: "Nix flake よく使うコマンド集"
+created: 2025-01-15
+tags: [nix, flake, cli, commands]
+---
+
+# Nix Flake Commands Cheatsheet
+
+## 環境構築
+```bash
+nix flake init                    # テンプレートから初期化
+nix flake show                    # フレーク内容を表示
+nix develop                       # 開発環境に入る
+nix develop .#<name>             # 特定の開発環境に入る
+```
+
+## ビルド・実行
+```bash
+nix build                         # デフォルトパッケージをビルド
+nix build .#<name>               # 特定パッケージをビルド
+nix run                           # デフォルトアプリを実行
+nix run .#<name>                 # 特定アプリを実行
+```
+
+## 更新・ロック
+```bash
+nix flake update                  # flake.lock を更新
+nix flake update <input>          # 特定入力を更新
+```
+
+## デバッグ
+```bash
+nix flake prefetch <url>          # URL をプリフェッチ
+nix eval                          # Nix 式を評価
+```
+```
+
+## ワークフロー
+
+### 汎用メモを保存するとき
+
+1. ユーザーが有用な発見や解決方法を共有、または見つける
+2. **メモの種類を判定**: プロジェクト固有か、複数プロジェクトで再利用可能か
+3. 適切なカテゴリ（learning, reference, troubleshooting, architecture, tools-commands）を選ぶ
+4. **新しいカテゴリが必要か判定**: 技術スタック固有の知識？ → サブカテゴリを作成（例：reference/react/, tools-commands/nix/）
+5. summaryと内容を書く
+6. ユーザーに確認: 保存されたファイルのパスを表示
+
+### プロジェクト固有メモを保存するとき
+
+1. ユーザーがプロジェクト特有の情報を提供
+2. `memories/projects/{project-name}/` に分類
+3. **必要に応じてサブカテゴリを作成**: typescript/, database/, frontend/react/ など
+4. ファイルを作成
+5. ユーザーに確認: 保存されたファイルのパスを表示
+
+### メモを検索するとき
+
+1. ユーザーが「以前のメモを確認して」と言う、または関連メモが必要
+2. Obsidian 内の検索結果を参照（キーワードやタグで検索）
+3. 関連するメモを読んで提供
+4. 必要に応じて、新しい情報で更新を提案
+
+### メモを整理するとき
+
+1. 定期的に `memories/inbox/` をチェック
+2. 未整理のメモを適切なカテゴリに移動
+3. 古い情報は削除または更新
+4. カテゴリが複雑になった場合、さらに細かく分割（例：reference/ → reference/react/hooks/, reference/react/performance/）
+5. プロジェクト終了時に `memories/projects/{project-name}` を整理（アーカイブまたは削除）
+
+## トラブルシューティング
+
+### Vaultにアクセスできない
+
+```bash
+# パスを確認
+ls -la ~/Documents/Vault/
+
+# メモリフォルダを作成
+mkdir -p ~/Documents/Vault/memories/{projects,reference,learning,troubleshooting,architecture,tools-commands,inbox}
+```
+
+### ファイル名の競合
+
+既存ファイルを上書きしないよう、ユーザーに確認してから保存。
+
+### メモが見つからない
+
+Obsidian内の検索を使用、またはタグで分類されているかを確認。特定のサブカテゴリにあるか確認してください。
+
+### フォルダ構造が複雑になってきた
+
+定期的に知識ベースを見直し、さらに細かく分割するか、統合するかを検討してください。必要に応じて新しいサブカテゴリを作成することで、整理を保つことができます。
