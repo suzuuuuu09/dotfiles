@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # Editors / Shells / Prompt
-    # neovim
+    neovim
     fish
     oh-my-posh
 

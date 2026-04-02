@@ -23,7 +23,6 @@
 
     brews = [
       "mas"
-      "neovim"
     ];
 
     casks = [

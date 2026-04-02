@@ -4,15 +4,14 @@
   ...
 }: let
   dictL = pkgs.skkDictionaries.l;
-  # dictLisp = pkgs.skkDictionaries.lisp;
   dictProper = pkgs.skkDictionaries.propernoun;
   dictJinmei = pkgs.skkDictionaries.jinmei;
   dictEmoji = pkgs.skkDictionaries.emoji;
   dictGeo = pkgs.skkDictionaries.geo;
-  macSKKDictPath = "Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries";
+  macSKKPath = "Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents";
 in {
   system.activationScripts.postActivation.text = ''
-    DICT_DIR="/Users/k25012kk/${macSKKDictPath}"
+    DICT_DIR="/Users/k25012kk/${macSKKPath}/Dictionaries"
     mkdir -p "$DICT_DIR"
     cp -fv ${dictL}/share/skk/SKK-JISYO.L "$DICT_DIR/SKK-JISYO.L"
     cp -fv ${dictGeo}/share/skk/SKK-JISYO.geo "$DICT_DIR/SKK-JISYO.geo"
@@ -23,4 +22,6 @@ in {
     chmod 644 "$DICT_DIR"/SKK-JISYO.*
     echo "macSKK dictionaries setup complete!"
   '';
+
+  # ${macSKKPath}/Settingsに~/dotfiles/.config/macSKK/Settingsをシンボリックリンクで配置
 }
