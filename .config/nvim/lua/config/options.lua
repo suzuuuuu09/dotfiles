@@ -44,7 +44,7 @@ opt.foldcolumn = "1" -- 折りたたみ用の列を表示
 opt.foldlevel = 99   -- 初期状態ですべての折りたたみを開く
 opt.foldlevelstart = 99
 opt.foldenable = true
-opt.winborder = "single"
+opt.winborder = "rounded"
 
 vim.o.shell = "fish"
 vim.o.shellcmdflag = "-c"
