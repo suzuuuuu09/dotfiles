@@ -2,7 +2,7 @@ abbr -a sc "source $FISH_CONFIG_DIR/config.fish"
 
 # ls
 alias ls "eza --icons --git"
-abbr -a la "ls -aF"
+abbr -a la "ls -aF --ignore-glob=.DS_Store"
 abbr -a ll "ls -lF"
 abbr -a lt "ls -TF"
 
@@ -15,6 +15,7 @@ abbr -a ... "z ../.."
 abbr -a .... "z ../../.."
 abbr -a ..... "z ../../../.."
 
+# Aliases to alternative tools
 alias find fd
 alias grep "rg --color=always"
 alias curl curlie
@@ -42,6 +43,9 @@ abbr -a nx nlx
 
 # lazygit
 abbr -a lg lazygit
+
+# Filesystem
+abbr -a yz yazi
 
 # Nix
 abbr -a nix-clean "nix-collect-garbage -d && nix-store --optimize"
