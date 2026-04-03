@@ -7,6 +7,10 @@ set -q XDG_CONFIG_HOME || set -gx XDG_CONFIG_HOME $HOME/.config
 set -q XDG_DATA_HOME || set -gx XDG_DATA_HOME $HOME/.local/share
 set -q XDG_CACHE_HOME || set -gx XDG_CACHE_HOME $HOME/.cache
 
+set -gx EDITOR nvim
+set -gx GIT_EDITOR nvim
+set -gx VISUAL nvim
+
 fish_config theme choose nord
 
 set -g FISH_CONFIG_DIR $HOME/.config/fish
