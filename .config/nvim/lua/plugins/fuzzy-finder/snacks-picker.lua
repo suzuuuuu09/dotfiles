@@ -19,6 +19,12 @@ return {
 					unloaded = true,  -- ロードされていないバッファも表示
 				},
 			},
+			previewers = {
+				diff = {
+					-- deltaの背景を消させる
+					style = "terminal",
+				},
+			},
 		},
 	},
 	keys = {
@@ -137,7 +143,9 @@ return {
 		{
 			"<leader>ft",
 			function()
-				require("snacks.picker").todo_comments()
+				require("snacks.picker").todo_comments({
+					keywords = { "TODO" },
+				})
 			end,
 			desc = "Find TODO comments",
 		},
@@ -154,6 +162,14 @@ return {
 				require("snacks.picker").diagnostics()
 			end,
 			desc = "Find diagnostics",
+		},
+		-- GIt
+		{
+			"<leader>gs",
+			function()
+				require("snacks.picker").git_status()
+			end,
+			desc = "Git status",
 		},
 	},
 }
