@@ -8,6 +8,7 @@
     ./packages.nix
     ./dotfiles.nix
     ./agent-skills.nix
+    ./sops.nix
   ];
 
   programs = {

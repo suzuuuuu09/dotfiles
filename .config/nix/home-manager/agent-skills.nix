@@ -11,19 +11,22 @@
 
     # スキルのソースを定義 (複数のソースを指定可能)
     sources = {
-      # Vercelのスキル (flake inputsから参照)
+      # +----------------------------------------------------------+
+      # | flake inputsから参照                                     |
+      # +----------------------------------------------------------+
+      # Vercelのスキル
       vercel = {
         path = inputs.vercel-skills;
         subdir = "skills";
       };
 
-      # Vercel Agentのスキル (flake inputsから参照)
+      # Vercel Agentのスキル
       v-agent = {
         path = inputs.vercel-agent-skills;
         subdir = "skills";
       };
 
-      # Anthropicsのスキル (flake inputsから参照)
+      # Anthropicsのスキル
       anthropics = {
         path = inputs.anthropics-skills;
         subdir = "skills";
@@ -33,8 +36,10 @@
         path = inputs.agent-browser;
         subdir = "skills";
       };
-
-      # 自作のスキル (ローカルパスから参照)
+      # +----------------------------------------------------------+
+      # | ローカルパスから参照                                     |
+      # +----------------------------------------------------------+
+      # 自作のスキル
       personal = {
         # path = "${inputs.self}/skills";
         path = inputs.local-skills;

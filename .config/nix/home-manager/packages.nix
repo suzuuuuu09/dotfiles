@@ -43,7 +43,9 @@
 
     # Media tools
     ffmpeg
-    yt-dlp
+    # NOTE: インストール時にdenoをインストールするため除外
+    # 仮にインストールするなら、homebrewでインストールすることを検討
+    # yt-dlp
     imagemagick
 
     # joke tools

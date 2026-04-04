@@ -16,15 +16,15 @@
 
     # homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    homebrew-core = {
-      url = "github:homebrew/homebrew-core";
-      flake = false;
-    };
-    homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
-      flake = false;
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # +----------------------------------------------------------+
+    # | Agent Skills                                             |
+    # +----------------------------------------------------------+
     agent-skills.url = "github:Kyure-A/agent-skills-nix";
 
     local-skills = {
@@ -71,11 +71,16 @@
           nix-homebrew.darwinModules.nix-homebrew
           home-manager.darwinModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.users.k25012kk = import ./home-manager;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              backupFileExtension = "backup";
+              extraSpecialArgs = {inherit inputs;};
+              users.k25012kk = import ./home-manager;
+              sharedModules = [
+                inputs.sops-nix.homeManagerModules.sops
+              ];
+            };
           }
         ];
     };

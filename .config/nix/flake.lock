@@ -3,11 +3,11 @@
     "agent-browser": {
       "flake": false,
       "locked": {
-        "lastModified": 1774808737,
-        "narHash": "sha256-E6IHEyd5voAyNXQyl4bCvyfeZQaSoztplXlKe449EEI=",
+        "lastModified": 1775181615,
+        "narHash": "sha256-nSyCc3YhGgdaW2hRQdLuKYa3X0B7m4nTsENU98zsTqE=",
         "owner": "vercel-labs",
         "repo": "agent-browser",
-        "rev": "312db04e5e2e68a9c1725548b12352d0a55e84db",
+        "rev": "0a36666587cd1c861694a1bf09b80c780e543d4e",
         "type": "github"
       },
       "original": {
@@ -96,49 +96,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1774738535,
-        "narHash": "sha256-2jfBEZUC67IlnxO5KItFCAd7Oc+1TvyV/jQlR+2ykGQ=",
+        "lastModified": 1775268934,
+        "narHash": "sha256-Sa5tW5kYPJornQEkFVD43F/0d4/WP+/GLTNktTFe2qU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "769e07ef8f4cf7b1ec3b96ef015abec9bc6b1e2a",
+        "rev": "9dc93220c1c9a410ef6277d6dc55c571d9e592d0",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "ref": "master",
         "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "homebrew-cask": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1774842759,
-        "narHash": "sha256-FO4jlUN6NljXARWHFOn181uX5dFaUAWirHNj2yx7qsE=",
-        "owner": "homebrew",
-        "repo": "homebrew-cask",
-        "rev": "92c88f3d0cd5dbe6ddbc022b7917afea68859d19",
-        "type": "github"
-      },
-      "original": {
-        "owner": "homebrew",
-        "repo": "homebrew-cask",
-        "type": "github"
-      }
-    },
-    "homebrew-core": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1774844353,
-        "narHash": "sha256-Ps33NX9ZDt8mIc1ZSl7TBGizqN0Qn9eucOTtQhXelzI=",
-        "owner": "homebrew",
-        "repo": "homebrew-core",
-        "rev": "ef6b96e054da88df734e443c7d501b784e8ad7db",
-        "type": "github"
-      },
-      "original": {
-        "owner": "homebrew",
-        "repo": "homebrew-core",
         "type": "github"
       }
     },
@@ -161,11 +129,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1773000227,
-        "narHash": "sha256-zm3ftUQw0MPumYi91HovoGhgyZBlM4o3Zy0LhPNwzXE=",
+        "lastModified": 1775037210,
+        "narHash": "sha256-KM2WYj6EA7M/FVZVCl3rqWY+TFV5QzSyyGE2gQxeODU=",
         "owner": "nix-darwin",
         "repo": "nix-darwin",
-        "rev": "da529ac9e46f25ed5616fd634079a5f3c579135f",
+        "rev": "06648f4902343228ce2de79f291dd5a58ee12146",
         "type": "github"
       },
       "original": {
@@ -211,11 +179,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1774701658,
-        "narHash": "sha256-CIS/4AMUSwUyC8X5g+5JsMRvIUL3YUfewe8K4VrbsSQ=",
+        "lastModified": 1775126147,
+        "narHash": "sha256-J0dZU4atgcfo4QvM9D92uQ0Oe1eLTxBVXjJzdEMQpD0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b63fe7f000adcfa269967eeff72c64cafecbbebe",
+        "rev": "8d8c1fa5b412c223ffa47410867813290cdedfef",
         "type": "github"
       },
       "original": {
@@ -231,24 +199,43 @@
         "agent-skills": "agent-skills",
         "anthropics-skills": "anthropics-skills",
         "home-manager": "home-manager_2",
-        "homebrew-cask": "homebrew-cask",
-        "homebrew-core": "homebrew-core",
         "local-skills": "local-skills",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_2",
+        "sops-nix": "sops-nix",
         "vercel-agent-skills": "vercel-agent-skills",
         "vercel-skills": "vercel-skills"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775188331,
+        "narHash": "sha256-/0BoSi0Dg0ON7IW0oscM12WSPBaMSCn36XTt0lHZoy8=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "8f093d0d2f08f37317778bd94db5951d6cce6c46",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "vercel-agent-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1774393204,
-        "narHash": "sha256-rMkx74IAnW55otJefKke8GRYL4Py0KxoeASJwMqOmFY=",
+        "lastModified": 1775165248,
+        "narHash": "sha256-1l6cthflz36+ihVQJ5PVl2GysLl1NBiKNNl8LUg+U28=",
         "owner": "vercel-labs",
         "repo": "agent-skills",
-        "rev": "64484e9a6022c81e3af59f5dcee6fb6d631bf53e",
+        "rev": "73140fc5b3a214ad3222bcf557b397b3c02d11c1",
         "type": "github"
       },
       "original": {
@@ -260,11 +247,11 @@
     "vercel-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1774562450,
-        "narHash": "sha256-w4vw0I3q+3AtfcQSRBwOvNKFIz2FEOgqsdcCcZ7UllY=",
+        "lastModified": 1775245510,
+        "narHash": "sha256-oU0fgedrelqSEcEGInYoQG+HGjYYehoLxAoNBo/Z/2I=",
         "owner": "vercel-labs",
         "repo": "skills",
-        "rev": "d95d0cacfd0ebe9677cb96d51c66a8e9d5630f2c",
+        "rev": "9fd386dbffd0b000ceaeb5e121e065900c01424f",
         "type": "github"
       },
       "original": {

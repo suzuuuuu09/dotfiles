@@ -19,6 +19,7 @@ in {
     "btop".source = mkLink ".config/btop";
     "mise".source = mkLink ".config/mise";
     "karabiner".source = mkLink ".config/karabiner";
+    "vde".source = mkLink ".config/vde";
   };
 
   # ~/ の直下に置くもの
