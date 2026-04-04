@@ -5,6 +5,8 @@ pnpm = "latest"
 
 "npm:@google/gemini-cli" = "latest"
 "npm:@github/copilot" = "latest"
+"npm:ctx7" = "latest"
+"npm:vde-layout" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["*,", "python"]
