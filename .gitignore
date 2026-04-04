@@ -4,3 +4,6 @@
 # Karabiner
 .config/karabiner/automatic_backups/
 .config/karabiner/assets/
+
+# Private key files
+.config/sops/age/key.txt

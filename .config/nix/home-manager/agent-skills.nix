@@ -36,6 +36,11 @@
         path = inputs.agent-browser;
         subdir = "skills";
       };
+
+      context7 = {
+        path = inputs.context7-skills;
+        subdir = "skills";
+      };
       # +----------------------------------------------------------+
       # | ローカルパスから参照                                     |
       # +----------------------------------------------------------+
@@ -56,6 +61,8 @@
         "frontend-design"
         "web-design-guidelines"
         "agent-browser"
+        "find-docs"
+        "context7-mcp"
       ];
     };
 

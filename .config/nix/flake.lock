@@ -68,6 +68,22 @@
         "type": "github"
       }
     },
+    "context7-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775119917,
+        "narHash": "sha256-zq3LQtbcNyS4v/3TTPYBRl937DXc80rue9wj+NNJEuc=",
+        "owner": "upstash",
+        "repo": "context7",
+        "rev": "6cba6fb29b2671e54cd4a9ecebf5e33820622531",
+        "type": "github"
+      },
+      "original": {
+        "owner": "upstash",
+        "repo": "context7",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -198,6 +214,7 @@
         "agent-browser": "agent-browser",
         "agent-skills": "agent-skills",
         "anthropics-skills": "anthropics-skills",
+        "context7-skills": "context7-skills",
         "home-manager": "home-manager_2",
         "local-skills": "local-skills",
         "nix-darwin": "nix-darwin",
