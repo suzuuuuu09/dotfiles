@@ -95,3 +95,9 @@ keymap.set("n", "#", function()
 	vim.opt.hlsearch = true
 	hlslens.start()
 end, opts)
+
+-- 0.12.0から追加されたインクリメンタルセレクションのキーマップ
+if vim.fn.has("nvim-0.12.0") == 1 then
+	keymap.set("x", "n", "an", { remap = true, desc = "Incremental selection: expand" })
+	keymap.set("x", "N", "in", { remap = true, desc = "Incremental selection: shrink" })
+end
