@@ -5,5 +5,5 @@ return {
 	dependencies = {
 		"anuvyklack/middleclass",
 	},
-	opts = {}
+	opts = {},
 }

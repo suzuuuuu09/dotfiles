@@ -16,7 +16,7 @@ return {
 			sources = {
 				buffers = {
 					sort_lastused = false, -- true: 最後に使用した順にソート、false: バッファ番号順にソート
-					unloaded = true,  -- ロードされていないバッファも表示
+					unloaded = true, -- ロードされていないバッファも表示
 				},
 			},
 			previewers = {

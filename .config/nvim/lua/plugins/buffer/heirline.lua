@@ -80,7 +80,7 @@ return {
 				local filename = self.filename
 				local extension = vim.fn.fnamemodify(filename, ":e")
 				self.icon, self.icon_color =
-						require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+					require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
 			end,
 			provider = function(self)
 				return self.icon and (self.icon .. " ")
@@ -111,11 +111,11 @@ return {
 			{
 				condition = function(self)
 					return not vim.api.nvim_get_option_value("modifiable", { buf = self.bufnr })
-							or vim.api.nvim_get_option_value("readonly", { buf = self.bufnr })
+						or vim.api.nvim_get_option_value("readonly", { buf = self.bufnr })
 				end,
 				provider = function(self)
 					return vim.api.nvim_get_option_value("buftype", { buf = self.bufnr }) == "terminal" and "  "
-							or " "
+						or " "
 				end,
 				hl = { fg = c.aurora.orange },
 			},

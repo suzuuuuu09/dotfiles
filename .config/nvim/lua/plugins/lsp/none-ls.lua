@@ -15,7 +15,7 @@ return {
 				-- ╭─────────────────────────────────────────────────────────╮
 				-- │                        Formatter                        │
 				-- ╰─────────────────────────────────────────────────────────╯
-				b.formatting.stylua,   -- lua formatter
+				b.formatting.stylua, -- lua formatter
 				-- b.formatting.black,    -- python formatter
 				b.formatting.clang_format, -- c/c++ formatter
 				-- b.formatting.beautysh, -- shell script formatter

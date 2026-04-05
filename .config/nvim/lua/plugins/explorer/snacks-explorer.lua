@@ -11,13 +11,19 @@ return {
 					layout = {
 						layout = {
 							width = 30,
-						}
-					}
-				}
-			}
-		}
+						},
+					},
+				},
+			},
+		},
 	},
 	keys = {
-		{ "<leader>e", function () require("snacks.explorer").open() end, desc = "Open Snacks Explorer" }
-	}
+		{
+			"<leader>e",
+			function()
+				require("snacks.explorer").open()
+			end,
+			desc = "Open Snacks Explorer",
+		},
+	},
 }

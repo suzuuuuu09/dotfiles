@@ -11,6 +11,6 @@ return {
 	},
 	keys = {
 		{ "<leader>Cc", "<CMD>CccConvert<CR>", desc = "Convert color" },
-		{ "<leader>Cp", "<CMD>CccPick<CR>",    desc = "Pick color" },
+		{ "<leader>Cp", "<CMD>CccPick<CR>", desc = "Pick color" },
 	},
 }

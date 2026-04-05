@@ -4,9 +4,9 @@ return {
 		-- "theHamsta/nvim-dap-virtual-text",
 		-- "nvim-telescope/telescope-dap.nvim",
 		"rcarriga/nvim-dap-ui",
-		"nvim-neotest/nvim-nio"
+		"nvim-neotest/nvim-nio",
 	},
-	config = function ()
+	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
 
@@ -31,5 +31,5 @@ return {
 		set("n", "<leader>dc", dap.continue, { desc = "Start / Continue" })
 		set("n", "<F6>", dap.pause, { desc = "Pause" })
 		set("n", "<leader>dp", dap.pause, { desc = "Pause" })
-	end
+	end,
 }

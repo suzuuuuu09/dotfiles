@@ -11,4 +11,3 @@ return {
 		require("mini.align").setup({})
 	end,
 }
-

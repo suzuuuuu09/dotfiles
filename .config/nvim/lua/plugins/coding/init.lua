@@ -1,3 +1,3 @@
 return {
-	{ import = "plugins.coding.search" }
+	{ import = "plugins.coding.search" },
 }

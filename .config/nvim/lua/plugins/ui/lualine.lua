@@ -3,7 +3,7 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	opts = {
 		options = {
-			theme = "nord"
-		}
-	}
+			theme = "nord",
+		},
+	},
 }

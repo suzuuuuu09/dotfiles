@@ -39,9 +39,9 @@ return {
 		require("tiny-inline-diagnostic").setup(opts)
 		vim.diagnostic.config({
 			virtual_text = false,
-			underline = true,     -- 波線を常に表示
+			underline = true, -- 波線を常に表示
 			update_in_insert = true, -- インサートモードでも診断を更新
-		})                      -- Disable Neovim's default virtual text diagnostics
+		}) -- Disable Neovim's default virtual text diagnostics
 		-- エラーのアイコン表示を変更
 		local icons = require("user.icons")
 		local signs = {

@@ -52,14 +52,14 @@ return {
 		end
 
 		return {
-			{ "<leader>tf",  "<CMD>ToggleTerm direction=float<CR>",              desc = "Open floating terminal" },
-			{ "<leader>th",  "<CMD>ToggleTerm size=10 direction=horizontal<CR>", desc = "Open horizontal terminal" },
-			{ "<leader>tv",  "<CMD>ToggleTerm size=80 direction=vertical<CR>",   desc = "Open vertical terminal" },
-			{ "<leader>gg",  "<CMD>lua _lazygit_toggle()<CR>",                   desc = "Open Lazygit" },
-			{ "<leader>tl",  "<CMD>lua _lazygit_toggle()<CR>",                   desc = "Open Lazygit" },
-			{ "<leader>tiv", open_terminal_by_id("vertical", 80),                desc = "Vertical" },
-			{ "<leader>tih", open_terminal_by_id("horizontal", 10),              desc = "Horizontal" },
-			{ "<leader>tif", open_terminal_by_id("float", nil),                  desc = "Floating" },
+			{ "<leader>tf", "<CMD>ToggleTerm direction=float<CR>", desc = "Open floating terminal" },
+			{ "<leader>th", "<CMD>ToggleTerm size=10 direction=horizontal<CR>", desc = "Open horizontal terminal" },
+			{ "<leader>tv", "<CMD>ToggleTerm size=80 direction=vertical<CR>", desc = "Open vertical terminal" },
+			{ "<leader>gg", "<CMD>lua _lazygit_toggle()<CR>", desc = "Open Lazygit" },
+			{ "<leader>tl", "<CMD>lua _lazygit_toggle()<CR>", desc = "Open Lazygit" },
+			{ "<leader>tiv", open_terminal_by_id("vertical", 80), desc = "Vertical" },
+			{ "<leader>tih", open_terminal_by_id("horizontal", 10), desc = "Horizontal" },
+			{ "<leader>tif", open_terminal_by_id("float", nil), desc = "Floating" },
 		}
 	end,
 }

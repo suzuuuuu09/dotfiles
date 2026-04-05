@@ -3,6 +3,6 @@ return {
 	build = "bun i -g live-server",
 	cmd = { "LiveServerStart", "LiveServerStop" },
 	opts = {
-		args = { "--port=5500" }
+		args = { "--port=5500" },
 	},
 }

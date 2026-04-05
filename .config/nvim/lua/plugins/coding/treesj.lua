@@ -8,10 +8,9 @@ return {
 		use_default_keymaps = false,
 		join = {
 			space_in_brackets = true,
-		}
+		},
 	},
 	keys = {
 		{ "<leader>lj", "<CMD>TSJToggle<CR>", desc = "Toggle split/join" },
 	},
 }
-

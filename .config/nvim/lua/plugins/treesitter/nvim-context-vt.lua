@@ -7,6 +7,6 @@ return {
 			"markdown",
 			"python",
 			"yaml",
-		}
-	}
+		},
+	},
 }

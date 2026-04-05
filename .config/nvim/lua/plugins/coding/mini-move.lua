@@ -9,7 +9,7 @@ return {
 		{ "<M-k>", mode = { "n", "v" }, desc = "Move selection up" },
 		{ "<M-l>", mode = { "n", "v" }, desc = "Move selection right" },
 	},
----@diagnostic disable-next-line: unused-local
+	---@diagnostic disable-next-line: unused-local
 	opts = function(_, opts)
 		require("mini.move").setup({
 			mappings = {
@@ -25,4 +25,3 @@ return {
 		})
 	end,
 }
-

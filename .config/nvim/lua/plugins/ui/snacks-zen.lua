@@ -7,6 +7,6 @@ return {
 		zoom = {
 			width = 120,
 			height = 40,
-		}
-	}
+		},
+	},
 }

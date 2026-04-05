@@ -6,16 +6,16 @@ return {
 			char = { enable = false },
 			search = { enable = false },
 			treesitter = { enable = false },
-		}
+		},
 	},
 	keys = {
 		{
 			"<CR>",
-			function ()
+			function()
 				require("flash").jump({
-					label = { before = true, after = false }
+					label = { before = true, after = false },
 				})
-			end
-		}
-	}
+			end,
+		},
+	},
 }

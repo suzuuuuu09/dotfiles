@@ -16,29 +16,29 @@ return {
 				return vim.tbl_contains({ "()", "[]", "{}" }, pair)
 			end),
 			Rule("( ", " )")
-					:with_pair(function()
-						return false
-					end)
-					:with_move(function(options)
-						return options.prev_char:match(".%)") ~= nil
-					end)
-					:use_key(")"),
+				:with_pair(function()
+					return false
+				end)
+				:with_move(function(options)
+					return options.prev_char:match(".%)") ~= nil
+				end)
+				:use_key(")"),
 			Rule("{ ", " }")
-					:with_pair(function()
-						return false
-					end)
-					:with_move(function(options)
-						return options.prev_char:match(".%}") ~= nil
-					end)
-					:use_key("}"),
+				:with_pair(function()
+					return false
+				end)
+				:with_move(function(options)
+					return options.prev_char:match(".%}") ~= nil
+				end)
+				:use_key("}"),
 			Rule("[ ", " ]")
-					:with_pair(function()
-						return false
-					end)
-					:with_move(function(options)
-						return options.prev_char:match(".%]") ~= nil
-					end)
-					:use_key("]"),
+				:with_pair(function()
+					return false
+				end)
+				:with_move(function(options)
+					return options.prev_char:match(".%]") ~= nil
+				end)
+				:use_key("]"),
 		})
 	end,
 }

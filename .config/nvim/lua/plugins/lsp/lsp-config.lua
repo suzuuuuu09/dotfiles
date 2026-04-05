@@ -139,7 +139,7 @@ return {
 				if vim.lsp.config[server_name] then
 					-- すでに設定がある場合はマージ
 					vim.lsp.config[server_name].capabilities =
-							vim.tbl_deep_extend("force", vim.lsp.config[server_name].capabilities or {}, capabilities)
+						vim.tbl_deep_extend("force", vim.lsp.config[server_name].capabilities or {}, capabilities)
 				else
 					-- 新規に設定を作成
 					vim.lsp.config[server_name] = {
@@ -171,9 +171,9 @@ return {
 		opts = {
 			ensure_installed = {
 				"stylua",
-				"ruff",     -- python linter
+				"ruff", -- python linter
 				-- "black", -- python formatter
-				"cpplint",  -- c/c++ linter
+				"cpplint", -- c/c++ linter
 				"clang_format", -- c/c++ formatter
 			},
 		},

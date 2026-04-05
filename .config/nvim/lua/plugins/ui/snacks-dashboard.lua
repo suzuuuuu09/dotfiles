@@ -22,10 +22,10 @@ local cmd = {
 	"sh",
 	"-c",
 	"echo -e "
-	.. vim.fn.shellescape(vim.trim(logo))
-	.. " | tte --anchor-canvas s "
-	.. subcommand
-	.. " --final-gradient-direction diagonal",
+		.. vim.fn.shellescape(vim.trim(logo))
+		.. " | tte --anchor-canvas s "
+		.. subcommand
+		.. " --final-gradient-direction diagonal",
 }
 
 return {

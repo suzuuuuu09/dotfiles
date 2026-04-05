@@ -15,18 +15,18 @@ return {
 			"<leader>ub",
 			function()
 				Snacks.toggle
-						.new({
-							name = "Breadcrumbs",
-							get = function()
-								return vim.wo.winbar ~= ""
-							end,
-							set = function()
-								-- dropbar.nvim に BreadcrumbsToggle コマンドがある、
-								-- または自作コマンドがある前提です
-								vim.cmd("BreadcrumbsToggle")
-							end,
-						})
-						:toggle()
+					.new({
+						name = "Breadcrumbs",
+						get = function()
+							return vim.wo.winbar ~= ""
+						end,
+						set = function()
+							-- dropbar.nvim に BreadcrumbsToggle コマンドがある、
+							-- または自作コマンドがある前提です
+							vim.cmd("BreadcrumbsToggle")
+						end,
+					})
+					:toggle()
 			end,
 			desc = "Toggle Breadcrumbs",
 		},

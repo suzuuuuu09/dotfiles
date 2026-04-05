@@ -1,4 +1,4 @@
-return { 
+return {
 	"folke/neoconf.nvim",
-	cmd = "Neoconf"
+	cmd = "Neoconf",
 }
