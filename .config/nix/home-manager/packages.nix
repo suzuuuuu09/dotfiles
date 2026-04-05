@@ -31,6 +31,7 @@
     docker-compose
     act # GitHub Actions をローカルで実行するツール
     vhs
+    typescript # typescript-tools.nvimで必要
     # mise
 
     # Python tools
