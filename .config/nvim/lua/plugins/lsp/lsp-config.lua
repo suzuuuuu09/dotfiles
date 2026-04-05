@@ -1,11 +1,48 @@
+local lsp_servers = {
+	"astro",
+	"bashls",
+	"biome",
+	"clangd",
+	"cssls",
+	"fish_lsp",
+	"html",
+	"jsonls",
+	"lua_ls",
+	"nil_ls",
+	"pyright",
+	"ruff",
+	"svelte",
+	"taplo",
+	"tailwindcss",
+	"typos-lsp",
+	-- NOTE: typescript-tools.nvimを使うためコメントアウト
+	-- "ts_ls",
+}
+
+local null_ls_sources = {
+	"stylua",
+	"ruff",        -- python linter
+	-- "black", -- python formatter
+	"cpplint",     -- c/c++ linter
+	"clang_format", -- c/c++ formatter
+	"prettier",    -- general formatter
+	"alejandra",   -- Nix formatter
+	"nixpkgs-fmt", -- Nix formatter
+	"kulala-fmt",
+}
+
+local dap_adapters = {
+	"python",
+}
+
+local generic_tools = {
+	"uv", -- python manager
+}
+
 ---@module "lazy"
 ---@type LazyPluginSpec[]
 return {
 	-- Base dependencies (must be loaded first)
-	{
-		"nvim-lua/plenary.nvim",
-		lazy = false,
-	},
 	{
 		"nvimtools/none-ls.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -17,14 +54,6 @@ return {
 	-- Mason core
 	{
 		"mason-org/mason.nvim",
-		--[[ cmd = {
-			"Mason",
-			"MasonInstall",
-			"MasonUninstall",
-			"MasonUninstallAll",
-			"MasonLog",
-			"MasonUpdate",
-		}, ]]
 		event = "VeryLazy",
 		opts = {},
 	},
@@ -59,25 +88,7 @@ return {
 				end
 			end
 
-			local servers = {
-				"lua_ls",
-				"svelte",
-				"tailwindcss",
-				-- NOTE: typescript-tools.nvimを使うためコメントアウト
-				-- "ts_ls",
-				"html",
-				"astro",
-				"pyright",
-				"jsonls",
-				"cssls",
-				"taplo",
-				"bashls",
-				"clangd",
-				"ruff",
-				"biome",
-			}
-
-			for _, server in ipairs(servers) do
+			for _, server in ipairs(lsp_servers) do
 				-- 個別設定ファイルの読み込みを試みる
 				local has_custom_opts, custom_opts = pcall(require, "plugins.lsp.settings." .. server)
 
@@ -113,22 +124,7 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			mason_lspconfig.setup({
-				ensure_installed = {
-					"typos_lsp", -- spelling checker
-					"lua_ls",
-					"svelte",
-					"tailwindcss",
-					-- NOTE: typescript-tools.nvimを使うためコメントアウト
-					-- "ts_ls",
-					"html",
-					"astro", -- Astro.js
-					"pyright", -- python
-					"jsonls", -- json
-					"cssls", -- css
-					"taplo", -- toml
-					"bashls", -- bash
-					"clangd", -- c/c++
-				},
+				ensure_installed = lsp_servers,
 				automatic_installation = true,
 			})
 
@@ -139,7 +135,7 @@ return {
 				if vim.lsp.config[server_name] then
 					-- すでに設定がある場合はマージ
 					vim.lsp.config[server_name].capabilities =
-						vim.tbl_deep_extend("force", vim.lsp.config[server_name].capabilities or {}, capabilities)
+							vim.tbl_deep_extend("force", vim.lsp.config[server_name].capabilities or {}, capabilities)
 				else
 					-- 新規に設定を作成
 					vim.lsp.config[server_name] = {
@@ -169,13 +165,8 @@ return {
 			"nvimtools/none-ls.nvim",
 		},
 		opts = {
-			ensure_installed = {
-				"stylua",
-				"ruff", -- python linter
-				-- "black", -- python formatter
-				"cpplint", -- c/c++ linter
-				"clang_format", -- c/c++ formatter
-			},
+			ensure_installed = null_ls_sources,
+			automatic_installation = true,
 		},
 	},
 
@@ -188,9 +179,7 @@ return {
 			"mfussenegger/nvim-dap",
 		},
 		opts = {
-			ensure_installed = {
-				"python",
-			},
+			ensure_installed = dap_adapters,
 		},
 	},
 
@@ -200,9 +189,7 @@ return {
 		event = "VeryLazy",
 		dependencies = { "mason-org/mason.nvim" },
 		opts = {
-			ensure_installed = {
-				"uv", -- python manager
-			},
+			ensure_installed = generic_tools,
 		},
 	},
 }
