@@ -10,6 +10,7 @@ in {
     "oh-my-posh".source = mkLink ".config/oh-my-posh";
     "nix".source = mkLink ".config/nix";
     "nvim".source = mkLink ".config/nvim";
+    "yazi".source = mkLink ".config/yazi";
     # 使わないけど一応残しておく
     # "zsh".source = mkLink ".config/zsh";
     "fish".source = mkLink ".config/fish";
