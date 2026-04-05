@@ -14,7 +14,7 @@ local lsp_servers = {
 	"svelte",
 	"taplo",
 	"tailwindcss",
-	"typos-lsp",
+	"typos_lsp",
 	-- NOTE: typescript-tools.nvimを使うためコメントアウト
 	-- "ts_ls",
 }
