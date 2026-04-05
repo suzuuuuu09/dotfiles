@@ -45,7 +45,6 @@ abbr -a nx nlx
 abbr -a lg lazygit
 
 # Filesystem
-abbr -a y yazi
 abbr -a yz yazi
 
 # Nix
