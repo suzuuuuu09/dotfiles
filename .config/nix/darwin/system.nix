@@ -82,19 +82,6 @@
     LSREG="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
     CASKROOM="/opt/homebrew/Caskroom"
 
-    # cmd-eikana: Caskroom から /Applications にコピー
-    if [ -d "$CASKROOM/cmd-eikana" ]; then
-      SRC=$(find "$CASKROOM/cmd-eikana" -maxdepth 2 -name "*.app" | head -1)
-      if [ -n "$SRC" ]; then
-        echo "Copying cmd-eikana to /Applications..." >&2
-        rm -rf "/Applications/⌘英かな.app" "/Applications/Eikana.app"
-        /usr/bin/ditto "$SRC" "/Applications/Eikana.app"
-        /usr/bin/xattr -dr com.apple.quarantine "/Applications/Eikana.app" 2>/dev/null || true
-        "$LSREG" -f "/Applications/Eikana.app" 2>/dev/null || true
-        /usr/bin/mdimport "/Applications/Eikana.app" 2>/dev/null || true
-      fi
-    fi
-
     # battery: Caskroom から /Applications にコピー
     if [ -d "$CASKROOM/battery" ]; then
       SRC=$(find "$CASKROOM/battery" -maxdepth 2 -name "*.app" | head -1)

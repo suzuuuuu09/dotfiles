@@ -26,9 +26,9 @@
     ];
 
     casks = [
+      "nikitabobko/tap/aerospace"
+      "pear-devs/pear/pear-desktop"
       "battery"
-      "battery-buddy"
-      "cmd-eikana"
       "google-chrome"
       "wezterm@nightly"
       "vivaldi"
@@ -44,7 +44,6 @@
       "obsidian"
       "parsec"
       "claude"
-      # "FelixKratz/formulae/sketchybar"
     ];
 
     masApps = {
