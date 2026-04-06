@@ -35,6 +35,9 @@
       mouse-over-hilite-stack = true;
       # 静的なアプリのみ表示 (実行中のアプリを非表示)
       static-only = false;
+      # アプリケーションをグループ化して表示
+      # AeroSpaceの小さく表示されるバグ対策
+      expose-group-apps = true;
     };
     # ╭──────────────────────────────────────────────────────────╮
     # │                         Trackpad                         │
