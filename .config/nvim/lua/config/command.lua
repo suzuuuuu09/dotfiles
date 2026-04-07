@@ -29,6 +29,11 @@ vim.api.nvim_create_user_command("BreadcrumbsToggle", function()
 	end
 end, { nargs = 0, desc = "Toggle Breadcrumbs" })
 
+-- :checkhealth vim.lspを呼び出す
+vim.api.nvim_create_user_command("LspInfo", function()
+	vim.cmd("checkhealth vim.lsp")
+end, { nargs = 0, desc = "Check LSP Health" })
+
 -- vim.api.nvim_create_user_command("ToggleStatusBar", function()
 -- 	if vim.o.laststatus == 3 then
 -- 		vim.opt.laststatus = 0
