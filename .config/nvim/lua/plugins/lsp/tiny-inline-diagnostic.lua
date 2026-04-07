@@ -37,22 +37,21 @@ return {
 	},
 	config = function(_, opts)
 		require("tiny-inline-diagnostic").setup(opts)
+
+		local icons = require("user.icons")
+
 		vim.diagnostic.config({
 			virtual_text = false,
-			underline = true, -- 波線を常に表示
+			underline = true,     -- 波線を常に表示
 			update_in_insert = true, -- インサートモードでも診断を更新
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = icons.diag.error_icon,
+					[vim.diagnostic.severity.WARN] = icons.diag.warning_icon,
+					[vim.diagnostic.severity.HINT] = icons.diag.hint_icon,
+					[vim.diagnostic.severity.INFO] = icons.diag.info_icon,
+				},
+			},
 		}) -- Disable Neovim's default virtual text diagnostics
-		-- エラーのアイコン表示を変更
-		local icons = require("user.icons")
-		local signs = {
-			Error = icons.diag.error_icon,
-			Warn = icons.diag.warning_icon,
-			Hint = icons.diag.hint_icon,
-			Info = icons.diag.info_icon,
-		}
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-		end
 	end,
 }

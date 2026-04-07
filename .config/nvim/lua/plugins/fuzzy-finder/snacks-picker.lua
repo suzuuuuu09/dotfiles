@@ -144,7 +144,7 @@ return {
 			"<leader>ft",
 			function()
 				require("snacks.picker").todo_comments({
-					keywords = { "TODO" },
+					keywords = { "TODO", "FIXME", "FIX" },
 				})
 			end,
 			desc = "Find TODO comments",

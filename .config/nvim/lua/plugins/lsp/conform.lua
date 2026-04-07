@@ -11,6 +11,7 @@ return {
 	---@module "conform"
 	opts = {
 		formatters_by_ft = {
+			lua = { "stylua" },
 			json = js_formatters,
 			javascript = js_formatters,
 			typescript = js_formatters,
@@ -25,6 +26,25 @@ return {
 		formatters = {
 			biome = {
 				args = { "format", "--write", "--stdin-file-path", "$FILENAME" },
+			},
+			stylua = {
+				stylua = {
+					-- ここに .stylua.toml の内容を直接引数として渡す
+					prepend_args = {
+						"--column-width",
+						"120",
+						"--indent-type",
+						"Tabs",
+						"--indent-width",
+						"4",
+						"--quote-style",
+						"AutoPreferDouble",
+						"--align-continuous-assignments",
+						"Always", -- これが '=' を揃える設定
+						"--call-parentheses",
+						"Always",
+					},
+				},
 			},
 		},
 		format_on_save = {
