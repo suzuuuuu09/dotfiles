@@ -1,0 +1,5 @@
+[formatting]
+align_entries       = true   # エントリを垂直に整列
+allowed_blank_lines = 1      # 許可される連続空白行の最大数
+array_auto_collapse = false  # 配列が1行に収まる場合でも自動的に縮小しない
+indent_string       = "    " # インデントに使用する文字列（スペース4つ）
