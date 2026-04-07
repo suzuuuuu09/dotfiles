@@ -125,3 +125,11 @@ vim.api.nvim_create_autocmd("FileType", {
 		})
 	end,
 })
+
+vim.api.nvim_create_autocmd("FocusGained", {
+	callback = function()
+		vim.defer_fn(function()
+			vim.fn.system("macism net.mtgto.inputmethod.macSKK.ascii")
+		end, 300)
+	end,
+})
