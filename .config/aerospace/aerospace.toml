@@ -12,7 +12,8 @@ after-login-command = []
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
+after-startup-command = ['exec-and-forget borders']
+
 
 # Start AeroSpace at login
 start-at-login = true
@@ -137,7 +138,7 @@ alt-shift-t = 'move-node-to-workspace T' # Terminal
 alt-shift-f = "fullscreen"
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-alt-tab = 'workspace-back-and-forth'
+# alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
@@ -180,3 +181,13 @@ run = "move-node-to-workspace N"
 [[on-window-detected]]
 if.app-id = 'com.github.th-ch.youtube-music'
 run = "move-node-to-workspace M"
+
+# Finderを開いたときにフローティングで表示
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+# システム設定を開いたときにフローティングで表示
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
