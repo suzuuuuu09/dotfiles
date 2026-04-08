@@ -48,4 +48,8 @@ abbr -a lg lazygit
 abbr -a yz yazi
 
 # Nix
+abbr -a nix-switch "sudo darwin-rebuild switch --flake ~/dotfiles/.config/nix#(scutil --get LocalHostName)"
+abbr -a nix-build "darwin-rebuild build --flake ~/dotfiles/.config/nix#(scutil --get LocalHostName)"
+abbr -a nix-check "darwin-rebuild check --flake ~/dotfiles/.config/nix#(scutil --get LocalHostName)"
 abbr -a nix-clean "nix-collect-garbage -d && nix-store --optimize"
+abbr -a nfu "nix flake update"
