@@ -7,3 +7,7 @@
 
 # Private key files
 .config/sops/age/key.txt
+
+# Yazi Plugins and themes
+.config/yazi/plugins/
+.config/yazi/flavors/
