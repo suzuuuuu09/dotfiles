@@ -23,17 +23,28 @@
 
     brews = [
       "mas"
+      "felixkratz/formulae/borders"
+      "bjarneo/cliamp/cliamp"
     ];
 
     casks = [
       "nikitabobko/tap/aerospace"
-      "pear-devs/pear/pear-desktop"
+      "alt-tab"
+      "homerow"
+
+      # Music
+      "pear-devs/pear/pear-desktop" # Youtube Music クライアント
       "battery"
-      "google-chrome"
+
+      # Terminal
       "wezterm@nightly"
+
+      # Browser
       "vivaldi"
-      "amical"
+
+      # Input Method
       "macskk"
+
       "raycast"
       "discord"
       "slack"
@@ -44,6 +55,8 @@
       "obsidian"
       "parsec"
       "claude"
+      "amical"
+      "1password"
     ];
 
     masApps = {
