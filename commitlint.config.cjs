@@ -116,7 +116,31 @@ module.exports = {
 		useEmoji: true,
 		emojiAlign: "center",
 		useAI: false,
-		aiNumber: 1,
+		aiNumber: 3,
+		aiQuestionCB: ({ type, diff, maxSubjectLength }) => {
+			return `
+			# constraints
+			- バッククォート（\`）やコードブロック（\`\`\`）は絶対に使用しないでください。
+			- 日本語で出力してください。
+			- 形式は conventional commits 1.0.0 に準拠してください。
+			- 簡潔かつ、後で履歴を追いやすいように具体的に表現を心がけてください。
+			- 変更点が複数ある場合は、一番大きい変更もしくは最も重要な変更を表現してください。2個以上は出力しないでください。
+			- scopeは、変更の影響範囲を表す短い単語やフレーズで、括弧で囲んでください。例: (nvim), (lazygit), (yazi)。
+
+			# format
+			- <description> (<scope>)
+
+			# example commit messages
+			- 自動コミットの機能を追加した (lazygit)
+			- IMEの切り替えを自動で行うようにした (nvimm)
+			- LspInfoのコマンド作った (nvim)
+			- yaziのnordフレーバーを入れた (yazi)
+			- コードのフォーマットをした (aerospace)
+			- パッケージの更新をした (nix)
+
+			${type} ${diff}
+			`;
+		},
 		themeColorCode: "",
 		scopes: [],
 		allowCustomScopes: true,
