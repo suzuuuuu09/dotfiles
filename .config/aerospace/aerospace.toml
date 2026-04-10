@@ -14,6 +14,11 @@ after-login-command = []
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = ['exec-and-forget borders']
 
+exec-on-workspace-change = [
+	'/bin/bash',
+	'-c',
+	'~/.config/aerospace/pip-follow.sh',
+]
 
 # Start AeroSpace at login
 start-at-login = true
@@ -203,3 +208,7 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
 run = 'layout floating'
+
+[[on-window-detected]]
+if.window-title-regex-substring = "ピクチャーインピクチャー"
+run = ['layout floating']
