@@ -19,6 +19,7 @@
     ni # @antfu/ni
     hyperfine # ベンチマークツール
     gomi
+    wakeonlan
 
     # Git tools
     delta

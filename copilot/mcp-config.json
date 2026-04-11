@@ -1,0 +1,36 @@
+{
+	"mcpServers": {
+		"context7": {
+			"tools": ["*"],
+			"type": "local",
+			"command": "bunx",
+			"args": ["-y", "@upstash/context7-mcp@latest"],
+			"env": {
+				"CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+			},
+			"source": "user",
+			"sourcePath": "~/.copilot/mcp-config.json"
+		},
+		"serena": {
+			"tools": ["*"],
+			"type": "local",
+			"command": "uvx",
+			"args": [
+				"--from",
+				"git+https://github.com/oraios/serena",
+				"serena",
+				"start-mcp-server"
+			],
+			"source": "user",
+			"sourcePath": "~/.copilot/mcp-config.json"
+		},
+		"drawio": {
+			"tools": ["*"],
+			"type": "local",
+			"command": "bunx",
+			"args": ["@drawio/mcp@latest"],
+			"source": "user",
+			"sourcePath": "~/.copilot/mcp-config.json"
+		}
+	}
+}
