@@ -31,6 +31,27 @@
 			"args": ["@drawio/mcp@latest"],
 			"source": "user",
 			"sourcePath": "~/.copilot/mcp-config.json"
+		},
+		"nixos": {
+			"tools": ["*"],
+			"type": "local",
+			"command": "uvx",
+			"args": ["mcp-nixos"],
+			"source": "user",
+			"sourcePath": "~/.copilot/mcp-config.json"
+		},
+		"filesystem": {
+			"tools": ["*"],
+			"type": "local",
+			"command": "npx",
+			"args": [
+				"-y",
+				"@modelcontextprotocol/server-filesystem",
+				"~/Documents",
+				"~/dotfiles"
+			],
+			"source": "user",
+			"sourcePath": "~/.copilot/mcp-config.json"
 		}
 	}
 }
