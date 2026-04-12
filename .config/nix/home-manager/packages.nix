@@ -17,6 +17,7 @@
     tlrc # tldr
     curlie # curl の代替
     ni # @antfu/ni
+    direnv
     hyperfine # ベンチマークツール
     gomi
     wakeonlan
