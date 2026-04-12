@@ -22,6 +22,7 @@ return {
 			-- NOTE: SvelteはLSPの整形機能を使う
 			clang = { "clang_format" },
 			nix = nix_formatters,
+			rust = { "rustfmt" },
 		},
 		formatters = {
 			biome = {

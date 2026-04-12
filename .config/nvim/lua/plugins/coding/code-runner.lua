@@ -17,7 +17,8 @@ return {
 				rust = {
 					"cd $dir &&",
 					"rustc $fileName &&",
-					"$dir/$fileNameWithoutExt",
+					"./$fileNameWithoutExt &&",
+					"rm ./$fileNameWithoutExt",
 				},
 				c = function(...)
 					c_base = {
