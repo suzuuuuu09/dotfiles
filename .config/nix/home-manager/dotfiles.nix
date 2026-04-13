@@ -18,6 +18,7 @@ in {
     "gh".source = mkLink ".config/gh";
     "lazygit".source = mkLink ".config/lazygit";
     "wezterm".source = mkLink ".config/wezterm";
+    "ghostty".source = mkLink ".config/ghostty";
     "btop".source = mkLink ".config/btop";
     "mise".source = mkLink ".config/mise";
     "karabiner".source = mkLink ".config/karabiner";

@@ -38,6 +38,7 @@
 
       # Terminal
       "wezterm@nightly"
+      "ghostty"
 
       # Browser
       "vivaldi"
