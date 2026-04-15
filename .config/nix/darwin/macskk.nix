@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   dictL = pkgs.skkDictionaries.l;
   dictProper = pkgs.skkDictionaries.propernoun;
   dictJinmei = pkgs.skkDictionaries.jinmei;
