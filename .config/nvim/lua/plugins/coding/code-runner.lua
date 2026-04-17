@@ -10,7 +10,8 @@ return {
 				java = {
 					"cd $dir &&",
 					"javac $fileName &&",
-					"java $fileNameWithoutExt",
+					"java $fileNameWithoutExt &&",
+					"rm $fileNameWithoutExt.class",
 				},
 				python = "python3 -u",
 				typescript = "bun run",
