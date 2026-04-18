@@ -1,0 +1,13 @@
+presets:
+  report:
+    name: Report
+    layout:
+      type: horizontal
+      ratio: [3, 2]
+      panes:
+        - name: editor
+          command: nvim
+          focus: true
+
+        - name: preview
+          command: tdf
