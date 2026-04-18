@@ -46,20 +46,29 @@
       # Input Method
       "macskk"
 
+      # Launcher
       "raycast"
+
+      # Communication
       "discord"
       "slack"
       "zoom"
+
       "karabiner-elements"
-      "affinity"
       "jordanbaird-ice"
       "obsidian"
       "parsec"
       "claude"
       "amical"
       "1password"
+
+      # IDE
+      "visual-studio-code"
+      # "intellij-idea"
     ];
 
+    # https://github.com/mas-cli/mas/issues/1221
+    # masでインストールができないのでコメントアウト
     masApps = {
       # "RunCat" = 1429033973;
       # "Microsoft Outlook" = 985367838;

@@ -4,6 +4,7 @@
     neovim
     fish
     oh-my-posh
+    tmux
 
     # Shell tools
     bat
