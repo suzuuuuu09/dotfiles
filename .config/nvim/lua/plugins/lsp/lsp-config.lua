@@ -15,19 +15,19 @@ local lsp_servers = {
 	"taplo",
 	"tailwindcss",
 	"typos_lsp",
+	"jdtls",
 	-- NOTE: typescript-tools.nvimを使うためコメントアウト
 	-- "ts_ls",
 }
 
 local null_ls_sources = {
 	"stylua",
-	"ruff",        -- python linter
+	"ruff", -- python linter
 	-- "black", -- python formatter
-	"cpplint",     -- c/c++ linter
+	"cpplint", -- c/c++ linter
 	"clang_format", -- c/c++ formatter
-	"prettier",    -- general formatter
-	"alejandra",   -- Nix formatter
-	"nixpkgs-fmt", -- Nix formatter
+	"prettier", -- general formatter
+	"alejandra", -- Nix formatter
 	"kulala-fmt",
 }
 
@@ -55,7 +55,9 @@ return {
 	{
 		"mason-org/mason.nvim",
 		event = "VeryLazy",
-		opts = {},
+		opts = {
+			PATH = "append",
+		},
 	},
 
 	-- LSP configuration
@@ -135,7 +137,7 @@ return {
 				if vim.lsp.config[server_name] then
 					-- すでに設定がある場合はマージ
 					vim.lsp.config[server_name].capabilities =
-							vim.tbl_deep_extend("force", vim.lsp.config[server_name].capabilities or {}, capabilities)
+						vim.tbl_deep_extend("force", vim.lsp.config[server_name].capabilities or {}, capabilities)
 				else
 					-- 新規に設定を作成
 					vim.lsp.config[server_name] = {

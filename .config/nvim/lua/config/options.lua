@@ -46,6 +46,7 @@ opt.foldlevelstart = 99
 opt.foldenable = true
 opt.winborder = "rounded"
 
+-- NOTE: LSP入れられないときはzshにしてみた方がいいかも
 vim.o.shell = "fish"
 vim.o.shellcmdflag = "-c"
 vim.o.shellredir = "> %s 2>&1"

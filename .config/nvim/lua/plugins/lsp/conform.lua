@@ -1,6 +1,6 @@
 local js_formatters = { "biome", "prettier", "prettierd", stop_after_first = true }
 local python_formatters = { "ruff_fix", "ruff_format", "ruff_organize_imports" }
-local nix_formatters = { "alejandra", "nixpkgs-fmt", "nixfmt" }
+local nix_formatters = { "alejandra", "nixfmt" }
 
 ---@module "lazy"
 ---@type LazyPluginSpec
@@ -23,6 +23,7 @@ return {
 			clang = { "clang_format" },
 			nix = nix_formatters,
 			rust = { "rustfmt" },
+			typst = { "typstyle" },
 		},
 		formatters = {
 			biome = {
