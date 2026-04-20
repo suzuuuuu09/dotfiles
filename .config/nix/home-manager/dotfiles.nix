@@ -8,6 +8,7 @@ in {
     # |                       ディレクトリ                       |
     # +----------------------------------------------------------+
     "aerospace".source = mkLink ".config/aerospace";
+    "borders".source = mkLink ".config/borders";
     "oh-my-posh".source = mkLink ".config/oh-my-posh";
     "nix".source = mkLink ".config/nix";
     "nvim".source = mkLink ".config/nvim";
