@@ -1,5 +1,5 @@
 ---
-name: fetch
+name: fetch-markdown
 description: >
   WebページのURLからコンテンツを取得し、HTMLをMarkdown形式に変換して処理するスキル。
   ユーザーがURLの内容を読みたい・要約したい・抽出したい場合、またはWebページのテキストを
