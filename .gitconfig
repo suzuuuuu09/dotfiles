@@ -28,6 +28,7 @@
 	
 [ghq]
 	root=~/Documents/ghq
+	user = suzuuuuu09
 [include]
 	path = ~/.config/lazygit/themes.gitconfig
 
