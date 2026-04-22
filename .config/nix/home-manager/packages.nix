@@ -13,13 +13,13 @@
     fzf
     ripgrep
     zoxide
-    tree
+    # tree
     wget
-    tlrc # tldr
+    # tlrc # tldr
     curlie # curl の代替
     ni # @antfu/ni
     direnv
-    hyperfine # ベンチマークツール
+    # hyperfine # ベンチマークツール
     gomi
     wakeonlan
 
@@ -30,15 +30,14 @@
     gh
 
     # Dev tools
-    docker
-    docker-compose
+    # docker
+    # docker-compose
     act # GitHub Actions をローカルで実行するツール
     vhs
+    just
     typescript # typescript-tools.nvimで必要
     # mise
-
-    # Python tools
-    uv
+    uv # Python
 
     # Surveillance tools
     bottom
