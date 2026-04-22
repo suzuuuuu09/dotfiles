@@ -1,6 +1,6 @@
 ---
 name: obsidian-agent-memory
-description: "Use when: メモを残したい、会話内容を記録したい、以前の内容を思い出したい、会話開始時に関連メモを先読みしたい、作業着手前に過去メモを参照したいとき。Triggers: 'メモリに保存して', '覚えておいて', 'この内容を記録して', 'ノートして', '以前のメモを読んで', '会話の最初にメモを確認して', 'remember this', 'save this', 'note this', 'what did we discuss about', 'check your notes', 'clean up memories'。Obsidian vaultのmemories配下に保存・整理・検索し、プロジェクト固有メモはprojects配下で管理する。"
+description: "Use this skill aggressively whenever the user asks to remember/save/recall prior context, asks to check notes before starting work, or gives durable decisions (方針・制約・次回やること) that should be stored. Trigger even if the user does not explicitly say 'メモ' when intent implies continuity across turns/sessions. Mandatory trigger moments: (1) conversation start with likely project context, (2) immediately before starting a new task, (3) right after meaningful outcomes/decisions/errors are produced. Keywords include: '覚えておいて', '記録して', 'メモして', '前回の内容', 'ノートを見て', 'remember this', 'save this', 'what did we discuss', 'check your notes'. Read from Obsidian memories first, then write back to memories/projects or category folders."
 ---
 
 # Obsidian Agent Memory
@@ -19,6 +19,51 @@ Obsidian vaultにメモを永続的に保存し、複数の会話にわたって
 - **プロジェクト関連**: `memories/projects/` 配下に保存
 - **その他**: `memories/` 直下に自動分類フォルダを作成
 
+## Trigger Policy（発火条件）
+
+以下に当てはまるときは、このスキルを使う:
+
+1. ユーザーが「保存・記録・覚えておいて」を明示したとき
+2. ユーザーが「以前の内容を参照してから進めて」と求めたとき
+3. 明示要求がなくても、将来再利用すべき決定事項（方針、制約、失敗原因、次回TODO）が出たとき
+4. 会話開始時にプロジェクト文脈があり、過去メモ参照が有効そうなとき
+5. 新しい実装/調査/デバッグタスクに着手する直前
+
+逆に、単発の雑談や一時的な情報で再利用価値が低い場合は保存を省略してよい。
+
+### Trigger Strength（強度）
+
+- **Strong Trigger（即時実行）**
+  - 「前回のメモを確認」「ノートを見てから」「覚えておいて」「記録して」
+  - 「今後もこの方針」「次回も同じ方針」「この制約で継続」
+  - 「実装に入る」「着手する」「進める」（既存プロジェクト文脈あり）
+- **Weak Trigger（文脈確認して実行）**
+  - 提案段階の文言（例: 「〜しようか」）で、方針確定が不明な場合
+  - 単発質問で再利用価値が低い場合
+
+Weak Triggerでも、再利用価値（次回に効く制約・方針・失敗知見）が高ければ保存する。
+
+### 再読の境界ルール
+
+- 同一タスクの継続でも、30分以上の中断後は再読を実行する
+- 中断が30分未満でも、要件変更・方針変更・担当変更があれば再読する
+
+「新規タスク」とみなす条件（いずれか1つで新規扱い）:
+
+1. ユーザーの目的が変わる（実装→調査、調査→修正 など）
+2. 成果物の種類が変わる（コード変更→設計提案、実装→運用手順）
+3. 対象スコープが変わる（別プロジェクト、別モジュール、別機能）
+4. ユーザーが明示的に切り替えを宣言する（「次は」「別件」「ここからは」）
+
+### 暗黙SAVEの判定基準（再利用価値）
+
+次のいずれかを含む場合は、メモ要求がなくても保存する:
+
+1. 継続方針（「今後この方針」「次回も同じ」）
+2. 制約条件（バージョン固定、禁止事項、運用ルール）
+3. 再発しうる失敗知見（原因と回避策）
+4. 次回TODOが明確な決定事項
+
 ## 実行フロー（先に読む）
 
 ### 1) 会話の最初に読む
@@ -29,6 +74,8 @@ Obsidian vaultにメモを永続的に保存し、複数の会話にわたって
 2. `memories/projects/{project-name}/` を最優先で確認する
 3. 該当が薄い場合は `reference/`, `learning/`, `troubleshooting/`, `architecture/`, `tools-commands/` を横断検索する
 4. 見つかったメモの summary と更新日を確認し、今回の作業に関係するものだけを短く要約して利用する
+
+ユーザーが「前回のメモを確認してから」と明示した場合は、他の作業より先に即時READを行う。
 
 ### 2) 何か作業を始める前に再確認する
 
@@ -50,7 +97,7 @@ Obsidian vaultにメモを永続的に保存し、複数の会話にわたって
 
 読んだメモを実際の成果に結びつけるため、以下を必ず回す:
 
-1. **Read**: 候補メモを3-10件集める
+1. **Read**: 候補メモを0-10件集める（0件でも可。0件時は「該当なし」を明示して続行）
 2. **Decide**: 各メモを関連度で評価する
   - 高: 今回のタスクに直接使える手順・制約・既知の落とし穴
   - 中: 補助的に使える設計方針・参考知識
@@ -58,15 +105,49 @@ Obsidian vaultにメモを永続的に保存し、複数の会話にわたって
 3. **Use**: 高関連メモを優先して実行計画と実装方針に反映する
 4. **Writeback**: 作業後に差分知見をメモへ追記し、次回の精度を上げる
 
-### 5) 応答への反映ルール
+### 5) 応答への反映ルール（必須）
 
 メモを読んだだけで終わらせないため、作業説明には次を含める:
 
 1. どのメモ方針を採用したか（1-3点）
-2. 採用しなかったメモの理由（必要な場合のみ）
+2. 検討したが採用しなかったメモと理由（1行ずつ、最低1件）
 3. 今回新たに得た知見をどこへ保存するか
+4. 次回着手時にどの順で再読するか（project→cross-category）
 
 ※ 詳細を毎回長文で出す必要はない。短く要点だけ反映すればよい。
+
+#### 応答テンプレート（固定）
+
+メモ活用を伴う応答では、以下の見出しをこの順序で含める:
+
+1. `採用したメモ`
+2. `採用しなかったメモ`
+3. `今回の実行計画`
+4. `保存先（Writeback）`
+5. `次回の再読順`
+
+実行計画では、各ステップの末尾に対応メモを `[source: <path>]` 形式で明記する。
+
+### 6) 競合時の意思決定ログ（必須）
+
+過去メモと現在要求が矛盾する場合は、保存メモ本文に次のログを残す:
+
+```md
+## Decision Log
+- Previous policy: <旧方針>
+- New policy: <新方針>
+- Why changed: <現在要求を優先した理由>
+- Effective from: <適用開始タイミング>
+- Related old memo: <旧メモパス>
+```
+
+### 7) 失敗時の再試行ルール
+
+読込失敗時は以下を適用する:
+
+1. 同一操作を最大1回だけ再試行する
+2. それでも失敗したら「どのパスの読込に失敗したか」を1行で共有して継続する
+3. 作業完了後、`troubleshooting/` か対象プロジェクト配下に失敗記録をWritebackする
 
 ### Vault構造の概要
 
@@ -129,7 +210,7 @@ Obsidian vaultにメモを永続的に保存し、複数の会話にわたって
 ```yaml
 ---
 summary: "このメモが何を含むかの簡潔な説明（1-2行）"
-created: 2025-01-15  # YYYY-MM-DD format
+created: 2025-01-15  # 必ず YYYY-MM-DD（ゼロ埋め）形式
 ---
 ```
 
