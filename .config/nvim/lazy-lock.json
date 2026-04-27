@@ -70,6 +70,7 @@
   "sidekick.nvim": { "branch": "main", "commit": "17447a05f9385e5f8372b61530f6f9329cb82421" },
   "smear-cursor.nvim": { "branch": "main", "commit": "9e9378d6ee34bb3782e0e8c63d9ec8ca618b479b" },
   "snacks.nvim": { "branch": "main", "commit": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e" },
+  "sonarqube.nvim": { "branch": "master", "commit": "811bf8f46e0aa5ed9c9b5783aaf6f87640df553a" },
   "tiny-code-action.nvim": { "branch": "main", "commit": "9f4b05c2f93f76a7bd517d9587ad0dc73cca0d0d" },
   "tiny-inline-diagnostic.nvim": { "branch": "main", "commit": "b3b91e086795c036ecfe70429b72b26bcb302c91" },
   "todo-comments.nvim": { "branch": "main", "commit": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668" },
