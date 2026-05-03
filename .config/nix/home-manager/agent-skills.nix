@@ -62,7 +62,8 @@
         "web-design-guidelines"
         "agent-browser"
         "find-docs"
-        "context7-mcp"
+        # "context7-mcp"
+        "context7-cli"
       ];
     };
 
