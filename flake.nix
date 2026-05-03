@@ -37,7 +37,7 @@
     agent-skills.url = "github:Kyure-A/agent-skills-nix";
 
     local-skills = {
-      url = "path:../../skills";
+      url = "path:./skills";
       flake = false;
     };
     vercel-skills = {
@@ -76,7 +76,7 @@
     isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
     localOverlays = [
       (final: prev: {
-        czg = prev.callPackage ./overlays/czg.nix {};
+        czg = prev.callPackage ./.config/nix/overlays/czg.nix {};
       })
     ];
   in {
@@ -84,7 +84,7 @@
       system = targetSystem;
       specialArgs = {inherit self inputs;};
       modules =
-        (nixpkgs.lib.optionals isDarwin [./darwin])
+        (nixpkgs.lib.optionals isDarwin [./.config/nix/darwin])
         ++ [
           nix-homebrew.darwinModules.nix-homebrew
           home-manager.darwinModules.home-manager
@@ -97,7 +97,7 @@
               useUserPackages = true;
               backupFileExtension = "backup";
               extraSpecialArgs = {inherit inputs;};
-              users.k25012kk = import ./home-manager;
+              users.k25012kk = import ./.config/nix/home-manager;
               sharedModules = [
                 inputs.sops-nix.homeManagerModules.sops
                 inputs.nix-index-database.hmModules.nix-index

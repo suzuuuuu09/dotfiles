@@ -31,11 +31,6 @@ abbr -a nvn "nvim $XDG_CONFIG_HOME/nvim"
 abbr -a co copilot
 abbr -a oc opencode
 
-# chezmoi
-abbr -a cm chezmoi
-abbr -a cma "chezmoi apply"
-abbr -a cmA "chezmoi add"
-
 abbr -a act "act --container-architecture linux/amd64"
 
 # @antfu/ni
@@ -48,8 +43,9 @@ abbr -a lg lazygit
 abbr -a yz yazi
 
 # Nix
-abbr -a nix-switch "sudo darwin-rebuild switch --flake ~/dotfiles/.config/nix#(scutil --get LocalHostName)"
-abbr -a nix-build "darwin-rebuild build --flake ~/dotfiles/.config/nix#(scutil --get LocalHostName)"
-abbr -a nix-check "darwin-rebuild check --flake ~/dotfiles/.config/nix#(scutil --get LocalHostName)"
+abbr -a nix-switch "sudo darwin-rebuild switch --flake ~/dotfiles#(scutil --get LocalHostName)"
+abbr -a nix-build "darwin-rebuild build --flake ~/dotfiles#(scutil --get LocalHostName)"
+abbr -a nix-check "darwin-rebuild check --flake ~/dotfiles#(scutil --get LocalHostName)"
 abbr -a nix-clean "nix-collect-garbage -d && nix-store --optimize"
 abbr -a nfu "nix flake update"
+# abbr -a , --position anywhere --set-cursor 'nix run nixpkgs#%'

@@ -232,11 +232,11 @@
     "local-skills": {
       "flake": false,
       "locked": {
-        "path": "../../skills",
+        "path": "./skills",
         "type": "path"
       },
       "original": {
-        "path": "../../skills",
+        "path": "./skills",
         "type": "path"
       },
       "parent": []
