@@ -9,6 +9,7 @@
     ./dotfiles.nix
     ./agent-skills.nix
     ./sops.nix
+    ./github-copilot.nix
   ];
 
   programs = {

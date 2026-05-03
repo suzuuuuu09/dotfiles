@@ -22,6 +22,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+    };
+
     # +----------------------------------------------------------+
     # | Agent Skills                                             |
     # +----------------------------------------------------------+
@@ -65,6 +74,11 @@
     # TODO: 将来的にはArchlinuxもサポートする予定
     targetSystem = "aarch64-darwin";
     isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
+    localOverlays = [
+      (final: prev: {
+        czg = prev.callPackage ./overlays/czg.nix {};
+      })
+    ];
   in {
     darwinConfigurations."suzuMac" = nix-darwin.lib.darwinSystem {
       system = targetSystem;
@@ -75,6 +89,9 @@
           nix-homebrew.darwinModules.nix-homebrew
           home-manager.darwinModules.home-manager
           {
+            nixpkgs.overlays = [
+              inputs.llm-agents.overlays.default
+            ] ++ localOverlays;
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
@@ -83,6 +100,7 @@
               users.k25012kk = import ./home-manager;
               sharedModules = [
                 inputs.sops-nix.homeManagerModules.sops
+                inputs.nix-index-database.hmModules.nix-index
               ];
             };
           }

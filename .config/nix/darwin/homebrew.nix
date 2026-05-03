@@ -57,14 +57,16 @@
       "karabiner-elements"
       "jordanbaird-ice"
       "obsidian"
-      "parsec"
+      # "parsec"
       "claude"
       "amical"
       "1password"
 
+      # "microsoft-powerpoint"
+
       # IDE
       "visual-studio-code"
-      # "intellij-idea"
+      "intellij-idea"
     ];
 
     # https://github.com/mas-cli/mas/issues/1221

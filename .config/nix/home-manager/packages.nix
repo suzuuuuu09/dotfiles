@@ -28,6 +28,7 @@
     lazygit
     ghq
     gh
+    czg
 
     # Dev tools
     # docker
@@ -66,5 +67,6 @@
 
     # GUI tools
     # obsidian
+    comma
   ];
 }
