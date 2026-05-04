@@ -18,11 +18,13 @@
 	"packageRules": [
 		{
 			"matchManagers": ["nix"],
-			"groupName": "nix flake inputs"
+			"groupName": "nix flake inputs",
+			"commitMessageSuffix": "(flake)"
 		},
 		{
 			"matchManagers": ["github-actions"],
-			"automerge": false
+			"automerge": false,
+			"commitMessageSuffix": "(actions)"
 		}
 	]
 }
