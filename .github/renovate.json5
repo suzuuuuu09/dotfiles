@@ -1,0 +1,18 @@
+{
+  "extends": ["config:recommended"],
+  "nix": { "enabled": true },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 5am on monday"]
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["nix"],
+      "groupName": "nix flake inputs"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "automerge": false
+    }
+  ]
+}
