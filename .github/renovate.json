@@ -5,6 +5,7 @@
 		"enabled": true
 	},
 	"minimumReleaseAge": "3 days",
+	"commitMessagePrefix": "📦 ",
 	"lockFileMaintenance": {
 		"enabled": true,
 		"schedule": ["every 3 days"]
