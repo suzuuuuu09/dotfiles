@@ -89,9 +89,11 @@
           nix-homebrew.darwinModules.nix-homebrew
           home-manager.darwinModules.home-manager
           {
-            nixpkgs.overlays = [
-              inputs.llm-agents.overlays.default
-            ] ++ localOverlays;
+            nixpkgs.overlays =
+              [
+                inputs.llm-agents.overlays.default
+              ]
+              ++ localOverlays;
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
@@ -100,11 +102,27 @@
               users.k25012kk = import ./.config/nix/home-manager;
               sharedModules = [
                 inputs.sops-nix.homeManagerModules.sops
-                inputs.nix-index-database.hmModules.nix-index
+                inputs.nix-index-database.homeModules.nix-index
               ];
             };
           }
         ];
     };
+  };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://suzuuuuu09.cachix.org" # ここを自分のキャッシュ URL に変更
+      "https://nix-community.cachix.org" # ついでに nix-community も追加
+    ];
+    extra-trusted-public-keys = [
+      "suzuuuuu09.cachix.org-1:+V6hB76qnQ1Ra3Lf9VZsQtszeZ9UyE39QvRHNtfYPXw="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+    trusted-users = [
+      "root"
+      "@wheel"
+      "@admin"
+    ];
   };
 }
