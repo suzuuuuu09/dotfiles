@@ -4,7 +4,6 @@ node = "latest"
 pnpm = "latest"
 
 "npm:@google/gemini-cli" = "latest"
-"npm:@github/copilot" = "latest"
 "npm:ctx7" = "latest"
 "npm:vde-layout" = "latest"
 "npm:agent-browser" = "latest"
