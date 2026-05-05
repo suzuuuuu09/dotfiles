@@ -6,6 +6,7 @@
 	},
 	"minimumReleaseAge": "3 days",
 	"commitMessagePrefix": "📦 ",
+	"automerge": true,
 	"lockFileMaintenance": {
 		"enabled": true,
 		"schedule": ["every 1 days"]
