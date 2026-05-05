@@ -1,6 +1,7 @@
 {config, ...}: let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
-  mkLink = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";
+  mkLink = path:
+    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";
 in {
   # ~/.config/ の直下に置くもの
   xdg.configFile = {
@@ -32,10 +33,12 @@ in {
     # +----------------------------------------------------------+
     # |                         ファイル                         |
     # +----------------------------------------------------------+
+    ".commitlintrc.cjs".source = mkLink ".commitlintrc.cjs";
     ".gitconfig".source = mkLink ".gitconfig";
     ".global.gitignore".source = mkLink ".global.gitignore";
     ".zshrc".source = mkLink ".zshrc";
     ".zshenv".source = mkLink ".zshenv";
     ".zprofile".source = mkLink ".zprofile";
+    ".npmrc".source = mkLink ".npmrc";
   };
 }
