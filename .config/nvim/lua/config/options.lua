@@ -11,6 +11,8 @@ opt.relativenumber = true -- 相対番号表示
 opt.cursorcolumn = true -- カーソルの列を強調
 opt.cursorline = true -- カーソルの行を強調
 opt.guifont = "UDEV Gothic 35NFLG Regular" -- フォント
+-- NOTE: 保存時にMarpのwatchモードで自動更新をするために必要
+opt.backupcopy = "yes" -- バックアップファイルを作成
 
 opt.wrap = false -- 折り返し無効
 opt.scrolloff = 5 -- スクロールオフセット
