@@ -8,7 +8,7 @@
 	"commitMessagePrefix": "📦 ",
 	"lockFileMaintenance": {
 		"enabled": true,
-		"schedule": ["at 5am"]
+		"schedule": ["every 1 days"]
 	},
 	"vulnerabilityAlerts": {
 		"enabled": true,
