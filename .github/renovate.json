@@ -4,7 +4,6 @@
 	"nix": {
 		"enabled": true
 	},
-	"minimumReleaseAge": "3 days",
 	"commitMessagePrefix": "📦 ",
 	"automerge": true,
 	"labels": ["dependencies", "renovate"],
