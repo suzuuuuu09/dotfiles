@@ -7,9 +7,11 @@
 	"minimumReleaseAge": "3 days",
 	"commitMessagePrefix": "📦 ",
 	"automerge": true,
+	"labels": ["dependencies", "renovate"],
+	"timezone": "Asia/Tokyo",
 	"lockFileMaintenance": {
 		"enabled": true,
-		"schedule": ["every 1 days"]
+		"schedule": ["before 6am"]
 	},
 	"vulnerabilityAlerts": {
 		"enabled": true,
