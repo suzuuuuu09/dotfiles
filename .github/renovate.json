@@ -6,12 +6,12 @@
 	},
 	"commitMessagePrefix": "📦 ",
 	"automerge": true,
-	"automergeSchedule": ["at any time"],
+	"automergeSchedule": ["* 4-6 * * *"],
 	"labels": ["dependencies", "renovate"],
 	"timezone": "Asia/Tokyo",
 	"lockFileMaintenance": {
 		"enabled": true,
-		"schedule": ["before 5am"]
+		"schedule": ["* 2-4 * * *"]
 	},
 	"vulnerabilityAlerts": {
 		"enabled": true,
