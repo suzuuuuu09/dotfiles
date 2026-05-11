@@ -6,7 +6,7 @@
 	},
 	"commitMessagePrefix": "📦 ",
 	"automerge": true,
-	"automergeSchedule": ["before 6am"],
+	"automergeSchedule": ["at any time"],
 	"labels": ["dependencies", "renovate"],
 	"timezone": "Asia/Tokyo",
 	"lockFileMaintenance": {
