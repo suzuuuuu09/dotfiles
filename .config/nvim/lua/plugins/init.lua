@@ -16,4 +16,5 @@ return {
 	{ import = "plugins.terminal" },
 	{ import = "plugins.window" },
 	{ import = "plugins.database" },
+	{ import = "plugins.markdown" },
 }
