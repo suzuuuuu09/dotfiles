@@ -1,0 +1,17 @@
+name: Renovate config linter
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/renovate-config-validator.yaml
+      - .github/renovate.json
+  pull_request:
+
+jobs:
+  renovate-validate:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v6
+      - uses: suzuki-shunsuke/github-action-renovate-config-validator@v2.1.0
