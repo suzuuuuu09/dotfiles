@@ -1,4 +1,4 @@
-name: Build
+name: 'CI: Nix Build'
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-macos:
     runs-on: macos-15
     steps:
       - name: Checkout
