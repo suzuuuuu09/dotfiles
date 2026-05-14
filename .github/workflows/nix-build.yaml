@@ -7,10 +7,12 @@ on:
     paths:
       - "**.nix"
       - "flake.lock"
+      - ".github/workflows/nix-build.yaml"
   pull_request:
     paths:
       - "**.nix"
       - "flake.lock"
+      - ".github/workflows/nix-build.yaml"
   workflow_dispatch:
 
 jobs:
