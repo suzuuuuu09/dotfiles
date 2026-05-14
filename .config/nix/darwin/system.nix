@@ -8,6 +8,12 @@
   environment.systemPackages = with pkgs; [
     git
   ];
+  # Homebrew API からのインストールを無効化
+  environment.variables.HOMEBREW_NO_INSTALL_FROM_API = "1";
+  # Homebrew の環境変数を設定して、API からのインストールを無効化
+  environment.etc."homebrew/brew.env".text = ''
+    HOMEBREW_NO_INSTALL_FROM_API=1
+  '';
 
   system.defaults = {
     # +----------------------------------------------------------+
