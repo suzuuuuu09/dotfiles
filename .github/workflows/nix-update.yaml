@@ -61,7 +61,7 @@ jobs:
         uses: actions/create-github-app-token@v2
         id: app-token
         with:
-          app-id: ${{ vars.RYOTA2357_PR_ACTION_APP_APP_ID }}
+          app-id: ${{ vars.SUZUUUUU09_UPDATER_APP_ID }}
           private-key: ${{ secrets.SUZUUUUU09_UPDATER_PRIVATE_KEY }}
 
       - name: Create Pull Request
