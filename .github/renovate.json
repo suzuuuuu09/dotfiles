@@ -7,12 +7,17 @@
 	},
 	"commitMessagePrefix": "📦 ",
 	"automerge": true,
-	"automergeSchedule": ["* 4-6 * * *"],
+	"automergeSchedule": [
+		"* 3-5 * * *",
+		"* 9-11 * * *",
+		"* 15-17 * * *",
+		"* 21-23 * * *"
+	],
 	"labels": ["dependencies", "renovate"],
 	"timezone": "Asia/Tokyo",
 	"lockFileMaintenance": {
 		"enabled": true,
-		"schedule": ["* 2-4 * * *"]
+		"schedule": ["* 0-2 * * *", "* 6-8 * * *", "* 12-14 * * *", "* 18-20 * * *"]
 	},
 	"vulnerabilityAlerts": {
 		"enabled": true,
