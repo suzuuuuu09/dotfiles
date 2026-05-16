@@ -5,6 +5,9 @@
 	"nix": {
 		"enabled": true
 	},
+	"github-actions": {
+		"enabled": true
+	},
 	"commitMessagePrefix": "📦 ",
 	"automerge": true,
 	"automergeSchedule": [
