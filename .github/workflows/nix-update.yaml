@@ -1,8 +1,8 @@
-name: Nix Update
+name: 'Bot: Update flake inputs'
 
 on:
   schedule:
-    # 3日ごとの15:00 UTC (日本時間 00:00)
+    # 元の設定（3日ごとの15:00 UTC / 日本時間 00:00）を維持
     - cron: "0 15 */3 * *"
   workflow_dispatch:
     inputs:
@@ -21,116 +21,19 @@ on:
         type: boolean
         default: false
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
-  # 1. アップデート対象の flake inputs を検出するジョブ
-  discover:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.discover.outputs.matrix }}
-      has-updates: ${{ steps.discover.outputs.has-updates }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Nix
-        uses: ./.github/actions/setup-nix
-        with:
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-          skipPush: true
-
-      - name: Discover flake inputs
-        id: discover
-        uses: ./.github/actions/discover-flake-inputs
-        with:
-          inputs: ${{ github.event.inputs.inputs || '' }}
-          exclude-inputs: |
-            llm-agents
-            nixpkgs-neovim
-          skip-delay-inputs: ''
-
-  # 2. 検出されたインプットごとに並列でアップデートとPR作成を行うジョブ
   update:
-    needs: discover
-    if: needs.discover.outputs.has-updates == 'true'
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
-    steps:
-      - name: Checkout repository (for local actions)
-        uses: actions/checkout@v4
-
-      - name: Create GitHub App Token
-        id: bot
-        uses: actions/create-github-app-token@v2
-        with:
-          app-id: ${{ vars.SUZUUUUU09_UPDATER_APP_ID }}
-          private-key: ${{ secrets.SUZUUUUU09_UPDATER_PRIVATE_KEY }}
-
-      - name: Checkout repository (with bot token)
-        uses: actions/checkout@v4
-        with:
-          token: ${{ steps.bot.outputs.token }}
-
-      - name: Setup Git User
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      - name: Setup Nix
-        uses: ./.github/actions/setup-nix
-        with:
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-          skipPush: true
-
-      - name: Update flake input
-        id: update
-        uses: ./.github/actions/update-flake-input
-        with:
-          input-name: ${{ matrix.name }}
-          current-version: ${{ matrix.current_version }}
-          owner: ${{ matrix.owner }}
-          repo: ${{ matrix.repo }}
-          ref: ${{ matrix.ref }}
-          skip-delay: ${{ (github.event.inputs.skip-delay == 'true') && 'true' || matrix.skip_delay }}
-          minimum-release-age-days: ${{ github.event.inputs.minimum-release-age-days || '3' }}
-          auto-merge: 'true'
-          pr-labels: 'dependencies,automated'
-          github-token: ${{ steps.bot.outputs.token }}
-
-  # 3. 実行結果のサマリーを書き出すジョブ
-  summary:
-    needs: [discover, update]
-    runs-on: ubuntu-latest
-    if: always() && needs.discover.outputs.has-updates == 'true'
-    steps:
-      - name: Generate summary
-        env:
-          SUMMARY_TITLE: 'Stable Update Summary'
-          INPUTS: ${{ github.event.inputs.inputs || '' }}
-          EXCLUDE_INPUTS: 'llm-agents nixpkgs-neovim'
-          MINIMUM_RELEASE_AGE_DAYS: ${{ github.event.inputs.minimum-release-age-days || '3' }}
-          AUTO_MERGE: 'true'
-          UPDATE_RESULT: ${{ needs.update.result }}
-        run: |
-          echo "## $SUMMARY_TITLE" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Configuration" >> $GITHUB_STEP_SUMMARY
-          if [ -n "$INPUTS" ]; then
-            echo "- Inputs: $INPUTS" >> $GITHUB_STEP_SUMMARY
-          fi
-          if [ -n "$EXCLUDE_INPUTS" ]; then
-            echo "- Excluded: $EXCLUDE_INPUTS" >> $GITHUB_STEP_SUMMARY
-          fi
-          echo "- Minimum release age: $MINIMUM_RELEASE_AGE_DAYS days" >> $GITHUB_STEP_SUMMARY
-          echo "- Auto-merge: $AUTO_MERGE" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-          if [ "$UPDATE_RESULT" = "failure" ]; then
-            echo ":warning: Some updates failed. Check individual job logs for details." >> $GITHUB_STEP_SUMMARY
-          else
-            echo ":white_check_mark: All update jobs completed." >> $GITHUB_STEP_SUMMARY
-          fi
+    uses: ./.github/workflows/_update-flake-reusable.yaml
+    with:
+      inputs: ${{ github.event.inputs.inputs || '' }}
+      # 頻繁に更新される等の理由で除外したいインプットがあればここに記述
+      exclude-inputs: >-
+        llm-agents
+        nixpkgs-neovim
+      minimum-release-age-days: ${{ github.event.inputs.minimum-release-age-days || '3' }}
+      skip-delay: ${{ github.event.inputs.skip-delay == 'true' }}
+      summary-title: 'Stable Update Summary'
+    secrets:
+      app-id: ${{ vars.SUZUUUUU09_UPDATER_APP_ID }}
+      private-key: ${{ secrets.SUZUUUUU09_UPDATER_PRIVATE_KEY }}
+      cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
