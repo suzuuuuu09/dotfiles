@@ -9,7 +9,7 @@
 	"automerge": true,
 	"automergeSchedule": [
 		"* 3-5 * * *",
-		"* 15-17 * * *",
+		"* 15-17 * * *"
 	],
 	"labels": ["dependencies", "renovate"],
 	"timezone": "Asia/Tokyo",
@@ -17,7 +17,7 @@
 		"enabled": true,
 		"schedule": [
 			"* 0-2 * * *",
-			"* 12-14 * * *",
+			"* 12-14 * * *"
 		]
 	},
 	"vulnerabilityAlerts": {
