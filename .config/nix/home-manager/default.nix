@@ -10,6 +10,7 @@
     ./agent-skills.nix
     ./sops.nix
     ./github-copilot.nix
+    ./programs/nh.nix
   ];
 
   programs = {
