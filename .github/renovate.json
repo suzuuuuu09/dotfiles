@@ -15,6 +15,7 @@
 	"timezone": "Asia/Tokyo",
 	"lockFileMaintenance": {
 		"enabled": true,
+		"recreateWhen": "always",
 		"schedule": ["* 0-2 * * *", "* 12-14 * * *"]
 	},
 	"vulnerabilityAlerts": {
