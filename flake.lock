@@ -129,11 +129,11 @@
     "context7-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1779288440,
-        "narHash": "sha256-V09vHmC7LvYZbVQ5aKGPI+lo4C2eHoi7N0IJ9JF+PXI=",
+        "lastModified": 1779346491,
+        "narHash": "sha256-VNl/8ZplT6agerzxZAMr5cdtGNceXwBmz5zucrxcU8Y=",
         "owner": "upstash",
         "repo": "context7",
-        "rev": "34fda7d9b834cb0362799012bb75155220fb3267",
+        "rev": "1ed71d7edcae915a0ce1e66594c40d748a9687f5",
         "type": "github"
       },
       "original": {
@@ -215,11 +215,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1779326625,
-        "narHash": "sha256-dN9pgfoVIclpoNHt3g6jim2ttzrDQY1vOd19M+8Z8J8=",
+        "lastModified": 1779341808,
+        "narHash": "sha256-RC3GaOxJ/fQtXTw+km1fPAGso09+Jn/LCfiESZ/fxy0=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "5f394d51138b43ec675f1ef4714c818efbb5b05d",
+        "rev": "339239b8e071b0294cc5b49b555d724761a68bf0",
         "type": "github"
       },
       "original": {
