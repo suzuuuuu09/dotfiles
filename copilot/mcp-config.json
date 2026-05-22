@@ -24,22 +24,6 @@
 			"source": "user",
 			"sourcePath": "~/.copilot/mcp-config.json"
 		},
-		"drawio": {
-			"tools": ["*"],
-			"type": "local",
-			"command": "bunx",
-			"args": ["@drawio/mcp@latest"],
-			"source": "user",
-			"sourcePath": "~/.copilot/mcp-config.json"
-		},
-		"nixos": {
-			"tools": ["*"],
-			"type": "local",
-			"command": "uvx",
-			"args": ["mcp-nixos"],
-			"source": "user",
-			"sourcePath": "~/.copilot/mcp-config.json"
-		},
 		"filesystem": {
 			"tools": ["*"],
 			"type": "local",
@@ -49,6 +33,17 @@
 				"@modelcontextprotocol/server-filesystem",
 				"~/Documents",
 				"~/dotfiles"
+			],
+			"source": "user",
+			"sourcePath": "~/.copilot/mcp-config.json"
+		},
+		"chrome-devtools": {
+			"tools": ["*"],
+			"type": "local",
+			"command": "npx",
+			"args": [
+				"-y",
+				"chrome-devtools-mcp@latest",
 			],
 			"source": "user",
 			"sourcePath": "~/.copilot/mcp-config.json"
