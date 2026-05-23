@@ -11,3 +11,6 @@ result
 # Yazi Plugins and themes
 .config/yazi/plugins/
 .config/yazi/flavors/
+
+# fish
+.config/fish/fish_variables
