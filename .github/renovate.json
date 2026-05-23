@@ -16,7 +16,7 @@
 	"lockFileMaintenance": {
 		"enabled": true,
 		"recreateWhen": "always",
-		"schedule": ["* 0-2 * * *", "* 12-14 * * *"]
+		"schedule": ["* 0-23 * * *"]
 	},
 	"vulnerabilityAlerts": {
 		"enabled": true,
