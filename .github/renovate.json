@@ -10,13 +10,13 @@
 	},
 	"commitMessagePrefix": "📦 ",
 	"automerge": true,
-	"automergeSchedule": ["* 3-5 * * *", "* 15-17 * * *"],
+	"automergeSchedule": ["* 0-23 * * *"],
 	"labels": ["dependencies", "renovate"],
 	"timezone": "Asia/Tokyo",
 	"lockFileMaintenance": {
 		"enabled": true,
 		"recreateWhen": "always",
-		"schedule": ["* 0-23 * * *"]
+		"schedule": ["* 0-2 * * *", "* 12-14 * * *"]
 	},
 	"vulnerabilityAlerts": {
 		"enabled": true,
