@@ -1,83 +1,83 @@
-# メモの操作：保存・検索・管理
+# Note Operations: Saving, Searching, and Managing
 
-このドキュメントでは、メモの保存、検索、管理、トラブルシューティングの方法について説明します。
+This document explains how to save, search, manage, and troubleshoot your notes.
 
-## 目次
+## Table of Contents
 
-1. [メモの保存](#メモの保存)
-2. [メモの検索](#メモの検索)
-3. [メモの管理](#メモの管理)
-4. [トラブルシューティング](#トラブルシューティング)
+1. [Saving Notes](#saving-notes)
+2. [Searching Notes](#searching-notes)
+3. [Managing Notes](#managing-notes)
+4. [Troubleshooting](#troubleshooting)
 
-## メモの保存
+## Saving Notes
 
-### 基本的な流れ
+### Basic Workflow
 
-1. **メモの種類を判定**
-   - プロジェクト固有？ → `memories/projects/{project-name}/`
-   - 複数プロジェクトで再利用可能？ → 汎用フォルダに保存
+1. **Determine the type of note**
+   - Project-specific? → `memories/projects/{project-name}/`
+   - Reusable across multiple projects? → Save to a general-purpose folder
 
-2. **汎用メモの場合、カテゴリを選ぶ**
-   - 技術的発見 → `learning/`
-   - 解決方法 → `reference/`
-   - 反復される問題 → `troubleshooting/`
-   - 設計パターン → `architecture/`
-   - コマンド・スクリプト → `tools-commands/`
-   - 不明 → `inbox/` (後で分類)
-   - **新しいカテゴリが必要？** 自由に作成してください
+2. **For general notes, choose a category**
+   - Technical findings → `learning/`
+   - Solutions → `reference/`
+   - Recurring issues → `troubleshooting/`
+   - Design patterns → `architecture/`
+   - Commands/Scripts → `tools-commands/`
+   - Unknown → `inbox/` (sort later)
+   - **Need a new category?** Feel free to create one.
 
-3. **ファイルを作成**
+3. **Create the file**
 
 ```bash
-# 汎用リファレンスの例（既存カテゴリ）
+# Example of a general reference (existing category)
 mkdir -p ~/Documents/Vault/memories/reference/
 cat > ~/Documents/Vault/memories/reference/cors-error-fix.md << 'EOF'
 ---
-summary: "CORS エラーの解決方法と設定ガイド"
+summary: "CORS error resolution and configuration guide"
 created: 2025-01-15
 tags: [cors, http, troubleshooting]
 ---
 
-# CORS エラーの解決方法
+# CORS Error Resolution
 
-## 問題
-リクエストが CORS エラーで失敗する...
+## Problem
+Request fails with a CORS error...
 EOF
 
-# 汎用リファレンスの例（新規カテゴリ作成）
+# Example of a general reference (creating a new category)
 mkdir -p ~/Documents/Vault/memories/reference/nix-darwin/
 cat > ~/Documents/Vault/memories/reference/nix-darwin/home-manager-setup.md << 'EOF'
 ---
-summary: "home-manager による dotfiles 管理とシステム設定"
+summary: "Dotfiles management and system configuration with home-manager"
 created: 2025-01-15
 tags: [nix, darwin, configuration]
 ---
 
 # home-manager Setup Guide
 
-home-managerを使用した設定管理...
+Configuration management using home-manager...
 EOF
 
-# 学習メモの例
+# Example of a learning note
 mkdir -p ~/Documents/Vault/memories/learning/
 cat > ~/Documents/Vault/memories/learning/nodejs-eventloop.md << 'EOF'
 ---
-summary: "Node.js イベントループ: microtasks vs macrotasks"
+summary: "Node.js Event Loop: microtasks vs macrotasks"
 created: 2025-01-15
 status: resolved
 tags: [nodejs, eventloop, javascript]
 ---
 
-# Node.js イベントループ
+# Node.js Event Loop
 
-Microtasks (Promises) は macrotasks (setTimeout) より先に実行される...
+Microtasks (Promises) are executed before macrotasks (setTimeout)...
 EOF
 
-# プロジェクト固有メモの例（基本構造）
+# Example of a project-specific note (basic structure)
 mkdir -p ~/Documents/Vault/memories/projects/my-app/
 cat > ~/Documents/Vault/memories/projects/my-app/authentication-setup.md << 'EOF'
 ---
-summary: "my-app の OAuth2 + JWT 認証実装"
+summary: "OAuth2 + JWT authentication implementation for my-app"
 created: 2025-01-15
 status: in-progress
 tags: [auth, my-app]
@@ -85,135 +85,135 @@ tags: [auth, my-app]
 
 # Authentication Setup for my-app
 
-このプロジェクト特有の認証実装について...
+About the authentication implementation specific to this project...
 EOF
 
-# プロジェクト固有メモの例（サブカテゴリ）
+# Example of a project-specific note (sub-category)
 mkdir -p ~/Documents/Vault/memories/projects/my-app/frontend/react/
 cat > ~/Documents/Vault/memories/projects/my-app/frontend/react/component-patterns.md << 'EOF'
 ---
-summary: "my-app の React コンポーネント設計パターン"
+summary: "React component design patterns for my-app"
 created: 2025-01-15
 tags: [react, components, my-app]
 ---
 
 # React Component Patterns for my-app
 
-このプロジェクトで使用するコンポーネント設計...
+Component design used in this project...
 EOF
 
-# tools-commands の例（新規カテゴリ）
+# Example of tools-commands (new category)
 mkdir -p ~/Documents/Vault/memories/tools-commands/nix/
 cat > ~/Documents/Vault/memories/tools-commands/nix/flake-commands.md << 'EOF'
 ---
-summary: "Nix flake よく使うコマンド集"
+summary: "Commonly used Nix flake commands"
 created: 2025-01-15
 tags: [nix, flake, cli]
 ---
 
 # Nix Flake Commands Cheatsheet
 
-フレーク開発に必要なコマンド...
+Commands necessary for flake development...
 EOF
 ```
 
-### ファイル命名規則
+### File Naming Conventions
 
-- kebab-caseを使用: `my-feature-name.md`
-- わかりやすく、内容を反映させる
-- 日付は必要ない（frontmatterに記録）
+- Use kebab-case: `my-feature-name.md`
+- Make it clear and descriptive of the content
+- No need for dates (recorded in frontmatter)
 
-## メモの検索
+## Searching Notes
 
-### Obsidian内での検索
+### Searching within Obsidian
 
-Obsidianの検索機能を使用:
+Use Obsidian's built-in search features:
 
-1. **Quick Open** (`Cmd/Ctrl+P`): ファイル名で検索
-2. **Global Search** (`Cmd/Ctrl+Shift+F`): 全文検索
-3. **Link suggestions**: `[[` で関連ファイルを発見
+1. **Quick Open** (`Cmd/Ctrl+P`): Search by file name
+2. **Global Search** (`Cmd/Ctrl+Shift+F`): Full-text search
+3. **Link suggestions**: Discover related files using `[[`
 
-### コマンドラインでの検索
+### Searching via Command Line
 
-ユーザーが手動で検索する場合用（参考）:
+For manual searching (reference):
 
 ```bash
-# summaryフィールドを確認
+# Check the summary field
 grep -r "^summary:" ~/Documents/Vault/memories/ | head -20
 
-# キーワードで検索
+# Search by keyword
 grep -r "keyword" ~/Documents/Vault/memories/ -i
 
-# 特定のタグを検索
+# Search for specific tags
 grep -r "tags:.*keyword" ~/Documents/Vault/memories/ -i
 
-# 特定のカテゴリ内で検索
+# Search within a specific category
 grep -r "keyword" ~/Documents/Vault/memories/reference/nix-darwin/ -i
 ```
 
-## メモの管理
+## Managing Notes
 
-### 更新
+### Updating
 
-情報が変更されたら、内容を更新し、frontmatterに`updated`フィールドを追加:
+When information changes, update the content and add an `updated` field to the frontmatter:
 
 ```yaml
 ---
-summary: "更新されたサマリー"
+summary: "Updated summary"
 created: 2025-01-15
 updated: 2025-01-20
 status: resolved
 ---
 ```
 
-### 削除
+### Deleting
 
-不要になったメモは削除。空のフォルダもクリーンアップ。
+Delete notes that are no longer needed. Clean up empty folders as well.
 
-### 統合
+### Merging
 
-同じトピックの関連メモは、必要に応じて統合:
+Merge related notes on the same topic as necessary:
 
 ```bash
-# ファイルを統合したら、古いファイルは削除
+# After merging files, delete the old file
 rm ~/Documents/Vault/memories/category/old-file.md
 ```
 
-### 再整理
+### Reorganizing
 
-知識ベースが成長したら、メモを更に良いカテゴリに移動:
+As your knowledge base grows, move notes into better categories:
 
 ```bash
-# 例1: inboxから適切なカテゴリへ
+# Example 1: From inbox to an appropriate category
 mv ~/Documents/Vault/memories/inbox/note.md \
    ~/Documents/Vault/memories/reference/note.md
 
-# 例2: 新しいサブカテゴリを作成して移動
+# Example 2: Create a new sub-category and move files
 mkdir -p ~/Documents/Vault/memories/reference/react-hooks/
 mv ~/Documents/Vault/memories/reference/hooks-*.md \
    ~/Documents/Vault/memories/reference/react-hooks/
 ```
 
-## トラブルシューティング
+## Troubleshooting
 
-### Vaultにアクセスできない
+### Cannot access Vault
 
 ```bash
-# パスを確認
+# Check the path
 ls -la ~/Documents/Vault/
 
-# メモリフォルダを作成
+# Create memory folders
 mkdir -p ~/Documents/Vault/memories/{projects,reference,learning,troubleshooting,architecture,tools-commands,inbox}
 ```
 
-### ファイル名の競合
+### File name conflicts
 
-既存ファイルを上書きしないよう、ユーザーに確認してから保存。
+To avoid overwriting existing files, confirm with the user before saving.
 
-### メモが見つからない
+### Cannot find notes
 
-Obsidian内の検索を使用、またはタグで分類されているかを確認。特定のサブカテゴリにあるか確認してください。
+Use the search function within Obsidian or check if they are categorized by tags. Please verify if they are located in a specific subcategory.
 
-### フォルダ構造が複雑になってきた
+### Folder structure has become complex
 
-定期的に知識ベースを見直し、さらに細かく分割するか、統合するかを検討してください。必要に応じて新しいサブカテゴリを作成することで、整理を保つことができます。
+Periodically review your knowledge base and consider whether to split it into smaller parts or merge them. You can maintain organization by creating new subcategories as needed.

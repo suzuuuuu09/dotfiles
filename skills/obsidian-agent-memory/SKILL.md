@@ -1,220 +1,220 @@
 ---
 name: obsidian-agent-memory
-description: "Use this skill aggressively whenever the user asks to remember/save/recall prior context, asks to check notes before starting work, or gives durable decisions (方針・制約・次回やること) that should be stored. Trigger even if the user does not explicitly say 'メモ' when intent implies continuity across turns/sessions. Mandatory trigger moments: (1) conversation start with likely project context, (2) immediately before starting a new task, (3) right after meaningful outcomes/decisions/errors are produced. Keywords include: '覚えておいて', '記録して', 'メモして', '前回の内容', 'ノートを見て', 'remember this', 'save this', 'what did we discuss', 'check your notes'. Read from Obsidian memories first, then write back to memories/projects or category folders."
+description: "Use this skill aggressively whenever the user asks to remember/save/recall prior context, asks to check notes before starting work, or provides durable decisions (policies, constraints, next steps) that should be stored. Trigger even if the user does not explicitly say 'memo' when the intent implies continuity across turns or sessions. Mandatory trigger moments: (1) conversation start with relevant project context, (2) immediately before starting a new task, (3) right after meaningful outcomes, decisions, or errors are produced. Keywords include: 'remember this', 'record this', 'save this', 'check previous context', 'look at my notes', 'what did we discuss'. Always read from Obsidian memories first, then write back to memory or project-specific folders."
 ---
 
 # Obsidian Agent Memory
 
-Obsidian vaultにメモを永続的に保存し、複数の会話にわたって知識を保持できるスキル。
+A skill for persisting notes in an Obsidian vault to maintain knowledge across multiple conversations.
 
 **Vault Location:** `~/Documents/Vault/`
 **Memory Folder:** `memories/`
 
-## 概要
+## Overview
 
-このスキルを使用して、メモの保存・整理・検索を行います。
+Use this skill to save, organize, and retrieve notes. 
 
-このスキルが有効なときは、保存だけでなく「最初に読む」ことを優先します。
+When this skill is active, prioritize "reading first" before performing tasks.
 
-- **プロジェクト関連**: `memories/projects/` 配下に保存
-- **その他**: `memories/` 直下に自動分類フォルダを作成
+- **Project-related:** Save under `memories/projects/`
+- **Others:** Create auto-categorized folders directly under `memories/`
 
-## Trigger Policy（発火条件）
+## Trigger Policy
 
-以下に当てはまるときは、このスキルを使う:
+Use this skill under the following conditions:
 
-1. ユーザーが「保存・記録・覚えておいて」を明示したとき
-2. ユーザーが「以前の内容を参照してから進めて」と求めたとき
-3. 明示要求がなくても、将来再利用すべき決定事項（方針、制約、失敗原因、次回TODO）が出たとき
-4. 会話開始時にプロジェクト文脈があり、過去メモ参照が有効そうなとき
-5. 新しい実装/調査/デバッグタスクに着手する直前
+1. The user explicitly requests to "save," "record," or "remember."
+2. The user requests to "check previous content" before proceeding.
+3. Durable decisions that should be reused in the future are made, even without an explicit request (e.g., policies, constraints, causes of failure, next TODOs).
+4. Conversation starts with existing project context where prior notes are relevant.
+5. Immediately before starting a new implementation, research, or debugging task.
 
-逆に、単発の雑談や一時的な情報で再利用価値が低い場合は保存を省略してよい。
+Conversely, you may skip saving for casual conversation or transient information with low reuse value.
 
-### Trigger Strength（強度）
+### Trigger Strength
 
-- **Strong Trigger（即時実行）**
-  - 「前回のメモを確認」「ノートを見てから」「覚えておいて」「記録して」
-  - 「今後もこの方針」「次回も同じ方針」「この制約で継続」
-  - 「実装に入る」「着手する」「進める」（既存プロジェクト文脈あり）
-- **Weak Trigger（文脈確認して実行）**
-  - 提案段階の文言（例: 「〜しようか」）で、方針確定が不明な場合
-  - 単発質問で再利用価値が低い場合
+- **Strong Trigger (Immediate Execution):**
+  - Phrases like "check previous notes," "look at notes first," "remember this," "record this."
+  - Statements like "use this policy from now on," "continue with this constraint."
+  - Intent to "start implementing," "begin a task," or "proceed" (when project context exists).
+- **Weak Trigger (Evaluate Context First):**
+  - Suggestions (e.g., "Shall we try...?") where the policy is not yet confirmed.
+  - Single-turn questions with low reuse value.
 
-Weak Triggerでも、再利用価値（次回に効く制約・方針・失敗知見）が高ければ保存する。
+*Note: Even with a weak trigger, save if the reuse value (future constraints, policies, or troubleshooting insights) is high.*
 
-### 再読の境界ルール
+### Re-reading Boundary Rules
 
-- 同一タスクの継続でも、30分以上の中断後は再読を実行する
-- 中断が30分未満でも、要件変更・方針変更・担当変更があれば再読する
+- Re-read after 30 minutes of inactivity, even if the task is the same.
+- Re-read if requirements, policies, or personnel change, even if inactivity is less than 30 minutes.
 
-「新規タスク」とみなす条件（いずれか1つで新規扱い）:
+Conditions for a "New Task" (any one of the following):
 
-1. ユーザーの目的が変わる（実装→調査、調査→修正 など）
-2. 成果物の種類が変わる（コード変更→設計提案、実装→運用手順）
-3. 対象スコープが変わる（別プロジェクト、別モジュール、別機能）
-4. ユーザーが明示的に切り替えを宣言する（「次は」「別件」「ここからは」）
+1. User purpose changes (e.g., implementation to research, research to fix).
+2. Output type changes (e.g., code change to design proposal, implementation to operational procedure).
+3. Scope changes (e.g., different project, module, or feature).
+4. User explicitly declares a switch (e.g., "next," "on another note," "from here on").
 
-### 暗黙SAVEの判定基準（再利用価値）
+### Implicit SAVE Criteria (Reuse Value)
 
-次のいずれかを含む場合は、メモ要求がなくても保存する:
+Save without an explicit request if the content includes:
 
-1. 継続方針（「今後この方針」「次回も同じ」）
-2. 制約条件（バージョン固定、禁止事項、運用ルール）
-3. 再発しうる失敗知見（原因と回避策）
-4. 次回TODOが明確な決定事項
+1. Continuity policies ("use this from now on," "same as next time").
+2. Constraints (version pinning, prohibited actions, operational rules).
+3. Reoccurring failure insights (causes and workarounds).
+4. Clear decisions for future TODOs.
 
-## 実行フロー（先に読む）
+## Execution Flow (Read First)
 
-### 1) 会話の最初に読む
+### 1) Reading at the Start of a Conversation
 
-会話開始時は、まず関連メモを検索・読込してから通常作業に入る:
+Before beginning work, retrieve and read relevant notes:
 
-1. 現在のリポジトリ名・技術スタック・ユーザー依頼の要点を抽出する
-2. `memories/projects/{project-name}/` を最優先で確認する
-3. 該当が薄い場合は `reference/`, `learning/`, `troubleshooting/`, `architecture/`, `tools-commands/` を横断検索する
-4. 見つかったメモの summary と更新日を確認し、今回の作業に関係するものだけを短く要約して利用する
+1. Extract the current repository name, tech stack, and user request summary.
+2. Check `memories/projects/{project-name}/` as the highest priority.
+3. If irrelevant, search across `reference/`, `learning/`, `troubleshooting/`, `architecture/`, and `tools-commands/`.
+4. Review summaries and update dates; synthesize only what is relevant to the current task.
 
-ユーザーが「前回のメモを確認してから」と明示した場合は、他の作業より先に即時READを行う。
+If the user explicitly asks to "check previous notes first," perform READ immediately before any other work.
 
-### 2) 何か作業を始める前に再確認する
+### 2) Re-checking Before Starting Tasks
 
-新しいタスクに着手する直前は、直近で関係しそうなメモを再読する:
+Re-read relevant notes immediately before starting a new task:
 
-1. タスク種別を判定する（実装・調査・デバッグ・設計・運用）
-2. 対応するカテゴリを優先読込する
-  - 実装/調査: `reference/`, `learning/`
-  - デバッグ: `troubleshooting/`
-  - 設計: `architecture/`
-  - コマンド操作: `tools-commands/`
-3. 過去メモと今回の要求が矛盾する場合は、古いメモより現在の要求を優先し、必要なら更新メモを残す
+1. Identify the task type (implementation, research, debug, design, operations).
+2. Prioritize reading relevant categories:
+  - Impl/Research: `reference/`, `learning/`
+  - Debug: `troubleshooting/`
+  - Design: `architecture/`
+  - Command execution: `tools-commands/`
+3. If past notes conflict with current requirements, prioritize the current request and update the note if necessary.
 
-### 3) 読めなかった場合のフォールバック
+### 3) Fallback
 
-アクセス不可・該当なしの場合はその旨を短く共有し、メモなしで作業を進める。作業後に新規メモを作って次回の先読み精度を上げる。
+If access is denied or no relevant notes exist, state this briefly and proceed without memory. Create a new note after the task to improve future retrieval accuracy.
 
-### 4) 活用ループ（Read -> Decide -> Use -> Writeback）
+### 4) Utilization Loop (Read -> Decide -> Use -> Writeback)
 
-読んだメモを実際の成果に結びつけるため、以下を必ず回す:
+To turn notes into actual output, always follow this loop:
 
-1. **Read**: 候補メモを0-10件集める（0件でも可。0件時は「該当なし」を明示して続行）
-2. **Decide**: 各メモを関連度で評価する
-  - 高: 今回のタスクに直接使える手順・制約・既知の落とし穴
-  - 中: 補助的に使える設計方針・参考知識
-  - 低: 今回は使わない背景情報
-3. **Use**: 高関連メモを優先して実行計画と実装方針に反映する
-4. **Writeback**: 作業後に差分知見をメモへ追記し、次回の精度を上げる
+1. **Read:** Gather 0–10 candidate notes (if 0, state "no matching notes" and proceed).
+2. **Decide:** Rate notes by relevance:
+  - High: Directly applicable procedures, constraints, or known pitfalls.
+  - Medium: Supplemental design policies or reference knowledge.
+  - Low: Background info not used this time.
+3. **Use:** Prioritize high-relevance notes for execution plans and implementation.
+4. **Writeback:** Add new insights/diffs to notes after work to improve future accuracy.
 
-### 5) 応答への反映ルール（必須）
+### 5) Response Reflection Rules (Mandatory)
 
-メモを読んだだけで終わらせないため、作業説明には次を含める:
+To ensure memory is put to use, include the following in your response:
 
-1. どのメモ方針を採用したか（1-3点）
-2. 検討したが採用しなかったメモと理由（1行ずつ、最低1件）
-3. 今回新たに得た知見をどこへ保存するか
-4. 次回着手時にどの順で再読するか（project→cross-category）
+1. Which memory policies were adopted (1–3 points).
+2. Notes considered but not adopted, and why (one line each, at least one).
+3. Where the new insights will be saved (Writeback location).
+4. Re-reading order for the next session (project → cross-category).
 
-※ 詳細を毎回長文で出す必要はない。短く要点だけ反映すればよい。
+*Note: Detailed long-form explanations are not required; keep it brief and focused.*
 
-#### 応答テンプレート（固定）
+#### Response Template (Fixed)
 
-メモ活用を伴う応答では、以下の見出しをこの順序で含める:
+In responses involving memory utilization, include these headers in this order:
 
-1. `採用したメモ`
-2. `採用しなかったメモ`
-3. `今回の実行計画`
-4. `保存先（Writeback）`
-5. `次回の再読順`
+1. `Adopted Notes`
+2. `Non-Adopted Notes`
+3. `Execution Plan`
+4. `Writeback Destination`
+5. `Next Re-reading Order`
 
-実行計画では、各ステップの末尾に対応メモを `[source: <path>]` 形式で明記する。
+In the Execution Plan, note the source at the end of each step as `[source: <path>]`.
 
-### 6) 競合時の意思決定ログ（必須）
+### 6) Decision Log for Conflicts (Required)
 
-過去メモと現在要求が矛盾する場合は、保存メモ本文に次のログを残す:
+If past notes and current requirements contradict each other, leave the following log in the body of the saved note:
 
 ```md
 ## Decision Log
-- Previous policy: <旧方針>
-- New policy: <新方針>
-- Why changed: <現在要求を優先した理由>
-- Effective from: <適用開始タイミング>
-- Related old memo: <旧メモパス>
+- Previous policy: <Old Policy>
+- New policy: <New Policy>
+- Why changed: <Reason for prioritizing the current requirement>
+- Effective from: <Date/Time when the change takes effect>
+- Related old memo: <Path to the old memo>
 ```
 
-### 7) 失敗時の再試行ルール
+### 7) Retry Rules for Failures
 
-読込失敗時は以下を適用する:
+In case of a read failure, apply the following:
 
-1. 同一操作を最大1回だけ再試行する
-2. それでも失敗したら「どのパスの読込に失敗したか」を1行で共有して継続する
-3. 作業完了後、`troubleshooting/` か対象プロジェクト配下に失敗記録をWritebackする
+1. Retry the same operation at most once.
+2. If it still fails, share which path failed to load in a single line and continue.
+3. Once the task is complete, write back the failure record to `troubleshooting/` or under the target project directory.
 
-### Vault構造の概要
+### Overview of Vault Structure
 
 ```
 ~/Documents/Vault/
 ├── memories/
-│   ├── projects/              # プロジェクト固有のメモ（各プロジェクトに独立）
-│   ├── reference/             # 汎用リファレンス・解決策（全プロジェクトで再利用）
-│   ├── learning/              # 学習・発見・パターン（複数プロジェクトに応用可能）
-│   ├── troubleshooting/       # トラブルシューティング（共通の問題解決）
-│   ├── architecture/          # アーキテクチャ・設計パターン（再利用可能）
-│   ├── tools-commands/        # ツール・コマンド・スニペット集
-│   └── inbox/                 # 未整理のメモ（後で汎用フォルダに分類）
-└── (その他のvault内容)
+│   ├── projects/              # Project-specific notes (independent for each project)
+│   ├── reference/             # General references and solutions (reusable across all projects)
+│   ├── learning/              # Learning, discoveries, and patterns (applicable to multiple projects)
+│   ├── troubleshooting/       # Troubleshooting (common problem solving)
+│   ├── architecture/          # Architecture and design patterns (reusable)
+│   ├── tools-commands/        # Collection of tools, commands, and snippets
+│   └── inbox/                 # Unorganized notes (to be categorized into general folders later)
+└── (Other vault content)
 ```
 
-詳細なVault構造とフォルダの使い分けについては、`references/vault-structure.md` を参照してください。
+For details on the Vault structure and folder usage, please refer to `references/vault-structure.md`.
 
-## 積極的な使用
+## Active Usage
 
-### 汎用メモを保存する場合（プロジェクトを超えて再利用）
+### Saving General Notes (Reusable across projects)
 
-以下の場合、各カテゴリに自動的にメモを保存:
+Automatically save notes in each category in the following cases:
 
-- **Learning**: 技術的な発見、パターン、ベストプラクティス
-  - イベントループの仕組み、パフォーマンス最適化パターンなど
-- **Reference**: 解決策、手順、ハウツー
-  - エラー解決方法、API設定方法、設定ガイドなど
-  - **新規カテゴリも自由に作成**: react/, nix-darwin/, typescript/ など
-- **Troubleshooting**: 繰り返し出現する問題と解決方法
-  - メモリリーク診断、タイムアウト対応など
-- **Architecture**: 再利用可能な設計パターン
-  - マイクロサービスパターン、キャッシング戦略など
-- **Tools-Commands**: よく使うコマンド、スクリプト、設定
-  - Docker コマンド、Git ワークフロー、CLI設定など
-  - **新規ツールカテゴリも自由に作成**: docker/, nix/, jq/ など
+- **Learning**: Technical discoveries, patterns, best practices
+  - Event loop mechanisms, performance optimization patterns, etc.
+- **Reference**: Solutions, procedures, how-tos
+  - Error resolution methods, API configuration, setup guides, etc.
+  - **Feel free to create new categories**: react/, nix-darwin/, typescript/, etc.
+- **Troubleshooting**: Recurring problems and solutions
+  - Memory leak diagnosis, timeout handling, etc.
+- **Architecture**: Reusable design patterns
+  - Microservice patterns, caching strategies, etc.
+- **Tools-Commands**: Frequently used commands, scripts, and settings
+  - Docker commands, Git workflows, CLI settings, etc.
+  - **Feel free to create new tool categories**: docker/, nix/, jq/, etc.
 
-### プロジェクト固有のメモを保存する場合
+### Saving Project-Specific Notes
 
-- プロジェクト特有の仕様、実装ノート、設定
-- 特定プロジェクトでのみ使用される情報
-- → `memories/projects/{project-name}/` に保存
-- **必要に応じてサブカテゴリを作成**: typescript/, database/, frontend/react/ など
+- Project-specific specifications, implementation notes, and settings.
+- Information used only in a specific project.
+- → Save in `memories/projects/{project-name}/`
+- **Create subcategories as needed**: typescript/, database/, frontend/react/, etc.
 
-### メモを検索・参照する場合
+### Searching and Referencing Notes
 
-関連する汎用メモを確認:
+Check relevant general notes:
 
-- 新しい技術を学習するとき → `learning/` を確認
-- エラーが出たとき → `troubleshooting/` を確認
-- 実装方法を知りたいとき → `reference/` を確認
-- アーキテクチャを設計するとき → `architecture/` を確認
-- コマンドを忘れたとき → `tools-commands/` を確認
-- 特定の技術スタック（React, Nix, TypeScriptなど）について → 対応するサブカテゴリを確認
+- When learning new technology → Check `learning/`
+- When an error occurs → Check `troubleshooting/`
+- When you want to know how to implement something → Check `reference/`
+- When designing architecture → Check `architecture/`
+- When you forget a command → Check `tools-commands/`
+- For a specific technology stack (React, Nix, TypeScript, etc.) → Check the corresponding subcategory
 
-## ファイル形式
+## File Format
 
-すべてのメモには、Markdownフロントマター（YAML）が必須：
+All notes must include Markdown frontmatter (YAML):
 
 ```yaml
 ---
-summary: "このメモが何を含むかの簡潔な説明（1-2行）"
-created: 2025-01-15  # 必ず YYYY-MM-DD（ゼロ埋め）形式
+summary: "A brief description of what this note contains (1-2 lines)"
+created: 2025-01-15  # Use YYYY-MM-DD format (zero-padded)
 ---
 ```
 
-オプションフィールド:
+Optional fields:
 
 ```yaml
 ---
@@ -227,53 +227,53 @@ related: [src/core/file/fileProcessor.ts]
 ---
 ```
 
-## メモの操作
+## Note Operations
 
-### 保存
-メモの保存方法、ファイル命名規則、カテゴリ選択について、詳しくは `references/operations.md` の「メモの保存」セクションを参照してください。
+### Saving
+For details on how to save notes, file naming conventions, and category selection, see the "Saving Notes" section in `references/operations.md`.
 
-### 検索
-Obsidian内での検索方法やコマンドラインでの検索方法については、`references/operations.md` の「メモの検索」セクションを参照してください。
+### Searching
+For how to search within Obsidian or from the command line, see the "Searching Notes" section in `references/operations.md`.
 
-### 管理
-メモの更新、削除、統合、再整理の方法については、`references/operations.md` の「メモの管理」セクションを参照してください。
+### Management
+For how to update, delete, merge, and reorganize notes, see the "Managing Notes" section in `references/operations.md`.
 
-## 具体例
+## Concrete Examples
 
-様々なタイプのメモの具体例については、`references/examples.md` を参照してください:
-- プロジェクトメモ（基本・階層構造）
-- 学習メモ
-- リファレンスメモ（既存・新規カテゴリ）
-- tools-commands メモ
-- ワークフロー例
+For specific examples of various types of notes, refer to `references/examples.md`:
+- Project notes (basics and hierarchy)
+- Learning notes
+- Reference notes (existing and new categories)
+- tools-commands notes
+- Workflow examples
 
-## ガイドライン
+## Guidelines
 
-1. **自己完結的に書く**: 以前の知識がなくても理解できるように、完全な文脈を含める
-2. **summaryを決定的に**: summaryを読むだけで、詳細を読む必要があるかわかるように
-3. **最新に保つ**: 古い情報は更新または削除
-4. **実用的に**: 実際に有用なものだけを保存。すべてを保存する必要はない
-5. **積極的に拡張**: 新しいカテゴリが必要と感じたら、遠慮なく作成
-6. **意思決定に使う**: メモは記録用ではなく、次のタスクの判断材料として使う
-7. **作業後に還元する**: 新しい失敗例・成功例・手順差分は必ず書き戻す
+1. **Write self-contained notes**: Include complete context so it can be understood without prior knowledge.
+2. **Make the summary decisive**: Ensure one can tell if they need to read the details just by reading the summary.
+3. **Keep it up-to-date**: Update or delete old information.
+4. **Be practical**: Only save what is actually useful. You do not need to save everything.
+5. **Expand actively**: Do not hesitate to create new categories if you feel they are necessary.
+6. **Use for decision-making**: Use notes not just as records, but as material for deciding on the next task.
+7. **Feed back after work**: Always write back new failure examples, success examples, and procedure changes.
 
-## メモの内容
+## Content of Notes
 
-詳細なメモを書くときは、以下を検討:
+When writing detailed notes, consider including:
 
-- **Context**: 目標、背景、制約
-- **State**: 何が終わったか、進行中か、ブロックされているか
-- **Details**: キーとなるファイル、コマンド、コードスニペット
-- **Next steps**: 次にすることは？未解決の質問は？
+- **Context**: Goals, background, constraints
+- **State**: What is finished, in progress, or blocked
+- **Details**: Key files, commands, and code snippets
+- **Next steps**: What to do next? Any unresolved questions?
 
-すべてのメモが全セクションを必要とするわけではない。関連するものだけを使用してください。
+Not all notes require every section. Use only what is relevant.
 
-## トラブルシューティング
+## Troubleshooting
 
-基本的なトラブルシューティングについては、`references/operations.md` の「トラブルシューティング」セクションを参照してください。
+For basic troubleshooting, see the "Troubleshooting" section in `references/operations.md`.
 
-## 参考資料
+## Reference Materials
 
-- **Vault構造の詳細**: `references/vault-structure.md` - フォルダ構造、柔軟性、各フォルダの役割
-- **具体例集**: `references/examples.md` - 様々なタイプのメモの実例
-- **操作ガイド**: `references/operations.md` - 保存、検索、管理、トラブルシューティング
+- **Vault structure details**: `references/vault-structure.md` - folder structure, flexibility, and the role of each folder
+- **Examples collection**: `references/examples.md` - real-world examples of various note types
+- **Operations guide**: `references/operations.md` - saving, searching, management, and troubleshooting

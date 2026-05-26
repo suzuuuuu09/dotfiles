@@ -1,13 +1,13 @@
-# Vault構造の詳細
+# Details of the Vault Structure
 
-このドキュメントでは、Obsidian Vaultのフォルダ構造、柔軟性、および各フォルダの役割について詳しく説明します。
+This document provides a detailed explanation of the Obsidian Vault's folder structure, its flexibility, and the role of each folder.
 
-## 完全なVault構造
+## Full Vault Structure
 
 ```
 ~/Documents/Vault/
 ├── memories/
-│   ├── projects/              # プロジェクト固有のメモ（各プロジェクトに独立）
+│   ├── projects/              # Project-specific notes (independent for each project)
 │   │   ├── project-a/
 │   │   │   ├── typescript/
 │   │   │   ├── database/
@@ -16,39 +16,39 @@
 │   │   ├── project-b/
 │   │   └── project-c/
 │   │
-│   ├── reference/             # 汎用リファレンス・解決策（全プロジェクトで再利用）
+│   ├── reference/             # General references/solutions (reusable across all projects)
 │   │   ├── nix-darwin/
 │   │   ├── react/
 │   │   ├── typescript/
 │   │   ├── database/
 │   │   └── ...
-│   ├── learning/              # 学習・発見・パターン（複数プロジェクトに応用可能）
+│   ├── learning/              # Learning, discoveries, and patterns (applicable to multiple projects)
 │   │   ├── nodejs/
 │   │   ├── performance/
 │   │   └── ...
-│   ├── troubleshooting/       # トラブルシューティング（共通の問題解決）
-│   ├── architecture/          # アーキテクチャ・設計パターン（再利用可能）
-│   ├── tools-commands/        # ツール・コマンド・スニペット集
+│   ├── troubleshooting/       # Troubleshooting (common problem-solving)
+│   ├── architecture/          # Architecture and design patterns (reusable)
+│   ├── tools-commands/        # Collection of tools, commands, and snippets
 │   │   ├── docker/
 │   │   ├── git/
 │   │   ├── nix/
 │   │   └── ...
-│   └── inbox/                 # 未整理のメモ（後で汎用フォルダに分類）
-└── (その他のvault内容)
+│   └── inbox/                 # Unorganized notes (to be categorized into general folders later)
+└── (other vault content)
 ```
 
-## 📌 重要：フォルダ構造の柔軟性
+## 📌 Important: Flexibility of the Folder Structure
 
-このVaultの構造は**固定的ではありません**。必要に応じて、以下のような細分化や拡張を自由に行ってください。
+The structure of this Vault is **not fixed**. Feel free to break things down or expand as necessary, as shown below.
 
-### 基本原則
+### Basic Principles
 
-- ✅ **サブカテゴリフォルダを積極的に作成してください**
-- ✅ **深さに制限はありません** → `reference/frontend/react/hooks/` のような階層化も可
-- ✅ **不要なフォルダは削除・整理して OK**
-- ✅ **成長に合わせて構造を変更することを推奨します**
+- ✅ **Feel free to create subcategory folders**
+- ✅ **No depth limits** → Hierarchies like `reference/frontend/react/hooks/` are perfectly fine
+- ✅ **It is OK to delete or reorganize unnecessary folders**
+- ✅ **We recommend modifying the structure as you grow**
 
-### プロジェクト内での階層化
+### Hierarchization Within Projects
 
 ```
 projects/my-app/
@@ -74,9 +74,9 @@ projects/my-app/
         └── database-layer.md
 ```
 
-**ポイント**: 階層の深さは自由。プロジェクトの複雑さに応じて増やしたり減らしたりできます。
+**Note**: You can choose the depth of the hierarchy. You can increase or decrease it based on the project's complexity.
 
-### 汎用カテゴリの拡張
+### Expanding General Categories
 
 ```
 reference/
@@ -104,9 +104,9 @@ reference/
     └── indexing-strategies.md
 ```
 
-**ポイント**: 関連テーマをサブフォルダにグループ化することで、整理がしやすくなります。
+**Note**: Grouping related themes into subfolders makes them easier to organize.
 
-### learning フォルダの拡張例
+### Example of `learning` Folder Expansion
 
 ```
 learning/
@@ -125,7 +125,7 @@ learning/
     └── event-driven-design.md
 ```
 
-### tools-commands の細分化
+### Breaking Down `tools-commands`
 
 ```
 tools-commands/
@@ -150,80 +150,81 @@ tools-commands/
     └── shell-keybindings.md
 ```
 
-**ポイント**: ツールごとにサブフォルダを作成することで、関連コマンドを一箇所に集約できます。
+**Note**: By creating a subfolder for each tool, you can aggregate related commands in one place.
 
-## フォルダの説明
+## Folder Descriptions
 
-### `projects/` - プロジェクト固有
+### `projects/` - Project-Specific
 
-- **用途**: 特定のプロジェクトにのみ関連する情報
-- **例**: プロジェクトAの仕様書、実装ノート、プロジェクト固有の設定
-- **基本構造**: `projects/{project-name}/{topic}.md`
-- **拡張構造**: 必要に応じてサブカテゴリを自由に作成
+- **Purpose**: Information relevant only to a specific project.
+- **Examples**: Project A specifications, implementation notes, project-specific settings.
+- **Basic Structure**: `projects/{project-name}/{topic}.md`
+- **Expanded Structure**: Feel free to create subcategories as needed.
   - `projects/my-app/typescript/type-definitions.md`
   - `projects/my-app/database/schema-design.md`
   - `projects/my-app/frontend/react/component-patterns.md`
   - `projects/my-app/backend/api/authentication-flow.md`
-- **寿命**: プロジェクト終了後、アーカイブまたは削除可能
+- **Lifecycle**: Can be archived or deleted after the project is completed.
 
-### `reference/` - 汎用リファレンス
+### `reference/` - General References
 
-- **用途**: 複数プロジェクトで参照可能な解決策・方法論
-- **基本例**: 
-  - CORS エラーの解決方法
-  - API authentication パターン
-  - Database migration 手順
-- **拡張例**（自由に作成可能）:
-  - `reference/nix-darwin/` - NixOS/darwin設定ガイド
-  - `reference/react/` - React パターンと最適化
-  - `reference/typescript/` - TypeScript 高度な型テクニック
-- **特徴**: プロジェクトに依存しない一般的な知識
-- **拡張**: 技術スタックに応じてサブカテゴリを自由に追加
+- **Purpose**: Solutions and methodologies that can be referenced across multiple projects.
+- **Basic Examples**:
+  - How to resolve CORS errors
+  - API authentication patterns
+  - Database migration procedures
+- **Extended Examples** (can be created as needed):
+  - `reference/nix-darwin/` - NixOS/darwin configuration guide
+  - `reference/react/` - React patterns and optimizations
+  - `reference/typescript/` - Advanced TypeScript type techniques
+- **Characteristics**: General knowledge that is independent of specific projects.
+- **Expansion**: Feel free to add subcategories according to your technology stack.
 
-### `learning/` - 学習・発見・パターン
+### `learning/` - Learning, Discoveries, and Patterns
 
-- **用途**: 技術的発見、パターン、ベストプラクティス
-- **例**:
-  - Node.js イベントループの仕組み
-  - React レンダリング最適化パターン
-  - TypeScript 型推論のコツ
-- **拡張例**:
-  - `learning/nodejs/` - Node.jsの深掘り学習
-  - `learning/performance/` - パフォーマンス最適化パターン
-  - `learning/security/` - セキュリティベストプラクティス
-- **特徴**: 複数プロジェクトに応用可能な知識
+- **Purpose**: Technical discoveries, patterns, and best practices.
+- **Examples**:
+  - How the Node.js event loop works
+  - React rendering optimization patterns
+  - TypeScript type inference tips
+- **Extended Examples**:
+  - `learning/nodejs/` - In-depth Node.js learning
+  - `learning/performance/` - Performance optimization patterns
+  - `learning/security/` - Security best practices
+- **Characteristics**: Knowledge applicable to multiple projects.
 
-### `troubleshooting/` - 共通問題解決
+### `troubleshooting/` - Common Problem Solving
 
-- **用途**: 繰り返し出現する問題とその解決方法
-- **例**:
-  - メモリリーク診断方法
-  - ネットワークタイムアウト対応
-  - ビルドエラー解決ガイド
+- **Purpose**: Recurring issues and their solutions.
+- **Examples**:
+  - Memory leak diagnostic methods
+  - Dealing with network timeouts
+  - Build error resolution guide
 
-### `architecture/` - 設計パターン・図面
+### `architecture/` - Design Patterns and Diagrams
 
-- **用途**: 再利用可能なアーキテクチャ設計
-- **例**:
-  - マイクロサービスパターン
-  - キャッシング戦略
-  - スケーリング方法論
+- **Purpose**: Reusable architectural designs.
+- **Examples**:
+  - Microservices patterns
+  - Caching strategies
+  - Scaling methodologies
 
-### `tools-commands/` - ツール・コマンド集
+### `tools-commands/` - Tools and Command Collection
 
-- **用途**: よく使うコマンド、スクリプト、ツール設定
-- **基本例**:
-  - Docker コマンドチートシート
-  - Git ワークフロー
-  - CLI ツール設定
-  - useful one-liners
-- **拡張例**（自由に作成可能）:
-  - `tools-commands/docker/` - Dockerコマンド集
-  - `tools-commands/nix/` - Nixコマンド集とflakeの例
-  - `tools-commands/git/` - Gitワークフロー詳解
-  - `tools-commands/jq/` - jqレシピ集
+- **Purpose**: Frequently used commands, scripts, and tool configurations.
+- **Basic Examples**:
+  - Docker command cheat sheet
+  - Git workflows
+  - CLI tool configurations
+  - Useful one-liners
+- **Extended Examples** (can be created as needed):
+  - `tools-commands/docker/` - Docker command collection
+  - `tools-commands/nix/` - Nix command collection and flake examples
+  - `tools-commands/git/` - Detailed Git workflows
+  - `tools-commands/jq/` - jq recipe collection
 
-### `inbox/` - 未整理
+### `inbox/` - Unorganized
 
-- **用途**: 一時的に保存されるメモ
-- **プロセス**: 定期的に適切なカテゴリに移動
+- **Purpose**: Notes saved temporarily.
+- **Process**: Move to the appropriate category periodically.
+

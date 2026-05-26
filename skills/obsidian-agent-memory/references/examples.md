@@ -1,20 +1,20 @@
-# メモの具体例とワークフロー
+# Note Examples and Workflow
 
-このドキュメントでは、様々なタイプのメモの具体例とワークフローを示します。
+This document provides examples and workflows for various types of notes.
 
-## 目次
+## Table of Contents
 
-1. [プロジェクトメモ（基本）](#プロジェクトメモ基本)
-2. [プロジェクトメモ（階層構造）](#プロジェクトメモ階層構造)
-3. [学習メモ](#学習メモ)
-4. [リファレンスメモ（既存カテゴリ）](#リファレンスメモ既存カテゴリ)
-5. [リファレンスメモ（新規カテゴリ）](#リファレンスメモ新規カテゴリ)
-6. [tools-commands メモ（新規カテゴリ）](#tools-commandsメモ新規カテゴリ)
-7. [ワークフロー](#ワークフロー)
+1. [Project Note (Basic)](#project-note-basic)
+2. [Project Note (Hierarchical Structure)](#project-note-hierarchical-structure)
+3. [Learning Note](#learning-note)
+4. [Reference Note (Existing Category)](#reference-note-existing-category)
+5. [Reference Note (New Category)](#reference-note-new-category)
+6. [tools-commands Note (New Category)](#tools-commands-note-new-category)
+7. [Workflow](#workflow)
 
-## プロジェクトメモ（基本）
+## Project Note (Basic)
 
-**場所**: `memories/projects/project-x/authentication-setup.md`
+**Location**: `memories/projects/project-x/authentication-setup.md`
 
 ```markdown
 ---
@@ -52,13 +52,13 @@ Project X requires secure authentication with external service integration.
 - Write integration tests
 ```
 
-## プロジェクトメモ（階層構造）
+## Project Note (Hierarchical Structure)
 
-**場所**: `memories/projects/my-app/frontend/react/component-patterns.md`
+**Location**: `memories/projects/my-app/frontend/react/component-patterns.md`
 
 ```markdown
 ---
-summary: "my-app フロントエンド: React コンポーネント設計方針"
+summary: "my-app frontend: React component design guidelines"
 created: 2025-01-15
 status: in-progress
 tags: [react, components, frontend, my-app]
@@ -66,26 +66,26 @@ tags: [react, components, frontend, my-app]
 
 # React Component Architecture for my-app
 
-## 設計原則
-- Presentational / Container パターン
-- Custom hooks による状態管理
-- Props Drilling を避ける
+## Design Principles
+- Presentational / Container pattern
+- State management via custom hooks
+- Avoiding props drilling
 
-## コンポーネント構成
+## Component Structure
 ```
 src/components/
-├── common/       # 再利用可能な UI コンポーネント
-├── pages/        # ページレベルのコンポーネント
-└── features/     # 機能別グループ
+├── common/       # Reusable UI components
+├── pages/        # Page-level components
+└── features/     # Feature-based groupings
 ```
 
-## 例
-[実装例...]
+## Example
+[Implementation example...]
 ```
 
-## 学習メモ
+## Learning Note
 
-**場所**: `memories/learning/nodejs/event-loop.md`
+**Location**: `memories/learning/nodejs/event-loop.md`
 
 ```markdown
 ---
@@ -115,9 +115,9 @@ setTimeout(() => console.log('macrotask'), 0);
 ```
 ```
 
-## リファレンスメモ（既存カテゴリ）
+## Reference Note (Existing Category)
 
-**場所**: `memories/reference/cors-error-fix.md`
+**Location**: `memories/reference/cors-error-fix.md`
 
 ```markdown
 ---
@@ -147,13 +147,13 @@ Access-Control-Allow-Headers: Content-Type, Authorization
 Always check CORS headers in API responses before assuming client-side issue.
 ```
 
-## リファレンスメモ（新規カテゴリ）
+## Reference Note (New Category)
 
-**場所**: `memories/reference/nix-darwin/home-manager-setup.md`
+**Location**: `memories/reference/nix-darwin/home-manager-setup.md`
 
 ```markdown
 ---
-summary: "Nix darwin 環境: home-manager による完全な dotfiles 管理"
+summary: "Nix darwin environment: complete dotfiles management with home-manager"
 created: 2025-01-15
 updated: 2025-01-20
 status: resolved
@@ -162,105 +162,105 @@ tags: [nix, darwin, configuration, home-manager]
 
 # home-manager Setup on macOS
 
-## 前提
+## Prerequisites
 - Nix is installed
-- macOS with Apple Silicon または Intel
+- macOS with Apple Silicon or Intel
 
-## インストール
-[インストール手順...]
+## Installation
+[Installation steps...]
 
-## 設定ファイル構成
+## Configuration File Structure
 ```
 flake.nix
 ├── inputs: home-manager
 └── outputs: homeConfigurations
 ```
 
-## よくある設定
-- Zsh / Fish シェル設定
-- Tmux / Neovim 設定
-- 開発環境（Node, Python, Rust など）
+## Common Configurations
+- Zsh / Fish shell configuration
+- Tmux / Neovim configuration
+- Development environment (Node, Python, Rust, etc.)
 
-## 実装例
-[実装例...]
+## Implementation Example
+[Implementation example...]
 
 ## Tips
-- Generational rollback が可能
-- 複数マシンで共有可能
+- Generational rollback is possible
+- Shareable across multiple machines
 ```
 
-## tools-commandsメモ（新規カテゴリ）
+## tools-commands Memo (New Category)
 
-**場所**: `memories/tools-commands/nix/flake-commands.md`
+**Location**: `memories/tools-commands/nix/flake-commands.md`
 
 ```markdown
 ---
-summary: "Nix flake よく使うコマンド集"
+summary: "Commonly used Nix flake commands"
 created: 2025-01-15
 tags: [nix, flake, cli, commands]
 ---
 
 # Nix Flake Commands Cheatsheet
 
-## 環境構築
+## Environment Setup
 ```bash
-nix flake init                    # テンプレートから初期化
-nix flake show                    # フレーク内容を表示
-nix develop                       # 開発環境に入る
-nix develop .#<name>             # 特定の開発環境に入る
+nix flake init                    # Initialize from a template
+nix flake show                    # Display flake contents
+nix develop                       # Enter development environment
+nix develop .#<name>             # Enter a specific development environment
 ```
 
-## ビルド・実行
+## Build & Run
 ```bash
-nix build                         # デフォルトパッケージをビルド
-nix build .#<name>               # 特定パッケージをビルド
-nix run                           # デフォルトアプリを実行
-nix run .#<name>                 # 特定アプリを実行
+nix build                         # Build default package
+nix build .#<name>               # Build a specific package
+nix run                           # Run default app
+nix run .#<name>                 # Run a specific app
 ```
 
-## 更新・ロック
+## Update & Lock
 ```bash
-nix flake update                  # flake.lock を更新
-nix flake update <input>          # 特定入力を更新
+nix flake update                  # Update flake.lock
+nix flake update <input>          # Update a specific input
 ```
 
-## デバッグ
+## Debugging
 ```bash
-nix flake prefetch <url>          # URL をプリフェッチ
-nix eval                          # Nix 式を評価
+nix flake prefetch <url>          # Prefetch a URL
+nix eval                          # Evaluate Nix expressions
 ```
 ```
 
-## ワークフロー
+## Workflow
 
-### 汎用メモを保存するとき
+### Saving General Memos
 
-1. ユーザーが有用な発見や解決方法を共有、または見つける
-2. **メモの種類を判定**: プロジェクト固有か、複数プロジェクトで再利用可能か
-3. 適切なカテゴリ（learning, reference, troubleshooting, architecture, tools-commands）を選ぶ
-4. **新しいカテゴリが必要か判定**: 技術スタック固有の知識？ → サブカテゴリを作成（例：reference/react/, tools-commands/nix/）
-5. summaryと内容を書く
-6. ユーザーに確認: 保存されたファイルのパスを表示
+1. User shares or finds useful discoveries or solutions.
+2. **Determine memo type**: Project-specific or reusable across multiple projects?
+3. Select the appropriate category (learning, reference, troubleshooting, architecture, tools-commands).
+4. **Determine if a new category is needed**: Is it knowledge specific to a tech stack? → Create a subcategory (e.g., reference/react/, tools-commands/nix/).
+5. Write the summary and content.
+6. User confirmation: Display the path of the saved file.
 
-### プロジェクト固有メモを保存するとき
+### Saving Project-Specific Memos
 
-1. ユーザーがプロジェクト特有の情報を提供
-2. `memories/projects/{project-name}/` に分類
-3. **必要に応じてサブカテゴリを作成**: typescript/, database/, frontend/react/ など
-4. ファイルを作成
-5. ユーザーに確認: 保存されたファイルのパスを表示
+1. User provides information specific to a project.
+2. Classify under `memories/projects/{project-name}/`.
+3. **Create subcategories as needed**: typescript/, database/, frontend/react/, etc.
+4. Create the file.
+5. User confirmation: Display the path of the saved file.
 
-### メモを検索するとき
+### Searching Memos
 
-1. ユーザーが「以前のメモを確認して」と言う、または関連メモが必要
-2. Obsidian 内の検索結果を参照（キーワードやタグで検索）
-3. 関連するメモを読んで提供
-4. 必要に応じて、新しい情報で更新を提案
+1. User says "Check previous memos" or relevant memos are needed.
+2. Refer to search results within Obsidian (search by keyword or tag).
+3. Read and provide relevant memos.
+4. Propose updates with new information if necessary.
 
-### メモを整理するとき
+### Organizing Memos
 
-1. 定期的に `memories/inbox/` をチェック
-2. 未整理のメモを適切なカテゴリに移動
-3. 古い情報は削除または更新
-4. カテゴリが複雑になった場合、さらに細かく分割（例：reference/ → reference/react/hooks/, reference/react/performance/）
-5. プロジェクト終了時に `memories/projects/{project-name}` を整理（アーカイブまたは削除）
+1. Regularly check `memories/inbox/`.
+2. Move unorganized memos to the appropriate category.
+3. Delete or update outdated information.
+4. If categories become too complex, further subdivide (e.g., reference/ → reference/react/hooks/, reference/react/performance/).
+5. Organize `memories/projects/{project-name}` upon project completion (archive or delete).
