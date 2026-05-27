@@ -47,7 +47,7 @@ return {
 							"cd " .. project_dir .. " &&",
 							"mkdir -p build &&",
 							"cd build &&",
-							"cmake . -DCMAKE_BUILD_TYPE=Debug > /dev/null &&",
+							"cmake .. -DCMAKE_BUILD_TYPE=Debug > /dev/null &&",
 							"cmake --build ./ &&",
 							"cd .. &&",
 							"./build/" .. vim.fn.expand("%:t:r"),
