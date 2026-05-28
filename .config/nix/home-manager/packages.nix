@@ -39,6 +39,7 @@
     typescript # typescript-tools.nvimで必要
     # mise
     uv # Python
+    cx
 
     # Surveillance tools
     bottom
