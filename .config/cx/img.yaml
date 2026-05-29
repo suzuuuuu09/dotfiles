@@ -1,0 +1,63 @@
+name: "Image Processing Template"
+description: "Template for university image processing class."
+variables:
+  - project_name
+post_hook: |
+  cd {{ project_name }}
+  mkdir -p build
+  pwd
+  cd build
+  pwd
+  cmake ..
+items:
+  - type: "directory"
+    name: "{{ project_name }}"
+    items:
+    - type: "file"
+      name: "CMakeLists.txt"
+      content: |
+        cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+
+        set (CMAKE_CXX_STANDARD 11)
+        project({{ project_name }})
+
+        find_package(OpenCV 4.11.0 REQUIRED)
+
+        include_directories(${OpenCV_INCLUDE_DIRS})
+        file(GLOB SOURCES *.cpp)
+
+        add_executable ({{ project_name }} ${SOURCES})
+        target_link_libraries ({{ project_name }}
+            PRIVATE ${OpenCV_LIBS}
+        )
+    - type: "file"
+      name: "{{ project_name }}.cpp"
+      content: |
+        #include <stdio.h>
+        #include <opencv2/opencv.hpp>
+
+        // 画像ファイル
+        #define FILE_NAME "./apple.jpg"
+
+        // ウィンドウ名
+        #define WINDOW_NAME_INPUT "input"
+        #define WINDOW_NAME_OUTPUT "output"
+
+        int main(int argc, const char *argv[]) {
+          cv::Mat src_img = cv::imread(FILE_NAME, cv::IMREAD_COLOR);
+
+          if (src_img.empty()) {
+            fprintf(stderr, "File is not opened.\n");
+            return -1;
+          }
+
+          cv::Mat dst_img;
+          dst_img = src_img.clone();
+
+          cv::imshow(WINDOW_NAME_INPUT, src_img);
+          cv::imshow(WINDOW_NAME_OUTPUT, dst_img);
+
+          cv::waitKey(0);
+          return 0;
+        }
+
