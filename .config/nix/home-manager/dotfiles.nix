@@ -11,6 +11,7 @@ in {
     "aerospace".source = mkLink ".config/aerospace";
     "bat".source = mkLink ".config/bat";
     "borders".source = mkLink ".config/borders";
+    "cx".source = mkLink ".config/cx";
     "oh-my-posh".source = mkLink ".config/oh-my-posh";
     "nix".source = mkLink ".config/nix";
     "nvim".source = mkLink ".config/nvim";
