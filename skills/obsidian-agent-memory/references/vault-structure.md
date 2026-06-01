@@ -9,29 +9,20 @@ This document provides a detailed explanation of the Obsidian Vault's folder str
 ├── memories/
 │   ├── projects/              # Project-specific notes (independent for each project)
 │   │   ├── project-a/
-│   │   │   ├── typescript/
-│   │   │   ├── database/
-│   │   │   ├── deployment/
+│   │   │   ├── {typescript,database,deployment}/
 │   │   │   └── ...
-│   │   ├── project-b/
-│   │   └── project-c/
+│   │   └── {project-b,project-c}/
 │   │
 │   ├── reference/             # General references/solutions (reusable across all projects)
-│   │   ├── nix-darwin/
-│   │   ├── react/
-│   │   ├── typescript/
-│   │   ├── database/
+│   │   ├── {nix-darwin,react,typescript,database}/
 │   │   └── ...
 │   ├── learning/              # Learning, discoveries, and patterns (applicable to multiple projects)
-│   │   ├── nodejs/
-│   │   ├── performance/
+│   │   ├── {nodejs,performance}/
 │   │   └── ...
 │   ├── troubleshooting/       # Troubleshooting (common problem-solving)
 │   ├── architecture/          # Architecture and design patterns (reusable)
 │   ├── tools-commands/        # Collection of tools, commands, and snippets
-│   │   ├── docker/
-│   │   ├── git/
-│   │   ├── nix/
+│   │   ├── {docker,git,nix}/
 │   │   └── ...
 │   └── inbox/                 # Unorganized notes (to be categorized into general folders later)
 └── (other vault content)
@@ -52,26 +43,13 @@ The structure of this Vault is **not fixed**. Feel free to break things down or 
 
 ```
 projects/my-app/
-├── typescript/
-│   ├── type-definitions.md
-│   └── generic-patterns.md
-├── database/
-│   ├── schema-design.md
-│   └── migrations.md
-├── deployment/
-│   ├── docker-setup.md
-│   └── ci-cd-pipeline.md
-├── frontend/
-│   └── react/
-│       ├── component-architecture.md
-│       ├── hooks-optimization.md
-│       └── styling-strategy.md
+├── typescript/{generic-patterns.md,type-definitions.md}
+├── database/{schema-design.md,migrations.md}
+├── deployment/{docker-setup.md,ci-cd-pipeline.md}
+├── frontend/react/{component-patterns.md,performance-tips.md}
 └── backend/
-    ├── api/
-    │   ├── authentication-flow.md
-    │   └── error-handling.md
-    └── services/
-        └── database-layer.md
+    ├── api/{authentication-flow.md,rest-endpoints.md}
+    └── services/database-layer.md
 ```
 
 **Note**: You can choose the depth of the hierarchy. You can increase or decrease it based on the project's complexity.
@@ -80,28 +58,16 @@ projects/my-app/
 
 ```
 reference/
-├── nix-darwin/
-│   ├── home-manager-config.md
-│   ├── flake-best-practices.md
-│   └── module-composition.md
+├── nix-darwin/{home-manager-config.md,flake-best-practices.md,module-composition.md}
 ├── react/
-│   ├── hooks/
-│   │   ├── custom-hooks-patterns.md
-│   │   └── hooks-performance.md
+│   ├── hooks/{custom-hooks-patterns.md,hooks-performance.md}
 │   ├── performance-optimization.md
 │   └── testing-strategies.md
 ├── typescript/
 │   ├── advanced-types.md
-│   ├── generics/
-│   │   ├── generic-constraints.md
-│   │   └── conditional-types.md
-│   └── type-inference.md
-├── api-design/
-│   ├── rest-conventions.md
-│   └── graphql-patterns.md
-└── database/
-    ├── migrations.md
-    └── indexing-strategies.md
+│   ├── generics/{generic-constraints.md,conditional-types.md}
+├── api-design/{rest-conventions.md,graphql-patterns.md}
+└── database/{migration-strategies.md,scaling-patterns.md}
 ```
 
 **Note**: Grouping related themes into subfolders makes them easier to organize.
@@ -110,44 +76,21 @@ reference/
 
 ```
 learning/
-├── nodejs/
-│   ├── event-loop.md
-│   ├── streams.md
-│   └── worker-threads.md
-├── performance/
-│   ├── profiling-techniques.md
-│   └── optimization-patterns.md
-├── security/
-│   ├── authentication-methods.md
-│   └── data-encryption.md
-└── architecture/
-    ├── microservices.md
-    └── event-driven-design.md
+├── nodejs/{event-loop.md,streams.md,worker-threads.md}
+├── performance/{profiling-techniques.md,optimization-patterns.md}
+├── security/{authentication-methods.md,data-encryption.md}
+└── architecture/{microservices.md,event-driven-design.md}
 ```
 
 ### Breaking Down `tools-commands`
 
 ```
 tools-commands/
-├── docker/
-│   ├── docker-compose.md
-│   ├── image-optimization.md
-│   └── networking.md
-├── git/
-│   ├── branching-strategy.md
-│   ├── cherry-pick-guide.md
-│   └── advanced-workflows.md
-├── nix/
-│   ├── flake-commands.md
-│   ├── nix-shell-setup.md
-│   └── package-management.md
-├── cli-tools/
-│   ├── jq-recipes.md
-│   ├── find-commands.md
-│   └── sed-awk-patterns.md
-└── terminal/
-    ├── tmux-config.md
-    └── shell-keybindings.md
+├── docker/{docker-compose.md,image-optimization.md,networking.md}
+├── git/{branching-strategy.md,cherry-pick-guide.md,advanced-workflows.md}
+├── nix/{flake-commands.md,nix-shell-setup.md,package-management.md}
+├── cli-tools/{jq-recipes.md,find-commands.md,sed-awk-patterns.md}
+└── terminal/{tmux-config.md,shell-keybindings.md}
 ```
 
 **Note**: By creating a subfolder for each tool, you can aggregate related commands in one place.

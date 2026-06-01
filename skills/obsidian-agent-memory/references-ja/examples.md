@@ -16,7 +16,7 @@
 
 **場所**: `memories/projects/project-x/authentication-setup.md`
 
-```markdown
+````markdown
 ---
 summary: "Authentication flow implementation with OAuth2 and JWT tokens"
 created: 2025-01-15
@@ -50,13 +50,13 @@ Project X requires secure authentication with external service integration.
 - Implement token refresh endpoint
 - Add logout endpoint
 - Write integration tests
-```
+````
 
 ## プロジェクトメモ（階層構造）
 
 **場所**: `memories/projects/my-app/frontend/react/component-patterns.md`
 
-```markdown
+````markdown
 ---
 summary: "my-app フロントエンド: React コンポーネント設計方針"
 created: 2025-01-15
@@ -81,13 +81,13 @@ src/components/
 
 ## 例
 [実装例...]
-```
+````
 
 ## 学習メモ
 
 **場所**: `memories/learning/nodejs/event-loop.md`
 
-```markdown
+````markdown
 ---
 summary: "Node.js event loop: microtasks vs macrotasks execution order"
 created: 2025-01-15
@@ -113,13 +113,13 @@ Promise.resolve().then(() => console.log('microtask'));
 setTimeout(() => console.log('macrotask'), 0);
 // Output: microtask, macrotask
 ```
-```
+````
 
 ## リファレンスメモ（既存カテゴリ）
 
 **場所**: `memories/reference/cors-error-fix.md`
 
-```markdown
+````markdown
 ---
 summary: "Solution: Fix CORS errors with specific headers configuration"
 created: 2025-01-15
@@ -145,13 +145,13 @@ Access-Control-Allow-Headers: Content-Type, Authorization
 
 ## Prevention
 Always check CORS headers in API responses before assuming client-side issue.
-```
+````
 
 ## リファレンスメモ（新規カテゴリ）
 
 **場所**: `memories/reference/nix-darwin/home-manager-setup.md`
 
-```markdown
+````markdown
 ---
 summary: "Nix darwin 環境: home-manager による完全な dotfiles 管理"
 created: 2025-01-15
@@ -187,13 +187,13 @@ flake.nix
 ## Tips
 - Generational rollback が可能
 - 複数マシンで共有可能
-```
+````
 
 ## tools-commandsメモ（新規カテゴリ）
 
 **場所**: `memories/tools-commands/nix/flake-commands.md`
 
-```markdown
+````markdown
 ---
 summary: "Nix flake よく使うコマンド集"
 created: 2025-01-15
@@ -229,7 +229,7 @@ nix flake update <input>          # 特定入力を更新
 nix flake prefetch <url>          # URL をプリフェッチ
 nix eval                          # Nix 式を評価
 ```
-```
+````
 
 ## ワークフロー
 

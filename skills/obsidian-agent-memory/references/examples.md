@@ -50,7 +50,7 @@ Project X requires secure authentication with external service integration.
 - Implement token refresh endpoint
 - Add logout endpoint
 - Write integration tests
-```
+````
 
 ## Project Note (Hierarchical Structure)
 
@@ -87,7 +87,7 @@ src/components/
 
 **Location**: `memories/learning/nodejs/event-loop.md`
 
-```markdown
+````markdown
 ---
 summary: "Node.js event loop: microtasks vs macrotasks execution order"
 created: 2025-01-15
@@ -113,13 +113,13 @@ Promise.resolve().then(() => console.log('microtask'));
 setTimeout(() => console.log('macrotask'), 0);
 // Output: microtask, macrotask
 ```
-```
+````
 
 ## Reference Note (Existing Category)
 
 **Location**: `memories/reference/cors-error-fix.md`
 
-```markdown
+````markdown
 ---
 summary: "Solution: Fix CORS errors with specific headers configuration"
 created: 2025-01-15
@@ -145,13 +145,13 @@ Access-Control-Allow-Headers: Content-Type, Authorization
 
 ## Prevention
 Always check CORS headers in API responses before assuming client-side issue.
-```
+````
 
 ## Reference Note (New Category)
 
 **Location**: `memories/reference/nix-darwin/home-manager-setup.md`
 
-```markdown
+````markdown
 ---
 summary: "Nix darwin environment: complete dotfiles management with home-manager"
 created: 2025-01-15
@@ -187,13 +187,13 @@ flake.nix
 ## Tips
 - Generational rollback is possible
 - Shareable across multiple machines
-```
+````
 
 ## tools-commands Memo (New Category)
 
 **Location**: `memories/tools-commands/nix/flake-commands.md`
 
-```markdown
+````markdown
 ---
 summary: "Commonly used Nix flake commands"
 created: 2025-01-15
@@ -229,7 +229,7 @@ nix flake update <input>          # Update a specific input
 nix flake prefetch <url>          # Prefetch a URL
 nix eval                          # Evaluate Nix expressions
 ```
-```
+````
 
 ## Workflow
 

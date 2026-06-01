@@ -9,29 +9,20 @@
 ├── memories/
 │   ├── projects/              # プロジェクト固有のメモ（各プロジェクトに独立）
 │   │   ├── project-a/
-│   │   │   ├── typescript/
-│   │   │   ├── database/
-│   │   │   ├── deployment/
+│   │   │   ├── {typescript,database,deployment}/
 │   │   │   └── ...
-│   │   ├── project-b/
-│   │   └── project-c/
+│   │   └── {project-b,project-c}/
 │   │
 │   ├── reference/             # 汎用リファレンス・解決策（全プロジェクトで再利用）
-│   │   ├── nix-darwin/
-│   │   ├── react/
-│   │   ├── typescript/
-│   │   ├── database/
+│   │   ├── {nix-darwin,react,typescript,database}/
 │   │   └── ...
 │   ├── learning/              # 学習・発見・パターン（複数プロジェクトに応用可能）
-│   │   ├── nodejs/
-│   │   ├── performance/
+│   │   ├── {nodejs,performance}/
 │   │   └── ...
 │   ├── troubleshooting/       # トラブルシューティング（共通の問題解決）
 │   ├── architecture/          # アーキテクチャ・設計パターン（再利用可能）
 │   ├── tools-commands/        # ツール・コマンド・スニペット集
-│   │   ├── docker/
-│   │   ├── git/
-│   │   ├── nix/
+│   │   ├── {docker,git,nix}/
 │   │   └── ...
 │   └── inbox/                 # 未整理のメモ（後で汎用フォルダに分類）
 └── (その他のvault内容)
@@ -52,26 +43,13 @@
 
 ```
 projects/my-app/
-├── typescript/
-│   ├── type-definitions.md
-│   └── generic-patterns.md
-├── database/
-│   ├── schema-design.md
-│   └── migrations.md
-├── deployment/
-│   ├── docker-setup.md
-│   └── ci-cd-pipeline.md
-├── frontend/
-│   └── react/
-│       ├── component-architecture.md
-│       ├── hooks-optimization.md
-│       └── styling-strategy.md
+├── typescript/{generic-patterns.md,type-definitions.md}
+├── database/{schema-design.md,migrations.md}
+├── deployment/{docker-setup.md,ci-cd-pipeline.md}
+├── frontend/react/{component-patterns.md,performance-tips.md}
 └── backend/
-    ├── api/
-    │   ├── authentication-flow.md
-    │   └── error-handling.md
-    └── services/
-        └── database-layer.md
+    ├── api/{authentication-flow.md,rest-endpoints.md}
+    └── services/database-layer.md
 ```
 
 **ポイント**: 階層の深さは自由。プロジェクトの複雑さに応じて増やしたり減らしたりできます。
@@ -80,28 +58,16 @@ projects/my-app/
 
 ```
 reference/
-├── nix-darwin/
-│   ├── home-manager-config.md
-│   ├── flake-best-practices.md
-│   └── module-composition.md
+├── nix-darwin/{home-manager-config.md,flake-best-practices.md,module-composition.md}
 ├── react/
-│   ├── hooks/
-│   │   ├── custom-hooks-patterns.md
-│   │   └── hooks-performance.md
+│   ├── hooks/{custom-hooks-patterns.md,hooks-performance.md}
 │   ├── performance-optimization.md
 │   └── testing-strategies.md
 ├── typescript/
 │   ├── advanced-types.md
-│   ├── generics/
-│   │   ├── generic-constraints.md
-│   │   └── conditional-types.md
-│   └── type-inference.md
-├── api-design/
-│   ├── rest-conventions.md
-│   └── graphql-patterns.md
-└── database/
-    ├── migrations.md
-    └── indexing-strategies.md
+│   ├── generics/{generic-constraints.md,conditional-types.md}
+├── api-design/{rest-conventions.md,graphql-patterns.md}
+└── database/{migration-strategies.md,scaling-patterns.md}
 ```
 
 **ポイント**: 関連テーマをサブフォルダにグループ化することで、整理がしやすくなります。
@@ -110,44 +76,21 @@ reference/
 
 ```
 learning/
-├── nodejs/
-│   ├── event-loop.md
-│   ├── streams.md
-│   └── worker-threads.md
-├── performance/
-│   ├── profiling-techniques.md
-│   └── optimization-patterns.md
-├── security/
-│   ├── authentication-methods.md
-│   └── data-encryption.md
-└── architecture/
-    ├── microservices.md
-    └── event-driven-design.md
+├── nodejs/{event-loop.md,streams.md,worker-threads.md}
+├── performance/{profiling-techniques.md,optimization-patterns.md}
+├── security/{authentication-methods.md,data-encryption.md}
+└── architecture/{microservices.md,event-driven-design.md}
 ```
 
 ### tools-commands の細分化
 
 ```
 tools-commands/
-├── docker/
-│   ├── docker-compose.md
-│   ├── image-optimization.md
-│   └── networking.md
-├── git/
-│   ├── branching-strategy.md
-│   ├── cherry-pick-guide.md
-│   └── advanced-workflows.md
-├── nix/
-│   ├── flake-commands.md
-│   ├── nix-shell-setup.md
-│   └── package-management.md
-├── cli-tools/
-│   ├── jq-recipes.md
-│   ├── find-commands.md
-│   └── sed-awk-patterns.md
-└── terminal/
-    ├── tmux-config.md
-    └── shell-keybindings.md
+├── docker/{docker-compose.md,image-optimization.md,networking.md}
+├── git/{branching-strategy.md,cherry-pick-guide.md,advanced-workflows.md}
+├── nix/{flake-commands.md,nix-shell-setup.md,package-management.md}
+├── cli-tools/{jq-recipes.md,find-commands.md,sed-awk-patterns.md}
+└── terminal/{tmux-config.md,shell-keybindings.md}
 ```
 
 **ポイント**: ツールごとにサブフォルダを作成することで、関連コマンドを一箇所に集約できます。
