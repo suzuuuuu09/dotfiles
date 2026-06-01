@@ -58,13 +58,6 @@ module.exports = {
 				description: "Refactor code without changing its behavior.",
 			},
 			{
-				value: "🔥",
-				name: "🔥  コード/ファイルの削除",
-				emoji: "🔥",
-				title: "Code/Files Removal",
-				description: "Remove code or files from the codebase.",
-			},
-			{
 				value: "🎉",
 				name: "🎉  プロジェクトの開始",
 				emoji: "🎉",
@@ -116,7 +109,7 @@ module.exports = {
 		useEmoji: true,
 		emojiAlign: "center",
 		useAI: false,
-		aiNumber: 3,
+		aiNumber: 5,
 		aiQuestionCB: ({ type, diff, maxSubjectLength }) => {
 			return `
 			# constraints
@@ -148,7 +141,8 @@ module.exports = {
 		customScopesAlign: "bottom",
 		customScopesAlias: "custom",
 		emptyScopesAlias: "empty",
-		upperCaseSubject: false,
+		// 最初の文字の大文字・小文字を変更しない
+		upperCaseSubject: null,
 		markBreakingChangeMode: false,
 		allowBreakingChanges: ["feat", "fix"],
 		breaklineNumber: 100,

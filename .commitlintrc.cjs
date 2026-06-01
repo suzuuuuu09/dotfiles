@@ -142,7 +142,8 @@ module.exports = {
 		customScopesAlign: "bottom",
 		customScopesAlias: "custom",
 		emptyScopesAlias: "empty",
-		upperCaseSubject: false,
+		// 最初の文字の大文字・小文字を変更しない
+		upperCaseSubject: null,
 		markBreakingChangeMode: false,
 		allowBreakingChanges: ["feat", "fix"],
 		breaklineNumber: 100,
