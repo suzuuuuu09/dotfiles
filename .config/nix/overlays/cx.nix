@@ -5,16 +5,16 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "cx";
-  version = "0.1.2";
+  version = "0.1.3";
 
   src = fetchFromGitHub {
     owner = "suzuuuuu09";
     repo = "cx";
     rev = "v${version}";
-    hash = "sha256-IvRaGL6tOcofvfODYNmGd0xgKLq50dx7Xdkd7e3ngGI=";
+    hash = "sha256-Yi9PFk6t9RTvfPg9ZrZQBMgUb8McF6wpc86I04Rbd0U=";
   };
 
-  cargoHash = "sha256-gj6zjU3UTS0L5Yz6MFymU6SMw3ZfdJcTEZ0NZrC+YCM=";
+  cargoHash = "sha256-Zn2FnxpizmueQgBAC4vE7OSufmlFotMkAX8cNMwOdmo=";
 
   # Tests require lsof and multi-process operations that don't work in Nix sandbox
   doCheck = false;
