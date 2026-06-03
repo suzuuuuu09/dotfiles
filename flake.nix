@@ -60,6 +60,10 @@
       url = "github:upstash/context7";
       flake = false;
     };
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
   };
 
   outputs = {

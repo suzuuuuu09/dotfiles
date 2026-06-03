@@ -240,6 +240,22 @@
       },
       "parent": []
     },
+    "mattpocock-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780218516,
+        "narHash": "sha256-+Px3qIMHGKvi0PK2l5H4j/4YRQ448G9kuWX28cgqPCI=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "aaf2453fbdfe7a15c07f11d861224f34ab4b53cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -356,6 +372,7 @@
         "home-manager": "home-manager_2",
         "llm-agents": "llm-agents",
         "local-skills": "local-skills",
+        "mattpocock-skills": "mattpocock-skills",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix-index-database": "nix-index-database",

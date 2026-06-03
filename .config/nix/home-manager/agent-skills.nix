@@ -41,6 +41,11 @@
         path = inputs.context7-skills;
         subdir = "skills";
       };
+      mattpocock = {
+        path = inputs.mattpocock-skills;
+        subdir = "skills";
+      };
+
       # +----------------------------------------------------------+
       # | ローカルパスから参照                                     |
       # +----------------------------------------------------------+
@@ -64,6 +69,7 @@
         "find-docs"
         # "context7-mcp"
         "context7-cli"
+        "productivity/grill-me"
       ];
     };
 
