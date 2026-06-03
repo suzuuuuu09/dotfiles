@@ -41,9 +41,14 @@
         path = inputs.context7-skills;
         subdir = "skills";
       };
+
       mattpocock = {
         path = inputs.mattpocock-skills;
         subdir = "skills";
+      };
+
+      mizchi = {
+        path = inputs.mizchi-skills;
       };
 
       # +----------------------------------------------------------+
@@ -70,6 +75,7 @@
         # "context7-mcp"
         "context7-cli"
         "productivity/grill-me"
+        "meta/empirical-prompt-tuning"
       ];
     };
 

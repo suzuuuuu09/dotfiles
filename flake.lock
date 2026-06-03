@@ -256,6 +256,23 @@
         "type": "github"
       }
     },
+    "mizchi-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780073399,
+        "narHash": "sha256-EbrNaTfP++pdDutmuG+iLaknZxoEjSia5Od4dNXcOdg=",
+        "owner": "mizchi",
+        "repo": "skills",
+        "rev": "89c1b34018ba0d85a770c065ba22f83a8d004d34",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mizchi",
+        "repo": "skills",
+        "rev": "89c1b34018ba0d85a770c065ba22f83a8d004d34",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -373,6 +390,7 @@
         "llm-agents": "llm-agents",
         "local-skills": "local-skills",
         "mattpocock-skills": "mattpocock-skills",
+        "mizchi-skills": "mizchi-skills",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix-index-database": "nix-index-database",
