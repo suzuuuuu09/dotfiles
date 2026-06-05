@@ -1,20 +1,16 @@
-name: 'CI: Nix Build'
+name: 'CI: Neovim plugins'
 
 on:
   push:
     branches:
       - main
     paths:
-      - "**.nix"
+      - "nvim/**"
       - "flake.lock"
-      - ".github/workflows/nix-build.yaml"
+      - "flake.nix"
+      - ".github/workflows/nix-nvim.yaml"
       - ".github/actions/setup-nix/action.yaml"
   pull_request:
-    paths:
-      - "**.nix"
-      - "flake.lock"
-      - ".github/workflows/nix-build.yaml"
-      - ".github/actions/setup-nix/action.yaml"
   workflow_dispatch:
 
 jobs:
@@ -30,8 +26,15 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: ${{ github.event_name == 'pull_request' }}
 
-      - name: Build darwinConfigurations
-        run: nix build --show-trace --no-link .#darwinConfigurations.suzuMac.system
+      - name: Link Neovim config
+        run: |
+          mkdir -p ~/.config
+          ln -s "$PWD/nvim" ~/.config/nvim
 
-      - name: Print disk usage
-        run: df -h
+      - name: Restore Neovim plugins
+        run: |
+          nix develop -c ./scripts/nvim-restore.sh ~/.config/nvim
+
+      - name: Check Neovim configuration
+        run: |
+          nix develop -c nvim --headless "+qa"
