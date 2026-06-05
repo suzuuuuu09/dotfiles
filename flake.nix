@@ -68,6 +68,10 @@
       url = "github:mizchi/skills/89c1b34018ba0d85a770c065ba22f83a8d004d34";
       flake = false;
     };
+    ui-ux-pro-max-skills = {
+      url = "github:nextlevelbuilder/ui-ux-pro-max-skill/b7e3af80f6e331f6fb456667b82b12cade7c9d35";
+      flake = false;
+    };
   };
 
   outputs = {

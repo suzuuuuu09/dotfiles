@@ -51,6 +51,11 @@
         path = inputs.mizchi-skills;
       };
 
+      ui-ux-pro-max = {
+        path = inputs.ui-ux-pro-max-skills;
+        # NOTE: シムリンクのscriptsを使うため、リポジトリ全体を source root にする
+        subdir = ".";
+      };
       # +----------------------------------------------------------+
       # | ローカルパスから参照                                     |
       # +----------------------------------------------------------+
@@ -77,6 +82,12 @@
         "productivity/grill-me"
         "meta/empirical-prompt-tuning"
       ];
+      explicit = {
+        ui-ux-pro-max = {
+          from = "ui-ux-pro-max";
+          path = ".claude/skills/ui-ux-pro-max";
+        };
+      };
     };
 
     # どこにスキルを配置するか
