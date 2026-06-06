@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-macos:
+  check-nvim:
     runs-on: macos-26
     steps:
       - name: Checkout
