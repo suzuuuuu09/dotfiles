@@ -35,11 +35,15 @@
     # docker-compose
     act # GitHub Actions をローカルで実行するツール
     vhs
+    ttyd
     just
     typescript # typescript-tools.nvimで必要
     # mise
     uv # Python
     cxr
+    bun
+    nodejs_24
+    comma
 
     # Surveillance tools
     bottom
@@ -66,8 +70,8 @@
     udev-gothic
     udev-gothic-nf
 
-    # GUI tools
-    # obsidian
-    comma
+    # AI tools
+    agent-browser
+    ctx7
   ];
 }

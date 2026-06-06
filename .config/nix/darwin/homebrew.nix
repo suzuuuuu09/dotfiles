@@ -61,8 +61,11 @@
       "claude"
       "amical"
       "1password"
+      "shottr"
+      "musescore"
 
       # "microsoft-powerpoint"
+      "microsoft-word"
 
       # IDE
       "visual-studio-code"
