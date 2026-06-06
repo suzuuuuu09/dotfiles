@@ -89,7 +89,7 @@
     localOverlays = [
       (final: prev: {
         czg = prev.callPackage ./.config/nix/overlays/czg.nix {};
-        cx = prev.callPackage ./.config/nix/overlays/cx.nix {};
+        cxr = prev.callPackage ./.config/nix/overlays/cxr.nix {};
       })
     ];
   in {
