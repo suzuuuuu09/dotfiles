@@ -1,7 +1,17 @@
 ---
 name: obsidian-agent-memory
-description: "Use this skill aggressively whenever the user asks to remember/save/recall prior context, asks to check notes before starting work, or provides durable decisions (policies, constraints, next steps) that should be stored. Trigger even if the user does not explicitly say 'memo' when the intent implies continuity across turns or sessions. Mandatory trigger moments: (1) conversation start with relevant project context, (2) immediately before starting a new task, (3) right after meaningful outcomes, decisions, or errors are produced. Keywords include: 'remember this', 'record this', 'save this', 'check previous context', 'look at my notes', 'what did we discuss'. Always read from Obsidian memories first, then write back to memory or project-specific folders."
+description: "Read Obsidian memories first whenever the user asks to remember, check prior context, or starts a new task with reusable context; then write back durable outcomes after the task."
 ---
+
+## Quick Start
+
+When the task may reuse prior context, do this before any other work:
+
+1. Read relevant project memory first.
+2. If nothing relevant exists, search `troubleshooting/`, `reference/`, `learning/`, `architecture/`, and `tools-commands/`.
+3. Write back durable outcomes after the task.
+
+**Do not answer or plan the task before this read step.**
 
 # Obsidian Agent Memory
 

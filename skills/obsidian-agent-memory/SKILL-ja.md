@@ -1,7 +1,17 @@
 ---
 name: obsidian-agent-memory
-description: "Use this skill aggressively whenever the user asks to remember/save/recall prior context, asks to check notes before starting work, or gives durable decisions (方針・制約・次回やること) that should be stored. Trigger even if the user does not explicitly say 'メモ' when intent implies continuity across turns/sessions. Mandatory trigger moments: (1) conversation start with likely project context, (2) immediately before starting a new task, (3) right after meaningful outcomes/decisions/errors are produced. Keywords include: '覚えておいて', '記録して', 'メモして', '前回の内容', 'ノートを見て', 'remember this', 'save this', 'what did we discuss', 'check your notes'. Read from Obsidian memories first, then write back to memories/projects or category folders."
+description: "ユーザーが記憶を求めたとき、以前の文脈を確認するとき、あるいは再利用可能な文脈を伴って新しいタスクを開始するときは、まずObsidianの記憶を読み取ってください。その後、タスクが完了したら持続的な成果を書き戻してください。"
 ---
+
+## クイックスタート
+
+タスクで以前の文脈を再利用する可能性がある場合は、他の作業を行う前に以下の手順を実行してください。
+
+1. まず、関連するプロジェクトの記憶を読み取る。
+2. 関連するものがない場合は、`troubleshooting/`、`reference/`、`learning/`、`architecture/`、および `tools-commands/` を検索する。
+3. タスク終了後、持続的な成果を書き戻す。
+
+**この読み取りステップを行う前に、タスクへの回答や計画を立てないでください。**
 
 # Obsidian Agent Memory
 
