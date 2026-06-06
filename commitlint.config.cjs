@@ -62,21 +62,21 @@ module.exports = {
 		types: [
 			{
 				value: "feat",
-				name: "✨  feat: 新機能の追加",
+				name: "✨  feat:     新機能の追加",
 				emoji: "✨",
 				title: "Features",
 				description: "Add new features to the codebase.",
 			},
 			{
 				value: "fix",
-				name: "🐛  fix: バグ修正",
+				name: "🐛  fix:      バグ修正",
 				emoji: "🐛",
 				title: "Bug Fixes",
 				description: "Fix bugs in the codebase.",
 			},
 			{
 				value: "docs",
-				name: "📝  docs: ドキュメントの生成や修正",
+				name: "📝  docs:     ドキュメントの生成や修正",
 				emoji: "📝",
 				title: "Documentation",
 				description:
@@ -84,7 +84,7 @@ module.exports = {
 			},
 			{
 				value: "style",
-				name: "💄  style: コードの意味に影響を与えない変更",
+				name: "💄  style:    コードの意味に影響を与えない変更",
 				emoji: "💄",
 				title: "Code Style Improvements",
 				description:
@@ -100,14 +100,14 @@ module.exports = {
 			},
 			{
 				value: "test",
-				name: "✅  test: テストコードの追加や修正",
+				name: "✅  test:     テストコードの追加や修正",
 				emoji: "✅",
 				title: "Tests",
 				description: "Add or update test codes.",
 			},
 			{
 				value: "chore",
-				name: "🔧  chore: ビルドプロセスや補助ツールの変更、設定ファイルの編集などの雑多",
+				name: "🔧  chore:    設定ファイルや開発環境の変更など",
 				emoji: "🔧",
 				title: "Chores",
 				description:
@@ -115,17 +115,24 @@ module.exports = {
 			},
 			{
 				value: "perf",
-				name: "⚡️  perf: パフォーマンスを向上させるためのコード変更",
+				name: "⚡️  perf:     パフォーマンスを向上させるためのコード変更",
 				emoji: "⚡️",
 				title: "Performance Improvements",
 				description: "Improve the performance of the codebase.",
 			},
 			{
 				value: "revert",
-				name: "⏪️  revert: コミットの打ち消し",
+				name: "⏪️  revert:   コミットの打ち消し",
 				emoji: "⏪️",
 				title: "Reverts",
 				description: "Revert to a previous commit.",
+			},
+			{
+				value: "deps",
+				name: "📦  deps:     依存関係・パッケージの追加や更新",
+				emoji: "📦",
+				title: "Dependencies",
+				description: "Add or update dependencies and packages.",
 			},
 		],
 
@@ -154,32 +161,36 @@ module.exports = {
 - scopeはファイルの場所ではなく、設定対象を優先してください。
 - 複数にまたがる場合は中心となるものを1つだけ選んでください。
 - 判断できない場合だけ empty と書いてください。
-- descriptionは、変更内容を1文で少し詳しく説明してください。
-- descriptionには「何が変わったか」または「なぜ変えたか」が分かる内容を書いてください。
+- descriptionは補足が必要な場合のみ書いてください。
+- subjectだけで変更内容が十分に伝わる場合はdescriptionを書かないでください。
+- descriptionを書く場合は「何が変わったか」または「なぜ変えたか」が分かる1文にしてください。
 
 # scope examples
 - .github/renovate.json -> renovate
-- .github/workflows/*.yml -> ci
+- .github/workflows/ci.yml -> ci
+- .github/workflows/deploy.yml -> deploy
 - commitlint.config.cjs -> commitlint
 - cz.config.cjs -> czg
 - flake.nix -> nix
 - home.nix -> nix
 - lazy.lua -> nvim
 - yazi.toml -> yazi
-- package.json -> package
+- bun.lock -> deps
 
 # format
+<subject> (<scope>)
 <subject> (<scope>) | <description>
 
 # good examples
-obsidianのworkspace設定を追加 (nvim) | Obsidianプラグインで使用するworkspaceを明示的に設定
+obsidianのworkspace設定を追加 (nvim)
 renovateの設定を追加 (renovate) | 依存関係更新を自動化するための設定を追加
-GitHub Actionsのworkflowを修正 (ci) | CIで実行する処理が正しく動作するようにworkflowを調整
+GitHub Actionsのworkflowを修正 (ci)
+デプロイworkflowを追加 (deploy) | GitHub Actionsから本番環境へデプロイできるように設定
 コミットメッセージの形式を修正 (commitlint) | gitmoji付きのConventional Commits形式を検証できるように調整
-czgのプロンプト設定を更新 (czg) | コミット作成時の質問文と出力形式を使いやすく調整
-home-managerの設定を整理 (nix) | 管理対象の設定ファイルを分かりやすく分類
-パッケージ一覧を更新 (nix) | 利用する開発ツールの依存関係を現在の構成に合わせて更新
-READMEの説明を追加 (docs) | セットアップ手順が分かりやすくなるように説明を追加
+czgのプロンプト設定を更新 (czg)
+home-managerの設定を整理 (nix)
+パッケージ一覧を更新 (deps)
+READMEの説明を追加 (docs)
 
 # bad examples
 renovateの設定を追加 (github)
@@ -188,7 +199,6 @@ nvimの設定を修正 (lua)
 feat(nvim): obsidianのworkspace設定を追加
 ✨ feat(nvim): obsidianのworkspace設定を追加
 以下のコミットメッセージが適切です
-obsidianのworkspace設定を追加 (nvim)
 obsidianのworkspace設定を追加 (nvim) | Obsidianプラグインで使用するworkspaceを明示的に設定。
 
 # selected type
