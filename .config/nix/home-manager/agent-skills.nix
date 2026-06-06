@@ -69,23 +69,48 @@
     # 使うスキルを指定 (sourcesのキーを参照)
     skills = {
       enableAll = ["personal"];
+
       # 外部からのスキルを使う
-      enable = [
-        "skill-creator"
-        "find-skills"
-        "frontend-design"
-        "web-design-guidelines"
-        "agent-browser"
-        "find-docs"
-        # "context7-mcp"
-        "context7-cli"
-        "productivity/grill-me"
-        "meta/empirical-prompt-tuning"
-      ];
       explicit = {
+        frontend-design = {
+          from = "anthropics";
+          path = "frontend-design";
+        };
+        skill-creator = {
+          from = "anthropics";
+          path = "skill-creator";
+        };
+        find-skills = {
+          from = "vercel";
+          path = "find-skills";
+        };
+        web-design-guidelines = {
+          from = "v-agent";
+          path = "web-design-guidelines";
+        };
+        empirical-prompt-tuning = {
+          from = "mizchi";
+          path = "meta/empirical-prompt-tuning";
+        };
+        find-docs = {
+          from = "context7";
+          path = "find-docs";
+        };
+        context7-cli = {
+          from = "context7";
+          path = "context7-cli";
+        };
+        grill-me = {
+          from = "mattpocock";
+          path = "productivity/grill-me";
+        };
         ui-ux-pro-max = {
           from = "ui-ux-pro-max";
           path = ".claude/skills/ui-ux-pro-max";
+        };
+        agent-browser = {
+          from = "agent-browser";
+          path = "agent-browser";
         };
       };
     };
