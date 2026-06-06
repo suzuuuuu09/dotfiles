@@ -9,9 +9,7 @@
     ./dotfiles.nix
     ./agent-skills.nix
     ./sops.nix
-    # ./github-copilot.nix # 多分もう使わない
-    ./codex.nix
-    ./programs/nh.nix
+    ./programs
   ];
 
   programs = {
