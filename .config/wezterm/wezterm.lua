@@ -3,13 +3,26 @@ local wezterm = require("wezterm")
 local nord = require("nord")
 local config = wezterm.config_builder()
 
+----------------------------------------------------
+-- マルチプレクサ（セッション永続化）の設定
+----------------------------------------------------
+-- Unix Domain Socketを定義
+config.unix_domains = {
+	{
+		name = "unix",
+	},
+}
+
+-- 起動時に自動的に 'unix' ドメインに接続する
+-- これにより、ウィンドウを閉じても次回起動時に前回の状態が復元されます
+config.default_gui_startup_args = { "connect", "unix" }
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 tabline.setup({
 	options = {
 		theme_overrides = {
 			tab = {
 				active = { fg = nord.snow_storm.brightest, bg = nord.frost.ocean },
-				inactive = { fg = nord.snow_storm.origin, bg = nord.polar_night.darkest },
+				inactive = { fg = nord.snow_storm.origin, bg = nord.polar_night.origin },
 				inactive_hover = { fg = nord.snow_storm.brightest, bg = nord.frost.ocean },
 			},
 		},
@@ -21,12 +34,12 @@ config.default_prog = { "/etc/profiles/per-user/k25012kk/bin/fish", "-l" }
 config.automatically_reload_config = true
 config.font = wezterm.font("UDEV Gothic 35NFLG", {
 	weight = "Regular",
-	harfbuzz_features = { "liga=1", "clig=1", "calt=1" }, -- リガチャを有効にする
 })
+config.harfbuzz_features = { "liga", "clig", "calt" } -- リガチャを有効にする
 config.font_size = 14.5
 config.use_ime = true
-config.window_background_opacity = 0.6
-config.macos_window_background_blur = 5
+config.window_background_opacity = 0.8
+config.macos_window_background_blur = 20
 config.color_scheme = "nord"
 
 ----------------------------------------------------
@@ -49,7 +62,7 @@ config.window_frame = {
 
 -- タブバーを背景色に合わせる
 config.window_background_gradient = {
-	colors = { nord.polar_night.darkest },
+	colors = { nord.polar_night.origin },
 }
 
 -- タブの追加ボタンを非表示
