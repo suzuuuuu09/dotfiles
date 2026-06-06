@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./czg
     ./codex.nix
     ./nh.nix
     ./direnv.nix

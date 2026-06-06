@@ -34,7 +34,6 @@ in {
     # +----------------------------------------------------------+
     # |                         ファイル                         |
     # +----------------------------------------------------------+
-    ".commitlintrc.cjs".source = mkLink ".commitlintrc.cjs";
     ".gitconfig".source = mkLink ".gitconfig";
     ".global.gitignore".source = mkLink ".global.gitignore";
     ".zshrc".source = mkLink ".zshrc";
