@@ -8,7 +8,7 @@
 	"github-actions": {
 		"enabled": true
 	},
-	"commitMessagePrefix": "📦 ",
+	"commitMessagePrefix": "📦 deps(flake): ",
 	"automerge": true,
 	"automergeSchedule": ["* 0-23 * * *"],
 	"labels": ["dependencies", "renovate"],
@@ -27,7 +27,6 @@
 		{
 			"matchManagers": ["nix"],
 			"groupName": "nix flake inputs",
-			"commitMessageSuffix": "(flake)"
 		},
 		{
 			"matchManagers": ["github-actions"],
