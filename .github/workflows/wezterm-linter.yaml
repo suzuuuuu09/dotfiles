@@ -1,0 +1,41 @@
+name: WezTerm config linter
+
+on:
+  push:
+    paths:
+      - .github/workflows/wezterm-linter.yaml
+      - .github/actions/setup-nix/action.yaml
+      - .config/wezterm/**
+  pull_request:
+    paths:
+      - .github/workflows/wezterm-linter.yaml
+      - .github/actions/setup-nix/action.yaml
+      - .config/wezterm/**
+
+jobs:
+  check-wezterm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Nix
+        uses: ./.github/actions/setup-nix
+        with:
+          skipPush: "true"
+
+      - name: Install Xvfb
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
+      - name: Check WezTerm config
+        run: |
+          set -euo pipefail
+
+          TRUE_CMD="$(command -v true)"
+
+          xvfb-run -a nix shell nixpkgs#wezterm -c wezterm \
+            --config-file "$GITHUB_WORKSPACE/.config/wezterm/wezterm.lua" \
+            start --no-auto-connect -- "$TRUE_CMD"
