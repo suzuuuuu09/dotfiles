@@ -1,4 +1,8 @@
 local wezterm = require("wezterm")
+
+-- ~/.config/wezterm 配下の分割設定を require できるようにする
+package.path = wezterm.config_dir .. "/?.lua;" .. wezterm.config_dir .. "/?/init.lua;" .. package.path
+
 ---@type Nord.Palette
 local nord = require("nord")
 local config = wezterm.config_builder()
