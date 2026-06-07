@@ -2,6 +2,8 @@ name: WezTerm config linter
 
 on:
   push:
+    branches:
+      - main
     paths:
       - .github/workflows/wezterm-linter.yaml
       - .github/actions/setup-nix/action.yaml
@@ -11,6 +13,7 @@ on:
       - .github/workflows/wezterm-linter.yaml
       - .github/actions/setup-nix/action.yaml
       - .config/wezterm/**
+  workflow_dispatch:
 
 jobs:
   check-wezterm:
