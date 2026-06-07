@@ -25,17 +25,35 @@ jobs:
         with:
           skipPush: "true"
 
-      - name: Install Xvfb
+      - name: Install GUI dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb
+          sudo apt-get install -y xvfb libegl1 libgl1
 
       - name: Check WezTerm config
         run: |
           set -euo pipefail
 
+          LOG="$(mktemp)"
           TRUE_CMD="$(command -v true)"
 
+          set +e
           xvfb-run -a nix shell nixpkgs#wezterm -c wezterm \
             --config-file "$GITHUB_WORKSPACE/.config/wezterm/wezterm.lua" \
-            start --no-auto-connect -- "$TRUE_CMD"
+            start --no-auto-connect -- "$TRUE_CMD" > "$LOG" 2>&1
+          CODE="$?"
+          set -e
+
+          cat "$LOG"
+
+          if [ "$CODE" -ne 0 ]; then
+            echo "WezTerm exited with non-zero status: $CODE"
+            exit "$CODE"
+          fi
+
+          if grep -Eiq \
+            "Config::from_dynamic|not a valid Config field|stack traceback|in function 'require'|module .* not found|Failed to load|error converting Lua table to Config" \
+            "$LOG"; then
+            echo "WezTerm config validation failed"
+            exit 1
+          fi
