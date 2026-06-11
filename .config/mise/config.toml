@@ -3,10 +3,5 @@ bun = "latest"
 node = "latest"
 pnpm = "latest"
 
-"npm:@google/gemini-cli" = "latest"
-"npm:ctx7" = "latest"
-"npm:vde-layout" = "latest"
-"npm:agent-browser" = "latest"
-
 [settings]
 idiomatic_version_file_enable_tools = ["*,", "python"]
