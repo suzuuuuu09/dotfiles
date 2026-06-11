@@ -57,7 +57,7 @@
       flake = false;
     };
     context7-skills = {
-      url = "github:upstash/context7/0c53c6fb3e3e544e2c65af5c91f685047bb59597";
+      url = "github:upstash/context7/e35cb61068fad12cafe011a6487a7a2092f66c1a";
       flake = false;
     };
     mattpocock-skills = {
