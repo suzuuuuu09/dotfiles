@@ -69,9 +69,5 @@
     # Fonts
     udev-gothic
     udev-gothic-nf
-
-    # AI tools
-    agent-browser
-    ctx7
   ];
 }
