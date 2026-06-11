@@ -15,3 +15,6 @@ customCommands:
     context: files
     key: C
     output: terminal
+
+# 起動時のポップアップを表示しない
+disableStartupPopups: true
