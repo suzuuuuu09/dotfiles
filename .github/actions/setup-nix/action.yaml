@@ -13,9 +13,9 @@ runs:
   using: composite
   steps:
     - name: Install Nix
-      uses: nixbuild/nix-quick-install-action@v34
+      uses: nixbuild/nix-quick-install-action@2c9db80fb984ceb1bcaa77cdda3fdf8cfba92035 # v34
     - name: Setup Cachix
-      uses: cachix/cachix-action@v17
+      uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
       with:
         name: suzuuuuu09 # ここを自分のキャッシュ名に変更
         authToken: ${{ inputs.authToken }}
