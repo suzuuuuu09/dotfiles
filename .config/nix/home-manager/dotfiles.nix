@@ -27,6 +27,7 @@ in {
     "mise".source = mkLink ".config/mise";
     "karabiner".source = mkLink ".config/karabiner";
     "vde".source = mkLink ".config/vde";
+    "git".source = mkLink ".config/git";
   };
 
   # ~/ の直下に置くもの
@@ -35,7 +36,6 @@ in {
     # |                         ファイル                         |
     # +----------------------------------------------------------+
     ".gitconfig".source = mkLink ".gitconfig";
-    ".global.gitignore".source = mkLink ".global.gitignore";
     ".zshrc".source = mkLink ".zshrc";
     ".zshenv".source = mkLink ".zshenv";
     ".zprofile".source = mkLink ".zprofile";

@@ -13,7 +13,6 @@
 	clean = git-lfs clean -- %f
 [core]
 	autocrlf = false
-	excludesfile = ~/.global.gitignore
 	pager = delta
 	editor = nvim
 [merge]

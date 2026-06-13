@@ -2,7 +2,7 @@
 .env
 .env.*
 
-# File format files
+# macOS system file
 .DS_Store
 
 
