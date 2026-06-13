@@ -25,6 +25,11 @@
 	"packageRules": [
 		{
 			"matchManagers": ["nix"],
+			"matchJsonata": ["$exists(currentDigest)"],
+			"enabled": false
+		},
+		{
+			"matchManagers": ["nix"],
 			"groupName": "nix flake inputs",
 			"commitMessagePrefix": "📦 deps(flake): "
 		},
