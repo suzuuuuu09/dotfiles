@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - .github/workflows/renovate-config-validator.yaml
-      - .github/renovate.json
+      - .github/renovate.jsonc
   pull_request:
 
 jobs:

@@ -23,6 +23,7 @@
 		"schedule": ["at any time"]
 	},
 	"packageRules": [
+		// flake inputsがコミットハッシュで固定されているものは更新しない
 		{
 			"matchManagers": ["nix"],
 			"matchJsonata": ["$exists(currentDigest)"],
