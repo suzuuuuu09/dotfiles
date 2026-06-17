@@ -1,92 +1,96 @@
-local keymap = vim.keymap
+local keyset = vim.keymap.set
+local keydel = vim.keymap.del
 local opts = { noremap = true, silent = true }
 
 -- US配列用
-keymap.set({ "n", "v" }, ";", ":")
-keymap.set({ "n", "v" }, ":", ";")
+keyset({ "n", "v" }, ";", ":")
+keyset({ "n", "v" }, ":", ";")
 
 -- Increment / Decrement
-keymap.set("n", "+", "<C-a>", opts)
-keymap.set("n", "-", "<C-x>", opts)
+keyset("n", "+", "<C-a>", opts)
+keyset("n", "-", "<C-x>", opts)
 
 -- Window navigation
-keymap.set({ "n", "i" }, "<C-h>", "<C-w>h", opts)
-keymap.set({ "n", "i" }, "<C-j>", "<C-w>j", opts)
-keymap.set({ "n", "i" }, "<C-k>", "<C-w>k", opts)
-keymap.set({ "n", "i" }, "<C-l>", "<C-w>l", opts)
+keyset({ "n", "i" }, "<C-h>", "<C-w>h", opts)
+keyset({ "n", "i" }, "<C-j>", "<C-w>j", opts)
+keyset({ "n", "i" }, "<C-k>", "<C-w>k", opts)
+keyset({ "n", "i" }, "<C-l>", "<C-w>l", opts)
 
 -- Better up/down
-keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+keyset("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+keyset("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- Clear search highlights
-keymap.set("n", "<Esc>", "<Cmd>nohlsearch<CR><Esc>", opts)
+keyset("n", "<Esc>", "<Cmd>nohlsearch<CR><Esc>", opts)
 
 -- Exit insert mode quickly
 -- better-escape.nvimを使うのでコメントアウト
--- keymap.set("i", "jj","<ESC>", opts)
+-- keyset("i", "jj","<ESC>", opts)
 
-keymap.set("n", "<leader>n", "<CMD>tabedit<CR>", { desc = "New tab" })
-keymap.set("n", "<leader>w", "<CMD>write<CR>", { desc = "Save file" })
-keymap.set("n", "<leader>W", "<CMD>wa<CR>", { desc = "Save all files" })
-keymap.set("n", "<leader>q", "<CMD>quit<CR>", { desc = "Quit" })
-keymap.set("n", "<leader>Q", "<CMD>qa!<CR>", { desc = "Quit all" })
-keymap.set("n", "<leader>c", "<CMD>close<CR>", { desc = "Close buffer" })
+keyset("n", "<leader>n", "<CMD>tabedit<CR>", { desc = "New tab" })
+keyset("n", "<leader>w", "<CMD>write<CR>", { desc = "Save file" })
+keyset("n", "<leader>W", "<CMD>wa<CR>", { desc = "Save all files" })
+keyset("n", "<leader>q", "<CMD>quit<CR>", { desc = "Quit" })
+keyset("n", "<leader>Q", "<CMD>qa!<CR>", { desc = "Quit all" })
+keyset("n", "<leader>c", "<CMD>close<CR>", { desc = "Close buffer" })
 
 -- ╭─────────────────────────────────────────────────────────╮
 -- │                         Buffer                          │
 -- ╰─────────────────────────────────────────────────────────╯
-keymap.set("n", "<leader>bd", "<CMD>bdelete<CR>", { desc = "Delete buffer" })
+keyset("n", "<leader>bd", "<CMD>bdelete<CR>", { desc = "Delete buffer" })
 
 -- Select all
-keymap.set("n", "vv", "ggVG", opts)
+keyset("n", "vv", "ggVG", opts)
 
 -- Redo
-keymap.set("n", "U", "<C-r>", opts)
+keyset("n", "U", "<C-r>", opts)
 
 -- Delete / Change without yanking
-keymap.set({ "n", "v" }, "d", '"_d', opts)
-keymap.set({ "n", "v" }, "D", '"_D', opts)
-keymap.set({ "n", "v" }, "c", '"_c', opts)
-keymap.set({ "n", "v" }, "C", '"_C', opts)
+keyset({ "n", "v" }, "d", '"_d', opts)
+keyset({ "n", "v" }, "D", '"_D', opts)
+keyset({ "n", "v" }, "c", '"_c', opts)
+keyset({ "n", "v" }, "C", '"_C', opts)
 
 -- Delete / Change / Yank / Visual select inner word
-keymap.set("n", "c<space>", '"_ciw', opts)
-keymap.set("n", "d<space>", '"_diw', opts)
-keymap.set("n", "y<space>", "yiw", opts)
-keymap.set("n", "v<space>", "viw", opts)
+keyset("n", "c<space>", '"_ciw', opts)
+keyset("n", "d<space>", '"_diw', opts)
+keyset("n", "y<space>", "yiw", opts)
+keyset("n", "v<space>", "viw", opts)
 
 -- Paste without overwriting the default register
-keymap.set("v", "p", [["_dp]])
-keymap.set("v", "P", [["_dP]])
+keyset("v", "p", [["_dp]])
+keyset("v", "P", [["_dP]])
 
 -- x to using cut to the system clipboard
-keymap.set({ "n", "v" }, "x", '"*d', opts)
-keymap.set({ "n", "v" }, "X", '"*D', opts)
-keymap.set({ "n", "v" }, "xx", '"*dd', opts)
+keyset({ "n", "v" }, "x", '"*d', opts)
+keyset({ "n", "v" }, "X", '"*D', opts)
+keyset({ "n", "v" }, "xx", '"*dd', opts)
 
 -- Stay in visual mode when indenting
-keymap.set("v", "<", "<gv")
-keymap.set("v", ">", ">gv")
+keyset("v", "<", "<gv")
+keyset("v", ">", ">gv")
 
 -- Split window
-keymap.set({ "n", "v" }, "|", "<CMD>vsplit<CR>")
-keymap.set({ "n", "v" }, "\\", "<CMD>split<CR>")
+keyset({ "n", "v" }, "|", "<CMD>vsplit<CR>")
+keyset({ "n", "v" }, "\\", "<CMD>split<CR>")
 
 -- Move to beginning and end of line
-keymap.set({ "n", "v" }, "gh", "^", opts)
-keymap.set({ "n", "v" }, "gl", "$", opts)
-keymap.set({ "n", "v" }, "gm", "%", opts)
+keyset({ "n", "v" }, "gh", "^", opts)
+keyset({ "n", "v" }, "gl", "$", opts)
+keyset({ "n", "v" }, "gm", "%", opts)
 
 -- Center cursor
--- keymap.set("n", "n", "nzzzv", opts)
--- keymap.set("n", "N", "Nzzzv", opts)
--- keymap.set("n", "J", "mzJ`z", opts)
--- keymap.set("n", "<C-d>", "<C-d>zz", opts)
--- keymap.set("n", "<C-u>", "<C-u>zz", opts)
+-- keyset("n", "n", "nzzzv", opts)
+-- keyset("n", "N", "Nzzzv", opts)
+-- keyset("n", "J", "mzJ`z", opts)
+-- keyset("n", "<C-d>", "<C-d>zz", opts)
+-- keyset("n", "<C-u>", "<C-u>zz", opts)
+keyset("n", "<C-e>", vim.diagnostic.open_float, {
+	desc = "Show line diagnostic",
+})
 
 -- https://eiji.page/blog/nvim-hlslens-intro/
-keymap.set("n", "#", function()
+keyset("n", "#", function()
 	local current_word = vim.fn.expand("<cword>")
 	vim.api.nvim_feedkeys(":%s/" .. current_word .. "//g", "n", false)
 	-- :%s/word/CURSOR/g
@@ -98,6 +102,6 @@ end, opts)
 
 -- 0.12.0から追加されたインクリメンタルセレクションのキーマップ
 if vim.fn.has("nvim-0.12.0") == 1 then
-	keymap.set("x", "n", "an", { remap = true, desc = "Incremental selection: expand" })
-	keymap.set("x", "N", "in", { remap = true, desc = "Incremental selection: shrink" })
+	keyset("x", "n", "an", { remap = true, desc = "Incremental selection: expand" })
+	keyset("x", "N", "in", { remap = true, desc = "Incremental selection: shrink" })
 end
