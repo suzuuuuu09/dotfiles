@@ -1,3 +1,7 @@
+-- ログの保存先を変更する
+vim.env.XDG_STATE_HOME = "/tmp"
+vim.opt.undodir = vim.env.XDG_STATE_HOME .. "/nvim/undo"
+
 local opt = vim.opt
 
 -- 行をまたいで移動できるようにする
