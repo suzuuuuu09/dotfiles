@@ -118,7 +118,7 @@
       ./.config/nix/home-manager/programs/treefmt.nix;
 
     localOverlays = [
-      (final: prev: {
+      (_final: prev: {
         czg = prev.callPackage ./.config/nix/overlays/czg.nix {};
         cxr = prev.callPackage ./.config/nix/overlays/cxr.nix {};
       })

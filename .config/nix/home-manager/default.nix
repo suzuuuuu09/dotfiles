@@ -1,7 +1,9 @@
 {...}: {
-  home.homeDirectory = /Users/k25012kk;
-  home.username = "k25012kk";
-  home.stateVersion = "25.11";
+  home = {
+    homeDirectory = /Users/k25012kk;
+    username = "k25012kk";
+    stateVersion = "25.11";
+  };
   targets.darwin.copyApps.enable = false;
 
   imports = [

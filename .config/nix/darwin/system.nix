@@ -166,37 +166,39 @@
     keep-derivations = false;
   };
 
-  # Spotlight で見えるように /Applications/Nix Apps を macOS alias で作る
-  system.activationScripts.applications.text = lib.mkForce ''
-    echo "setting up /Applications/Nix Apps..." >&2
-    rm -rf /Applications/Nix\ Apps
-    mkdir -p /Applications/Nix\ Apps
-    find ${config.system.build.applications}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-    while read -r src; do
-      app_name=$(basename "$src")
-      ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
-    done
-  '';
+  system = {
+    # システムのユーザ名を指定
+    primaryUser = "k25012kk";
 
-  # Homebrew cask アプリを /Applications にコピーして Spotlight に登録
-  system.activationScripts.spotlightApps.text = ''
-    LSREG="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
-    CASKROOM="/opt/homebrew/Caskroom"
+    # Spotlight で見えるように /Applications/Nix Apps を macOS alias で作る
+    activationScripts.applications.text = lib.mkForce ''
+      echo "setting up /Applications/Nix Apps..." >&2
+      rm -rf /Applications/Nix\ Apps
+      mkdir -p /Applications/Nix\ Apps
+      find ${config.system.build.applications}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
+      while read -r src; do
+        app_name=$(basename "$src")
+        ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+      done
+    '';
 
-    # battery: Caskroom から /Applications にコピー
-    if [ -d "$CASKROOM/battery" ]; then
-      SRC=$(find "$CASKROOM/battery" -maxdepth 2 -name "*.app" | head -1)
-      if [ -n "$SRC" ] && [ ! -d "/Applications/$(basename "$SRC")" ]; then
-        echo "Copying battery to /Applications..." >&2
-        /usr/bin/ditto "$SRC" "/Applications/$(basename "$SRC")"
-        /usr/bin/xattr -dr com.apple.quarantine "/Applications/$(basename "$SRC")" 2>/dev/null || true
-        "$LSREG" -f "/Applications/$(basename "$SRC")" 2>/dev/null || true
+    # Homebrew cask アプリを /Applications にコピーして Spotlight に登録
+    activationScripts.spotlightApps.text = ''
+      LSREG="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
+      CASKROOM="/opt/homebrew/Caskroom"
+
+      # battery: Caskroom から /Applications にコピー
+      if [ -d "$CASKROOM/battery" ]; then
+        SRC=$(find "$CASKROOM/battery" -maxdepth 2 -name "*.app" | head -1)
+        if [ -n "$SRC" ] && [ ! -d "/Applications/$(basename "$SRC")" ]; then
+          echo "Copying battery to /Applications..." >&2
+          /usr/bin/ditto "$SRC" "/Applications/$(basename "$SRC")"
+          /usr/bin/xattr -dr com.apple.quarantine "/Applications/$(basename "$SRC")" 2>/dev/null || true
+          "$LSREG" -f "/Applications/$(basename "$SRC")" 2>/dev/null || true
+        fi
       fi
-    fi
-  '';
-
-  # システムのユーザ名を指定
-  system.primaryUser = "k25012kk";
+    '';
+  };
   users.users.k25012kk.home = /Users/k25012kk;
 
   system.configurationRevision = self.rev or self.dirtyRev or null;
