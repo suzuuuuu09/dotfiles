@@ -15,16 +15,16 @@ after-login-command = []
 after-startup-command = ['exec-and-forget borders']
 
 exec-on-workspace-change = [
-	'/bin/bash',
-	'-c',
-	'~/.config/aerospace/pip-follow.sh',
+    '/bin/bash',
+    '-c',
+    '~/.config/aerospace/pip-follow.sh',
 ]
 
 # Start AeroSpace at login
 start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
-enable-normalization-flatten-containers = true
+enable-normalization-flatten-containers                         = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
 # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
@@ -60,11 +60,11 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
 inner.horizontal = 5
-inner.vertical = 5
-outer.left = 5
-outer.bottom = 5
-outer.top = 5
-outer.right = 5
+inner.vertical   = 5
+outer.left       = 5
+outer.bottom     = 5
+outer.top        = 5
+outer.right      = 5
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -156,11 +156,11 @@ alt-shift-semicolon = 'mode service'
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
+r   = ['flatten-workspace-tree', 'mode main'] # reset layout
 #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 f = [
-	'layout floating tiling',
-	'mode main',
+    'layout floating tiling',
+    'mode main',
 ] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
@@ -172,44 +172,44 @@ alt-shift-l = ['join-with right', 'mode main']
 # WezTermを開いたときにTerminalワークスペースに移動して開く
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
-run = "move-node-to-workspace T"
+run       = "move-node-to-workspace T"
 
 # Vivaldiを開いたときにBrowserワークスペースに移動して開く
 [[on-window-detected]]
 if.app-id = 'om.vivaldi.Vivaldi'
-run = "move-node-to-workspace B"
+run       = "move-node-to-workspace B"
 
 # Obsidianを開いたときにNotesワークスペースに移動して開く
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
-run = "move-node-to-workspace N"
+run       = "move-node-to-workspace N"
 
 # Youtube Musicを開いたときにMusicワークスペースに移動して開く
 [[on-window-detected]]
 if.app-id = 'com.github.th-ch.youtube-music'
-run = "move-node-to-workspace M"
+run       = "move-node-to-workspace M"
 
 # Slackを開いたときにCommunicationワークスペースに移動して開く
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
-run = "move-node-to-workspace C"
+run       = "move-node-to-workspace C"
 
 # Discordを開いたときにCommunicationワークスペースに移動して開く
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
-run = "move-node-to-workspace C"
+run       = "move-node-to-workspace C"
 
 # Finderを開いたときにフローティングで表示
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
-run = 'layout floating'
+run       = 'layout floating'
 
 # システム設定を開いたときにフローティングで表示
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
-run = 'layout floating'
+run       = 'layout floating'
 
 [[on-window-detected]]
-if.app-id = 'om.vivaldi.Vivaldi'
+if.app-id                       = 'om.vivaldi.Vivaldi'
 if.window-title-regex-substring = "ピクチャーインピクチャー"
-run = ['layout floating']
+run                             = ['layout floating']
