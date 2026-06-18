@@ -17,6 +17,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -99,11 +104,18 @@
     nixpkgs,
     home-manager,
     nix-homebrew,
+    treefmt-nix,
     ...
   } @ inputs: let
     # TODO: 将来的にはArch Linuxもサポートする予定
     targetSystem = "aarch64-darwin";
     isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
+
+    pkgs = nixpkgs.legacyPackages.${targetSystem};
+
+    treefmtEval =
+      treefmt-nix.lib.evalModule pkgs
+      ./.config/nix/home-manager/programs/treefmt.nix;
 
     localOverlays = [
       (final: prev: {
@@ -112,6 +124,11 @@
       })
     ];
   in {
+    formatter.${targetSystem} = treefmtEval.config.build.wrapper;
+
+    checks.${targetSystem}.formatting =
+      treefmtEval.config.build.check self;
+
     darwinConfigurations."suzuMac" = nix-darwin.lib.darwinSystem {
       system = targetSystem;
 
