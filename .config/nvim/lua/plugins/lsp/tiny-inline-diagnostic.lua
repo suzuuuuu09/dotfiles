@@ -42,7 +42,7 @@ return {
 
 		vim.diagnostic.config({
 			virtual_text = false,
-			underline = true,     -- 波線を常に表示
+			underline = true, -- 波線を常に表示
 			update_in_insert = true, -- インサートモードでも診断を更新
 			signs = {
 				text = {
