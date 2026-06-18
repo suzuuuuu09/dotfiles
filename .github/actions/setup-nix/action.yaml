@@ -5,6 +5,7 @@ inputs:
   authToken:
     description: Cachix auth token
     required: true
+    default: ""
   skipPush:
     description: Skip Cachix push configuration
     default: "false"
