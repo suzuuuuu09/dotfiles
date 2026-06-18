@@ -1,9 +1,47 @@
 module.exports = {
+	parserPreset: {
+		parserOpts: {
+			// 先頭のgitmojiを許可しつつ、Conventional Commitsとして読む
+			// 例: ✨ feat(nvim): obsidianのworkspace設定を追加
+			headerPattern:
+				/^(?:\p{Emoji_Presentation}|\p{Emoji}\uFE0F)?\s?(\w*)(?:\((.*)\))?!?: (.*)$/u,
+			headerCorrespondence: ["type", "scope", "subject"],
+		},
+	},
+
 	rules: {
 		// @see: https://commitlint.js.org/#/reference-rules
+
+		"type-enum": [
+			2,
+			"always",
+			[
+				"feat",
+				"fix",
+				"update",
+				"docs",
+				"style",
+				"refactor",
+				"perf",
+				"test",
+				"build",
+				"ci",
+				"chore",
+				"revert",
+				"wip",
+			],
+		],
+
+		"type-empty": [2, "never"],
+		"subject-empty": [2, "never"],
+		"header-max-length": [2, "always", 100],
 	},
+
 	prompt: {
-		alias: { fd: "docs: fix typos" },
+		alias: {
+			fd: "docs: fix typos",
+		},
+
 		messages: {
 			type: "変更の種類を選択してください:",
 			scope: "変更のスコープを入力してください（任意）:",
@@ -23,151 +61,166 @@ module.exports = {
 
 		types: [
 			{
-				value: "✨",
-				name: "✨  新機能の追加",
+				value: "feat",
+				name: "✨  feat:     新機能の追加",
 				emoji: "✨",
 				title: "Features",
 				description: "Add new features to the codebase.",
 			},
 			{
-				value: "⚡️",
-				name: "⚡️  パフォーマンスの改善",
-				emoji: "⚡️",
-				title: "Performance Improvements",
-				description: "Improve the performance of the codebase.",
-			},
-			{
-				value: "🐛",
-				name: "🐛  バグ修正",
+				value: "fix",
+				name: "🐛  fix:      バグ修正",
 				emoji: "🐛",
 				title: "Bug Fixes",
 				description: "Fix bugs in the codebase.",
 			},
 			{
-				value: "🩹",
-				name: "🩹  重要ではない軽微な問題の修正",
-				emoji: "🩹",
-				title: "Minor Fixes",
-				description: "Fix minor issues that are not critical.",
-			},
-			{
-				value: "♻️",
-				name: "♻️   コードのリファクタリング",
-				emoji: "♻️",
-				title: "Refactoring",
-				description: "Refactor code without changing its behavior.",
-			},
-			{
-				value: "🎉",
-				name: "🎉  プロジェクトの開始",
-				emoji: "🎉",
-				title: "Initial Commit",
-				description: "Initial commit to start the project.",
-			},
-			{
-				value: "🚨",
-				name: "🚨  コンパイラ/リンターのエラー修正",
-				emoji: "🚨 ",
-				title: "Compiler/Linter Fixes",
-				description: "Fix compiler or linter errors in the codebase.",
-			},
-			{
-				value: "🎨",
-				name: "🎨  コードの構造/フォーマットを改善",
-				emoji: "🎨",
-				title: "Code Style Improvements",
-				description:
-					"Improve the structure or format of the code without changing its behavior.",
-			},
-			{
-				value: "🔧",
-				name: "🔧  設定ファイルの追加/更新",
-				emoji: "🔧 ",
-				title: "Configuration",
-				description: "Add or update configuration files.",
-			},
-			{
-				value: "🚧",
-				name: "🚧  作業中",
-				emoji: "🚧",
-				title: "Work in Progress",
-				description: "Work in progress, not ready for review or merging.",
-			},
-			{
-				value: "📝",
-				name: "📝  ドキュメントの追加/更新",
+				value: "docs",
+				name: "📝  docs:     ドキュメントの生成や修正",
 				emoji: "📝",
 				title: "Documentation",
-				description: "Add or update documentation.",
+				description:
+					"Add or update documentation (README, inline comments, etc.).",
 			},
 			{
-				value: "📦",
-				name: "📦  パッケージの追加/更新",
+				value: "style",
+				name: "💄  style:    コードの意味に影響を与えない変更",
+				emoji: "💄",
+				title: "Code Style Improvements",
+				description:
+					"Improve code formatting, white spaces, semicolons, or UI appearance without changing behavior.",
+			},
+			{
+				value: "refactor",
+				name: "♻️   refactor: コードのパターンの変更や整理",
+				emoji: "♻️",
+				title: "Refactoring",
+				description:
+					"Refactor code without changing its behavior or fixing bugs.",
+			},
+			{
+				value: "test",
+				name: "✅  test:     テストコードの追加や修正",
+				emoji: "✅",
+				title: "Tests",
+				description: "Add or update test codes.",
+			},
+			{
+				value: "chore",
+				name: "🔧  chore:    設定ファイルや開発環境の変更など",
+				emoji: "🔧",
+				title: "Chores",
+				description:
+					"Update build process, auxiliary tools, configuration files, etc. (non-source code).",
+			},
+			{
+				value: "perf",
+				name: "⚡️  perf:     パフォーマンスを向上させるためのコード変更",
+				emoji: "⚡️",
+				title: "Performance Improvements",
+				description: "Improve the performance of the codebase.",
+			},
+			{
+				value: "revert",
+				name: "⏪️  revert:   コミットの打ち消し",
+				emoji: "⏪️",
+				title: "Reverts",
+				description: "Revert to a previous commit.",
+			},
+			{
+				value: "deps",
+				name: "📦  deps:     依存関係・パッケージの追加や更新",
 				emoji: "📦",
+				title: "Dependencies",
+				description: "Add or update dependencies and packages.",
 			},
 		],
+
 		useEmoji: true,
 		emojiAlign: "center",
+
 		useAI: false,
 		aiNumber: 5,
+
 		aiQuestionCB: ({ type, diff, maxSubjectLength }) => {
 			return `
-			# constraints
-			- バッククォート（\`）やコードブロック（\`\`\`）は絶対に使用しないでください。
-			- 日本語で出力してください。
-			- 形式は conventional commits 1.0.0 に準拠してください。
-			- 簡潔かつ、後で履歴を追いやすいように具体的に表現を心がけてください。
-			- 変更点が複数ある場合は、一番大きい変更もしくは最も重要な変更を表現してください。2個以上は出力しないでください。
-			- 長かったら、${maxSubjectLength}文字以内に収めてください。
-			- scopeは、変更の影響範囲を表す短い単語やフレーズで、括弧で囲んでください。例: (nvim), (lazygit), (yazi)。
+# selected type
+${type}
 
-			# format
-			- <description> (<scope>)
-
-			# example commit messages
-			- 自動コミットの機能を追加した (lazygit)
-			- IMEの切り替えを自動で行うようにした (nvimm)
-			- LspInfoのコマンド作った (nvim)
-			- yaziのnordフレーバーを入れた (yazi)
-			- コードのフォーマットをした (aerospace)
-			- パッケージの更新をした (nix)
-
-			${type} ${diff}
-			`;
+# diff
+${diff}
+`;
 		},
+
 		themeColorCode: "",
+
 		scopes: [],
 		allowCustomScopes: true,
 		allowEmptyScopes: true,
 		customScopesAlign: "bottom",
 		customScopesAlias: "custom",
 		emptyScopesAlias: "empty",
+
 		// 最初の文字の大文字・小文字を変更しない
 		upperCaseSubject: null,
+
 		markBreakingChangeMode: false,
 		allowBreakingChanges: ["feat", "fix"],
+
 		breaklineNumber: 100,
 		breaklineChar: "|",
+
 		skipQuestions: [],
+
 		issuePrefixes: [
-			{ value: "closed", name: "closed:   ISSUES has been processed" },
+			{
+				value: "closed",
+				name: "closed:   ISSUES has been processed",
+			},
 		],
+
 		customIssuePrefixAlign: "top",
 		emptyIssuePrefixAlias: "skip",
 		customIssuePrefixAlias: "custom",
 		allowCustomIssuePrefix: true,
 		allowEmptyIssuePrefix: true,
+
 		confirmColorize: true,
+
 		scopeOverrides: undefined,
+
 		defaultBody: "",
 		defaultIssues: "",
 		defaultScope: "",
 		defaultSubject: "",
-		formatMessageCB: ({ defaultMessage, type, scope, subject }) => {
-			if (scope) {
-				return `${type} ${subject} (${scope})`;
-			}
-			return `${type} ${subject}`;
+
+		formatMessageCB: ({ type, scope, subject, emoji, body }) => {
+			const gitmoji = emoji ? `${emoji} ` : "";
+
+			const [subjectPart, ...descriptionParts] = subject
+				.split("|")
+				.map((part) => part.trim())
+				.filter(Boolean);
+
+			const match = subjectPart.match(/^(.*)\s+\(([^()]+)\)$/);
+
+			const parsedSubject = match ? match[1].trim() : subjectPart.trim();
+			const parsedScope = match ? match[2].trim() : scope;
+
+			const normalizedScope =
+				parsedScope && parsedScope !== "empty" ? parsedScope : "";
+
+			const commitType = normalizedScope ? `${type}(${normalizedScope})` : type;
+
+			const header = `${gitmoji}${commitType}: ${parsedSubject}`;
+
+			const descriptionFromAI = descriptionParts.join("\n").trim();
+			const descriptionFromInput = body
+				? body.replaceAll("|", "\n").trim()
+				: "";
+			const description = descriptionFromAI || descriptionFromInput;
+
+			return description ? `${header}\n\n${description}` : header;
 		},
 	},
 };
