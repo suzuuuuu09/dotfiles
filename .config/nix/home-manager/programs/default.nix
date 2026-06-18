@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./czg
+    ./npm
     ./codex.nix
     ./nh.nix
     ./direnv.nix

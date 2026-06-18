@@ -39,6 +39,5 @@ in {
     ".zshrc".source = mkLink ".zshrc";
     ".zshenv".source = mkLink ".zshenv";
     ".zprofile".source = mkLink ".zprofile";
-    ".npmrc".source = mkLink ".npmrc";
   };
 }
