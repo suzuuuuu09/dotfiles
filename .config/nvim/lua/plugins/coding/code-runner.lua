@@ -7,12 +7,51 @@ return {
 	config = function()
 		require("code_runner").setup({
 			filetype = {
-				java = {
-					"cd $dir &&",
-					"javac $fileName &&",
-					"java $fileNameWithoutExt &&",
-					"rm $fileNameWithoutExt.class",
-				},
+				java = function()
+					local file = vim.fn.expand("%:p")
+					local filename = vim.fn.expand("%:t")
+					local class_name = vim.fn.expand("%:t:r")
+
+					local package_name
+
+					for line in io.lines(file) do
+						package_name = line:match("^%s*package%s+([%w%._]+)%s*;")
+
+						if package_name then
+							break
+						end
+					end
+
+					-- package宣言がない通常のJavaファイル
+					if not package_name then
+						local dir = vim.fn.expand("%:p:h")
+
+						return table.concat({
+							"cd " .. vim.fn.shellescape(dir),
+							"javac -encoding UTF-8 " .. vim.fn.shellescape(filename),
+							"java " .. vim.fn.shellescape(class_name),
+						}, " && ")
+					end
+
+					-- package com.example.app; などの宣言がある場合
+					-- ↓
+					-- com/example/app
+					local package_path = package_name:gsub("%.", "/")
+					local relative_file = package_path .. "/" .. filename
+
+					-- ファイルパスの末尾からパッケージ部分を取り除き、
+					-- ソースルートを取得する
+					local suffix = "/" .. relative_file
+					local source_root = file:sub(1, #file - #suffix)
+
+					local full_class_name = package_name .. "." .. class_name
+
+					return table.concat({
+						"cd " .. vim.fn.shellescape(source_root),
+						"javac -encoding UTF-8 " .. vim.fn.shellescape(relative_file),
+						"java " .. vim.fn.shellescape(full_class_name),
+					}, " && ")
+				end,
 				python = "python3 -u",
 				typescript = "bun run",
 				rust = {
@@ -42,7 +81,6 @@ return {
 					local cmake_file = vim.fn.findfile("CMakeLists.txt", vim.fn.expand("%:p:h") .. ";")
 					if cmake_file ~= "" then
 						local project_dir = vim.fn.fnamemodify(cmake_file, ":p:h")
-						local build_dir = project_dir .. "/build"
 						local commands = {
 							"cd " .. project_dir .. " &&",
 							"mkdir -p build &&",
