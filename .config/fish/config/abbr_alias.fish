@@ -28,10 +28,7 @@ abbr -a nvc "nvim $XDG_CONFIG_HOME"
 abbr -a nvn "nvim $XDG_CONFIG_HOME/nvim"
 
 # AI
-abbr -a co copilot
-abbr -a oc opencode
-
-abbr -a act "act --container-architecture linux/amd64"
+abbr -a co codex
 
 # @antfu/ni
 abbr -a nx nlx
@@ -48,4 +45,5 @@ abbr -a nix-build "darwin-rebuild build --flake ~/dotfiles#(scutil --get LocalHo
 abbr -a nix-check "darwin-rebuild check --flake ~/dotfiles#(scutil --get LocalHostName)"
 abbr -a nix-clean "nix-collect-garbage -d && nix-store --optimize"
 abbr -a nfu "nix flake update"
+abbr -a nfc "nix flake check"
 # abbr -a , --position anywhere --set-cursor 'nix run nixpkgs#%'

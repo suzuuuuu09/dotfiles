@@ -18,9 +18,6 @@ fish_add_path $PYENV_ROOT/shims
 # Cursor Agent
 fish_add_path $HOME/.local/bin
 
-# bun
-fish_add_path $HOME/.bun/bin
-
 # Obsidian
 fish_add_path /Applications/Obsidian.app/Contents/MacOS
 
