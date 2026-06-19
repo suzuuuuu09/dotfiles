@@ -15,159 +15,149 @@
   #   HOMEBREW_NO_INSTALL_FROM_API=1
   # '';
 
-  system.defaults = {
-    finder = {
-      AppleShowAllFiles = true;
-      FXDefaultSearchScope = "SCcf";
-      FXPreferredViewStyle = "Nlsv";
-      FXRemoveOldTrashItems = true;
-      NewWindowTarget = "Home";
-      ShowExternalHardDrivesOnDesktop = true;
-    };
-
-    NSGlobalDomain = {
-      ApplePressAndHoldEnabled = false;
-      InitialKeyRepeat = 30;
-      KeyRepeat = 2;
-      "com.apple.swipescrolldirection" = true;
-      "com.apple.trackpad.scaling" = 1.5;
-    };
-
-    ".GlobalPreferences" = {
-      "com.apple.mouse.scaling" = 1.0;
-    };
-
-    # +----------------------------------------------------------+
-    # |                           Dock                           |
-    # +----------------------------------------------------------+
-    dock = {
-      # Dock のサイズ
-      tilesize = 34;
-      # 拡大
-      magnification = true;
-      largesize = 74;
-      # Dock の位置
-      orientation = "bottom";
-      # Dock を自動的に隠す
-      autohide = true;
-      # 起動中のアプリにインジケータを表示
-      show-process-indicators = true;
-      # 最近使ったアプリを表示
-      show-recents = true;
-      # ウィンドウをアプリアイコンにしまう
-      minimize-to-application = false;
-      # しまうときのエフェクト ("genie", "scale")
-      mineffect = "genie";
-      # スタックにマウスオーバーでハイライト
-      mouse-over-hilite-stack = true;
-      # 静的なアプリのみ表示 (実行中のアプリを非表示)
-      static-only = false;
-      # アプリケーションをグループ化して表示
-      # AeroSpaceの小さく表示されるバグ対策
-      expose-group-apps = true;
-      # ドックに表示するアプリ
-      persistent-apps = [
-        {app = "/Applications/Vivaldi.app";}
-        {app = "/Applications/WezTerm.app";}
-        {app = "/Applications/Microsoft Teams.app";}
-        {app = "/Applications/Slack.app";}
-        {app = "/Applications/zoom.us.app";}
-        {app = "/Applications/Obsidian.app";}
-        {app = "/System/Applications/Utilities/Audio MIDI Setup.app";}
-        {app = "/Applications/Claude.app";}
-        {app = "/Applications/Parsec.app";}
-        {app = "/Applications/Discord.app";}
-      ];
-      wvous-bl-corner = 2;
-      wvous-br-corner = 11;
-    };
-    # ╭──────────────────────────────────────────────────────────╮
-    # │                         Trackpad                         │
-    # ╰──────────────────────────────────────────────────────────╯
-    trackpad = {
-      # タップでクリック
-      Clicking = true;
-      # 2本指で右クリック
-      TrackpadRightClick = false;
-      # 3本指でドラッグ
-      TrackpadThreeFingerDrag = true;
-      # クリックしたときの触覚フィードバック
-      ActuateDetents = true;
-    };
-
-    screencapture = {
-      target = "file";
-    };
-
-    CustomUserPreferences = {
-      "com.apple.controlcenter" = {
-        "NSStatusItem Visible AudioVideoModule" = 0;
-        "NSStatusItem Visible Battery" = 1;
-        "NSStatusItem Visible BentoBox" = 1;
-        "NSStatusItem Visible Clock" = 1;
-        "NSStatusItem Visible FocusModes" = 1;
-        "NSStatusItem Visible KeyboardBrightness" = 0;
-        "NSStatusItem Visible NowPlaying" = 0;
-        "NSStatusItem Visible ScreenMirroring" = 0;
-        "NSStatusItem Visible Shortcuts" = 0;
-        "NSStatusItem Visible Timer" = 0;
-        "NSStatusItem Visible WiFi" = 1;
+  system = {
+    defaults = {
+      # +----------------------------------------------------------+
+      # |                          finder                          |
+      # +----------------------------------------------------------+
+      finder = {
+        AppleShowAllFiles = true;
+        FXDefaultSearchScope = "SCcf";
+        FXPreferredViewStyle = "Nlsv";
+        FXRemoveOldTrashItems = true;
+        NewWindowTarget = "Home";
+        ShowExternalHardDrivesOnDesktop = true;
       };
 
       NSGlobalDomain = {
-        AppleMenuBarVisibleInFullscreen = true;
+        ApplePressAndHoldEnabled = false;
+        InitialKeyRepeat = 30;
+        KeyRepeat = 2;
+        "com.apple.swipescrolldirection" = true;
+        "com.apple.trackpad.scaling" = 1.5;
       };
 
-      "com.apple.finder" = {
-        ShowHardDrivesOnDesktop = 0;
-        ShowPathbar = 1;
-        ShowRemovableMediaOnDesktop = 1;
+      ".GlobalPreferences" = {
+        "com.apple.mouse.scaling" = 1.0;
       };
 
-      "com.apple.driver.AppleBluetoothMultitouch.trackpad" = {
-        DragLock = 0;
-        Dragging = 0;
-        TrackpadCornerSecondaryClick = 0;
-        TrackpadFiveFingerPinchGesture = 2;
-        TrackpadFourFingerHorizSwipeGesture = 2;
-        TrackpadFourFingerPinchGesture = 2;
-        TrackpadFourFingerVertSwipeGesture = 2;
-        TrackpadHandResting = 1;
-        TrackpadHorizScroll = 1;
-        TrackpadMomentumScroll = 1;
-        TrackpadPinch = 1;
-        TrackpadRightClick = 0;
-        TrackpadRotate = 1;
-        TrackpadScroll = 1;
-        TrackpadThreeFingerHorizSwipeGesture = 2;
-        TrackpadThreeFingerTapGesture = 0;
-        TrackpadThreeFingerVertSwipeGesture = 2;
-        TrackpadTwoFingerDoubleTapGesture = 1;
-        TrackpadTwoFingerFromRightEdgeSwipeGesture = 3;
-        USBMouseStopsTrackpad = 0;
+      # +----------------------------------------------------------+
+      # |                           Dock                           |
+      # +----------------------------------------------------------+
+      dock = {
+        # Dock のサイズ
+        tilesize = 34;
+        # 拡大
+        magnification = true;
+        largesize = 74;
+        # Dock の位置
+        orientation = "bottom";
+        # Dock を自動的に隠す
+        autohide = true;
+        # 起動中のアプリにインジケータを表示
+        show-process-indicators = true;
+        # 最近使ったアプリを表示
+        show-recents = true;
+        # ウィンドウをアプリアイコンにしまう
+        minimize-to-application = false;
+        # しまうときのエフェクト ("genie", "scale")
+        mineffect = "genie";
+        # スタックにマウスオーバーでハイライト
+        mouse-over-hilite-stack = true;
+        # 静的なアプリのみ表示 (実行中のアプリを非表示)
+        static-only = false;
+        # アプリケーションをグループ化して表示
+        # AeroSpaceの小さく表示されるバグ対策
+        expose-group-apps = true;
+        # ドックに表示するアプリ
+        persistent-apps = [
+          {app = "/Applications/Vivaldi.app";}
+          {app = "/Applications/WezTerm.app";}
+          {app = "/Applications/Microsoft Teams.app";}
+          {app = "/Applications/Slack.app";}
+          {app = "/Applications/zoom.us.app";}
+          {app = "/Applications/Obsidian.app";}
+          {app = "/System/Applications/Utilities/Audio MIDI Setup.app";}
+          {app = "/Applications/Claude.app";}
+          {app = "/Applications/Parsec.app";}
+          {app = "/Applications/Discord.app";}
+        ];
+        wvous-bl-corner = 2;
+        wvous-br-corner = 11;
+      };
+      # ╭──────────────────────────────────────────────────────────╮
+      # │                         Trackpad                         │
+      # ╰──────────────────────────────────────────────────────────╯
+      trackpad = {
+        # タップでクリック
+        Clicking = true;
+        # 2本指で右クリック
+        TrackpadRightClick = false;
+        # 3本指でドラッグ
+        TrackpadThreeFingerDrag = true;
+        # クリックしたときの触覚フィードバック
+        ActuateDetents = true;
       };
 
-      "com.apple.screencapture" = {
-        location = "~/Pictures/スクリーンショット";
-        style = "selection";
+      screencapture = {
+        target = "file";
+      };
+
+      CustomUserPreferences = {
+        "com.apple.controlcenter" = {
+          "NSStatusItem Visible AudioVideoModule" = 0;
+          "NSStatusItem Visible Battery" = 1;
+          "NSStatusItem Visible BentoBox" = 1;
+          "NSStatusItem Visible Clock" = 1;
+          "NSStatusItem Visible FocusModes" = 1;
+          "NSStatusItem Visible KeyboardBrightness" = 0;
+          "NSStatusItem Visible NowPlaying" = 0;
+          "NSStatusItem Visible ScreenMirroring" = 0;
+          "NSStatusItem Visible Shortcuts" = 0;
+          "NSStatusItem Visible Timer" = 0;
+          "NSStatusItem Visible WiFi" = 1;
+        };
+
+        NSGlobalDomain = {
+          AppleMenuBarVisibleInFullscreen = true;
+        };
+
+        "com.apple.finder" = {
+          ShowHardDrivesOnDesktop = 0;
+          ShowPathbar = 1;
+          ShowRemovableMediaOnDesktop = 1;
+        };
+
+        "com.apple.driver.AppleBluetoothMultitouch.trackpad" = {
+          DragLock = 0;
+          Dragging = 0;
+          TrackpadCornerSecondaryClick = 0;
+          TrackpadFiveFingerPinchGesture = 2;
+          TrackpadFourFingerHorizSwipeGesture = 2;
+          TrackpadFourFingerPinchGesture = 2;
+          TrackpadFourFingerVertSwipeGesture = 2;
+          TrackpadHandResting = 1;
+          TrackpadHorizScroll = 1;
+          TrackpadMomentumScroll = 1;
+          TrackpadPinch = 1;
+          TrackpadRightClick = 0;
+          TrackpadRotate = 1;
+          TrackpadScroll = 1;
+          TrackpadThreeFingerHorizSwipeGesture = 2;
+          TrackpadThreeFingerTapGesture = 0;
+          TrackpadThreeFingerVertSwipeGesture = 2;
+          TrackpadTwoFingerDoubleTapGesture = 1;
+          TrackpadTwoFingerFromRightEdgeSwipeGesture = 3;
+          USBMouseStopsTrackpad = 0;
+        };
+
+        "com.apple.screencapture" = {
+          location = "~/Pictures/スクリーンショット";
+          style = "selection";
+        };
       };
     };
-  };
-  nixpkgs.config.allowUnfree = true;
 
-  nix.enable = true;
-  nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
-    trusted-users = ["root" "k25012kk"];
-
-    # 容量節約のための設定
-    auto-optimise-store = true;
-    keep-outputs = false;
-    keep-derivations = false;
-  };
-
-  system = {
-    # システムのユーザ名を指定
     primaryUser = "k25012kk";
 
     # Spotlight で見えるように /Applications/Nix Apps を macOS alias で作る
@@ -198,10 +188,26 @@
         fi
       fi
     '';
+
+    configurationRevision = self.rev or self.dirtyRev or null;
+    stateVersion = 6;
   };
+  nixpkgs.config.allowUnfree = true;
+
+  nix = {
+    enable = true;
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["root" "k25012kk"];
+
+      # 容量節約のための設定
+      auto-optimise-store = true;
+      keep-outputs = false;
+      keep-derivations = false;
+    };
+  };
+
   users.users.k25012kk.home = /Users/k25012kk;
 
-  system.configurationRevision = self.rev or self.dirtyRev or null;
-  system.stateVersion = 6;
   nixpkgs.hostPlatform = "aarch64-darwin";
 }

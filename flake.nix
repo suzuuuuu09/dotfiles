@@ -126,8 +126,31 @@
   in {
     formatter.${targetSystem} = treefmtEval.config.build.wrapper;
 
-    checks.${targetSystem}.formatting =
-      treefmtEval.config.build.check self;
+    checks.${targetSystem} = {
+      formatting = treefmtEval.config.build.check self;
+
+      statix =
+        pkgs.runCommand "statix-check" {
+          nativeBuildInputs = [pkgs.statix];
+        } ''
+          statix check ${self}
+          touch "$out"
+        '';
+
+      deadnix =
+        pkgs.runCommand "deadnix-check" {
+          nativeBuildInputs = [pkgs.deadnix];
+        } ''
+          deadnix \
+            --hidden \
+            --fail \
+            --no-lambda-arg \
+            --no-lambda-pattern-names \
+            ${self}
+
+          touch "$out"
+        '';
+    };
 
     darwinConfigurations."suzuMac" = nix-darwin.lib.darwinSystem {
       system = targetSystem;
