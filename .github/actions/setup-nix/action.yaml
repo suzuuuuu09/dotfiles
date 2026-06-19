@@ -4,7 +4,7 @@ description: Setup Nix with Cachix configuration
 inputs:
   authToken:
     description: Cachix auth token
-    required: true
+    required: false
     default: ""
   skipPush:
     description: Skip Cachix push configuration
@@ -21,4 +21,4 @@ runs:
         name: suzuuuuu09 # ここを自分のキャッシュ名に変更
         authToken: ${{ inputs.authToken }}
         extraPullNames: nix-community
-        skipPush: ${{ inputs.skipPush }}
+        skipPush: ${{ inputs.authToken == '' || inputs.skipPush == 'true' }}
