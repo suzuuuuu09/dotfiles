@@ -5,17 +5,20 @@ on:
     branches:
       - main
     paths:
-      - "**.nix"
+      - "**/*.nix"
       - "flake.lock"
       - ".github/workflows/nix-build.yaml"
       - ".github/actions/setup-nix/action.yaml"
   pull_request:
     paths:
-      - "**.nix"
+      - "**/*.nix"
       - "flake.lock"
       - ".github/workflows/nix-build.yaml"
       - ".github/actions/setup-nix/action.yaml"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build-macos:
@@ -23,15 +26,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
 
       - name: Setup Nix
         uses: ./.github/actions/setup-nix
         with:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           skipPush: ${{ github.event_name == 'pull_request' }}
-      
+
       - name: Check flake
-        run: nix flake check --show-trace
+        run: nix flake check --show-trace --keep-going
 
       - name: Build darwinConfigurations
         run: nix build --show-trace --no-link .#darwinConfigurations.suzuMac.system
