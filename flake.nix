@@ -32,6 +32,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
@@ -103,6 +108,7 @@
     nix-darwin,
     nixpkgs,
     home-manager,
+    nixos-wsl,
     nix-homebrew,
     treefmt-nix,
     ...
@@ -215,6 +221,19 @@
             };
           })
         ];
+    };
+
+    nixosConfigurations.suzuWsl = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+
+      specialArgs = {
+        inherit inputs;
+      };
+
+      modules = [
+        nixos-wsl.nixosModules.default
+	./.config/nix/wsl
+      ];
     };
   };
 }
