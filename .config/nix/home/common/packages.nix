@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # Editors / Shells / Prompt
+    git
     neovim
     fish
     oh-my-posh

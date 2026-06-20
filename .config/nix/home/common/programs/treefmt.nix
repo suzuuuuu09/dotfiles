@@ -13,5 +13,8 @@ _: {
 
     # TOML
     taplo.enable = true;
+
+    # Python
+    ruff.enable = true;
   };
 }

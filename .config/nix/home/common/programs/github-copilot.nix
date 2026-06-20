@@ -10,7 +10,7 @@
   # MCPの設定
   sops = {
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
-    defaultSopsFile = ../secrets/secrets.yaml;
+    defaultSopsFile = ../../../secrets/secrets.yaml;
 
     secrets = {
       context7_api_key = {};
@@ -23,7 +23,7 @@
         builtins.replaceStrings
         ["\${CONTEXT7_API_KEY}"]
         [config.sops.placeholder.context7_api_key]
-        (builtins.readFile ../../../copilot/mcp-config.json);
+        (builtins.readFile ../../../../copilot/mcp-config.json);
     };
   };
 }

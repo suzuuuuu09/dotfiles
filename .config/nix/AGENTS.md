@@ -3,9 +3,10 @@
 ## Project Structure & Module Organization
 This directory contains Nix-based macOS and Home Manager configuration fragments.
 
-- `darwin/`: nix-darwin system modules (`default.nix`, `system.nix`, `homebrew.nix`).
-- `home-manager/`: user-level configuration, package lists, and per-program modules.
-- `home-manager/programs/`: one file per tool, with nested folders for grouped configs such as `czg/`.
+- `hosts/`: machine-specific system entrypoints for macOS and WSL.
+- `home/common/`: shared Home Manager settings used by both macOS and WSL.
+- `home/darwin/`: macOS-specific Home Manager settings and macOS system modules. `default.nix` is the nix-darwin entrypoint and `home.nix` is the Home Manager entrypoint.
+- `home/wsl/`: WSL-specific Home Manager settings.
 - `overlays/`: custom package overlays for local package tweaks.
 - `secrets/`: SOPS-managed secret material. Do not inspect or edit secrets unless required.
 
@@ -24,7 +25,7 @@ Use the smallest command that exercises the area you changed.
 - Prefer Nix attrsets with short, explicit imports.
 - Keep function arguments vertically aligned, matching existing files.
 - Use 2-space indentation and trailing semicolons where required by Nix syntax.
-- Name new modules by feature or tool, for example `home-manager/programs/direnv.nix`.
+- Name new modules by feature or tool, for example `home/common/programs/direnv.nix`.
 - Keep comments brief and practical; existing Japanese comments may be preserved.
 
 ## Testing Guidelines
@@ -43,4 +44,4 @@ Recent commits use short, emoji-prefixed Japanese summaries, often with a scope 
 ## Security & Configuration Tips
 - Never commit or print secret values from `secrets/secrets.yaml`.
 - Preserve `nix.conf` settings for flakes and trusted caches unless there is a clear reason to change them.
-- Be careful with out-of-store symlinks in `home-manager/dotfiles.nix`; they depend on the local dotfiles checkout path.
+- Be careful with out-of-store symlinks in `home/common/dotfiles.nix`; they depend on the local dotfiles checkout path.

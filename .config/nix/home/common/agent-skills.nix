@@ -1,12 +1,17 @@
 # https://github.com/Kyure-A/agent-skills-nix
 # Agent Skillsを管理している
 # ~/.agents/skills (デフォルトの配置) にスキルを配置するための設定
-{inputs, ...}: {
+{
+  lib,
+  inputs,
+  enableAgentSkills ? false,
+  ...
+}: {
   imports = [
     inputs.agent-skills.homeManagerModules.default
   ];
 
-  programs.agent-skills = {
+  programs.agent-skills = lib.mkIf enableAgentSkills {
     enable = true;
 
     # スキルのソースを定義 (複数のソースを指定可能)

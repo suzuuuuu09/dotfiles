@@ -1,7 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  username,
+  ...
+}: {
   wsl = {
     enable = true;
-    defaultUser = "nixos";
+    defaultUser = username;
   };
 
   networking.hostName = "suzuWsl";
@@ -13,7 +17,7 @@
 
   programs.fish.enable = true;
 
-  users.users.nixos.shell = pkgs.fish;
+  users.users.${username}.shell = pkgs.fish;
 
   environment.systemPackages = with pkgs; [
     git

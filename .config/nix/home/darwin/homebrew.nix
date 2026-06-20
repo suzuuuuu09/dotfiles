@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  username,
+  ...
+}: let
   trustedHomebrewTaps = [
     "bjarneo/cliamp"
     "felixkratz/formulae"
@@ -12,7 +16,7 @@ in {
     # Apple Silicon (M1/M2/M3) 環境で Intel 版 Brew も使えるようにする
     enableRosetta = true;
     # 現在の macOS ユーザー名
-    user = "k25012kk";
+    user = username;
     # 既存の Homebrew インストールを自動で移行する
     autoMigrate = true;
   };
@@ -28,7 +32,7 @@ in {
       extraEnv = {
         # Homebrew trust state is stored under XDG_CONFIG_HOME when set.
         # nix-darwin activation runs brew under sudo, so pass it explicitly.
-        XDG_CONFIG_HOME = "/Users/k25012kk/.config";
+        XDG_CONFIG_HOME = "/Users/${username}/.config";
       };
       # 警告: "zap" を有効にすると、このファイルに書いていない
       # 手動で入れた Brew パッケージが削除されます。移行完了後に有効化するのが安全です。
@@ -99,16 +103,16 @@ in {
 
   system.activationScripts.extraActivation.text = lib.mkAfter ''
     # Keep Homebrew trust state in both lookup locations.
-    install -d -m 0755 /Users/k25012kk/.homebrew
-    install -d -m 0755 /Users/k25012kk/.config/homebrew
-    chown k25012kk:staff /Users/k25012kk/.homebrew /Users/k25012kk/.config/homebrew
+    install -d -m 0755 /Users/${username}/.homebrew
+    install -d -m 0755 /Users/${username}/.config/homebrew
+    chown ${username}:staff /Users/${username}/.homebrew /Users/${username}/.config/homebrew
 
-    cat > /Users/k25012kk/.homebrew/trust.json <<'EOF'
+    cat > /Users/${username}/.homebrew/trust.json <<'EOF'
     ${builtins.toJSON {trustedtaps = trustedHomebrewTaps;}}
     EOF
 
-    cp /Users/k25012kk/.homebrew/trust.json /Users/k25012kk/.config/homebrew/trust.json
-    chown k25012kk:staff /Users/k25012kk/.homebrew/trust.json /Users/k25012kk/.config/homebrew/trust.json
-    chmod 0600 /Users/k25012kk/.homebrew/trust.json /Users/k25012kk/.config/homebrew/trust.json
+    cp /Users/${username}/.homebrew/trust.json /Users/${username}/.config/homebrew/trust.json
+    chown ${username}:staff /Users/${username}/.homebrew/trust.json /Users/${username}/.config/homebrew/trust.json
+    chmod 0600 /Users/${username}/.homebrew/trust.json /Users/${username}/.config/homebrew/trust.json
   '';
 }

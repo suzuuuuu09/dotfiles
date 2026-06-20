@@ -8,9 +8,7 @@ in {
     # +----------------------------------------------------------+
     # |                       ディレクトリ                       |
     # +----------------------------------------------------------+
-    "aerospace".source = mkLink ".config/aerospace";
     "bat".source = mkLink ".config/bat";
-    "borders".source = mkLink ".config/borders";
     "cxr".source = mkLink ".config/cxr";
     "oh-my-posh".source = mkLink ".config/oh-my-posh";
     "nix".source = mkLink ".config/nix";
@@ -25,7 +23,6 @@ in {
     "ghostty".source = mkLink ".config/ghostty";
     "btop".source = mkLink ".config/btop";
     "mise".source = mkLink ".config/mise";
-    "karabiner".source = mkLink ".config/karabiner";
     "vde".source = mkLink ".config/vde";
     "git".source = mkLink ".config/git";
   };

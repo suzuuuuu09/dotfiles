@@ -116,12 +116,14 @@
     # TODO: 将来的にはArch Linuxもサポートする予定
     targetSystem = "aarch64-darwin";
     isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
+    macUsername = "k25012kk";
+    wslUsername = "nixos";
 
     pkgs = nixpkgs.legacyPackages.${targetSystem};
 
     treefmtEval =
       treefmt-nix.lib.evalModule pkgs
-      ./.config/nix/home-manager/programs/treefmt.nix;
+      ./.config/nix/home/common/programs/treefmt.nix;
 
     localOverlays = [
       (_final: prev: {
@@ -129,6 +131,12 @@
         cxr = prev.callPackage ./.config/nix/overlays/cxr.nix {};
       })
     ];
+
+    sharedOverlays =
+      [
+        inputs.llm-agents.overlays.default
+      ]
+      ++ localOverlays;
   in {
     formatter.${targetSystem} = treefmtEval.config.build.wrapper;
 
@@ -163,22 +171,23 @@
 
       specialArgs = {
         inherit self inputs;
+        username = macUsername;
       };
 
       modules =
         (nixpkgs.lib.optionals isDarwin [
-          ./.config/nix/darwin
+          ./.config/nix/hosts/mac
         ])
         ++ [
           nix-homebrew.darwinModules.nix-homebrew
           home-manager.darwinModules.home-manager
 
-          ({pkgs, ...}: {
-            nixpkgs.overlays =
-              [
-                inputs.llm-agents.overlays.default
-              ]
-              ++ localOverlays;
+          ({
+            pkgs,
+            username,
+            ...
+          }: {
+            nixpkgs.overlays = sharedOverlays;
 
             # Mac全体で永続的に使用するNixキャッシュ設定
             nix.settings = {
@@ -194,7 +203,7 @@
 
               trusted-users = [
                 "root"
-                "k25012kk"
+                username
               ];
             };
 
@@ -209,10 +218,16 @@
               backupFileExtension = "backup";
 
               extraSpecialArgs = {
-                inherit inputs;
+                inherit inputs username;
+                enableAgentSkills = true;
               };
 
-              users.k25012kk = import ./.config/nix/home-manager;
+              users.${username} = {
+                imports = [
+                  ./.config/nix/home/common
+                  ./.config/nix/home/darwin/home.nix
+                ];
+              };
 
               sharedModules = [
                 inputs.sops-nix.homeManagerModules.sops
@@ -228,11 +243,43 @@
 
       specialArgs = {
         inherit inputs;
+        username = wslUsername;
       };
 
       modules = [
         nixos-wsl.nixosModules.default
-	./.config/nix/wsl
+        ./.config/nix/hosts/wsl
+        home-manager.nixosModules.home-manager
+
+        ({
+          pkgs,
+          username,
+          ...
+        }: {
+          nixpkgs.overlays = sharedOverlays;
+
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+
+            extraSpecialArgs = {
+              inherit inputs username;
+              enableAgentSkills = false;
+            };
+
+            users.${username} = {
+              imports = [
+                ./.config/nix/home/common
+                ./.config/nix/home/wsl
+              ];
+            };
+
+            sharedModules = [
+              inputs.sops-nix.homeManagerModules.sops
+              inputs.nix-index-database.homeModules.nix-index
+            ];
+          };
+        })
       ];
     };
   };

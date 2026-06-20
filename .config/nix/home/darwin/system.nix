@@ -3,17 +3,24 @@
   config,
   lib,
   pkgs,
+  username,
   ...
 }: {
   environment.systemPackages = with pkgs; [
     git
   ];
+
   # Homebrew API からのインストールを無効化
   # environment.variables.HOMEBREW_NO_INSTALL_FROM_API = "1";
   # Homebrew の環境変数を設定して、API からのインストールを無効化
   # environment.etc."homebrew/brew.env".text = ''
   #   HOMEBREW_NO_INSTALL_FROM_API=1
   # '';
+
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    reattach = true; # tmux内で必要
+  };
 
   system = {
     defaults = {
@@ -34,6 +41,7 @@
         InitialKeyRepeat = 30;
         KeyRepeat = 2;
         "com.apple.swipescrolldirection" = true;
+        "com.apple.trackpad.enableSecondaryClick" = true;
         "com.apple.trackpad.scaling" = 1.5;
       };
 
@@ -92,7 +100,7 @@
         # タップでクリック
         Clicking = true;
         # 2本指で右クリック
-        TrackpadRightClick = false;
+        TrackpadRightClick = true;
         # 3本指でドラッグ
         TrackpadThreeFingerDrag = true;
         # クリックしたときの触覚フィードバック
@@ -140,7 +148,7 @@
           TrackpadHorizScroll = 1;
           TrackpadMomentumScroll = 1;
           TrackpadPinch = 1;
-          TrackpadRightClick = 0;
+          TrackpadRightClick = 1;
           TrackpadRotate = 1;
           TrackpadScroll = 1;
           TrackpadThreeFingerHorizSwipeGesture = 2;
@@ -158,7 +166,7 @@
       };
     };
 
-    primaryUser = "k25012kk";
+    primaryUser = username;
 
     # Spotlight で見えるように /Applications/Nix Apps を macOS alias で作る
     activationScripts.applications.text = lib.mkForce ''
@@ -198,7 +206,7 @@
     enable = true;
     settings = {
       experimental-features = ["nix-command" "flakes"];
-      trusted-users = ["root" "k25012kk"];
+      trusted-users = ["root" username];
 
       # 容量節約のための設定
       auto-optimise-store = true;
@@ -207,7 +215,7 @@
     };
   };
 
-  users.users.k25012kk.home = /Users/k25012kk;
+  users.users.${username}.home = "/Users/${username}";
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 }
