@@ -115,11 +115,14 @@
   } @ inputs: let
     # TODO: 将来的にはArch Linuxもサポートする予定
     targetSystem = "aarch64-darwin";
+    wslSystem = "x86_64-linux";
     isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
     macUsername = "k25012kk";
     wslUsername = "nixos";
+    wslHostName = "suzuWsl";
 
     pkgs = nixpkgs.legacyPackages.${targetSystem};
+    wslPkgs = nixpkgs.legacyPackages.${wslSystem};
 
     treefmtEval =
       treefmt-nix.lib.evalModule pkgs
@@ -137,6 +140,35 @@
         inputs.llm-agents.overlays.default
       ]
       ++ localOverlays;
+
+    wslHomeImports = [
+      ./.config/nix/home/common
+      ./.config/nix/home/wsl
+    ];
+
+    wslHomeSharedModules = [
+      inputs.sops-nix.homeManagerModules.sops
+      inputs.nix-index-database.homeModules.nix-index
+    ];
+
+    wslHomeConfiguration = home-manager.lib.homeManagerConfiguration {
+      pkgs = wslPkgs;
+
+      extraSpecialArgs = {
+        inherit inputs;
+        username = wslUsername;
+        enableAgentSkills = true;
+      };
+
+      modules =
+        [
+          {
+            nixpkgs.overlays = sharedOverlays;
+          }
+        ]
+        ++ wslHomeImports
+        ++ wslHomeSharedModules;
+    };
   in {
     formatter.${targetSystem} = treefmtEval.config.build.wrapper;
 
@@ -238,8 +270,13 @@
         ];
     };
 
+    homeConfigurations = {
+      "${wslUsername}" = wslHomeConfiguration;
+      "${wslUsername}@${wslHostName}" = wslHomeConfiguration;
+    };
+
     nixosConfigurations.suzuWsl = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      system = wslSystem;
 
       specialArgs = {
         inherit inputs;
@@ -264,20 +301,14 @@
 
             extraSpecialArgs = {
               inherit inputs username;
-              enableAgentSkills = false;
+              enableAgentSkills = true;
             };
 
             users.${username} = {
-              imports = [
-                ./.config/nix/home/common
-                ./.config/nix/home/wsl
-              ];
+              imports = wslHomeImports;
             };
 
-            sharedModules = [
-              inputs.sops-nix.homeManagerModules.sops
-              inputs.nix-index-database.homeModules.nix-index
-            ];
+            sharedModules = wslHomeSharedModules;
           };
         })
       ];
