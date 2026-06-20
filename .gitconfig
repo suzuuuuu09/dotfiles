@@ -23,12 +23,9 @@
 	navigate = true
   keep-plus-minus-markers=true
 	line-numbers = true
-	features = "chameleon"
 [ghq]
 	root=~/ghq
 	user = suzuuuuu09
-[include]
-	path = ~/.config/lazygit/themes.gitconfig
 [pull]
 	rebase = true
 [rebase]
