@@ -92,7 +92,7 @@ module.exports = {
 			},
 			{
 				value: "refactor",
-				name: "♻️  refactor: コードのパターンの変更や整理",
+				name: "♻️   refactor: コードのパターンの変更や整理",
 				emoji: "♻️",
 				title: "Refactoring",
 				description:
@@ -139,12 +139,12 @@ module.exports = {
 		useEmoji: true,
 		emojiAlign: "center",
 
-		useAI: true,
+		useAI: false,
 		aiNumber: 5,
 
 		aiQuestionCB: ({ type, diff, maxSubjectLength }) => {
 			return `
-あなたはGitのコミットメッセージを作成するアシスタントです。
+			あなたはGitのコミットメッセージを作成するアシスタントです。
 以下のdiffを読み取り、変更内容に合うコミットメッセージ候補を1つだけ作成してください。
 
 # constraints
@@ -161,36 +161,36 @@ module.exports = {
 - scopeはファイルの場所ではなく、設定対象を優先してください。
 - 複数にまたがる場合は中心となるものを1つだけ選んでください。
 - 判断できない場合だけ empty と書いてください。
-- descriptionは補足が必要な場合のみ書いてください。
-- subjectだけで変更内容が十分に伝わる場合はdescriptionを書かないでください。
-- descriptionを書く場合は「何が変わったか」または「なぜ変えたか」が分かる1文にしてください。
+- descriptionは任意です。
+- subjectだけで変更内容や意図が十分に伝わる場合は、descriptionを書かなくても構いません。
+- descriptionを書く場合は、変更内容を1文で少し詳しく説明してください。
+- descriptionには「何が変わったか」または「なぜ変えたか」が分かる内容を書いてください。
 
 # scope examples
 - .github/renovate.json -> renovate
-- .github/workflows/ci.yml -> ci
-- .github/workflows/deploy.yml -> deploy
+- .github/workflows/*.yml -> ci
 - commitlint.config.cjs -> commitlint
 - cz.config.cjs -> czg
 - flake.nix -> nix
 - home.nix -> nix
 - lazy.lua -> nvim
 - yazi.toml -> yazi
-- bun.lock -> deps
+- package.json -> package
 
 # format
-<subject> (<scope>)
 <subject> (<scope>) | <description>
+or
+<subject> (<scope>)
 
 # good examples
 obsidianのworkspace設定を追加 (nvim)
 renovateの設定を追加 (renovate) | 依存関係更新を自動化するための設定を追加
-GitHub Actionsのworkflowを修正 (ci)
-デプロイworkflowを追加 (deploy) | GitHub Actionsから本番環境へデプロイできるように設定
+GitHub Actionsのworkflowを修正 (ci) | CIで実行する処理が正しく動作するようにworkflowを調整
 コミットメッセージの形式を修正 (commitlint) | gitmoji付きのConventional Commits形式を検証できるように調整
 czgのプロンプト設定を更新 (czg)
-home-managerの設定を整理 (nix)
-パッケージ一覧を更新 (deps)
-READMEの説明を追加 (docs)
+home-managerの設定を整理 (nix) | 管理対象の設定ファイルを分かりやすく分類
+パッケージ一覧を更新 (nix)
+READMEの説明を追加 (docs) | セットアップ手順が分かりやすくなるように説明を追加
 
 # bad examples
 renovateの設定を追加 (github)
@@ -199,6 +199,7 @@ nvimの設定を修正 (lua)
 feat(nvim): obsidianのworkspace設定を追加
 ✨ feat(nvim): obsidianのworkspace設定を追加
 以下のコミットメッセージが適切です
+obsidianのworkspace設定を追加 (nvim)
 obsidianのworkspace設定を追加 (nvim) | Obsidianプラグインで使用するworkspaceを明示的に設定。
 
 # selected type
