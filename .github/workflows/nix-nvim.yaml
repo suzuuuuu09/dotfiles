@@ -21,6 +21,10 @@ on:
       - ".github/actions/setup-nix/action.yaml"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 

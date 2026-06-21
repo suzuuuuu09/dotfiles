@@ -1,4 +1,4 @@
-name: Renovate config linter
+name: "CI: Renovate config lint"
 
 on:
   push:
@@ -8,6 +8,16 @@ on:
       - .github/workflows/renovate-config-validator.yaml
       - .github/renovate.jsonc
   pull_request:
+    paths:
+      - .github/workflows/renovate-config-validator.yaml
+      - .github/renovate.jsonc
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   renovate-validate:
