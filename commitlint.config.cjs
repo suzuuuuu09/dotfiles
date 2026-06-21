@@ -28,7 +28,7 @@ module.exports = {
 				"ci",
 				"chore",
 				"revert",
-				"wip",
+				"deps",
 			],
 		],
 
