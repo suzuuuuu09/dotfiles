@@ -3,6 +3,8 @@ local wezterm = require("wezterm")
 -- ~/.config/wezterm 配下の分割設定を require できるようにする
 package.path = wezterm.config_dir .. "/?.lua;" .. wezterm.config_dir .. "/?/init.lua;" .. package.path
 
+require("events.command-palette")
+
 ---@type Nord.Palette
 local nord = require("nord")
 local config = wezterm.config_builder()
@@ -11,15 +13,15 @@ local config = wezterm.config_builder()
 -- マルチプレクサ（セッション永続化）の設定
 ----------------------------------------------------
 -- Unix Domain Socketを定義
-config.unix_domains = {
+--[[ config.unix_domains = {
 	{
 		name = "unix",
 	},
-}
+} ]]
 
 -- 起動時に自動的に 'unix' ドメインに接続する
 -- これにより、ウィンドウを閉じても次回起動時に前回の状態が復元されます
-config.default_gui_startup_args = { "connect", "unix" }
+-- config.default_gui_startup_args = { "connect", "unix" }
 local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 tabline.setup({
 	options = {
