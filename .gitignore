@@ -5,8 +5,8 @@ result
 .config/karabiner/automatic_backups/
 .config/karabiner/assets/
 
-# Private key files
-.config/sops/age/key.txt
+# Sops age Private key
+.config/sops/age/
 
 # Yazi Plugins and themes
 .config/yazi/plugins/
