@@ -5,12 +5,20 @@ on:
     branches:
       - main
     paths:
-      - "nvim/**"
+      - ".config/nvim/**"
+      - "scripts/nvim-restore.sh"
       - "flake.lock"
       - "flake.nix"
       - ".github/workflows/nix-nvim.yaml"
       - ".github/actions/setup-nix/action.yaml"
   pull_request:
+    paths:
+      - ".config/nvim/**"
+      - "scripts/nvim-restore.sh"
+      - "flake.lock"
+      - "flake.nix"
+      - ".github/workflows/nix-nvim.yaml"
+      - ".github/actions/setup-nix/action.yaml"
   workflow_dispatch:
 
 permissions:
@@ -34,7 +42,7 @@ jobs:
       - name: Link Neovim config
         run: |
           mkdir -p ~/.config
-          ln -s "$PWD/nvim" ~/.config/nvim
+          ln -s "$PWD/.config/nvim" ~/.config/nvim
 
       - name: Restore Neovim plugins
         run: |
