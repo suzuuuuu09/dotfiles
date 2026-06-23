@@ -163,6 +163,12 @@
           location = "~/Pictures/スクリーンショット";
           style = "selection";
         };
+
+        "io.github.gitusp.azoo-key-skkserv" = {
+          host = "127.0.0.1";
+          incomingCharset = "EUC-JP";
+          startServerAtLaunch = true;
+        };
       };
     };
 
@@ -200,6 +206,31 @@
     configurationRevision = self.rev or self.dirtyRev or null;
     stateVersion = 6;
   };
+
+  launchd.user.agents = {
+    macSKKAutostart = {
+      script = ''
+        /usr/bin/open -gj -a "/Library/Input Methods/macSKK.app"
+      '';
+      serviceConfig = {
+        Label = "net.mtgto.inputmethod.macSKK.autostart";
+        RunAtLoad = true;
+        KeepAlive = false;
+      };
+    };
+
+    azooKeySkkservAutostart = {
+      script = ''
+        /usr/bin/open -gj -a "/Applications/azooKey skkserv.app"
+      '';
+      serviceConfig = {
+        Label = "io.github.gitusp.azoo-key-skkserv.autostart";
+        RunAtLoad = true;
+        KeepAlive = false;
+      };
+    };
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   nix = {

@@ -10,6 +10,14 @@
     "pear-devs/pear"
     "mtgto/macskk"
   ];
+
+  homebrewTaps = trustedHomebrewTaps ++ [
+    "gitusp/azoo-key-skkserv"
+  ];
+
+  trustedHomebrewCasks = [
+    "gitusp/azoo-key-skkserv/azoo-key-skkserv"
+  ];
 in {
   nix-homebrew = {
     enable = true;
@@ -24,7 +32,7 @@ in {
   homebrew = {
     enable = true;
     caskArgs.appdir = "/Applications";
-    taps = trustedHomebrewTaps;
+    taps = homebrewTaps;
 
     onActivation = {
       autoUpdate = true;
@@ -63,6 +71,7 @@ in {
 
       # Input Method
       "macskk"
+      "gitusp/azoo-key-skkserv/azoo-key-skkserv"
 
       # Launcher
       "raycast"
@@ -75,12 +84,12 @@ in {
       "karabiner-elements"
       "jordanbaird-ice"
       "obsidian"
-      # "parsec"
-      "claude"
+      "parsec"
       "amical"
       "1password"
       "shottr"
       "musescore"
+      "localsend"
 
       # "microsoft-powerpoint"
       # "microsoft-word"
@@ -88,9 +97,6 @@ in {
       # IDE
       "visual-studio-code"
       "intellij-idea"
-
-      # AI
-      "codex-app"
     ];
 
     # https://github.com/mas-cli/mas/issues/1221
@@ -108,11 +114,21 @@ in {
     chown ${username}:staff /Users/${username}/.homebrew /Users/${username}/.config/homebrew
 
     cat > /Users/${username}/.homebrew/trust.json <<'EOF'
-    ${builtins.toJSON {trustedtaps = trustedHomebrewTaps;}}
+    ${builtins.toJSON {
+      trustedtaps = trustedHomebrewTaps;
+      trustedcasks = trustedHomebrewCasks;
+    }}
     EOF
 
     cp /Users/${username}/.homebrew/trust.json /Users/${username}/.config/homebrew/trust.json
     chown ${username}:staff /Users/${username}/.homebrew/trust.json /Users/${username}/.config/homebrew/trust.json
     chmod 0600 /Users/${username}/.homebrew/trust.json /Users/${username}/.config/homebrew/trust.json
+
+    azooKeySkkservTapDir="/opt/homebrew/Library/Taps/gitusp/homebrew-azoo-key-skkserv"
+    install -d -m 0755 "$azooKeySkkservTapDir/Casks"
+    install -m 0644 \
+      "${toString ../../../homebrew/Casks/azoo-key-skkserv.rb}" \
+      "$azooKeySkkservTapDir/Casks/azoo-key-skkserv.rb"
+    chown -R ${username}:staff "$azooKeySkkservTapDir"
   '';
 }
