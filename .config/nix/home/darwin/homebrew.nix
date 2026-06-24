@@ -11,9 +11,11 @@
     "mtgto/macskk"
   ];
 
-  homebrewTaps = trustedHomebrewTaps ++ [
-    "gitusp/azoo-key-skkserv"
-  ];
+  homebrewTaps =
+    trustedHomebrewTaps
+    ++ [
+      "gitusp/azoo-key-skkserv"
+    ];
 
   trustedHomebrewCasks = [
     "gitusp/azoo-key-skkserv/azoo-key-skkserv"
