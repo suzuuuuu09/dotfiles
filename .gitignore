@@ -14,3 +14,7 @@ result
 
 # fish
 .config/fish/fish_variables
+
+# pre-commit
+/.pre-commit-config.yaml
+/.direnv

@@ -50,6 +50,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     # +----------------------------------------------------------+
@@ -111,6 +116,7 @@
     nixos-wsl,
     nix-homebrew,
     treefmt-nix,
+    git-hooks,
     ...
   } @ inputs: let
     # TODO: 将来的にはArch Linuxもサポートする予定
@@ -127,6 +133,11 @@
     treefmtEval =
       treefmt-nix.lib.evalModule pkgs
       ./.config/nix/home/common/programs/treefmt.nix;
+
+    preCommitCheck = import ./.config/nix/home/common/programs/git-hooks.nix {
+      inherit git-hooks pkgs treefmtEval;
+      src = self;
+    };
 
     localOverlays = [
       (_final: prev: {
@@ -173,6 +184,7 @@
     formatter.${targetSystem} = treefmtEval.config.build.wrapper;
 
     checks.${targetSystem} = {
+      pre-commit = preCommitCheck;
       formatting = treefmtEval.config.build.check self;
 
       statix =
@@ -196,6 +208,11 @@
 
           touch "$out"
         '';
+    };
+
+    devShells.${targetSystem}.default = pkgs.mkShell {
+      inherit (preCommitCheck) shellHook;
+      packages = preCommitCheck.enabledPackages;
     };
 
     darwinConfigurations."suzuMac" = nix-darwin.lib.darwinSystem {
