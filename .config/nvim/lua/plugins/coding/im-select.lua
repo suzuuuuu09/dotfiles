@@ -2,6 +2,7 @@
 ---@type LazyPluginSpec
 return {
 	"keaising/im-select.nvim",
+	enabled = vim.fn.executable("macism") == 1,
 	config = function()
 		require("im_select").setup({
 			default_im_select = "net.mtgto.inputmethod.macSKK.ascii",
