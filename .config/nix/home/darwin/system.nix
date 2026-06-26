@@ -151,6 +151,7 @@
           TrackpadRightClick = 1;
           TrackpadRotate = 1;
           TrackpadScroll = 1;
+          TrackpadThreeFingerDrag = 0;
           TrackpadThreeFingerHorizSwipeGesture = 2;
           TrackpadThreeFingerTapGesture = 0;
           TrackpadThreeFingerVertSwipeGesture = 2;
@@ -160,7 +161,7 @@
         };
 
         "com.apple.screencapture" = {
-          location = "~/Pictures/スクリーンショット";
+          location = "~/Pictures/Screenshots";
           style = "selection";
         };
 

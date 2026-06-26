@@ -107,9 +107,9 @@
           from = "ui-ux-pro-max";
           path = ".claude/skills/ui-ux-pro-max";
         };
-        grill-me = {
+        grilling = {
           from = "mattpocock";
-          path = "productivity/grill-me";
+          path = "productivity/grilling";
 
           transform = {original, ...}: ''
             ${original}
