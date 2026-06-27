@@ -44,6 +44,7 @@ config.font = wezterm.font("UDEV Gothic 35NFLG", {
 config.harfbuzz_features = { "liga", "clig", "calt" } -- リガチャを有効にする
 config.font_size = 14.5
 config.use_ime = true
+config.scrollback_lines = 1000
 config.window_background_opacity = 0.8
 config.macos_window_background_blur = 20
 config.color_scheme = "nord"
@@ -103,7 +104,7 @@ config.window_frame = {
 	border_top_color = border_color,
 }
 
-wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+--[[ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
 	local background = nord.frost.ocean
 	local foreground = nord.snow_storm.origin
 	local edge_background = "none"
@@ -124,7 +125,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 		{ Foreground = { Color = edge_foreground } },
 		{ Text = SOLID_RIGHT_ARROW },
 	}
-end)
+end) ]]
 
 ----------------------------------------------------
 -- keybinds
