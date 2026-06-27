@@ -116,7 +116,6 @@
   },
   "vscode_custom_css.imports": [
     "https://gist.githubusercontent.com/Crysta1221/24c724fd9f475ef473dcf2c3d551b8c3/raw/a9e6920e39d78eeb43ea448d36a8eb215bbbbf35/style.css",
-    "file:///c:/Users/shuns/.vscode-insiders/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js",
     // "https://gist.githubusercontent.com/suzuuuuu09/177eb9fc653a4cc8da15cc3b0aa3da0f/raw/6ecae01babdcbd9339b24183d4efb75e6dfe0785/vscode.css",
   ],
   "terminal.integrated.defaultProfile.windows": "Git Bash",
@@ -371,7 +370,6 @@
   "background.fullscreen": {
     "images": [
       "https://github.com/user-attachments/assets/5cd322ed-6173-4b53-a474-27de3d3c2115",
-      "file:///C:/Users/shuns/Pictures/wallpaper/yapariame.png",
     ],
     "opacity": 0.1,
     "size": "cover",
