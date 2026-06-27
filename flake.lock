@@ -3,11 +3,11 @@
     "agent-browser": {
       "flake": false,
       "locked": {
-        "lastModified": 1782414711,
-        "narHash": "sha256-kZKTt4eglj5WGUhxzHCu6pZogSy4nqxdj9F71artro8=",
+        "lastModified": 1782493662,
+        "narHash": "sha256-uCLzNQ0NAeg1TtA6tcBhTu5VTyjkumsyiEpAhYLPQD0=",
         "owner": "vercel-labs",
         "repo": "agent-browser",
-        "rev": "5acf7f9dc153cd51dcc6c79e1aebb09c83b2261d",
+        "rev": "ed2e10598c9064aecfaeb7cf21b540684db4be2c",
         "type": "github"
       },
       "original": {
@@ -267,11 +267,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782423922,
-        "narHash": "sha256-qPNd6lUohHP5gcJhqQ7rLV87RwIx0xYR2A4Frb9Zjc4=",
+        "lastModified": 1782522538,
+        "narHash": "sha256-CvOaUvJ+mXlxU3m2cPWKcOAhtKETsPUYhq+Xa5ewBp4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5d320ab301cfaaca7d32514f13815d19d109f5f4",
+        "rev": "8d8a6cc50ddc60748791a14ee1163c865ec57635",
         "type": "github"
       },
       "original": {
