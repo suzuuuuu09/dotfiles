@@ -1,0 +1,479 @@
+{
+  "window.customMenuBarAltFocus": false,
+  "window.enableMenuBarMnemonics": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "git.openRepositoryInParentFolders": "never",
+  "code-runner.ignoreSelection": true,
+  "code-runner.runInTerminal": true,
+  "code-runner.executorMap": {
+    "javascript": "node",
+    "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+    "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt && rm -f $dir$fileNameWithoutExt",
+    "zig": "zig run",
+    "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "php": "php",
+    "python": "python -u",
+    "perl": "perl",
+    "perl6": "perl6",
+    "ruby": "ruby",
+    "go": "go run",
+    "lua": "lua",
+    "groovy": "groovy",
+    "powershell": "powershell -ExecutionPolicy ByPass -File",
+    "bat": "cmd /c",
+    "shellscript": "bash",
+    "fsharp": "fsi",
+    "csharp": "scriptcs",
+    "vbscript": "cscript //Nologo",
+    "typescript": "ts-node",
+    "coffeescript": "coffee",
+    "scala": "scala",
+    "swift": "swift",
+    "julia": "julia",
+    "crystal": "crystal",
+    "ocaml": "ocaml",
+    "r": "Rscript",
+    "applescript": "osascript",
+    "clojure": "lein exec",
+    "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+    "rust": "cargo run",
+    "racket": "racket",
+    "scheme": "csi -script",
+    "ahk": "autohotkey",
+    "autoit": "autoit3",
+    "dart": "dart",
+    "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+    "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+    "haskell": "runghc",
+    "nim": "nim compile --verbosity:0 --hints:off --run",
+    "lisp": "sbcl --script",
+    "kit": "kitc --run",
+    "v": "v run",
+    "sass": "sass --style expanded",
+    "scss": "scss --style expanded",
+    "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
+    "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "sml": "cd $dir && sml $fileName",
+    "mojo": "mojo run"
+  },
+  // タグ名の自動変更
+  "editor.linkedEditing": true,
+  // タグを自動で閉じる
+  "html.autoClosingTags": true,
+  "typescript.autoClosingTags": true,
+  "javascript.autoClosingTags": true,
+  // インデントの自動調整
+  "editor.autoIndent": "brackets",
+  "editor.renderWhitespace": "all",
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "editor.rulers": [],
+  "liveServer.settings.donotShowInfoMsg": true,
+  "remoteHub.commitDirectlyWarning": "off",
+  "security.workspace.trust.enabled": false,
+  "workbench.tree.enableStickyScroll": false,
+  "C_Cpp.files.exclude": {
+    "**/.vscode": true,
+    "**/.vs": true
+  },
+  "files.exclude": {
+    "**/*.meta": false
+  },
+  "extensions.ignoreRecommendations": true,
+  "markdownlint.config": {
+    "heading-increment": false, // MD001: 見出しレベルが1つずつ増加されているか、MDCコンポーネントの影響で見出しの階層を正しく判定できないため
+    "heading-style": false, // MD003: 見出しスタイルがMDCのコンポーネント記述と競合するため
+    "line-length": {
+      // MD013: 1文の最大文字数を調整
+      "line_length": 120
+    },
+    "blanks-around-headings": false, // MD022: 見出しを空白行で囲む必要があるスタイルが同じく競合するため
+    "no-duplicate-heading": false, // MD024: 見出し判断されたコンポーネント名が重複するため見出しテキストの重複を許容
+    "no-trailing-punctuation": false, // MD026: 見出しに.,;:が入ることを許容
+    "no-inline-html": false, // MD033: HTML記述を許容
+    "no-bare-urls": false, // MD034: コンポーネントの引数で指定するためURLそのままの表記を許容
+    "fenced-code-language": false, // MD040: コマンドブロックに言語の設定をしなくてもよい
+    "first-line-h1": false, // MD041: 最初の行がHeadingじゃなくてもよい
+    "line_length": false // MD013
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "vscode_custom_css.imports": [
+    "https://gist.githubusercontent.com/Crysta1221/24c724fd9f475ef473dcf2c3d551b8c3/raw/a9e6920e39d78eeb43ea448d36a8eb215bbbbf35/style.css",
+    "file:///c:/Users/shuns/.vscode-insiders/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js",
+    // "https://gist.githubusercontent.com/suzuuuuu09/177eb9fc653a4cc8da15cc3b0aa3da0f/raw/6ecae01babdcbd9339b24183d4efb75e6dfe0785/vscode.css",
+  ],
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.env.windows": {
+    "CHERE_INVOKING": "1"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "markdown.extension.toc.levels": "2..3", // マークダウンの目次範囲設定
+  
+  "workbench.startupEditor": "none",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "editor.fontFamily": "'UDEV Gothic 35NFLG'",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "hediet.vscode-drawio.resizeImages": null,
+  "svelte.enable-ts-plugin": true,
+  // TODO Tree
+  "todo-tree.general.tags": ["FIXME", "NOTE", "TODO", "CHECK"],
+  "todo-tree.highlights.defaultHighlight": {
+    "gutterIcon": true
+  },
+  "todo-tree.general.showActivityBarBadge": true,
+  "todo-tree.highlights.customHighlight": {
+    "TODO": {
+      "icon": "check-circle-fill",
+      "foreground": "orange",
+      "iconColour": "orange",
+      "type": "text"
+    },
+    "FIXME": {
+      "icon": "flame",
+      "foreground": "yellow",
+      "iconColour": "yellow",
+      "type": "text"
+    },
+    "NOTE": {
+      "icon": "paintbrush",
+      "foreground": "#00bfff",
+      "iconColour": "#00bfff",
+      "type": "text"
+    },
+    "CHECK": {
+      "icon": "plus-circle",
+      "foreground": "green",
+      "iconColour": "green",
+      "type": "text"
+    }
+  },
+  "workbench.editorAssociations": {
+    "*.db": "default"
+  },
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "[svelte]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "[vue]": {
+    "editor.tabSize": 2
+  },
+  "[typescript]": {
+    "editor.tabSize": 2
+  },
+  "git.ignoreRebaseWarning": true,
+  "editor.fontLigatures": true,
+  // ESLintの設定
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "svelte",
+    "vue",
+    "svelte",
+    "json",
+    "yaml"
+  ],
+  "workbench.colorCustomizations": {
+    "[Nord]": {
+      "editor.wordHighlightBackground": "#e5e9f060",
+      "editorIndentGuide.background1": "#bf616a",
+      "editorIndentGuide.background2": "#ebcb8b",
+      "editorIndentGuide.background3": "#a3be8c",
+      "editorIndentGuide.background4": "#88c0d0",
+      "editorIndentGuide.background5": "#5e81ac",
+      "editorIndentGuide.background6": "#b48ead",
+      "editorIndentGuide.activeBackground1": "#d8dee9",
+      "editorIndentGuide.activeBackground2": "#d8dee9",
+      "editorIndentGuide.activeBackground3": "#d8dee9",
+      "editorIndentGuide.activeBackground4": "#d8dee9",
+      "editorIndentGuide.activeBackground5": "#d8dee9",
+      "editorIndentGuide.activeBackground6": "#d8dee9",
+      "statusBar.noFolderBackground": "#b48ead",
+      "statusBar.debuggingBackground": "#b48ead",
+      "statusBar.debuggingForeground": "#2e3440",
+      "editorCursor.foreground": "#80a0bf"
+    },
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
+  },
+  "[astro]": {
+    "editor.tabSize": 2
+  },
+  "[lua]": {
+    "editor.tabSize": 2
+  },
+  "editor.cursorBlinking": "phase",
+  "trailing-spaces.includeEmptyLines": false,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "terminal.integrated.gpuAcceleration": "auto",
+  "window.titleBarStyle": "custom",
+  "terminal.integrated.fontFamily": "'UDEV Gothic 35NFLG', monoscape",
+  // ------------------------------------
+  // ---------- Multi Commands ----------
+  // ------------------------------------
+  "multiCommand.commands": [
+    {
+      "command": "multiCommand.splitWithoutFocus",
+      "sequence": [
+        "workbench.action.terminal.split",
+        "workbench.action.focusActiveEditorGroup"
+      ]
+    },
+    {
+      "command": "multiCommand.killWithoutFocus",
+      "sequence": [
+        "workbench.action.terminal.kill",
+        "workbench.action.focusActiveEditorGroup"
+      ]
+    },
+    {
+      "command": "multiCommand.findFiles",
+      "interval": 220,
+      "sequence": [
+        "workbench.action.toggleMaximizedPanel",
+        "find-it-faster.findFiles",
+      ]
+    },
+    {
+      "command": "multiCommand.findWithinFiles",
+      "interval": 220,
+      "sequence": [
+        "workbench.action.toggleMaximizedPanel",
+        "find-it-faster.findWithinFiles",
+      ]
+    },
+    {
+      "command": "multiCommand.findCurrentFile",
+      "interval": 220,
+      "sequence": [
+        "workbench.action.toggleMaximizedPanel",
+        {
+          "command": "workbench.action.terminal.newWithProfile",
+          "args": {
+            "profileName": "Git Bash",
+            "splitActiveTerminal": true,
+            "splitTerminalDimension": {
+              "split": "maxSize"
+            }
+          }
+        },
+        {
+          "command": "workbench.action.terminal.sendSequence",
+          "args": { "text": "rg --line-number \"\" ${file} | fzf --delimiter : --preview \"bat --style=numbers --color=always --line-range :500 ${file} -r {1}\" | cut -d: -f1,2 | xargs -I {} code-insiders -r -g {} \n" }
+        }
+      ]
+    },
+    {
+      "command": "multiCommand.lazygitOpen",
+      "interval": 220,
+      "sequence": [
+        {
+          "command": "workbench.action.terminal.newWithProfile",
+          "args": {
+            "profileName": "Git Bash",
+          },
+        },
+        "workbench.action.terminal.moveIntoNewWindow",
+        {
+          "command": "workbench.action.terminal.sendSequence",
+          "args": { "text": "lazygit && exit;\n" }
+        },
+        // "workbench.action.terminal.moveToEditor",
+        // "workbench.action.toggleMaximizeEditorGroup",
+      ],
+    }
+  ],
+  "editor.cursorSmoothCaretAnimation": "on",
+  // VSCode Neovim用のパス設定
+  "vscode-neovim.neovimInitVimPaths.win32": "~/AppData/Local/nvim/init.lua",
+  "vscode-neovim.neovimExecutablePaths.win32": "C:\\Program Files\\Neovim\\bin\\nvim.exe",
+  
+  "editor.lineNumbers": "relative",
+  "editor.minimap.enabled": false,
+  "debug.disassemblyView.showSourceCode": false,
+  "projectManager.git.baseFolders": [
+    "~/Documents/dev",
+    "~/Documents/projects"
+  ],
+  // // ノーマルモードに移行するときに日本語入力をオフにする
+  // "vim.autoSwitchInputMethod.enable": true,
+  // "vim.autoSwitchInputMethod.defaultIM": "0",
+  // "vim.autoSwitchInputMethod.obtainIMCmd": "C:\\mishmash\\zenhan.exe",
+  // "vim.autoSwitchInputMethod.switchIMCmd": "C:\\mishmash\\zenhan.exe {im}",
+  "vscode-neovim.compositeKeys": {
+    "jj": {
+      "command": "vscode-neovim.escape",
+      "args": []
+    },
+    "jk": {
+      "command": "vscode-neovim.lua",
+      "args": ["vim.api.nvim_input('<ESC>')\nrequire('vscode-neovim').action('workbench.action.files.save')"]
+    },
+  },
+  "workbench.activityBar.location": "top",
+  "explorer.compactFolders": false,
+  "workbench.tree.indent": 16,
+  "workbench.iconTheme": "material-icon-theme",
+  // スクロールを滑らかにする
+  "editor.smoothScrolling": true,
+  // アイコンの設定
+  "material-icon-theme.activeIconPack": "react",
+  "material-icon-theme.folders.color": "#616e88",
+  "material-icon-theme.folders.theme": "classic",
+  "material-icon-theme.hidesExplorerArrows": true,
+  "material-icon-theme.saturation": 0.6,
+  "workbench.productIconTheme": "fluent-icons",
+  // メニューバーをALTキー押したときのみ表示
+  "window.menuBarVisibility": "classic",
+  // タイトルバーの文字を非表示
+  "window.title": " ",
+  "background.enabled": true,
+  // ---------------------------------
+  // ----------- 背景設定 -------------
+  // ---------------------------------
+  "background.fullscreen": {
+    "images": [
+      "https://github.com/user-attachments/assets/5cd322ed-6173-4b53-a474-27de3d3c2115",
+      "file:///C:/Users/shuns/Pictures/wallpaper/yapariame.png",
+    ],
+    "opacity": 0.1,
+    "size": "cover",
+    "position": "center",
+    "interval": 0,
+  },
+  "background.windowBackgrounds": [
+    "https://github.com/user-attachments/assets/5cd322ed-6173-4b53-a474-27de3d3c2115",
+    "https://github.com/user-attachments/assets/eb05ecb3-9e99-4b62-b148-fcddbb46ba5e",
+    "https://github.com/user-attachments/assets/f63d94d3-3042-4640-a6eb-c28f37502ceb",
+  ],
+  "wakatime.apiKey": "",
+  "workbench.colorTheme": "Nord",
+  // 勝手にパネルが開かないようにする
+  "workbench.view.showQuietly": {
+    "workbench.panel.output": true
+  },
+  // エージェントモードを有効化
+  // "chat.agent.enabled": true,
+  "window.commandCenter": false,
+  "terminal.integrated.fontLigatures.enabled": true,
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 5,
+  "[typescriptreact]": {
+    "editor.tabSize": 2
+  },
+  "editor.fontSize": 14,
+  "kotlin.languageServer.enabled": false,
+  "kotlin.debugAdapter.enabled": false,
+  "[typst]": {
+    "editor.wordWrap": "on"
+  },
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "editor.inlineSuggest.edits.showCollapsed": true,
+  "cSpell.userWords": [
+    "suzu",
+    "suzuuuuu"
+  ],
+  "githubPullRequests.createOnPublishBranch": "never",
+  "chat.agent.maxRequests": 50,
+  // 全文検索で開くタブは一つ
+  "search.mode": "reuseEditor",
+  // 検索結果が出たら、自動で結果側にカーソルをフォーカス
+  "search.searchEditor.focusResultsOnSearch": true,
+  // Enterなしで検索しない
+  "search.searchOnType": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "terminal.integrated.fontSize": 14,
+  "clangd.detectExtensionConflicts": false,
+  "markdown-pdf.highlightStyle": "default.css",
+  "markdown-pdf.styles": [
+    "~/.config/Code/markdown-pdf.css"
+  ],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "prettier.documentSelectors": [
+    "**/*.ripple"
+  ],
+  "[ripple]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "chat.useAgentSkills": true,
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "path": "bash",
+      "args": [
+        "-l"
+      ],
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "zsh",
+      "args": [
+        "-l"
+      ]
+    },
+    "fish": {
+      "path": "/opt/homebrew/bin/fish",
+      "args": [
+        "-l"
+      ]
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    }
+  },
+  "terminal.integrated.defaultProfile.osx": "fish",
+  "editor.accessibilitySupport": "on"
+}

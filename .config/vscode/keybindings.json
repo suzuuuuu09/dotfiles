@@ -1,0 +1,73 @@
+// 既定値を上書きするには、このファイル内にキー バインドを挿入します
+[
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft",
+        "when": "!inQuickOpen && !suggestWidgetVisible && !parameterHintsVisible && !isInDiffEditor"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.navigateDown",
+        "when": "!codeActionMenuVisible && !inQuickOpen && !suggestWidgetVisible && !parameterHintsVisible"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.navigateUp",
+        "when": "!codeActionMenuVisible && !inQuickOpen && !suggestWidgetVisible && !parameterHintsVisible"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight",
+        "when": "!codeActionMenuVisible && !inQuickOpen && !suggestWidgetVisible && !parameterHintsVisible && !isInDiffEditor"
+    },
+    // Quick Navigation for diff view
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.compareEditor.focusSecondarySide",
+        "when": "isInDiffEditor && !isInDiffLeftEditor"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.navigateLeft",
+        "when": "isInDiffEditor && isInDiffLeftEditor"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.compareEditor.focusPrimarySide",
+        "when": "isInDiffEditor && isInDiffLeftEditor"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.navigateRight",
+        "when": "isInDiffEditor && !isInDiffLeftEditor"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "vscode-neovim.send",
+        "args": "<C-d>",
+        "when": "editorTextFocus && neovim.init"
+    },
+    {
+        "key": "ctrl+u",
+        "command": "vscode-neovim.send",
+        "args": "<C-u>",
+        "when": "editorTextFocus && neovim.init"
+    },
+    {
+        "key": "ctrl+enter",
+        "command": "vscode-neovim.send",
+        "args": "<C-CR>",
+        "when": "editorTextFocus && neovim.init"
+    },
+    {
+        "key": "alt+j",
+        "command": "editor.action.moveLinesDownAction",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+k",
+        "command": "editor.action.moveLinesUpAction",
+        "when": "editorTextFocus && !editorReadonly"
+    }
+]
+
