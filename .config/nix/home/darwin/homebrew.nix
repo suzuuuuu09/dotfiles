@@ -42,6 +42,7 @@
     "musescore"
     "localsend"
     "shottr"
+    "codex-app"
   ];
 
   # Kept out of Homebrew management on purpose.

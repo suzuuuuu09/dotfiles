@@ -1,0 +1,19 @@
+diff --git a/vendor/libghostty-vt/build.zig b/vendor/libghostty-vt/build.zig
+index 0d5ee9b..5d4ab4f 100644
+--- a/vendor/libghostty-vt/build.zig
++++ b/vendor/libghostty-vt/build.zig
+@@ -99,8 +99,10 @@ pub fn build(b: *std.Build) !void {
+     const webdata = try buildpkg.GhosttyWebdata.init(b, &deps);
+     if (config.emit_webdata) webdata.install();
+ 
+-    // Ghostty bench tools
+-    const bench = try buildpkg.GhosttyBench.init(b, &deps);
+-    if (config.emit_bench) bench.install();
++    if (config.emit_bench) {
++        // Skip bench dependency setup unless benchmarks are explicitly requested.
++        const bench = try buildpkg.GhosttyBench.init(b, &deps);
++        bench.install();
++    }
+ 
+     // Ghostty dist tarball
+     const dist = try buildpkg.GhosttyDist.init(b, &config);

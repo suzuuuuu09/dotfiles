@@ -86,7 +86,7 @@
           {app = "/Applications/zoom.us.app";}
           {app = "/Applications/Obsidian.app";}
           {app = "/System/Applications/Utilities/Audio MIDI Setup.app";}
-          {app = "/Applications/Claude.app";}
+          {app = "/Applications/Codex.app";}
           {app = "/Applications/Parsec.app";}
           {app = "/Applications/Discord.app";}
         ];

@@ -6,6 +6,7 @@
     fish
     oh-my-posh
     tmux
+    herdr
 
     # Shell tools
     bat

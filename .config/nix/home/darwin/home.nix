@@ -7,6 +7,10 @@
   mkLink = path:
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";
 in {
+  imports = [
+    ./home-manager-launchd.nix
+  ];
+
   home = {
     inherit username;
     homeDirectory = "/Users/${username}";
