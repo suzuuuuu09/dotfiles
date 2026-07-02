@@ -14,6 +14,7 @@ in {
     "nix".source = mkLink ".config/nix";
     "nvim".source = mkLink ".config/nvim";
     "yazi".source = mkLink ".config/yazi";
+    "tmux".source = mkLink ".config/tmux";
     # 使わないけど一応残しておく
     # "zsh".source = mkLink ".config/zsh";
     "fish".source = mkLink ".config/fish";
