@@ -1,0 +1,4 @@
+interface:
+  display_name: "Browser Problem Solver"
+  short_description: "Solve web-based quizzes and tasks"
+  default_prompt: "Use $browser-problem-solver to solve browser-based questions step by step, preserving the current session and either writing out or entering answers as requested."
