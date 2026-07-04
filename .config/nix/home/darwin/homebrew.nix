@@ -43,6 +43,7 @@
     "localsend"
     "shottr"
     "codex-app"
+    "tailscale-app"
   ];
 
   # Kept out of Homebrew management on purpose.
