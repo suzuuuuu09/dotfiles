@@ -106,6 +106,11 @@
       url = "github:nextlevelbuilder/ui-ux-pro-max-skill/b7e3af80f6e331f6fb456667b82b12cade7c9d35";
       flake = false;
     };
+
+    stop-ai-slop-jp-skills = {
+      url = "github:iKora128/stop-ai-slop-jp/e09d32796f253a62693885757cea484c275d06f2";
+      flake = false;
+    };
   };
 
   outputs = {

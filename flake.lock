@@ -474,6 +474,7 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_3",
         "sops-nix": "sops-nix",
+        "stop-ai-slop-jp-skills": "stop-ai-slop-jp-skills",
         "treefmt-nix": "treefmt-nix_2",
         "ui-ux-pro-max-skills": "ui-ux-pro-max-skills",
         "vercel-agent-skills": "vercel-agent-skills",
@@ -497,6 +498,23 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "stop-ai-slop-jp-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781179477,
+        "narHash": "sha256-LsCBtbaQwQkiYtObhTmyZOZlL2MmCRd4EM5PZuH8Is0=",
+        "owner": "iKora128",
+        "repo": "stop-ai-slop-jp",
+        "rev": "e09d32796f253a62693885757cea484c275d06f2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "iKora128",
+        "repo": "stop-ai-slop-jp",
+        "rev": "e09d32796f253a62693885757cea484c275d06f2",
         "type": "github"
       }
     },

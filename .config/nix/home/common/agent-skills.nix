@@ -61,6 +61,11 @@
         # NOTE: シムリンクのscriptsを使うため、リポジトリ全体を source root にする
         subdir = ".";
       };
+
+      stop-ai-slop-jp = {
+        path = inputs.stop-ai-slop-jp-skills;
+        subdir = ".";
+      };
       # +----------------------------------------------------------+
       # | ローカルパスから参照                                     |
       # +----------------------------------------------------------+
@@ -106,6 +111,10 @@
         ui-ux-pro-max = {
           from = "ui-ux-pro-max";
           path = ".claude/skills/ui-ux-pro-max";
+        };
+        stop-ai-slop-jp = {
+          from = "stop-ai-slop-jp";
+          path = ".";
         };
         grilling = {
           from = "mattpocock";
