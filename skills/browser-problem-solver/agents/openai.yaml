@@ -1,4 +1,4 @@
 interface:
   display_name: "Browser Problem Solver"
   short_description: "Solve web-based quizzes and tasks"
-  default_prompt: "Use $browser-problem-solver to solve browser-based questions step by step, preserving the current session and either writing out or entering answers as requested."
+  default_prompt: "Use $browser-problem-solver to solve browser-based questions step by step. Choose the least stateful mode that fits the request, keep the current session if it already exists, preserve progress in browser-entry, and use Computer Use to actually enter answers in the live browser. Stop before any final submit or third-party send until the user confirms."
