@@ -148,11 +148,13 @@
       (_final: prev: {
         czg = prev.callPackage ./.config/nix/overlays/czg.nix {};
         cxr = prev.callPackage ./.config/nix/overlays/cxr.nix {};
-        herdr = prev.callPackage ./.config/nix/overlays/herdr.nix {
+        /*
+           herdr = prev.callPackage ./.config/nix/overlays/herdr.nix {
           baseHerdr = prev.herdr;
           inherit (prev.darwin) cctools;
           inherit (prev) lib stdenv writeShellScriptBin zig_0_15;
         };
+        */
       })
     ];
 

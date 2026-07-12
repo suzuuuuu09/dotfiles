@@ -79,7 +79,10 @@
 
     # 使うスキルを指定 (sourcesのキーを参照)
     skills = {
-      enableAll = ["personal"];
+      enableAll = [
+        "personal"
+        "mattpocock"
+      ];
 
       # 外部からのスキルを使う
       explicit = {
@@ -116,7 +119,8 @@
           from = "stop-ai-slop-jp";
           path = ".";
         };
-        grilling = {
+        /*
+           grilling = {
           from = "mattpocock";
           path = "productivity/grilling";
 
@@ -129,6 +133,7 @@
             - Do not start implementation immediately after completing the design. After completing the design, you must request confirmation and proceed with implementation only after receiving explicit instructions from the user.
           '';
         };
+        */
         agent-browser = {
           from = "agent-browser";
           path = "agent-browser";

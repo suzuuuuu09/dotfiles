@@ -6,7 +6,8 @@
     fish
     oh-my-posh
     tmux
-    herdr
+    # Homebrewの方でインストールする
+    # herdr
 
     # Shell tools
     bat

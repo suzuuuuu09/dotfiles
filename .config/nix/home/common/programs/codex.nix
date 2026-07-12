@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   config,
   ...
@@ -7,8 +8,8 @@
   mkLink = path:
     config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";
 in {
-  home.packages = with pkgs; [
-    codex
+  home.packages = [
+    inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex
   ];
 
   home.file = {
