@@ -3,7 +3,7 @@
 return {
 	"nvim-mini/mini.nvim",
 	keys = {
-		{ "sa" },
+		{ "sa", mode = { "n", "x" } },
 		{ "sd" },
 		{ "sf" },
 		{ "sF" },
