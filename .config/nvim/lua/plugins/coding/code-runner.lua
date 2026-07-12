@@ -6,6 +6,8 @@ return {
 	},
 	config = function()
 		require("code_runner").setup({
+			root_markers = {},
+
 			filetype = {
 				java = function()
 					local file = vim.fn.expand("%:p")
