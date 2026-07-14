@@ -18,3 +18,7 @@ result
 # pre-commit
 /.pre-commit-config.yaml
 /.direnv
+
+# Herdr
+.config/herdr/*
+!.config/herdr/config.toml

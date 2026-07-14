@@ -27,7 +27,7 @@ previous_tab = "prefix+["
 next_tab     = "prefix+]"
 
 [[keys.command]]
-key         = "prefix+alt+g"
+key         = "prefix+shift+l"
 type        = "pane"
 command     = "lazygit"
 description = "run lazygit"
