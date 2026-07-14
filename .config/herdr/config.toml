@@ -1,0 +1,39 @@
+onboarding = false
+# herdr configuration — managed in dotfiles #   path : ~/.config/herdr/config.toml  (symlinked from this repo)
+#   apply: herdr server reload-config   (herdr の再起動は不要)
+#   defaults reference: `herdr --default-config`
+#
+# ランタイム生成物 (session.json / *.log / *.sock) は同ディレクトリに作られるが
+# dotfiles では config.toml のみを管理する。
+[ui]
+agent_panel_sort = "spaces"
+
+show_agent_labels_on_pane_borders = false
+[theme]
+name        = "terminal"
+auto_switch = false
+
+[experimental]
+pane_history                        = false
+switch_ascii_input_source_in_prefix = false
+kitty_graphics                      = true
+
+[keys]
+prefix    = "ctrl+s"
+copy_mode = "prefix+y"
+new_tab   = "prefix+n"
+
+previous_tab = "prefix+["
+next_tab     = "prefix+]"
+
+[[keys.command]]
+key         = "prefix+alt+g"
+type        = "pane"
+command     = "lazygit"
+description = "run lazygit"
+
+[[keys.command]]
+key         = "prefix+shift+b"
+type        = "shell"
+command     = "gh browse"
+description = "open GitHub page of current repo"

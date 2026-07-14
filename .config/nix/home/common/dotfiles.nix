@@ -26,6 +26,7 @@ in {
     "mise".source = mkLink ".config/mise";
     "vde".source = mkLink ".config/vde";
     "git".source = mkLink ".config/git";
+    "herdr".source = mkLink ".config/herdr";
   };
 
   # ~/ の直下に置くもの
