@@ -10,6 +10,10 @@ set -q XDG_CACHE_HOME || set -gx XDG_CACHE_HOME $HOME/.cache
 set -gx EDITOR nvim
 set -gx GIT_EDITOR nvim
 set -gx VISUAL nvim
+# Keep XDG-based tools like lazygit pointed at the dotfiles config tree.
+if not set -q XDG_CONFIG_HOME
+    set -gx XDG_CONFIG_HOME $HOME/.config
+end
 
 fish_config theme choose nord
 
