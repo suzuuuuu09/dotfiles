@@ -32,6 +32,7 @@
     ghq
     gh
     czg
+    hunk
 
     # Dev tools
     # docker

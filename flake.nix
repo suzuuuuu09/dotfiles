@@ -59,6 +59,12 @@
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 
+    hunk = {
+      url = "github:modem-dev/hunk";
+      # hunk's flake-parts still evaluates x86_64-darwin, which 26.11 dropped.
+      inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
+    };
+
     # +----------------------------------------------------------+
     # | Agent Skills                                             |
     # +----------------------------------------------------------+
@@ -150,13 +156,7 @@
       (_final: prev: {
         czg = prev.callPackage ./.config/nix/overlays/czg.nix {};
         cxr = prev.callPackage ./.config/nix/overlays/cxr.nix {};
-        /*
-           herdr = prev.callPackage ./.config/nix/overlays/herdr.nix {
-          baseHerdr = prev.herdr;
-          inherit (prev.darwin) cctools;
-          inherit (prev) lib stdenv writeShellScriptBin zig_0_15;
-        };
-        */
+        hunk = inputs.hunk.packages.${_final.stdenv.hostPlatform.system}.hunk;
       })
     ];
 
