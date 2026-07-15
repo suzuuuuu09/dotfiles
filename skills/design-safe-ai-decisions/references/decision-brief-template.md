@@ -1,81 +1,61 @@
 # AI Decision System Brief
 
-Use this template selectively. Keep sections concise, mark assumptions, and omit fields that do not apply.
+Use this six-block format for focused decision and pilot guidance. Keep the brief roughly 900 words or less unless a critical safeguard needs more space. Do not add sections merely because more fields could be discussed.
 
-## Recommendation
+Use exact numbers, durations, sample sizes, named owners, and legal requirements only when supplied or supported by evidence. Otherwise state the selection rule and accountable role type. Prefer `Unknown — <evidence or decision needed>` over speculative precision.
 
-- **Recommended next step:**
-- **Why this is the smallest credible step:**
-- **Largest unresolved risk:**
-- **Decision owner:**
+## 1. Recommendation and Risk
 
-## Decision Boundary
+- **Recommended next step — Proposed:**
+- **Largest unresolved risk — Unknown:**
 
-- **Decision unit and timing:**
-- **Eligible actions:**
-- **Affected people:**
-- **AI role:** recommend / rank / allocate / decide / execute
-- **Human authority:**
-- **Baseline process or policy:**
-- **Outcome horizon:**
-- **Fallback and reversibility:**
+## 2. Decision Boundary
 
-## Evaluation Contract
+Write one decision statement containing:
 
-| Role | Metric | Population/window | Threshold | Owner |
-| --- | --- | --- | --- | --- |
-| Primary outcome |  |  |  |  |
-| Quality guardrail |  |  |  |  |
-| Harm guardrail |  |  |  |  |
-| Distributional guardrail |  |  |  |  |
-| Operational guardrail |  |  |  |  |
+- decision unit and time;
+- eligible and prohibited actions;
+- objective and outcome horizon;
+- current baseline;
+- hard constraints;
+- AI role, human authority, affected people, fallback, and reversibility.
 
-- **Minimum meaningful improvement:**
-- **Non-inferiority requirements:**
-- **How the metrics could be gamed:**
-- **Known measurement gaps:**
+## 3. Evaluation Contract
 
-## Evidence and Evaluation
+Use one compact table.
 
-- **Available evidence:**
-- **Chosen evaluation methods:**
-- **Counterfactual assumptions, if any:**
-- **Uncertainty and sample limitations:**
-- **Segment and edge-case tests:**
-- **Evidence required before promotion:**
+| Role | Measure | Promotion, non-inferiority, or stop rule |
+| --- | --- | --- |
+| Primary outcome |  |  |
+| Quality guardrail |  |  |
+| Harm guardrail |  |  |
+| Operational guardrail |  |  |
+| Distributional guardrail |  |  |
 
-## Constraints and Safeguards
+Name metric-gaming risks only when they change a guardrail or method.
 
-- **Hard prohibitions:**
-- **Eligibility, budget, capacity, or supply constraints:**
-- **Privacy and security controls:**
-- **Consent, accessibility, fairness, and recourse:**
-- **Abstention and mandatory-review conditions:**
-- **Responsibility for failures:**
+## 4. Evidence and Methods
 
-## Logging and Monitoring
+- **Observed:** available evidence and its coverage.
+- **Estimated:** only estimates supported by stated assumptions.
+- **Unknown:** missing evidence that changes method choice or risk.
+- **Proposed methods:** the weakest evaluation steps that answer the current uncertainty; state why stronger causal methods are or are not supported.
 
-- **Decision-path fields to log:**
-- **Data minimization and retention:**
-- **Leading indicators:**
-- **Delayed outcome metrics:**
-- **Drift and segment monitoring:**
-- **Review cadence and owners:**
+## 5. Safeguards and Rollout
 
-## Staged Rollout
+Cover only safeguards material to the current risk:
 
-| Stage | Scope | Promotion criteria | Stop criteria | Rollback |
-| --- | --- | --- | --- | --- |
-| Offline |  |  |  |  |
-| Shadow |  |  |  |  |
-| Pilot |  |  |  |  |
-| Expansion |  |  |  |  |
+- data minimization, access, retention, and sensitive-data controls;
+- human review, appeal or recourse, abstention, and fallback;
+- shadow mode or pilot scope, promotion and stop conditions, and rollback;
+- responsible role types for incidents, operations, and residual-risk acceptance.
 
-## Open Questions
+For staged work, use at most four stages: offline, shadow, pilot, and expansion.
 
-- **Blocking:**
-- **Important but non-blocking:**
-- **Assumptions made:**
+## 6. Blocking Unknowns and Next Decisions
+
+- **Blocking unknowns:** only items that prevent the next stage or could change the risk posture.
+- **Next decisions:** action, accountable role type, and evidence required.
 
 ## Evidence Labels
 
@@ -83,3 +63,5 @@ Use this template selectively. Keep sections concise, mark assumptions, and omit
 - **Estimated:** inferred under stated assumptions.
 - **Proposed:** recommended design choice.
 - **Unknown:** evidence not yet available.
+
+For a comprehensive design or audit, retain these six blocks and expand only the relevant details from [evaluation-playbook.md](evaluation-playbook.md).

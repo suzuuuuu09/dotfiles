@@ -1,6 +1,18 @@
 ---
 name: design-safe-ai-decisions
-description: Design and review AI-enabled decision systems by defining the decision boundary, evaluation metrics, evidence, operational constraints, ethical safeguards, logging, staged rollout, stopping rules, and monitoring. Use when a user wants to turn an AI use case into an evaluable system; choose metrics or evaluation methods; assess recommendations, rankings, allocations, classifications, or tool actions; plan a pilot or rollout; audit an existing AI workflow; or prevent degradation, bias, unsafe automation, or metric gaming. Do not use for simple drafting, summarization, or coding requests unless the user asks for evaluation, governance, or deployment design.
+description: >-
+  Design and review AI-enabled decision systems by defining the decision
+  boundary, evaluation metrics, evidence, operational constraints, ethical
+  safeguards, logging, staged rollout, stopping rules, and monitoring. Use when
+  a user wants to turn an AI use case into an evaluable system; choose metrics
+  or evaluation methods; assess recommendations, rankings, allocations,
+  classifications, or tool actions; plan a pilot or rollout; audit an existing
+  AI workflow; prevent degradation, bias, unsafe automation, or metric gaming;
+  or evaluate assistive AI output that materially shapes consequential
+  downstream decisions. Do not use for simple drafting, summarization, or
+  coding that does not select, execute, or materially shape a downstream
+  decision, unless the user explicitly asks for evaluation, governance, or
+  deployment design.
 ---
 
 # Design Safe AI Decisions
@@ -9,6 +21,16 @@ Treat AI as one component of a decision system, not as an isolated answer genera
 
 Scale the process to the stakes. Keep low-risk, reversible uses lightweight. Require stronger evidence, human authority, and rollback controls when decisions affect rights, health, safety, employment, credit, access, or other consequential outcomes.
 
+For consequential decisions affecting education, employment, credit, health, rights, or essential access, default the AI role to recommendation or decision support. Do not automate eligibility, denial, sanction, allocation, or appeal outcomes. Any automated action must be narrowly scoped, low-severity, reversible, approved by a competent accountable authority, and protected by independent human review and recourse.
+
+Choose response depth separately from risk depth:
+
+- **Lightweight assistance:** For summaries, drafts, or neutral option generation that does not choose or execute, answer directly and add only decision-relevant cautions. Do not read the references.
+- **Focused decision or pilot guidance:** Produce a compact brief covering the boundary, metric roles, evidence-appropriate evaluation, essential safeguards, rollout controls, and blocking unknowns. Read only the references needed for those choices.
+- **Comprehensive design or audit:** Expand the full brief only when the user asks for an implementation specification, comprehensive audit, governance package, or detailed rollout design.
+
+High stakes strengthen evidence and safeguards; they do not by themselves require an exhaustive deliverable.
+
 ## Core Rules
 
 - Start with the decision and outcome, not the model.
@@ -16,7 +38,7 @@ Scale the process to the stakes. Keep low-risk, reversible uses lightweight. Req
 - Compare against a named baseline; do not evaluate a proposal in isolation.
 - Use a metric portfolio with one primary outcome, guardrails, and segment-level checks.
 - Treat legal, ethical, operational, budget, capacity, and supply limits as design constraints.
-- Distinguish observed results, estimated counterfactuals, assumptions, and recommendations.
+- Label decision-relevant claims as **Observed**, **Estimated**, **Proposed**, or **Unknown**, and state assumptions behind estimates and proposals.
 - Prefer staged, reversible deployment with predeclared stopping and rollback rules.
 - Log enough context to reconstruct what happened and why.
 - Never describe a system as safe merely because average accuracy improved.
@@ -34,6 +56,7 @@ Identify:
 
 - the decision owner and the people affected;
 - the unit of decision, timing, eligible actions, and excluded actions;
+- when an action has coupled components, the valid joint combinations, component-level constraints, interactions, and whether components can be overridden independently;
 - the current policy or human process used as the baseline;
 - the outcome delay and feedback path;
 - whether the AI recommends, ranks, allocates, decides, or executes;
@@ -120,9 +143,9 @@ Set a review cadence, name owners, and define when to retrain, revise policy, na
 
 ### 7. Produce an Actionable Brief
 
-Use [decision-brief-template.md](references/decision-brief-template.md) when the user asks for a design, review, audit, pilot, or rollout plan. Fill unknowns with clearly labeled assumptions only when they do not materially change the risk posture. Otherwise, identify the blocking evidence or decision.
+Use [decision-brief-template.md](references/decision-brief-template.md) for focused decision, review, pilot, or rollout guidance. Keep a focused brief to its six blocks and roughly 900 words unless a critical safeguard cannot be stated safely within that space. For a comprehensive design or audit, expand only the relevant blocks using [evaluation-playbook.md](references/evaluation-playbook.md). Fill unknowns with clearly labeled assumptions only when they do not materially change the risk posture. Otherwise, identify the blocking evidence or decision.
 
-Lead with the recommendation and the largest unresolved risk. Keep model selection subordinate to the decision, evaluation, and control design.
+Lead with the recommendation and the largest unresolved risk. Produce the minimum sufficient brief for the next decision rather than filling every template field. Do not invent numeric thresholds, durations, sample sizes, named owners, or legal requirements; when evidence is missing, name the decision rule or accountable role type that must supply them. Keep model selection subordinate to the decision, evaluation, and control design.
 
 ## Evidence Discipline
 
@@ -136,5 +159,5 @@ When deriving a method from a public figure, paper, organization, or existing sy
 
 ## Resources
 
-- Read [evaluation-playbook.md](references/evaluation-playbook.md) to select metrics, evidence, evaluation methods, safeguards, and rollout controls.
-- Use [decision-brief-template.md](references/decision-brief-template.md) to structure the final deliverable.
+- Read [evaluation-playbook.md](references/evaluation-playbook.md) when selecting or justifying evaluation methods, or when detailed metric, safeguard, logging, rollout, or incident guidance is needed. Skip it for activation triage and lightweight assistive responses.
+- Read [decision-brief-template.md](references/decision-brief-template.md) when producing a focused or comprehensive design, review, audit, pilot, or rollout brief. Keep its six-block format by default; add detail from the playbook only when the user explicitly requests comprehensive coverage. Skip it for lightweight assistive responses and narrow method questions.

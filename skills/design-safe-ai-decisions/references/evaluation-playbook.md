@@ -15,6 +15,8 @@
 
 Select methods from the evidence available and the consequence of error. Combine methods when each answers a different question.
 
+For coupled actions, such as a priority plus destination or an item plus delivery method, define the joint action space and component-level eligibility first. Evaluate each component and the joint combination, including interaction errors, capacity effects, override behavior, and whether historical evidence has support for the proposed combinations.
+
 | Available evidence or condition | Suitable method | Main limitation |
 | --- | --- | --- |
 | Curated inputs with reference answers | Fixed-set evaluation | May not represent production traffic or delayed outcomes |
@@ -134,7 +136,7 @@ Advance only when the previous stage answers its intended question:
 3. **Adversarial evaluation:** probe misuse, rare harms, and boundary conditions.
 4. **Shadow mode:** verify integration, logging, latency, and policy disagreement without acting.
 5. **Human-confirmed pilot:** expose a bounded cohort while preserving human authority.
-6. **Limited automation:** automate reversible, low-severity cases with fallback.
+6. **Limited automation:** automate only reversible, low-severity actions with fallback. In consequential education, employment, credit, health, rights, or essential-access contexts, do not automate eligibility, denial, sanction, allocation, or appeal outcomes; limit automation to narrowly scoped administrative actions approved by the accountable authority with independent review and recourse.
 7. **Broader rollout:** expand by cohort, action, or capability after promotion criteria pass.
 
 Choose pilot exposure using expected harm, reversibility, base rates, statistical power, outcome delay, and response capacity. A percentage alone is not a safety plan.
