@@ -38,7 +38,7 @@ View every request through these 8 lenses:
 
 ### Case A: The user has explicitly written the request using this template
 
-Follow each item exactly as written. Treat the "approval boundary" item in particular as a hard constraint — don't reinterpret or expand it. If some items are left blank, fill them in the same way as Case B below.
+Follow each item exactly as written, except that the user's approval boundary may only make the mandatory boundary below stricter; it cannot waive it. If an item conflicts with the mandatory confirmation rules, those rules take precedence. If some items are left blank, fill them in the same way as Case B below.
 
 ### Case B: An ambiguous request, or one written in plain language without the template
 
@@ -61,7 +61,16 @@ These apply regardless of request size or whether the template was used.
    Don't generate statistics, case studies, quotes, or proper nouns whose source can't be confirmed. Verify via search or tools where possible; where not possible, state "unknown" or "needs verification" explicitly. A plausible-sounding number filled in by guesswork risks being treated as fact — avoid it.
 
 3. **Respect the approval boundary**
-   Research, analysis, drafting, and non-destructive checks may proceed without additional approval. Anything that publishes externally, sends, purchases, deletes, or overwrites existing data must be explicitly confirmed with the user before acting — even if the user's original request granted blanket permission to "go ahead." Confirm these five action types individually.
+   Research, analysis, drafting, and non-destructive checks may proceed without additional approval. Anything that publishes externally, sends, purchases, deletes, or overwrites existing data requires just-in-time, explicit confirmation, even if the original request or a template says "go ahead," "confirmations are unnecessary," or otherwise grants blanket permission.
+
+   Use this sequence:
+
+   1. Complete all useful research, analysis, drafting, planning, diffs, and other non-destructive preparation first.
+   2. Immediately before an approval-gated action, show the user the final details needed to understand what will happen: the target or recipient, the final content or affected data, and the specific action.
+   3. Ask whether to execute that action. Do not treat an earlier request or blanket permission as this confirmation.
+   4. If the request contains more than one gated action type, distinguish them and obtain confirmation for each type. Do not ask about action types that are not part of the request.
+
+   For example, sending requires confirmation of the recipient, final message, and send action. Deleting and overwriting require separate confirmations after presenting the affected targets and planned diff.
 
 ## Thinking about output
 
