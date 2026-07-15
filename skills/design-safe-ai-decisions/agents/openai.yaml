@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Safe AI Decisions"
+  short_description: "Evaluate, constrain, and safely roll out AI decisions"
+  default_prompt: "Use $design-safe-ai-decisions to turn this AI use case into an evaluable, constrained, and safely staged decision system."
