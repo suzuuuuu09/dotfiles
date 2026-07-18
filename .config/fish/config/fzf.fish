@@ -17,6 +17,7 @@ set -gx FZF_DEFAULT_OPTS "
 "
 
 bind \co fzf-directory
+bind \cg fzf-ghq
 
 # set -gx FZF_CTRL_T_COMMAND "fd --type f"
 # set -gx FZF_ALT_C_COMMAND "fd --type d"
