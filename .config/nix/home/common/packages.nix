@@ -32,6 +32,7 @@
     ghq
     gh
     czg
+    jujutsu
     hunk
 
     # Dev tools
@@ -47,6 +48,7 @@
     cxr
     bun
     nodejs_24
+    python3
     comma
 
     # Surveillance tools
