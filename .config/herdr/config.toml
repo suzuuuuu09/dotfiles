@@ -6,9 +6,9 @@ onboarding = false
 # ランタイム生成物 (session.json / *.log / *.sock) は同ディレクトリに作られるが
 # dotfiles では config.toml のみを管理する。
 [ui]
-agent_panel_sort = "spaces"
-
+agent_panel_sort                  = "spaces"
 show_agent_labels_on_pane_borders = false
+
 [theme]
 name        = "terminal"
 auto_switch = false
@@ -28,9 +28,11 @@ next_tab     = "prefix+]"
 
 [[keys.command]]
 key         = "prefix+shift+l"
-type        = "pane"
+type        = "popup"
 command     = "lazygit"
 description = "run lazygit"
+width       = "95%"
+height      = "95%"
 
 [[keys.command]]
 key         = "prefix+shift+b"
