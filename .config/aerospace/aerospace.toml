@@ -17,7 +17,7 @@ after-startup-command = ['exec-and-forget borders']
 exec-on-workspace-change = [
     '/bin/bash',
     '-c',
-    '~/.config/aerospace/pip-follow.sh',
+    '~/.config/aerospace/scripts/pip-follow.sh',
 ]
 
 # Start AeroSpace at login
@@ -176,7 +176,7 @@ run       = "move-node-to-workspace T"
 
 # Vivaldiを開いたときにBrowserワークスペースに移動して開く
 [[on-window-detected]]
-if.app-id = 'om.vivaldi.Vivaldi'
+if.app-id = 'com.vivaldi.Vivaldi'
 run       = "move-node-to-workspace B"
 
 # Obsidianを開いたときにNotesワークスペースに移動して開く
@@ -210,6 +210,6 @@ if.app-id = 'com.apple.systempreferences'
 run       = 'layout floating'
 
 [[on-window-detected]]
-if.app-id                       = 'om.vivaldi.Vivaldi'
+if.app-id                       = 'com.vivaldi.Vivaldi'
 if.window-title-regex-substring = "ピクチャーインピクチャー"
 run                             = ['layout floating']
