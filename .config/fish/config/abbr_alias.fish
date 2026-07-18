@@ -45,6 +45,7 @@ abbr -a nvn "nvim $XDG_CONFIG_HOME/nvim"
 # |                            AI                            |
 # +----------------------------------------------------------+
 abbr -a co codex
+abbr -a cor "codex resume"
 
 # @antfu/ni
 abbr -a nx nlx

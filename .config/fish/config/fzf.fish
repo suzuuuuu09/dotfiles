@@ -4,7 +4,7 @@ set -gx FZF_DEFAULT_OPTS "
   --height=40% --reverse
   --preview '
     if test -d {}
-      eza -a --tree --level=1 --icons --group-directories-first --color=always {}
+      eza -a --tree --level=1 --icons --group-directories-first --color=always --ignore-glob=.DS_Store,.git {}
     else
       bat --style=numbers --color=always --line-range :500 {}
     end
@@ -15,6 +15,9 @@ set -gx FZF_DEFAULT_OPTS "
   --color=marker:#a3be8c,spinner:#b48ead,header:#a3be8c
   --layout=reverse --border
 "
+
+bind \co fzf-directory
+
 # set -gx FZF_CTRL_T_COMMAND "fd --type f"
 # set -gx FZF_ALT_C_COMMAND "fd --type d"
 
