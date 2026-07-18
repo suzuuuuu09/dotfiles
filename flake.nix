@@ -70,11 +70,6 @@
     # +----------------------------------------------------------+
     agent-skills.url = "github:Kyure-A/agent-skills-nix";
 
-    local-skills = {
-      url = "path:./skills";
-      flake = false;
-    };
-
     vercel-skills = {
       url = "github:vercel-labs/skills";
       flake = false;

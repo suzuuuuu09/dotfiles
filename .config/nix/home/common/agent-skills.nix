@@ -71,8 +71,7 @@
       # +----------------------------------------------------------+
       # 自作のスキル
       personal = {
-        # path = "${inputs.self}/skills";
-        path = inputs.local-skills;
+        path = "${inputs.self}/skills";
         filter.maxDepth = 1;
       };
     };
