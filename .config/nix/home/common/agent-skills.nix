@@ -90,10 +90,6 @@
           from = "anthropics";
           path = "frontend-design";
         };
-        skill-creator = {
-          from = "anthropics";
-          path = "skill-creator";
-        };
         find-skills = {
           from = "vercel";
           path = "find-skills";
@@ -110,7 +106,6 @@
           from = "context7";
           path = "context7-cli";
         };
-
         ui-ux-pro-max = {
           from = "ui-ux-pro-max";
           path = ".claude/skills/ui-ux-pro-max";
