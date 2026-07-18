@@ -86,7 +86,7 @@
           {app = "/Applications/zoom.us.app";}
           {app = "/Applications/Obsidian.app";}
           {app = "/System/Applications/Utilities/Audio MIDI Setup.app";}
-          {app = "/Applications/Codex.app";}
+          {app = "/Applications/ChatGPT.app";}
           {app = "/Applications/Parsec.app";}
           {app = "/Applications/Discord.app";}
         ];
@@ -151,7 +151,7 @@
           TrackpadRightClick = 1;
           TrackpadRotate = 1;
           TrackpadScroll = 1;
-          TrackpadThreeFingerDrag = 0;
+          TrackpadThreeFingerDrag = 1;
           TrackpadThreeFingerHorizSwipeGesture = 2;
           TrackpadThreeFingerTapGesture = 0;
           TrackpadThreeFingerVertSwipeGesture = 2;
