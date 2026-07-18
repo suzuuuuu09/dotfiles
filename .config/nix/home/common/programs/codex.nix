@@ -14,5 +14,6 @@ in {
 
   home.file = {
     ".codex/AGENTS.md".source = mkLink "codex/AGENTS.md";
+    ".codex/guide".source = mkLink "codex/guide";
   };
 }
