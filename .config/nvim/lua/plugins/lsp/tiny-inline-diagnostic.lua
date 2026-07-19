@@ -1,5 +1,6 @@
 return {
 	"rachartier/tiny-inline-diagnostic.nvim",
+	event = { "BufReadPre", "BufNewFile" },
 	---@module "tiny-inline-diagnostic"
 	opts = {
 		transparent_cursorline = true,

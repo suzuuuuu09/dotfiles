@@ -50,9 +50,6 @@ return {
 	-- LSP configuration
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = {
-			{ "folke/lazydev.nvim", lazy = false },
-		},
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			vim.lsp.config("*", {

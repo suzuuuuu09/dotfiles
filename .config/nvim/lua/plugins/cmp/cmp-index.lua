@@ -6,7 +6,6 @@ return {
 		"L3MON4D3/LuaSnip",
 		"rafamadriz/friendly-snippets",
 		"moyiz/blink-emoji.nvim",
-		{ "folke/lazydev.nvim" },
 		{ "brenoprata10/nvim-highlight-colors" },
 	},
 	config = function()

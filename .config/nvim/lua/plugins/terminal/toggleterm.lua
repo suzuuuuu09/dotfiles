@@ -1,6 +1,29 @@
+local lazygit
+
+local function toggle_lazygit()
+	if not lazygit then
+		local Terminal = require("toggleterm.terminal").Terminal
+		lazygit = Terminal:new({
+			cmd = "lazygit",
+			direction = "float",
+			float_opts = {
+				border = "curved",
+				width = function()
+					return math.floor(vim.o.columns * 0.9)
+				end,
+				height = function()
+					return math.floor(vim.o.lines * 0.9)
+				end,
+			},
+			hidden = true,
+		})
+	end
+
+	lazygit:toggle()
+end
+
 return {
 	"akinsho/toggleterm.nvim",
-	event = "VeryLazy",
 	version = "*",
 	cmd = "ToggleTerm",
 	config = function()
@@ -19,26 +42,6 @@ return {
 		keymap.set("t", "<C-l>", [[<C-\><C-n><C-w>l]], opts)
 	end,
 	keys = function()
-		-- Open Lazygit in a floating terminal
-		local Terminal = require("toggleterm.terminal").Terminal
-		local lazygit = Terminal:new({
-			cmd = "lazygit",
-			direction = "float",
-			float_opts = {
-				border = "curved",
-				width = function()
-					return math.floor(vim.o.columns * 0.9)
-				end,
-				height = function()
-					return math.floor(vim.o.lines * 0.9)
-				end,
-			},
-			hidden = true,
-		})
-		function _lazygit_toggle()
-			lazygit:toggle()
-		end
-
 		-- Open a terminal by entering its ID
 		local function open_terminal_by_id(direction, size)
 			return function()
@@ -55,8 +58,8 @@ return {
 			{ "<leader>tf", "<CMD>ToggleTerm direction=float<CR>", desc = "Open floating terminal" },
 			{ "<leader>th", "<CMD>ToggleTerm size=10 direction=horizontal<CR>", desc = "Open horizontal terminal" },
 			{ "<leader>tv", "<CMD>ToggleTerm size=80 direction=vertical<CR>", desc = "Open vertical terminal" },
-			{ "<leader>gg", "<CMD>lua _lazygit_toggle()<CR>", desc = "Open Lazygit" },
-			{ "<leader>tl", "<CMD>lua _lazygit_toggle()<CR>", desc = "Open Lazygit" },
+			{ "<leader>gg", toggle_lazygit, desc = "Open Lazygit" },
+			{ "<leader>tl", toggle_lazygit, desc = "Open Lazygit" },
 			{ "<leader>tiv", open_terminal_by_id("vertical", 80), desc = "Vertical" },
 			{ "<leader>tih", open_terminal_by_id("horizontal", 10), desc = "Horizontal" },
 			{ "<leader>tif", open_terminal_by_id("float", nil), desc = "Floating" },
