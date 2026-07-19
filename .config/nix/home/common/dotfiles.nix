@@ -19,6 +19,7 @@ in {
     # "zsh".source = mkLink ".config/zsh";
     "fish".source = mkLink ".config/fish";
     "gh".source = mkLink ".config/gh";
+    "gomi".source = mkLink ".config/gomi";
     "lazygit".source = mkLink ".config/lazygit";
     "wezterm".source = mkLink ".config/wezterm";
     "ghostty".source = mkLink ".config/ghostty";

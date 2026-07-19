@@ -1,0 +1,78 @@
+core:
+  trash:
+    strategy: legacy
+    gomi_dir: ~/.gomi
+    home_fallback: true
+    forbidden_paths:
+    - $HOME/.local/share/Trash
+    - $HOME/.trash
+    - $XDG_DATA_HOME/Trash
+    - /tmp/Trash
+    - /var/tmp/Trash
+    - $HOME/.gomi
+    - /
+    - /etc
+    - /usr
+    - /var
+    - /bin
+    - /sbin
+    - /lib
+    - /lib64
+  restore:
+    confirm: true
+    verbose: true
+  permanent_delete:
+    enable: false
+  trash_dir: ""
+ui:
+  density: spacious
+  style:
+    list_view:
+      cursor: "#88c0d0"
+      selected: "#81a1c1"
+      filter_match: "#5e81ac"
+      filter_prompt: "#88C0D0"
+      indent_on_select: true
+    detail_view:
+      border: "#4C566A"
+      info_pane:
+        deleted_from:
+          fg: "#D8DEE9"
+          bg: "#2E3440"
+        deleted_at:
+          fg: "#D8DEE9"
+          bg: "#2E3440"
+      preview_pane:
+        border: "#434C5E"
+        size:
+          fg: "#ECEFF4"
+          bg: "#434C5E"
+        scroll:
+          fg: "#ECEFF4"
+          bg: "#434C5E"
+    deletion_dialog: "#5e81ac"
+  exit_message: ""
+  preview:
+    syntax_highlight: true
+    colorscheme: nord
+    # directory_command: ls -GF -1 -A --color=always
+    directory_command: 'command -v eza >/dev/null 2>&1 && eza --sort=.name --color=always --long --links --group --git --icons --classify --extended --all --hyperlink || ls -GF -1 -A --color=always'
+  paginator_type: arabic
+history:
+  include:
+    within_days: 365
+  exclude:
+    files:
+    - .DS_Store
+    patterns: []
+    globs: []
+    size:
+      min: 0KB
+      max: 10GB
+logging:
+  enabled: true
+  level: debug
+  rotation:
+    max_size: 10MB
+    max_files: 3
+
