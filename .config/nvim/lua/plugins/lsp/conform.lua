@@ -20,7 +20,8 @@ return {
 			astro = js_formatters,
 			python = python_formatters,
 			-- NOTE: SvelteはLSPの整形機能を使う
-			clang = { "clang_format" },
+			c = { "clang-format" },
+			cpp = { "clang-format" },
 			nix = nix_formatters,
 			rust = { "rustfmt" },
 			typst = { "typstyle" },
@@ -49,7 +50,7 @@ return {
 		},
 		format_on_save = {
 			timeout_ms = 2000,
-			lsp_fallback = true,
+			lsp_format = "fallback",
 			quiet = false,
 		},
 		--[[ format_on_save = function(bufnr)

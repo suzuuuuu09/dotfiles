@@ -78,7 +78,7 @@ return {
 			desc = "Find word under cursor",
 		},
 		{
-			"<leader>fC",
+			"<leader>f:",
 			function()
 				require("snacks.picker").commands()
 			end,
