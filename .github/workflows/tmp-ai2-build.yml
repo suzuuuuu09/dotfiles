@@ -33,7 +33,7 @@ jobs:
         uses: typst-community/setup-typst@v4
         with:
           typst-version: "0.14.2"
-      - name: Apply source formatting fix
+      - name: Apply source formatting and layout fixes
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -46,7 +46,12 @@ jobs:
           ]'''
           if old not in text:
               raise SystemExit("target source line not found")
-          path.write_text(text.replace(old, new))
+          text = text.replace(old, new)
+          text = text.replace('#set page(columns: 3)', '#set page(columns: 2)')
+          text = text.replace('size: 7pt, lang: "ja"', 'size: 8pt, lang: "ja"')
+          text = text.replace('#show math.equation: set text(size: 6.2pt)', '#show math.equation: set text(size: 7.2pt)')
+          text = text.replace('size: 6.3pt, fill: gray', 'size: 7.2pt, fill: gray')
+          path.write_text(text)
           PY
       - name: Compile
         run: |
