@@ -48,9 +48,9 @@ jobs:
               raise SystemExit("target source line not found")
           text = text.replace(old, new)
           text = text.replace('#set page(columns: 3)', '#set page(columns: 2)')
-          text = text.replace('size: 7pt, lang: "ja"', 'size: 8pt, lang: "ja"')
-          text = text.replace('#show math.equation: set text(size: 6.2pt)', '#show math.equation: set text(size: 7.2pt)')
-          text = text.replace('size: 6.3pt, fill: gray', 'size: 7.2pt, fill: gray')
+          text = text.replace('size: 7pt, lang: "ja"', 'size: 8.5pt, lang: "ja"')
+          text = text.replace('#show math.equation: set text(size: 6.2pt)', '#show math.equation: set text(size: 7.6pt)')
+          text = text.replace('size: 6.3pt, fill: gray', 'size: 7.5pt, fill: gray')
           path.write_text(text)
           PY
       - name: Compile
