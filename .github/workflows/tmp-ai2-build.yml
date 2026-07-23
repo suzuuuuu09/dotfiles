@@ -33,20 +33,52 @@ jobs:
         uses: typst-community/setup-typst@v4
         with:
           typst-version: "0.14.2"
-      - name: Apply source formatting and layout fixes
+      - name: Apply source and layout fixes
         run: |
           python - <<'PY'
           from pathlib import Path
+
           path = Path("tmp-ai2-build/ai2_cheatsheet.typ")
           text = path.read_text()
-          old = '  block(breakable: false)[#set par(justify: false) └ #text(fill: red, weight: "bold")[#title]]'
-          new = '''  block(breakable: false)[
+
+          old_term = '  block(breakable: false)[#set par(justify: false) └ #text(fill: red, weight: "bold")[#title]]'
+          new_term = '''  block(breakable: false)[
             #set par(justify: false)
             └ #text(fill: red, weight: "bold")[#title]
           ]'''
-          if old not in text:
-              raise SystemExit("target source line not found")
-          text = text.replace(old, new)
+          if old_term not in text:
+              raise SystemExit("term formatting target not found")
+          text = text.replace(old_term, new_term)
+
+          old_whitening = '''== 白色化（Whitening）
+          - 平均0・分散1だけでなく、特徴間の相関も除去する。
+          - 共分散 $Sigma=E D E^T$ のとき、PCA: $z=D^(-1/2) E^T (x-mu)$、ZCA: $z=E D^(-1/2) E^T (x-mu)$。
+          - ZCAは元の座標系に近い。固有分解は高コストで不安定になり得る。
+          '''
+          new_whitening = '''== 白色化（Whitening）
+          - データの各次元には相関が存在する。白色化は平均を0にするだけでなく、*次元間の相関を取り除き、各方向の分散をそろえる*変換。
+          - 分布や目的関数の等高線を原点中心の同心円状に近づけるため、勾配降下法がジグザグせず収束しやすくなる。
+          - PCAを使った白色化では画像の時間・空間方向にずれが生じる場合があるため、教科書では *ZCA（zero-phase component analysis／ゼロ位相白色化）*を扱う。
+          #boxy[平均と共分散行列][
+            $m=1/n sum_(i=1)^n h^((i))$
+            #linebreak()
+            $S=1/n sum_(i=1)^n (h^((i))-m)(h^((i))-m)^T$
+          ]
+          #term[共分散行列 $S$][対角成分は各成分の分散、非対角成分は異なる成分間の共分散。2成分が独立なら、その共分散は0に近くなる。]
+          #boxy[固有値分解とZCA変換][
+            $S=Q Sigma Q^T$, $Q=[q_1,q_2,dots,q_m]$
+            #linebreak()
+            $hat(h)^((i))=Q Sigma^(-0.5) Q^T (h^((i))-m)$
+          ]
+          - 共分散行列 $S$ は対称行列なので、固有ベクトルを並べた直交行列 $Q$ と、固有値を対角成分に持つ $Sigma$ に分解できる。
+          - 手順は、①平均 $m$ を引く → ②$Q^T$ で固有ベクトル方向へ回転 → ③$Sigma^(-0.5)$ で各方向の分散を1にそろえる → ④$Q$ で元の軸方向へ戻す。
+          - 最後に $Q$ を掛けて元の空間へ戻すことが重要。戻さないと、近い固有値を持つ軸が変換のたびに入れ替わり、表現の対応がずれることがある。
+          - 各層で固有値分解を行うと計算量が大きい。そのため次元をグループに分けて群内だけZCAを行う方法や、白色化の計算を軽くする方法が使われる。
+          '''
+          if old_whitening not in text:
+              raise SystemExit("whitening section target not found")
+          text = text.replace(old_whitening, new_whitening)
+
           text = text.replace('#set page(columns: 3)', '#set page(columns: 2)')
           text = text.replace('size: 7pt, lang: "ja"', 'size: 8.5pt, lang: "ja"')
           text = text.replace('#show math.equation: set text(size: 6.2pt)', '#show math.equation: set text(size: 7.6pt)')
