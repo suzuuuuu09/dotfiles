@@ -5,4 +5,6 @@
 # macOS system file
 .DS_Store
 
+# Nix + direnv
+/.direnv
 
