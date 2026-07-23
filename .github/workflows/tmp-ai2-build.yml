@@ -33,6 +33,21 @@ jobs:
         uses: typst-community/setup-typst@v4
         with:
           typst-version: "0.14.2"
+      - name: Apply source formatting fix
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("tmp-ai2-build/ai2_cheatsheet.typ")
+          text = path.read_text()
+          old = '  block(breakable: false)[#set par(justify: false) └ #text(fill: red, weight: "bold")[#title]]'
+          new = '''  block(breakable: false)[
+            #set par(justify: false)
+            └ #text(fill: red, weight: "bold")[#title]
+          ]'''
+          if old not in text:
+              raise SystemExit("target source line not found")
+          path.write_text(text.replace(old, new))
+          PY
       - name: Compile
         run: |
           set +e
@@ -47,6 +62,7 @@ jobs:
             tmp-ai2-build/compile.stdout
             tmp-ai2-build/compile.stderr
             tmp-ai2-build/compile.exit
+            tmp-ai2-build/ai2_cheatsheet.typ
           retention-days: 1
       - name: Upload PDF
         if: ${{ hashFiles('tmp-ai2-build/ai2_cheatsheet.pdf') != '' }}
