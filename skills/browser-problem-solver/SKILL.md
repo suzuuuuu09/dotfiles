@@ -17,6 +17,16 @@ If the user explicitly asks for browser entry, use `browser-entry`. Otherwise, p
 If the user wants browser entry but only static material is available, ask for a live browser session instead of pretending to enter answers.
 When `browser-entry` is selected and a live browser is available, use Computer Use to perform the actual clicks, typing, saving, and page changes instead of leaving the work in chat.
 
+## Live Browser Access
+
+- Reading a live question page is required in both modes. Browser control is not limited to `browser-entry`; in `answer-only`, use it for read-only inspection without selecting, typing, saving, or submitting.
+- If the user names a browser, start with that exact browser and its current tab, profile, and login. Do not assume Chrome, Safari, or another browser.
+- Prefer a browser-specific control surface that can attach to the existing session. Use Computer Use for a named local browser when no session-preserving browser control is available. Use another automation path only when it can read the same session without forcing a new login or profile.
+- If browser control fails before returning page state, classify it as a **browser-access failure**, not as evidence that the question, choices, or page content are missing.
+- For a read-only recovery, retry initialization once. If initialization succeeds but the app lookup fails, discover the running apps and retry with the exact app identifier or bundle identifier. If available, try another read-only control surface that can attach to the same session.
+- Do not use a desktop screenshot showing a different foreground app as evidence about the requested browser page. Do not tell the user that the question is absent unless the requested page was actually read.
+- After the safe recovery paths are exhausted, report the exact access failure and ask for the smallest substitute needed, such as a screenshot containing the full question and choices. If the user clarifies the browser name, retry that exact browser before repeating the request for substitute material.
+
 ## Critical Rules
 
 - In `answer-only`, do not change page state, trigger auto-save, or submit anything.
@@ -46,6 +56,7 @@ When `browser-entry` is selected and a live browser is available, use Computer U
 ## Browser Tactics
 
 - Prefer the smallest interaction that preserves progress: choose, fill, save, then advance.
+- After every browser action, re-read the current browser state before the next action. Treat element indices, coordinates, and page references as stale after navigation, reloads, layout changes, or an app/browser reconnect; if an action reports that the app changed or fails, re-query the state and remap the visible control before clicking again.
 - Use local study materials as the source of truth when the browser question matches them.
 - Continue from the open tab rather than forcing a new login when the user asks to keep the current session.
 - When the user asks to "write out all answers", do not force browser input; produce a clean answer list first.
