@@ -34,11 +34,29 @@ jobs:
         with:
           typst-version: "0.14.2"
       - name: Compile
-        run: typst compile tmp-ai2-build/ai2_cheatsheet.typ tmp-ai2-build/ai2_cheatsheet.pdf
+        run: |
+          set +e
+          typst compile tmp-ai2-build/ai2_cheatsheet.typ tmp-ai2-build/ai2_cheatsheet.pdf >tmp-ai2-build/compile.stdout 2>tmp-ai2-build/compile.stderr
+          echo "$?" > tmp-ai2-build/compile.exit
+          set -e
+      - name: Upload debug output
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai2-build-debug
+          path: |
+            tmp-ai2-build/compile.stdout
+            tmp-ai2-build/compile.stderr
+            tmp-ai2-build/compile.exit
+          retention-days: 1
       - name: Upload PDF
+        if: ${{ hashFiles('tmp-ai2-build/ai2_cheatsheet.pdf') != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: ai2-cheatsheet
           path: tmp-ai2-build/ai2_cheatsheet.pdf
           if-no-files-found: error
           retention-days: 1
+      - name: Check compile result
+        run: |
+          cat tmp-ai2-build/compile.stderr
+          test "$(cat tmp-ai2-build/compile.exit)" = "0"
