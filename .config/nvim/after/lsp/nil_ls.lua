@@ -4,6 +4,11 @@ return {
 			formatting = {
 				command = { "alejandra" },
 			},
+			nix = {
+				flake = {
+					autoArchive = true,
+				},
+			},
 		},
 	},
 }
