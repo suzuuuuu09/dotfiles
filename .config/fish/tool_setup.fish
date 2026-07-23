@@ -8,7 +8,9 @@ zoxide init fish | source
 
 # mise
 set -g MISE_HOME $HOME/.local/share/mise
-mise activate fish | source
+if type -q mise
+    mise activate fish | source
+end
 
 # direnv
 direnv hook fish | source
