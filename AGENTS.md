@@ -44,3 +44,13 @@ Recent commits use short emoji-prefixed Conventional Commit style, often with a 
 - Never commit or inspect `.config/nix/secrets/secrets.yaml` unless absolutely necessary.
 - Be careful with out-of-store symlinks and local-path assumptions in the Nix config.
 - Avoid touching unrelated files, especially generated backups and lockfiles, unless the change requires it.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and PRDs are tracked in this repository's GitHub Issues. See `docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+This is a single-context repository. See `docs/agents/domain.md`.
