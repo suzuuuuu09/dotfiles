@@ -6,6 +6,7 @@ Nixが依存関係とシステム構成を評価し、Home Managerが共通ユ�
 現在の主環境はmacOSである。
 NixOS-WSLは、Windows側でUnityなどを使う作業中も共通ユーザー環境を利用するための補助対象環境としている。
 今後もmacOSと同じ水準でWSL構成を保守するかは決めていない。
+現在の保守範囲を分ける理由は[ADR 0003](adr/0003-treat-macos-as-primary-environment.md)に記録した。
 
 ## 構成の流れ
 
@@ -105,6 +106,7 @@ macOSでは、AeroSpace、JankyBorders、Karabiner-Elementsの設定もリンク
 
 Nixで管理する理由は、macOSとWSLで同じagent環境を再現し、外部skillsの版とローカル方針を一か所で管理するためである。
 外部skillsの版は`flake.lock`で固定する。
+この導入経路を選んだ理由は[ADR 0004](adr/0004-manage-agent-skills-with-nix.md)に記録した。
 
 外部skillの指示がローカル運用と合わない場合は、Home Manager module内のtransformで補正する。
 現在は、CLIをグローバルインストールせず`npx`で実行する方針などを追加している。
@@ -141,3 +143,6 @@ WSLの将来的な保守水準は未決定であり、このCI構成を恒久的
 - [アプリケーション設定と操作方針](applications.md)
 - [ADR 0001：dotfilesをout-of-store symlinkで配布する](adr/0001-use-out-of-store-symlinks.md)
 - [ADR 0002：NixとHomebrewの責務を分ける](adr/0002-split-nix-and-homebrew-responsibilities.md)
+- [ADR 0003：macOSを主環境として扱う](adr/0003-treat-macos-as-primary-environment.md)
+- [ADR 0004：Agent SkillsをNixで管理する](adr/0004-manage-agent-skills-with-nix.md)
+- [ADR 0005：言語ランタイムをNixで管理する](adr/0005-manage-language-runtimes-with-nix.md)

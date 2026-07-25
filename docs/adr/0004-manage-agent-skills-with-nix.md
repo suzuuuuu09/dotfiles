@@ -1,0 +1,5 @@
+# Agent SkillsをNixで管理する
+
+外部のAgent Skill Sourceとリポジトリ内のskillsは、Home Manager moduleで選択し、macOSとWSLへ同じ手順で配置する。
+環境ごとの手動導入はすぐに更新できる一方で、利用するskillの版とローカルの補正が環境間でずれるため、標準の導入経路にはしない。
+外部skillsの版は`flake.lock`で固定し、ローカル方針に合わせるtransformも同じmoduleで管理する。

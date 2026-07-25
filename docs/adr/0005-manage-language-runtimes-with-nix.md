@@ -1,0 +1,6 @@
+# 言語ランタイムをNixで管理する
+
+Node.js、Bun、Python、uvなどの日常利用するランタイムは、共通のHome Manager構成へ宣言し、Nixを正本とする。
+mise、nvm、nodebrew、pyenvは最新版や環境ごとの版を選びやすいが、macOSとWSLでPATHと利用版がずれるため、過去または予備の設定として残し、Nixと同じ水準では保守しない。
+MasonはNeovim専用のLSPと補助ツールだけを扱い、汎用ランタイムの管理には使わない。
+Fishに残るmise activationは過去または予備の設定であり、miseが存在する環境ではNixより優先される可能性があるため、今後の整理対象とする。

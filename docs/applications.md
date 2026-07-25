@@ -88,7 +88,8 @@ tmuxの設定は現状の実行経路ではなく、残存する設定として�
 
 GhosttyはHomebrewで管理し、設定ファイルもリンクしている。
 現在の`config`は空であり、アプリケーション自体を検証している段階である。
-WezTermと同じ役割を持つと決めず、検証結果が出るまでは候補として扱う。
+WezTermの置き換え候補として、Fish、macSKK、UDEV Gothic、Nord相当の表示、Vim風キー操作を確認する。
+検証が終わるまでは、WezTermをメイン端末として使う。
 
 ## 操作体系と見た目
 
@@ -174,10 +175,12 @@ VS Codeの設定はバックアップ用にリポジトリへ残している。
 
 ### ランタイムの管理
 
-Nixの共通パッケージにはNode.js、Bun、Python、uvなどを含める。
-一方、[`mise/config.toml`](../.config/mise/config.toml)ではBun、Node.js、pnpmを`latest`として管理する。
-この二つが共存していることは確認できるが、役割を一つの方針へ統合する判断はまだ記録していない。
-ランタイムのバージョンを固定する必要が生じた場合は、Nix、mise、Masonのどこを正本にするかを別途決める。
+ランタイムの正本はNixとする。
+この管理境界を選んだ理由は[ADR 0005](adr/0005-manage-language-runtimes-with-nix.md)に記録した。
+Nixの共通パッケージにはNode.js、Bun、Python、uvなどを含め、macOSとWSLで同じ基礎環境を用意する。
+[`mise/config.toml`](../.config/mise/config.toml)の`latest`指定、Fishのmise activation、nvm、nodebrew、pyenvのPATH設定は、過去または予備の設定として残す。
+これらをNixと同じ水準で保守することは、現在の運用方針に含めない。
+現行のFish設定にはmiseを検出したときに有効化する処理が残るため、Nixだけを使う状態へ移行するときは別途整理する。
 
 ## 補助アプリケーション
 
@@ -192,9 +195,10 @@ Zshにも同じテーマ名を指定しているが、現在のメインシェ�
 [`bat/config`](../.config/bat/config)はNordのシンタックステーマを使い、[`btop/btop.conf`](../.config/btop/btop.conf)はNordテーマ、true color、透過背景を使う。
 これらはターミナル上の補助表示をWezTermやNeovimの配色に揃えるための設定である。
 
-[`cxr/img.yaml`](../.config/cxr/img.yaml)はOpenCVを使う画像処理課題のプロジェクト雛形を生成する。
-[`vde/layout/config.yml`](../.config/vde/layout/config.yml)にはNeovimとtdfを横に並べるReportレイアウトを定義する。
-これらは用途固有の補助ツールであり、主環境の操作体系を決める設定とは分けて扱う。
+[`cxr/img.yaml`](../.config/cxr/img.yaml)は、現在も使っている画像処理課題向けのOpenCVプロジェクト雛形を生成する。
+[`vde/layout/config.yml`](../.config/vde/layout/config.yml)にはNeovimとtdfを横に並べるReportレイアウトを定義するが、vdeは現在使っていない。
+cxrは現行の用途固有ツールとして扱い、vdeは設定を残したバックアップとして扱う。
+どちらも主環境の操作体系を決める設定とは分けて扱う。
 
 ## ファイル操作
 
@@ -238,6 +242,7 @@ Dockは自動的に隠し、WezTerm、通信、ノート、ユーティリティ
 `.config/chezmoi`、`.config/homebrew`、`.config/macSKK`、`.config/vscode`、`.config/zsh`は、現在のHome Manager link定義やactivationの経路を確認してから編集する。
 macSKKのカナ入力規則は、直接リンクするのではなく、macSKK用activationでアプリのコンテナへコピーする。
 VS CodeとZshは設定が残っているが、現在の主環境で使っているアプリ設定とは扱わない。
+未使用設定はすぐに削除せず保存用として残すが、現行設定との互換性や動作確認を維持しない。
 
 ## 変更時の確認順
 
