@@ -114,6 +114,10 @@
       url = "github:iKora128/stop-ai-slop-jp/e09d32796f253a62693885757cea484c275d06f2";
       flake = false;
     };
+    handoff-skill = {
+      url = "git+https://gist.github.com/tegnike/09dbb98711d8b91e66de21611f5b88ff.git";
+      flake = false;
+    };
   };
 
   outputs = {

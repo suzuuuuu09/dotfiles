@@ -66,6 +66,11 @@
         path = inputs.stop-ai-slop-jp-skills;
         subdir = ".";
       };
+
+      handoff = {
+        path = inputs.handoff-skill;
+        filter.maxDepth = 1;
+      };
       # +----------------------------------------------------------+
       # | ローカルパスから参照                                     |
       # +----------------------------------------------------------+
@@ -111,6 +116,10 @@
         };
         stop-ai-slop-jp = {
           from = "stop-ai-slop-jp";
+          path = ".";
+        };
+        handoff = {
+          from = "handoff";
           path = ".";
         };
         /*

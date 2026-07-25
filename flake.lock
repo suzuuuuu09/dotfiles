@@ -235,6 +235,22 @@
         "type": "github"
       }
     },
+    "handoff-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784139188,
+        "narHash": "sha256-Iy2STZ/nK6H+U61xZ/pYfbQd/0OD18P7x2xRd+Fdvx4=",
+        "ref": "refs/heads/main",
+        "rev": "f0d01154a869aeb4d6ad2a0a15b7183ab764a0a6",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://gist.github.com/tegnike/09dbb98711d8b91e66de21611f5b88ff.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://gist.github.com/tegnike/09dbb98711d8b91e66de21611f5b88ff.git"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -533,6 +549,7 @@
         "anthropics-skills": "anthropics-skills",
         "context7-skills": "context7-skills",
         "git-hooks": "git-hooks",
+        "handoff-skill": "handoff-skill",
         "home-manager": "home-manager_2",
         "hunk": "hunk",
         "llm-agents": "llm-agents",
