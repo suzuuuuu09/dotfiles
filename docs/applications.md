@@ -1,261 +1,154 @@
-# アプリケーション設定と操作方針
+# Application Configuration and Operating Policy
 
-この文書は、各アプリケーションの設定値を転記するのではなく、現在の役割、設定の理由、適用経路を説明する。
-設定の正本は、各節のリンク先にあるリポジトリ内のファイルである。
+Rather than transcribing application settings, this document describes each application's current role, the reasons for its configuration, and its application path. The repository files linked in each section are the configuration source of truth.
 
-## この文書の前提
+## Assumptions
 
-現在の主環境はmacOSである。
-NixOS-WSLは、Windows側でUnityなどを使う作業時に共通ユーザー環境を利用するための補助対象環境である。
-WSLをmacOSと同じ頻度や水準で保守することは、現時点で決めていない。
+macOS is the current primary environment. NixOS-WSL is an auxiliary target environment for using the shared user environment while working with Unity and similar tools on Windows. Maintaining WSL at the same frequency or level as macOS is not currently decided.
 
-Home Managerは、共通設定の多くを`~/dotfiles`からout-of-store symlinkで公開する。
-そのため、リンク済みdotfileを編集した内容は、Nixの再適用を待たずに対象アプリから参照できる。
-インストール状態やmacOS固有の設定は、Nix、nix-darwin、Homebrewの各moduleを経由して適用する。
+Home Manager exposes most shared configuration as out-of-store symlinks from `~/dotfiles`. Edits to linked dotfiles can therefore be read by their applications without waiting for Nix to be reapplied. Installation state and macOS-specific configuration are applied through Nix, nix-darwin, and Homebrew modules.
 
-## 現在の位置付け
+## Current roles
 
-| 領域 | 現在の位置付け | 正本または適用経路 |
+| Area | Current role | Source of truth or application path |
 | --- | --- | --- |
-| シェル | Fishをメインで使う。Zshは現在使っていない。 | [`config.fish`](../.config/fish/config.fish)、[`dotfiles.nix`](../.config/nix/home/common/dotfiles.nix) |
-| 端末 | WezTermをメインで使う。 | [`wezterm/`](../.config/wezterm/) |
-| セッション管理 | Herdrを使う。tmuxは現在使っていない。 | [`herdr/config.toml`](../.config/herdr/config.toml) |
-| 端末候補 | Ghosttyは検証中である。 | [`ghostty/config`](../.config/ghostty/config) |
-| エディタ | Neovimをメインとして環境変数からも指定する。 | [`nvim/`](../.config/nvim/)、[`default.nix`](../.config/nix/home/common/default.nix) |
-| エディタの予備 | VS Codeはバックアップ用に設定を残しているが、現在はmacOSでもWSLでも使っていない。 | [`vscode/`](../.config/vscode/) |
-| ウィンドウ管理 | AeroSpaceでmacOSのウィンドウ配置を管理する。 | [`aerospace.toml`](../.config/aerospace/aerospace.toml) |
-| 日本語入力 | macSKKを中心に、azoo-key-skkserv、Karabiner、macismを組み合わせる。 | [`macskk.nix`](../.config/nix/home/darwin/macskk.nix)、[`karabiner.json`](../.config/karabiner/karabiner.json) |
-| ファイル操作 | Yaziとgomiを使い、通常の削除を復元可能な操作に寄せる。 | [`yazi/`](../.config/yazi/)、[`gomi/config.yaml`](../.config/gomi/config.yaml) |
-| Git操作 | ghq、rebase、delta、lazygit、czgを組み合わせる。 | [`.gitconfig`](../.gitconfig)、[`git/`](../.config/git/)、[`lazygit/`](../.config/lazygit/) |
+| Shell | Fish is the primary shell. Zsh is not currently used. | [`config.fish`](../.config/fish/config.fish), [`dotfiles.nix`](../.config/nix/home/common/dotfiles.nix) |
+| Terminal | WezTerm is the primary terminal. | [`wezterm/`](../.config/wezterm/) |
+| Session management | Herdr is used; tmux is not currently used. | [`herdr/config.toml`](../.config/herdr/config.toml) |
+| Terminal candidate | Ghostty is being evaluated. | [`ghostty/config`](../.config/ghostty/config) |
+| Editor | Neovim is the primary editor and is set through environment variables. | [`nvim/`](../.config/nvim/), [`default.nix`](../.config/nix/home/common/default.nix) |
+| Backup editor | VS Code configuration remains as a backup but is not currently used on macOS or WSL. | [`vscode/`](../.config/vscode/) |
+| Window management | AeroSpace manages macOS window placement. | [`aerospace.toml`](../.config/aerospace/aerospace.toml) |
+| Japanese input | macSKK is combined with azoo-key-skkserv, Karabiner, and macism. | [`macskk.nix`](../.config/nix/home/darwin/macskk.nix), [`karabiner.json`](../.config/karabiner/karabiner.json) |
+| File operations | Yazi and gomi make ordinary deletion recoverable. | [`yazi/`](../.config/yazi/), [`gomi/config.yaml`](../.config/gomi/config.yaml) |
+| Git operations | ghq, rebase, delta, lazygit, and czg are used together. | [`.gitconfig`](../.gitconfig), [`git/`](../.config/git/), [`lazygit/`](../.config/lazygit/) |
 
-## シェル
+## Shells
 
 ### Fish
 
-FishはmacOSとWSLの共通ユーザー環境で有効にしている。
-macOSのログインシェル、WezTermの起動シェル、Neovimの外部シェルをFishに揃えている。
-WSLでもFishをユーザーのログインシェルとして指定している。
+Fish is enabled in the shared user environment on macOS and WSL. It is the macOS login shell, WezTerm launch shell, and Neovim external shell; it is also the user's login shell on WSL.
 
-[`config.fish`](../.config/fish/config.fish)は、対話時の挨拶を無効にし、XDGディレクトリ、`EDITOR`、`GIT_EDITOR`、`VISUAL`を設定する。
-プロンプトはFishのNordテーマを選択し、詳細な補完やパス設定は[`config/`](../.config/fish/config/)に分割している。
-`fd`、`rg`、`eza`、`zoxide`、`fzf`などの代替CLIを短いaliasやabbrから呼び出す。
+[`config.fish`](../.config/fish/config.fish) disables the interactive greeting and sets XDG directories, `EDITOR`, `GIT_EDITOR`, and `VISUAL`. The Fish Nord theme provides the prompt, while detailed completions and path settings are split into [`config/`](../.config/fish/config/). Short aliases and abbreviations invoke alternative CLIs such as `fd`, `rg`, `eza`, `zoxide`, and `fzf`.
 
-`rm`は`gomi`へaliasし、意図しない完全削除を避ける。
-`y`関数はYazi終了時に選択したディレクトリへカレントディレクトリを移す。
-`fzf`にはNordの色と、ディレクトリなら`eza`、ファイルなら`bat`を使うプレビューを設定する。
+`rm` is aliased to `gomi` to prevent unintended permanent deletion. The `y` function changes to the directory selected when Yazi exits. `fzf` uses Nord colors and previews directories with `eza` and files with `bat`.
 
-Fishをメインにする理由は、現在のmacOSで日常的に使っているシェルであるためである。
-Zshとの機能互換性を維持することは、現在の運用要件に含めない。
+Fish is primary because it is the shell used daily on macOS. Preserving feature compatibility with Zsh is not a current operating requirement.
 
 ### Zsh
 
-ホーム直下の`.zshenv`、`.zprofile`、`.zshrc`はHome Managerからリンクされている。
-一方で、`.config/zsh`自体は現在のHome Manager moduleからリンクしていない。
-これは過去の設定をすぐに削除せずに残している状態であり、現在のメインシェルを意味しない。
-Zshの削除や整理は、リンクされたホーム直下ファイルを含めた別の判断として扱う。
+Home-directory `.zshenv`, `.zprofile`, and `.zshrc` files are linked by Home Manager. `.config/zsh` itself is not linked by the current module. This preserves past configuration without deleting it immediately; it does not indicate that Zsh is the current primary shell. Removing or reorganizing Zsh must be treated separately, including its linked home-directory files.
 
-## 端末とセッション
+## Terminal and sessions
 
 ### WezTerm
 
-WezTermはmacOSで使うメイン端末である。
-起動時のシェルをFishにし、UDEV Gothic 35NFLG、Nord、半透明表示、背景ぼかしを設定する。
-タブバー、ペイン境界、ワークスペース切り替えをLuaの分割設定で管理する。
+WezTerm is the primary terminal on macOS. It starts Fish and configures UDEV Gothic 35NFLG, Nord, translucency, and background blur. Lua configuration is split for the tab bar, pane borders, and workspace switching.
 
-リーダーキーは`Ctrl-q`である。
-リーダー後の`h/j/k/l`でペインを移動し、`r/d`で分割し、`n/w`でワークスペースを作成または選択する。
-この操作体系はNeovim、AeroSpace、Yaziなどでも使うVim風の移動キーと揃えている。
+The leader key is `Ctrl-q`. After the leader, `h/j/k/l` moves between panes, `r/d` splits panes, and `n/w` creates or selects workspaces. This aligns with the Vim-style navigation used in Neovim, AeroSpace, and Yazi.
 
 ### Herdr
 
-Herdrは、エージェント、タブ、ペインをワークスペースとしてまとめて扱うために使う。
-現在のセッション管理はtmuxではなくHerdrを中心にする。
-エージェントパネルはスペース順に並べ、ペイン境界へのエージェントラベル表示は無効にしている。
-テーマは端末テーマを使い、自動テーマ切り替えは行わない。
+Herdr groups agents, tabs, and panes into workspaces and is used instead of tmux for current session management. The agent panel is ordered by space, agent labels on pane borders are disabled, the terminal theme is used, and automatic theme switching is disabled.
 
-プレフィックスは`Ctrl-s`である。
-`prefix+Shift-l`でlazygitをポップアップ表示し、`prefix+Shift-b`で現在のリポジトリをGitHubで開く。
-セッションJSON、ログ、ソケットなどの実行時生成物は設定の正本ではないため、dotfilesでは管理しない。
+The prefix is `Ctrl-s`. `prefix+Shift-l` opens lazygit in a popup and `prefix+Shift-b` opens the current repository on GitHub. Runtime artifacts such as session JSON, logs, and sockets are not managed in dotfiles because they are not configuration sources of truth.
 
 ### tmux
 
-tmuxの設定はリポジトリに残り、Home Managerからもリンクされる。
-設定上のプレフィックスは`Ctrl-a`で、ペイン移動とNordのステータスラインを定義している。
-ただし、現在の日常運用ではtmuxを使わず、Herdrを使っている。
-tmuxの設定は現状の実行経路ではなく、残存する設定として記録する。
+tmux configuration remains in the repository and is linked by Home Manager. It defines `Ctrl-a` as its prefix, pane navigation, and a Nord status line. However, daily use currently relies on Herdr rather than tmux, so this is retained configuration, not the active session-management path.
 
 ### Ghostty
 
-GhosttyはHomebrewで管理し、設定ファイルもリンクしている。
-現在の`config`は空であり、アプリケーション自体を検証している段階である。
-WezTermの置き換え候補として、Fish、macSKK、UDEV Gothic、Nord相当の表示、Vim風キー操作を確認する。
-検証が終わるまでは、WezTermをメイン端末として使う。
+Ghostty is managed through Homebrew and its configuration file is linked. Its current `config` is empty because the application is still being evaluated. As a possible WezTerm replacement, the evaluation covers Fish, macSKK, UDEV Gothic, a Nord-equivalent appearance, and Vim-style keys. WezTerm remains the primary terminal until that evaluation finishes.
 
-## 操作体系と見た目
+## Interaction model and appearance
 
-### アプリ横断のキー操作
+### Cross-application key bindings
 
-Neovim、WezTerm、Herdr、AeroSpace、Yaziでは、可能な範囲でVim風の`h/j/k/l`を移動に使う。
-Caps LockはKarabiner-Elementsで左Controlへ変換する。
-これにより、アプリを切り替えても同じ移動とモード切り替えの感覚を保つ。
-この操作体系を選んだ理由は[ADR 0008](adr/0008-share-vim-style-navigation-across-apps.md)に記録した。
+Where possible, Neovim, WezTerm, Herdr, AeroSpace, and Yazi use Vim-style `h/j/k/l` navigation. Karabiner-Elements remaps Caps Lock to left Control. This keeps movement and mode switching familiar across applications. [ADR 0008](adr/0008-share-vim-style-navigation-across-apps.md) records the rationale.
 
-### 配色とフォント
+### Colors and fonts
 
-Nordは好みの配色であり、複数アプリの見た目を揃えるために使う。
-同時に、暗色背景とNordのコントラストは日常的な読みやすさにも寄与する。
-UDEV Gothicは好みのフォントであり、日本語とアイコンを含む表示の読みやすさも理由として使う。
+Nord is a preferred color scheme used to align the appearance of multiple applications; its dark background and contrast also aid everyday readability. UDEV Gothic is a preferred font, in part because it makes Japanese text and icons easy to read.
 
-Neovim、WezTerm、VS Code、Fish、fzf、bat、btop、Yazi、lazygit、delta、tmuxなどでNord系の設定を使う。
-UDEV Gothic系のフォントはNixでインストールし、Neovim、WezTerm、VS Codeで指定する。
+Nord-derived settings are used in Neovim, WezTerm, VS Code, Fish, fzf, bat, btop, Yazi, lazygit, delta, and tmux. UDEV Gothic-family fonts are installed with Nix and selected in Neovim, WezTerm, and VS Code.
 
-## ウィンドウ管理
+## Window management
 
-AeroSpaceはmacOSのタイル型ウィンドウ管理を担当する。
-`Alt-h/j/k/l`でフォーカスを移動し、`Alt-Shift-h/j/k/l`でウィンドウを移動する。
-通常のタイル配置とアコーディオン配置を切り替え、必要なウィンドウだけをフローティングにする。
+AeroSpace provides tiled window management on macOS. `Alt-h/j/k/l` moves focus and `Alt-Shift-h/j/k/l` moves windows. It switches between tiling and accordion layouts, floating only windows that need it.
 
-ワークスペースは、ブラウザを`B`、コミュニケーションを`C`、音楽を`M`、ノートを`N`、端末を`T`として用途の頭文字で覚える。
-数字のワークスペースも残しており、用途が固定されない作業に使える。
-Vivaldi、Slack、Discord、Obsidian、WezTerm、YouTube Musicは起動時に対応するワークスペースへ自動配置する。
-Finder、システム設定、ブラウザのピクチャーインピクチャーはフローティングにする。
+Workspace initials identify their use: `B` for browsers, `C` for communication, `M` for music, `N` for notes, and `T` for terminals. Numbered workspaces remain available for work without a fixed purpose. Vivaldi, Slack, Discord, Obsidian, WezTerm, and YouTube Music are placed automatically in their corresponding workspaces at launch. Finder, System Settings, and browser picture-in-picture windows float.
 
-JankyBordersはAeroSpaceの起動後に開始し、現在フォーカスされているウィンドウを境界線で示す。
-ワークスペース変更時にはピクチャーインピクチャー追従スクリプトを実行する。
+JankyBorders starts after AeroSpace and marks the focused window with a border. A picture-in-picture follow script runs when switching workspaces.
 
-## キーボードと日本語入力
+## Keyboard and Japanese input
 
 ### Karabiner-Elements
 
-Caps Lockは左Controlへ変換する。
-左Commandを単独で押すと英数、右Commandを単独で押すとかなを送信する。
-Commandを長押ししたときは通常のCommandとして扱う。
-リモートデスクトップアプリでは単独Commandの変換を無効にし、転送先のキーボード操作を優先する。
+Caps Lock is remapped to left Control. Pressing left Command alone sends alphanumeric mode; pressing right Command alone sends kana mode. Holding Command retains normal Command behavior. The standalone Command remapping is disabled in remote desktop applications so that the remote keyboard takes precedence.
 
-### macSKKとazoo-key-skkserv
+### macSKK and azoo-key-skkserv
 
-macSKKを日本語入力の中心にする。
-日本語入力を複数のツールで構成する理由は[ADR 0007](adr/0007-build-japanese-input-around-macskk.md)に記録した。
-macSKKの設定はnix-darwinの`CustomUserPreferences`で宣言し、辞書とカナ入力規則はactivation時にアプリのコンテナへコピーする。
-辞書には一般語、地名、人名、固有名詞、絵文字のSKK辞書を含める。
-カナ入力規則の正本は[`kana-rule.conf`](../.config/macSKK/Settings/kana-rule.conf)である。
+macSKK is the center of Japanese input; [ADR 0007](adr/0007-build-japanese-input-around-macskk.md) records why multiple tools are involved. Its settings are declared through nix-darwin `CustomUserPreferences`, while dictionaries and kana input rules are copied into the application container during activation. Dictionaries include general, place-name, personal-name, proper-noun, and emoji SKK dictionaries. [`kana-rule.conf`](../.config/macSKK/Settings/kana-rule.conf) is the source of truth for kana rules.
 
-macSKKではControlを使う移動や編集のキーバインドも設定し、シェルやエディタで使う操作感と揃える。
-SKKサーバーは`127.0.0.1:1178`で有効にし、azoo-key-skkservを起動時に開始する。
-macSKK本体とazoo-key-skkservの起動は、macOSのユーザーlaunchdで管理する。
+macSKK also configures Control-based movement and editing keys to align with the shell and editor. The SKK server is enabled at `127.0.0.1:1178`, and azoo-key-skkserv starts at login. macSKK and azoo-key-skkserv are managed by per-user macOS launchd jobs.
 
-Neovimからはmacismを使い、Neovimがフォーカスを失ったときにmacSKKの英数入力へ戻す。
-これはアプリを移動した後に日本語入力状態が残る問題を避けるためである。
+Neovim uses macism to return macSKK to alphanumeric input when Neovim loses focus, preventing Japanese input state from lingering after an application switch.
 
-## エディタと開発ツール
+## Editors and development tools
 
 ### Neovim
 
-Neovimはメインエディタであり、`EDITOR`、`GIT_EDITOR`、`VISUAL`にも指定する。
-設定は`config`、`plugins`、`after`、スニペットに分割し、機能ごとに遅延読み込みする。
-プラグインの解決結果は[`lazy-lock.json`](../.config/nvim/lazy-lock.json)で固定し、起動時の自動更新確認は無効にする。
-プラグインをNix packageへ統合しない理由は[ADR 0011](adr/0011-manage-neovim-plugins-with-lazy-nvim.md)に記録した。
+Neovim is the primary editor and is assigned to `EDITOR`, `GIT_EDITOR`, and `VISUAL`. Its configuration is split into `config`, `plugins`, `after`, and snippets, and features load lazily. Plugin resolution is pinned in [`lazy-lock.json`](../.config/nvim/lazy-lock.json), with automatic update checks disabled at startup. [ADR 0011](adr/0011-manage-neovim-plugins-with-lazy-nvim.md) records why plugins are not integrated into Nix packages.
 
-mapleaderはSpace、maplocalleaderは`,`である。
-ウィンドウ移動には`Ctrl-h/j/k/l`を使い、削除や変更ではブラックホールレジスタを使う。
-`x`系の操作はシステムクリップボードへ切り取り、通常の削除でレジスタを汚さない。
-FishをNeovimの外部シェルとして使い、macSKKから英数へ戻すautocmdを持つ。
+The mapleader is Space and maplocalleader is `,`. `Ctrl-h/j/k/l` moves windows; deletions and changes use the black-hole register. `x` operations cut to the system clipboard without polluting the register used by normal deletion. Fish is Neovim's external shell, and an autocmd returns macSKK to alphanumeric input.
 
-LSPと開発ツールは複数の層に分ける。
-NixはmacOSとWSLで共有するCLIと基礎ツールを提供する。
-lazy.nvimはNeovimプラグインを管理する。
-Masonはエディタ専用のLSPやツールを実行時に導入する。
-Conformは保存時のフォーマットを担当し、必要に応じてLSPのフォーマットへフォールバックする。
-この責務境界は[ADR 0012](adr/0012-separate-neovim-tool-responsibilities.md)に記録した。
-Masonの`generic_tools`に残る`uv`はNixの共通パッケージと重複しており、今後の整理対象である。
-CopilotとSidekickもNeovimのAI機能として設定するが、利用の有無は作業ごとに選ぶ。
+LSP and development tools are split across layers. Nix supplies shared CLI and foundational tools on macOS and WSL, lazy.nvim manages Neovim plugins, Mason installs editor-specific LSP servers and tools at runtime, and Conform formats on save with LSP formatting as a fallback. [ADR 0012](adr/0012-separate-neovim-tool-responsibilities.md) records this boundary. `uv` in Mason's `generic_tools` duplicates a shared Nix package and is a future cleanup item. Copilot and Sidekick are configured as Neovim AI features, but their use is selected per task.
 
 ### VS Code
 
-VS Codeの設定はバックアップ用にリポジトリへ残している。
-現在はmacOSでもWSLでも使っていない。
-設定にはUDEV Gothic、Nord系の色、Vim風の`Ctrl-h/j/k/l`、vscode-neovim連携、WindowsのGit Bash端末設定が残っている。
-ただし、現在のHome Managerのdotfileリンク対象には含めていない。
-再び使う場合は、設定をどの対象環境へ公開するかを先に確認する。
+VS Code configuration remains in the repository as a backup and is currently unused on macOS and WSL. It retains UDEV Gothic, Nord-derived colors, Vim-style `Ctrl-h/j/k/l`, vscode-neovim integration, and Windows Git Bash terminal settings. It is not included in the current Home Manager dotfile links. Before using it again, first decide which target environments should receive the configuration.
 
-### ランタイムの管理
+### Runtime management
 
-ランタイムの正本はNixとする。
-この管理境界を選んだ理由は[ADR 0005](adr/0005-manage-language-runtimes-with-nix.md)に記録した。
-Nixの共通パッケージにはNode.js、Bun、Python、uvなどを含め、macOSとWSLで同じ基礎環境を用意する。
-[`mise/config.toml`](../.config/mise/config.toml)の`latest`指定、Fishのmise activation、nvm、nodebrew、pyenvのPATH設定は、過去または予備の設定として残す。
-これらをNixと同じ水準で保守することは、現在の運用方針に含めない。
-現行のFish設定にはmiseを検出したときに有効化する処理が残るため、Nixだけを使う状態へ移行するときは別途整理する。
+Nix is the source of truth for runtimes; [ADR 0005](adr/0005-manage-language-runtimes-with-nix.md) records this boundary. Common Nix packages include Node.js, Bun, Python, and uv to provide the same foundation on macOS and WSL. The `latest` setting in [`mise/config.toml`](../.config/mise/config.toml), Fish mise activation, and PATH configuration for nvm, nodebrew, and pyenv remain as former or fallback settings and are not maintained to the same level as Nix. Because current Fish configuration activates mise when it exists, moving to Nix-only runtime management requires separate cleanup.
 
-## 補助アプリケーション
+## Supporting applications
 
-[`nord-detailed.omp.json`](../.config/oh-my-posh/themes/nord-detailed.omp.json)はFishのプロンプトとして使い、OS、シェル、メモリ、Node.js、Python、AWS、CMakeなどの状態をNord配色で表示する。
-Zshにも同じテーマ名を指定しているが、現在のメインシェルはFishである。
+[`nord-detailed.omp.json`](../.config/oh-my-posh/themes/nord-detailed.omp.json) is the Fish prompt theme and displays OS, shell, memory, Node.js, Python, AWS, CMake, and other status using Nord colors. Zsh specifies the same theme name, but Fish remains the primary shell.
 
-[`lazygit/config.yml`](../.config/lazygit/config.yml)は日本語UIとdeltaのNordページャを使い、Herdrからポップアップ起動できる。
-ファイル操作画面からは`czg`と`czg ai`を呼び出してコミットメッセージ作成を補助する。
-[`gh/config.yml`](../.config/gh/config.yml)はHTTPS接続と対話プロンプトを既定にし、`gh co`を`gh pr checkout`のaliasにする。
-認証情報を含む`hosts.yml`は、この文書でも内容を扱わない。
+[`lazygit/config.yml`](../.config/lazygit/config.yml) uses a Japanese UI and delta's Nord pager and can be launched as a Herdr popup. Its file view invokes `czg` and `czg ai` to assist with commit messages. [`gh/config.yml`](../.config/gh/config.yml) defaults to HTTPS and interactive prompts and aliases `gh co` to `gh pr checkout`. This document does not handle the contents of credential-bearing `hosts.yml`.
 
-[`bat/config`](../.config/bat/config)はNordのシンタックステーマを使い、[`btop/btop.conf`](../.config/btop/btop.conf)はNordテーマ、true color、透過背景を使う。
-これらはターミナル上の補助表示をWezTermやNeovimの配色に揃えるための設定である。
+[`bat/config`](../.config/bat/config) uses Nord syntax highlighting, while [`btop/btop.conf`](../.config/btop/btop.conf) uses the Nord theme, true color, and a transparent background. They align terminal support displays with the WezTerm and Neovim color scheme.
 
-[`cxr/img.yaml`](../.config/cxr/img.yaml)は、現在も使っている画像処理課題向けのOpenCVプロジェクト雛形を生成する。
-[`vde/layout/config.yml`](../.config/vde/layout/config.yml)にはNeovimとtdfを横に並べるReportレイアウトを定義するが、vdeは現在使っていない。
-cxrは現行の用途固有ツールとして扱い、vdeは設定を残したバックアップとして扱う。
-どちらも主環境の操作体系を決める設定とは分けて扱う。
+[`cxr/img.yaml`](../.config/cxr/img.yaml) generates an OpenCV project template for image-processing assignments that are still in use. [`vde/layout/config.yml`](../.config/vde/layout/config.yml) defines a Report layout that places Neovim and tdf side by side, but vde is no longer used. cxr is treated as a current purpose-specific tool and vde as retained backup configuration; neither defines the primary environment's interaction model.
 
-## ファイル操作
+## File operations
 
-Yaziは、隠しファイルを表示し、`h/j/k/l`でディレクトリとファイルを移動するファイルマネージャーである。
-プレビュー、fzf、zoxideを統合し、Fishの`y`関数から起動する。
-テキストは`$EDITOR`で開き、macOS、Linux、Windowsで開く操作を分ける。
+Yazi is a file manager that shows hidden files and uses `h/j/k/l` to navigate directories and files. It integrates previews, fzf, and zoxide and launches from Fish's `y` function. Text opens with `$EDITOR`, with separate open operations for macOS, Linux, and Windows.
 
-Yaziの`d`はゴミ箱へ移動し、`D`だけが完全削除を行う。
-Fishの`rm`もgomiへ向けるため、通常の削除は復元可能な経路を通る。
-この方針は、完全削除を明示操作に限定する安全策として採用する。
+Yazi's `d` moves items to the trash; only `D` permanently deletes them. Fish also redirects `rm` to gomi, so ordinary deletion follows a recoverable path. This is a safety measure that limits permanent deletion to an explicit operation.
 
-## Gitとリポジトリ操作
+## Git and repository operations
 
-ghqのルートは`~/ghq`に固定し、リポジトリの取得場所を揃える。
-通常のpullはrebaseを使い、rebase時にはautostashを有効にする。
-差分表示はdeltaを使い、lazygitを対話的な確認と操作の入口にする。
-czgとczg aiはコミットメッセージ作成を補助する。
+The ghq root is fixed at `~/ghq` to standardize repository locations. Normal pulls use rebase with autostash enabled. delta displays diffs, lazygit is the entry point for interactive review and operation, and czg and czg ai assist with commit messages.
 
-この構成は、リポジトリの場所を統一し、履歴を直線的に保ちながら、差分確認とコミット作成を補助するためのGit作業方針である。
-Gitの設定本体はホームの[`.gitconfig`](../.gitconfig)にあり、[`git/`](../.config/git/)にはattributesとignoreを置いている。
-Gitの設定を変更するときは、ホームファイルとXDGディレクトリのどちらを参照する設定かを確認する。
+This Git operating policy standardizes repository locations, keeps history linear, and supports diff review and commit creation. The main Git configuration is the home-directory [`.gitconfig`](../.gitconfig); [`git/`](../.config/git/) contains attributes and ignore rules. When changing Git configuration, confirm whether it is read from the home file or the XDG directory.
 
-## macOSのアプリケーション管理
+## macOS application management
 
-macOSのGUIアプリケーションは、すべてを同じ自動化対象にはしない。
-[`homebrew.nix`](../.config/nix/home/darwin/homebrew.nix)では、formulaとcaskを管理対象、手動管理、更新許可のallowlistに分ける。
-activationではHomebrewの自動更新と一括削除を行わない。
-手動管理のアプリを意図せず削除しないことを優先し、更新は[`homebrew-update.sh`](../scripts/homebrew-update.sh)へ分離する。
+macOS GUI applications are not all subject to the same automation. [`homebrew.nix`](../.config/nix/home/darwin/homebrew.nix) separates formulae and casks into managed, manual, and update-allowed sets. Activation does not automatically update Homebrew or perform bulk removal. To avoid unintentionally removing manually managed applications, updates are isolated in [`homebrew-update.sh`](../scripts/homebrew-update.sh).
 
-macSKK、azoo-key-skkserv、AeroSpace、WezTerm、Ghostty、Herdrなどは、macOS固有のインストール経路を持つ。
-Karabiner-Elements、Vivaldi、Slack、Discord、Obsidian、VS Codeなどは、存在をmanifestに記録しつつ自動管理から外している。
-この分類の背景は、NixとHomebrewの責務を分けた[ADR 0002](adr/0002-split-nix-and-homebrew-responsibilities.md)にまとめている。
+macSKK, azoo-key-skkserv, AeroSpace, WezTerm, Ghostty, and Herdr have macOS-specific installation paths. Karabiner-Elements, Vivaldi, Slack, Discord, Obsidian, and VS Code have their presence recorded in the manifest but are excluded from automated management. [ADR 0002](adr/0002-split-nix-and-homebrew-responsibilities.md) records why Nix and Homebrew responsibilities are separated.
 
-Finderは隠しファイルと外付けディスクを表示し、新しいウィンドウをホームディレクトリで開く。
-Dockは自動的に隠し、WezTerm、通信、ノート、ユーティリティなど日常的に使うアプリを固定する。
-これらのmacOS既定値は[`system.nix`](../.config/nix/home/darwin/system.nix)で管理する。
+Finder shows hidden files and external disks and opens new windows in the home directory. The Dock automatically hides and pins daily-use applications such as WezTerm, communication, note-taking, and utilities. These macOS defaults are managed in [`system.nix`](../.config/nix/home/darwin/system.nix).
 
-## 設定が正本にならないファイル
+## Files that are not configuration sources of truth
 
-リポジトリに存在することと、現在のアプリへリンクされていることは同じではない。
-`.config/chezmoi`、`.config/homebrew`、`.config/macSKK`、`.config/vscode`、`.config/zsh`は、現在のHome Manager link定義やactivationの経路を確認してから編集する。
-macSKKのカナ入力規則は、直接リンクするのではなく、macSKK用activationでアプリのコンテナへコピーする。
-VS CodeとZshは設定が残っているが、現在の主環境で使っているアプリ設定とは扱わない。
-未使用設定はすぐに削除せず保存用として残すが、現行設定との互換性や動作確認を維持しない。
+Presence in the repository does not mean a file is currently linked to an application. Before editing `.config/chezmoi`, `.config/homebrew`, `.config/macSKK`, `.config/vscode`, or `.config/zsh`, check the current Home Manager link definitions and activation paths. macSKK kana input rules are copied into the application container by macSKK activation rather than linked directly. VS Code and Zsh configurations remain, but are not treated as active primary-environment application configuration. Unused settings are retained as backups rather than deleted immediately, without preserving compatibility or operational verification with the active setup.
 
-## 変更時の確認順
+## Change checklist
 
-まず、この文書でアプリの現在の位置付けを確認する。
-次に、表に記載した正本ファイルとHome Managerまたはnix-darwinの適用経路を確認する。
-リンク済みdotfileだけを変更した場合は、対象アプリのreloadまたは再起動で確認する。
-Nix module、Homebrew manifest、macSKK activation、agent skillを変更した場合は、対象構成を評価してからswitchする。
-未使用、検証中、バックアップ用と記載した設定を有効化するときは、現在の役割を更新してから設定を変更する。
+First, use this document to confirm the application's current role. Next, inspect the source-of-truth file in the table and its Home Manager or nix-darwin application path. After changing only a linked dotfile, reload or restart the relevant application. After changing a Nix module, Homebrew manifest, macSKK activation, or agent skill, evaluate the target configuration before switching it. Before enabling a configuration marked unused, under evaluation, or retained as backup, update its current role first.
 
-構成全体の責務と検証範囲は[構成と責務](architecture.md)を参照する。
-適用コマンドと変更領域別の検証は[運用手順](operations.md)を参照する。
+See [Architecture and Responsibilities](architecture.md) for repository-wide responsibilities and verification coverage, and [Operating Procedures](operations.md) for application commands and verification by change area.

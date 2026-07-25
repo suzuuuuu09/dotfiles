@@ -1,5 +1,3 @@
-# 個人環境に特化する
+# Keep dotfiles specific to the personal environment
 
-このリポジトリは特定のmacOSホストとNixOS-WSL環境を再構成するために使い、ユーザー名、ホスト名、アプリケーションの配置先を設定へ直接記述する。
-すべてを変数化すれば他の利用者も流用できるが、使わない環境の抽象化と検証が増えるため、汎用的なdotfiles templateにはしない。
-別の利用者やホストへ適用するときは、既存構成との互換性を保つのではなく、対象環境に合わせてforkまたは設定変更を行う。
+Use this repository to reconstruct a specific macOS host and NixOS-WSL environment, with user names, host names, and application locations written directly into the configuration. Parameterizing everything would make reuse by others possible, but would add abstractions and verification for environments that are not used, so this is not a general-purpose dotfiles template. To apply it to another user or host, fork or adapt the configuration for that target environment rather than preserving compatibility with the existing setup.

@@ -1,5 +1,3 @@
-# macOSとWSLでHome Manager構成を共有する
+# Share Home Manager configuration across macOS and WSL
 
-macOSとNixOS-WSLは一つのflakeから構築し、CLI、Fish、Neovim、dotfile、Agent Skillsを`home/common`のHome Manager構成として共有する。
-OSごとにリポジトリと設定を分ければ条件分岐は減るが、同じユーザー環境の更新と検証が分岐するため採用しない。
-OS固有の設定は`home/darwin`、`home/wsl`、`hosts`へ分離し、両環境で同じ振る舞いが必要な設定だけを`home/common`へ置く。
+Build macOS and NixOS-WSL from one flake and share CLI, Fish, Neovim, dotfiles, and Agent Skills through the `home/common` Home Manager configuration. Separate repositories and configurations per operating system would reduce conditionals, but would split updates and verification of the same user environment, so that approach is not adopted. Put OS-specific configuration in `home/darwin`, `home/wsl`, and `hosts`, and put only behavior needed on both environments in `home/common`.

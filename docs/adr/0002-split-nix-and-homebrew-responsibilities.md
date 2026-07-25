@@ -1,5 +1,3 @@
-# NixとHomebrewの責務を分ける
+# Separate Nix and Homebrew responsibilities
 
-CLI、開発ツール、システム構成は原則としてNixで管理し、macOS GUIアプリケーションとNixで扱いにくいツールだけをHomebrewで管理する。
-Homebrewの対象は管理対象と手動管理に分け、activationでは一括更新と削除を行わない。
-macOSアプリケーションとの互換性を確保しながら、構成適用時の意図しない更新と削除を避けるためである。
+Manage CLI tools, development tools, and system configuration with Nix by default; use Homebrew only for macOS GUI applications and tools that Nix does not handle well. Divide Homebrew applications into managed and manual categories, and do not perform bulk updates or removals during activation. This preserves compatibility with macOS applications while avoiding unintended updates and removals when applying the configuration.

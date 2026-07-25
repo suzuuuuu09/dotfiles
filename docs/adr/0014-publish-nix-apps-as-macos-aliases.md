@@ -1,5 +1,3 @@
-# Nix製GUIアプリをmacOS aliasで公開する
+# Publish Nix GUI applications as macOS aliases
 
-Home Managerによるアプリケーションのコピーを無効にし、Nixで導入したGUIアプリはactivation時に`/Applications/Nix Apps`へmacOS aliasとして公開する。
-通常のsymlinkだけではSpotlightやLaunch Servicesから扱いにくく、アプリ本体をコピーするとNix storeを正本とする配置から分岐するため、aliasを使う。
-aliasの集合は現在のsystem closureから毎回作り直し、削除済みアプリを`/Applications/Nix Apps`へ残さない。
+Disable Home Manager's application copying and publish Nix-installed GUI applications as macOS aliases in `/Applications/Nix Apps` during activation. Ordinary symlinks are difficult to use through Spotlight and Launch Services, while copying application bundles would diverge from a layout where the Nix store is the source of truth, so use aliases. Recreate the collection of aliases from the current system closure each time so removed applications do not remain in `/Applications/Nix Apps`.

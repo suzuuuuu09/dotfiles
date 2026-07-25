@@ -1,5 +1,3 @@
-# dotfilesをout-of-store symlinkで配布する
+# Distribute dotfiles through out-of-store symlinks
 
-Home Managerは設定ファイルをNix storeへコピーせず、`~/dotfiles`から利用先へout-of-store symlinkを作る。
-リポジトリを設定の正本として編集内容をすぐに反映し、環境構築の初期段階から同じ場所を参照できるようにするため、通常のghq管理から外して短く安定した`~/dotfiles`へ置く。
-この判断により、任意のcheckout先からの適用と、Nix store内に閉じた配布は行わない。
+Home Manager creates out-of-store symlinks from `~/dotfiles` to their destinations instead of copying configuration files into the Nix store. The repository is the configuration source of truth, so changes are reflected immediately; placing it at the short, stable path `~/dotfiles`, outside the usual ghq layout, also makes it available from the earliest setup stage. Consequently, this repository does not support applying configuration from arbitrary checkout paths or distributing it solely from the Nix store.

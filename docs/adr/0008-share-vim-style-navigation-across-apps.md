@@ -1,5 +1,3 @@
-# Vim風の移動操作をアプリ間で共有する
+# Share Vim-style navigation across applications
 
-Neovim、WezTerm、Herdr、AeroSpace、Yaziなどでは、`h/j/k/l`、リーダーキー、モード切り替えを可能な範囲で揃え、Caps LockはControlへ変換する。
-各アプリの既定ショートカットだけを使えば個別設定は減るが、アプリを切り替えるたびに移動操作が変わるため採用しない。
-新しいアプリへ同じキー操作を追加するときは、そのアプリの主要な既定操作と衝突しない範囲に限る。
+Where possible, align `h/j/k/l`, leader keys, and mode switches across Neovim, WezTerm, Herdr, AeroSpace, and Yazi, and remap Caps Lock to Control. Using only each application's default shortcuts would reduce individual configuration, but navigation would change whenever switching applications, so that approach is not adopted. When adding the same key behavior to a new application, limit it to combinations that do not conflict with the application's important defaults.

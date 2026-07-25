@@ -1,46 +1,45 @@
 # Personal Environment Configuration
 
-macOSとNixOS-WSLで使う個人用の開発環境を、一つのリポジトリから再構成し、継続的に保守するためのコンテキスト。
+Context for reconstructing and continuously maintaining a personal development environment used on macOS and NixOS-WSL from a single repository.
 
 ## Language
 
-**対象環境（Target Environment）**：
-設定を評価して適用する単位となる、OS、ホスト、ユーザーの組み合わせ。
-_Avoid_: プラットフォーム、マシン
+**Target Environment**:
+An operating system, host, and user combination for which configuration is evaluated and applied.
+_Avoid_: platform, machine
 
-**主環境（Primary Environment）**：
-日常的に使用し、設定と検証の基準にする対象環境。
-_Avoid_: 補助対象環境、既定環境
+**Primary Environment**:
+The target environment used day to day and treated as the baseline for configuration and verification.
+_Avoid_: auxiliary target environment, default environment
 
-**補助対象環境（Auxiliary Target Environment）**：
-主環境とは別のOSで作業するときに、共通ユーザー環境を利用するための対象環境。
-主環境と同じ利用頻度や将来の保守水準を意味しない。
-_Avoid_: 主環境、試験環境
+**Auxiliary Target Environment**:
+A target environment for using the shared user environment when working on an operating system other than the primary environment. It does not imply the same frequency of use or future maintenance level as the primary environment.
+_Avoid_: primary environment, test environment
 
-**共通ユーザー環境（Shared User Environment）**：
-複数の対象環境で同じ振る舞いを保つ、シェル、CLI、エディタ、エージェントの設定群。
-_Avoid_: 共通ホスト設定、ベースシステム
+**Shared User Environment**:
+Shell, CLI, editor, and agent configuration that preserves the same behavior across multiple target environments.
+_Avoid_: shared host configuration, base system
 
-**ホスト構成（Host Configuration）**：
-一つの対象環境に固有のOS設定、サービス、デバイス設定をまとめたもの。
-_Avoid_: 共通設定、ユーザー環境
+**Host Configuration**:
+The operating-system, service, and device settings specific to one target environment.
+_Avoid_: shared configuration, user environment
 
-**設定の正本（Configuration Source of Truth）**：
-実行環境へ反映される設定について、編集対象として扱う唯一の版。
-_Avoid_: コピー、生成物
+**Configuration Source of Truth**:
+The single editable version of configuration that is reflected in a runtime environment.
+_Avoid_: copy, generated artifact
 
-**リンク済みdotfile（Linked Dotfile）**：
-設定の正本を保ったまま、対象アプリケーションから参照できる位置へ公開された設定。
-_Avoid_: 管理対象パッケージ、生成済み設定
+**Linked Dotfile**:
+Configuration exposed where an application can read it while keeping the configuration source of truth intact.
+_Avoid_: managed package, generated configuration
 
-**管理対象アプリ（Managed Application）**：
-構成の適用によって、インストール状態が自動的に調整されるアプリケーション。
-_Avoid_: 手動管理アプリ、設定済みアプリ
+**Managed Application**:
+An application whose installed state is adjusted automatically when the configuration is applied.
+_Avoid_: manually managed application, configured application
 
-**手動管理アプリ（Manual Application）**：
-構成内に存在を記録するが、自動的なインストール、更新、削除の対象にはしないアプリケーション。
-_Avoid_: 管理対象アプリ、未管理アプリ
+**Manual Application**:
+An application whose presence is recorded in the configuration but which is not installed, updated, or removed automatically.
+_Avoid_: managed application, unmanaged application
 
-**Agent Skill Source**：
-利用するエージェントスキルを選択する元となる、外部またはローカルのスキル集合。
-_Avoid_: Agent skill、エージェント設定
+**Agent Skill Source**:
+An external or local collection of skills from which agent skills to use are selected.
+_Avoid_: agent skill, agent configuration

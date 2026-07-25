@@ -1,5 +1,3 @@
-# Neovimプラグインをlazy.nvimで管理する
+# Manage Neovim plugins with lazy.nvim
 
-Neovim本体と基礎CLIはNixで導入し、Neovimプラグインはlazy.nvimで読み込み、`lazy-lock.json`で解決結果を固定する。
-プラグインもNix packageとして管理すればNix評価へ閉じられるが、Neovim側の遅延読み込みと更新手順から外れるため採用しない。
-CIはlockfileからプラグインを復元してheadless起動し、Nix store外の配布経路を含めて再現できることを確認する。
+Install Neovim itself and foundational CLI tools with Nix; load Neovim plugins with lazy.nvim and pin their resolution in `lazy-lock.json`. Managing plugins as Nix packages would keep them inside Nix evaluation, but would disconnect them from Neovim's lazy-loading and update workflow, so that approach is not adopted. CI restores plugins from the lockfile and starts Neovim headlessly to confirm that the out-of-store distribution path is reproducible.

@@ -1,5 +1,3 @@
-# macOSを主環境として扱う
+# Treat macOS as the primary environment
 
-macOSを日常利用と静的検査の基準にし、NixOS-WSLはWindows側でUnityなどを使うときに共通ユーザー環境を利用する補助対象環境とする。
-両環境の機能と検査を常に同じ水準へ揃える方法もあるが、WSLの利用頻度に対して保守負担が大きいため採用しない。
-WSLはLinux上のsystem buildで再構成可能性を確認するが、macOSとの同等性は保証しない。
+Use macOS as the baseline for daily work and static checks. Treat NixOS-WSL as an auxiliary target environment for using the shared user environment when working with Unity and similar tools on Windows. Keeping the features and checks of both environments at the same level would impose maintenance cost disproportionate to WSL usage, so that approach is not adopted. Confirm that WSL can be reconstructed through a Linux system build, without guaranteeing parity with macOS.

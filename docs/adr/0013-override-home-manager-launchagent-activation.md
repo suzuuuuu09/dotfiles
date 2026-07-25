@@ -1,5 +1,3 @@
-# Home ManagerのLaunchAgent適用処理を置き換える
+# Override Home Manager LaunchAgent activation
 
-最近のmacOSでHome Managerの`launchctl bootout --wait`が失敗するため、Darwinのactivationでは既定の`setupLaunchAgents`を独自処理へ置き換える。
-適用のたびに全agentを再起動する方法は単純だが、無関係な常駐処理まで停止するため、前後世代のplistとdomainを比較し、追加、変更、削除されたagentだけを処理する。
-利用先のplistが旧世代から変更されている場合は削除せず、Home Manager側の回帰が解消して既定処理で同じ動作を確認できるまでこの置き換えを維持する。
+Because Home Manager's `launchctl bootout --wait` fails on recent macOS versions, replace the default `setupLaunchAgents` with custom handling during Darwin activation. Restarting every agent on each application would be simpler, but would stop unrelated long-running processes, so compare the previous and next generations' plists and domains, then handle only added, changed, or removed agents. If a destination plist has changed from the previous generation, do not remove it. Keep this override until the Home Manager regression is fixed and the default implementation is confirmed to behave identically.

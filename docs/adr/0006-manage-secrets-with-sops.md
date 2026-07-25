@@ -1,5 +1,3 @@
-# 秘密値をSOPSで暗号化して管理する
+# Manage secrets encrypted with SOPS
 
-秘密値はSOPSで暗号化したファイルだけをリポジトリへ置き、age秘密鍵はリポジトリ外に保管し、Home Managerのactivationで必要な設定ファイルへ展開する。
-秘密値をすべて手動設定にすれば鍵の準備は不要になるが、環境の再構成手順から秘密値の配置だけが外れるため採用しない。
-新しい対象環境ではage秘密鍵を別経路で配置する必要があり、通常の調査や文書作成では暗号化ファイルの内容を開かない。
+Store only SOPS-encrypted files containing secrets in the repository, keep age private keys outside the repository, and materialize required configuration files during Home Manager activation. Configuring every secret manually would remove the need to prepare a key, but would exclude secret placement from the environment reconstruction procedure, so that approach is not adopted. A new target environment needs its age private key provisioned separately; routine investigation and documentation must not open encrypted file contents.

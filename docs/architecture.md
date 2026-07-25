@@ -1,14 +1,10 @@
-# 構成と責務
+# Architecture and Responsibilities
 
-このリポジトリは、macOSとNixOS-WSLの対象環境を一つのflakeから構築する。
-Nixが依存関係とシステム構成を評価し、Home Managerが共通ユーザー環境を組み立て、HomebrewがmacOSアプリケーションの一部を補う。
+This repository builds macOS and NixOS-WSL target environments from a single flake. Nix evaluates dependencies and system configuration, Home Manager assembles the shared user environment, and Homebrew supplements selected macOS applications.
 
-現在の主環境はmacOSである。
-NixOS-WSLは、Windows側でUnityなどを使う作業中も共通ユーザー環境を利用するための補助対象環境としている。
-今後もmacOSと同じ水準でWSL構成を保守するかは決めていない。
-現在の保守範囲を分ける理由は[ADR 0003](adr/0003-treat-macos-as-primary-environment.md)に記録した。
+macOS is the current primary environment. NixOS-WSL is an auxiliary target environment for using the shared user environment while working with Unity and similar tools on Windows. Whether the WSL configuration will continue to receive maintenance at the same level as macOS is undecided. [ADR 0003](adr/0003-treat-macos-as-primary-environment.md) records the rationale for this maintenance boundary.
 
-## 構成の流れ
+## Configuration flow
 
 ```mermaid
 flowchart TD
@@ -34,144 +30,117 @@ flowchart TD
   CommonHome --> AgentSkills[agent skills]
 ```
 
-`flake.nix` は対象環境と検証処理の入口である。
-共通ユーザー環境はmacOSとWSLの両方から読み込み、OSやホストに依存する設定は個別のmoduleへ分離する。
-この共有境界を選んだ理由は[ADR 0010](adr/0010-share-home-manager-configuration-across-macos-and-wsl.md)に記録した。
+`flake.nix` is the entry point for target environments and checks. Both macOS and WSL load the shared user environment; operating-system- and host-dependent settings are separated into individual modules. [ADR 0010](adr/0010-share-home-manager-configuration-across-macos-and-wsl.md) records why this sharing boundary was chosen.
 
-## Flakeの出力
+## Flake outputs
 
-| 出力 | システム | 役割 |
+| Output | System | Responsibility |
 | --- | --- | --- |
-| `darwinConfigurations.suzuMac` | `aarch64-darwin` | 主環境のmacOSシステム設定とHome Manager設定 |
-| `nixosConfigurations.suzuWsl` | `x86_64-linux` | 補助対象環境のNixOS-WSLシステム設定とHome Manager設定 |
-| `homeConfigurations.nixos` | `x86_64-linux` | 補助対象環境向けHome Manager設定の単独出力 |
-| `homeConfigurations."nixos@suzuWsl"` | `x86_64-linux` | 同じWSL向けHome Manager設定のホスト名付き出力 |
-| `checks.aarch64-darwin.*` | `aarch64-darwin` | 主環境で実行するformatter、静的解析、シェルと設定ファイルの検証 |
+| `darwinConfigurations.suzuMac` | `aarch64-darwin` | macOS system and Home Manager configuration for the primary environment |
+| `nixosConfigurations.suzuWsl` | `x86_64-linux` | NixOS-WSL system and Home Manager configuration for the auxiliary target environment |
+| `homeConfigurations.nixos` | `x86_64-linux` | Standalone Home Manager output for the auxiliary target environment |
+| `homeConfigurations."nixos@suzuWsl"` | `x86_64-linux` | The same WSL Home Manager configuration, with a host-qualified output name |
+| `checks.aarch64-darwin.*` | `aarch64-darwin` | Formatters, static analysis, and shell and configuration validation run on the primary environment |
 
-macOSではnix-darwinがシステム設定を所有する。
-WSLではNixOS-WSL moduleが基盤を作り、Home Managerがユーザー環境を追加する。
+On macOS, nix-darwin owns system configuration. On WSL, the NixOS-WSL module builds the foundation and Home Manager adds the user environment.
 
-## Nix moduleの境界
+## Nix module boundaries
 
-| 場所 | 責務 |
+| Location | Responsibility |
 | --- | --- |
-| `.config/nix/hosts/` | ホストごとのシステム入口 |
-| `.config/nix/home/common/` | 両方の対象環境で共有するパッケージ、プログラム、dotfile、SOPS、agent skills |
-| `.config/nix/home/darwin/` | macOSのユーザー設定、システム既定値、Homebrew、launchd |
-| `.config/nix/home/wsl/` | WSLのユーザー名、ホームディレクトリ、ブラウザ連携 |
-| `.config/nix/overlays/` | flakeから共通利用するローカルパッケージ |
+| `.config/nix/hosts/` | Host-specific system entry points |
+| `.config/nix/home/common/` | Packages, programs, dotfiles, SOPS, and agent skills shared by both target environments |
+| `.config/nix/home/darwin/` | macOS user configuration, system defaults, Homebrew, and launchd |
+| `.config/nix/home/wsl/` | WSL user name, home directory, and browser integration |
+| `.config/nix/overlays/` | Local packages shared through the flake |
 
-新しい設定は、利用する対象環境が一つなら対応するplatformまたはhost moduleへ置く。
-両方の対象環境で同じ振る舞いが必要な場合だけ、`home/common/`へ置く。
+Place new configuration for only one target environment in its corresponding platform or host module. Use `home/common/` only when identical behavior is required in both target environments.
 
-## NixとHomebrewの境界
+## Nix and Homebrew boundary
 
-NixはCLI、開発ツール、シェル、エディタ、システム構成を管理する。
-HomebrewはmacOS GUIアプリケーションと、Nixで扱いにくいmacOS固有ツールを補う。
+Nix manages CLI tools, development tools, shells, editors, and system configuration. Homebrew supplements macOS GUI applications and macOS-specific tools that Nix does not handle well.
 
-`.config/nix/home/darwin/homebrew.nix` はアプリケーションを次の集合に分ける。
+`.config/nix/home/darwin/homebrew.nix` divides applications into the following sets:
 
-- **`managedBrews`**：nix-darwinがインストールするformula。
-- **`managedCasks`**：nix-darwinがインストールするcask。
-- **`manualCasks`**：存在だけを記録し、自動操作しないcask。
-- **`upgradableCasks`**：補助スクリプトによる更新を許可したcask。
+- **`managedBrews`**: Formulae installed by nix-darwin.
+- **`managedCasks`**: Casks installed by nix-darwin.
+- **`manualCasks`**: Casks whose presence is recorded but which are not operated automatically.
+- **`upgradableCasks`**: Casks allowed to be updated by the helper script.
 
-activationではHomebrewの自動更新と一括削除を行わない。
-更新対象は`upgradableCasks`のallowlistで制限し、`scripts/homebrew-update.sh`から実行する。
+Activation does not automatically update Homebrew or remove applications in bulk. Updates are limited by the `upgradableCasks` allowlist and run through `scripts/homebrew-update.sh`.
 
-## macOS activationの例外
+## macOS activation exceptions
 
-Nixで導入したGUIアプリは、Home Managerのcopy処理を使わず、現在のsystem closureから`/Applications/Nix Apps`へmacOS aliasを作る。
-Spotlightから発見できる形を保ちながら、アプリ本体の正本をNix storeから分岐させないためである。
-この公開方法は[ADR 0014](adr/0014-publish-nix-apps-as-macos-aliases.md)に記録した。
+Instead of using Home Manager's application-copying behavior, Nix-installed GUI applications are exposed as macOS aliases in `/Applications/Nix Apps` from the current system closure. This keeps them discoverable through Spotlight without making a copy diverge from the Nix store source of truth. [ADR 0014](adr/0014-publish-nix-apps-as-macos-aliases.md) records this publication method.
 
-Home ManagerのLaunchAgent適用処理は、最近のmacOSで`launchctl bootout --wait`が失敗する回帰を避けるため独自実装へ置き換えている。
-前後のgenerationを比較して変更対象だけを停止して再登録し、利用先で変更されたplistは自動削除しない。
-この回避策と撤去条件は[ADR 0013](adr/0013-override-home-manager-launchagent-activation.md)に記録した。
+Home Manager's LaunchAgent activation is replaced with custom handling to avoid a regression where `launchctl bootout --wait` fails on recent macOS versions. It compares generations and stops and re-registers only changed agents; destination plists changed by their consumers are never removed automatically. [ADR 0013](adr/0013-override-home-manager-launchagent-activation.md) records the workaround and its removal criteria.
 
-## dotfileの配布
+## Dotfile distribution
 
-Home Managerは、`~/dotfiles`からXDG設定ディレクトリとホームディレクトリへout-of-store symlinkを作る。
-リポジトリ内のファイルが設定の正本となるため、リンク済みdotfileは編集後すぐに参照先へ現れる。
+Home Manager creates out-of-store symlinks from `~/dotfiles` into XDG configuration and home directories. Because repository files are the configuration source of truth, a linked dotfile takes effect at its destination immediately after editing.
 
-共通ユーザー環境では、次の設定をリンクする。
+The shared user environment links the following configuration:
 
-- ターミナルとシェル：Fish、WezTerm、Ghostty、tmux、Oh My Posh。
-- エディタと開発ツール：Neovim、Git、GitHub CLI、lazygit、mise、cxr、vde。
-- 操作支援：bat、btop、gomi、herdr、Yazi。
-- ホーム直下：`.gitconfig`、`.zshrc`、`.zshenv`、`.zprofile`。
+- Terminal and shell: Fish, WezTerm, Ghostty, tmux, and Oh My Posh.
+- Editors and development tools: Neovim, Git, GitHub CLI, lazygit, mise, cxr, and vde.
+- Interaction support: bat, btop, gomi, herdr, and Yazi.
+- Home-directory files: `.gitconfig`, `.zshrc`, `.zshenv`, and `.zprofile`.
 
-macOSでは、AeroSpace、JankyBorders、Karabiner-Elementsの設定もリンクする。
+macOS also links AeroSpace, JankyBorders, and Karabiner-Elements configuration.
 
-リポジトリに存在しても、現在のHome Manager moduleからリンクされていない設定ディレクトリがある。
-`.config/chezmoi`、`.config/homebrew`、`.config/macSKK`、`.config/vscode`、`.config/zsh`を変更するときは、対象アプリケーションがどの経路で読み込むかを確認する。
+Some configuration directories exist in the repository but are not linked by the current Home Manager module. Before changing `.config/chezmoi`, `.config/homebrew`, `.config/macSKK`, `.config/vscode`, or `.config/zsh`, confirm how the target application reads it.
 
-この方式はcheckout先を`~/dotfiles`に固定する。
-このリポジトリは環境構築の初期段階から参照するため、通常のghq管理から外し、短く安定したパスへ置いている。
-判断の背景は[ADR 0001](adr/0001-use-out-of-store-symlinks.md)に記録した。
+This approach fixes the checkout path to `~/dotfiles`. The repository is used from the earliest stage of setting up the environment, so it is kept outside the usual ghq layout at a short, stable path. [ADR 0001](adr/0001-use-out-of-store-symlinks.md) records the rationale.
 
-## エージェント設定
+## Agent configuration
 
-`.config/nix/home/common/agent-skills.nix` は、flake inputsとリポジトリ内の`skills/`をAgent Skill Sourceとして登録する。
-個人用スキルとMatt Pocockのskillsを一括で有効にし、その他の外部skillsは必要なものだけを明示的に選ぶ。
+`.config/nix/home/common/agent-skills.nix` registers flake inputs and the repository's `skills/` directory as Agent Skill Sources. It enables personal skills and Matt Pocock's skills together, while selecting other external skills explicitly as needed.
 
-Nixで管理する理由は、macOSとWSLで同じagent環境を再現し、外部skillsの版とローカル方針を一か所で管理するためである。
-外部skillsの版は`flake.lock`で固定する。
-この導入経路を選んだ理由は[ADR 0004](adr/0004-manage-agent-skills-with-nix.md)に記録した。
+Managing this with Nix reproduces the same agent environment on macOS and WSL and keeps external-skill versions and local policy in one place. External skill versions are pinned in `flake.lock`; [ADR 0004](adr/0004-manage-agent-skills-with-nix.md) records this installation path.
 
-外部skillの指示がローカル運用と合わない場合は、Home Manager module内のtransformで補正する。
-現在は、CLIをグローバルインストールせず`npx`で実行する方針などを追加している。
+When an external skill's instructions do not fit local operations, transform it in the Home Manager module. The current transforms include a policy to run CLIs through `npx` rather than installing them globally.
 
-有効化されたskillsは`~/.agents/skills`へ配置する。
-Codex自身の共通指示と質問ガイドは別経路で管理し、`codex/`から`~/.codex/`へリンクする。
+Enabled skills are placed in `~/.agents/skills`. Codex-wide instructions and its question guide are managed separately, with `codex/` linked to `~/.codex/`.
 
-## シークレットの境界
+## Secret boundary
 
-秘密値はSOPSで暗号化し、Home Managerのactivation時に必要な設定ファイルへ展開する。
-復号鍵はリポジトリ外の`~/.config/sops/age/keys.txt`に置く。
-暗号化した秘密値だけをリポジトリで管理する理由は[ADR 0006](adr/0006-manage-secrets-with-sops.md)に記録した。
+Secrets are encrypted with SOPS and materialized into required configuration files during Home Manager activation. The decryption key is stored outside the repository at `~/.config/sops/age/keys.txt`. [ADR 0006](adr/0006-manage-secrets-with-sops.md) records why only encrypted secrets are versioned.
 
-暗号化された`.config/nix/secrets/secrets.yaml`はGitで管理するが、内容を通常の調査や文書作成で読み取らない。
-GitHub Actionsで使う秘密値はGitHub Secretsから渡し、ローカル設定へ複製しない。
+The encrypted `.config/nix/secrets/secrets.yaml` is tracked by Git, but its contents must not be read during routine investigation or documentation work. Secrets used by GitHub Actions are passed from GitHub Secrets and are not copied into local configuration.
 
-## CIの対応範囲
+## CI coverage
 
-| 変更領域 | 主な検証 |
+| Change area | Main verification |
 | --- | --- |
-| Nix moduleとflake | formatter、Statix、deadnix、macOS build、WSL build |
-| シェルスクリプトとFish | ShellCheck、Fish構文検査 |
-| Python製skill scripts | Ruff |
-| Neovim | `lazy-lock.json`からの復元、headless起動 |
-| WezTerm | 仮想ディスプレイ上での設定読み込み |
-| GitHub Actions | actionlintと追加のセキュリティlint |
-| Renovate | 設定ファイルのvalidator |
+| Nix modules and flake | Formatter, Statix, deadnix, macOS build, and WSL build |
+| Shell scripts and Fish | ShellCheck and Fish syntax checks |
+| Python skill scripts | Ruff |
+| Neovim | Restore from `lazy-lock.json` and headless startup |
+| WezTerm | Load configuration on a virtual display |
+| GitHub Actions | actionlint and additional security linting |
+| Renovate | Configuration validator |
 
-静的検査は、現在の主環境であるmacOS向けのflake checksに集約している。
-WSLの構成はLinux runnerで別にbuildし、補助対象環境を再構成できる状態か確認する。
-WSLの将来的な保守水準は未決定であり、このCI構成を恒久的な保証とは位置づけていない。
+Static checks are collected in flake checks for the current primary environment, macOS. The WSL configuration is built separately on a Linux runner to confirm that the auxiliary target environment can be reconstructed. Its future maintenance level is undecided, so this CI arrangement is not a permanent guarantee.
 
-## 依存関係の固定と更新
+## Pinning and updates
 
-Nix inputs、Neovimプラグイン、GitHub Actionsは、それぞれlockfileまたはcommit SHAで解決結果を固定する。
-RenovateはNixとGitHub Actionsの更新およびlockfile maintenanceを提案する。
-Nix依存は検証後の自動mergeを許可するが、GitHub Actionsはworkflowの実行内容を変えるため人が差分を確認する。
-固定と更新の境界は[ADR 0015](adr/0015-pin-and-automate-dependency-updates.md)に記録した。
+Nix inputs, Neovim plugins, and GitHub Actions pin their resolved versions through lockfiles or commit SHAs. Renovate proposes Nix and GitHub Actions updates and lockfile maintenance. Verified Nix dependency updates may be merged automatically, while GitHub Actions changes are reviewed by a person because they alter workflow behavior. [ADR 0015](adr/0015-pin-and-automate-dependency-updates.md) records this boundary.
 
-## 設計判断
+## Design decisions
 
-- [アプリケーション設定と操作方針](applications.md)
-- [ADR 0001：dotfilesをout-of-store symlinkで配布する](adr/0001-use-out-of-store-symlinks.md)
-- [ADR 0002：NixとHomebrewの責務を分ける](adr/0002-split-nix-and-homebrew-responsibilities.md)
-- [ADR 0003：macOSを主環境として扱う](adr/0003-treat-macos-as-primary-environment.md)
-- [ADR 0004：Agent SkillsをNixで管理する](adr/0004-manage-agent-skills-with-nix.md)
-- [ADR 0005：言語ランタイムをNixで管理する](adr/0005-manage-language-runtimes-with-nix.md)
-- [ADR 0006：秘密値をSOPSで暗号化して管理する](adr/0006-manage-secrets-with-sops.md)
-- [ADR 0007：macSKKを中心に日本語入力を構成する](adr/0007-build-japanese-input-around-macskk.md)
-- [ADR 0008：Vim風の移動操作をアプリ間で共有する](adr/0008-share-vim-style-navigation-across-apps.md)
-- [ADR 0009：個人環境に特化する](adr/0009-keep-dotfiles-specific-to-personal-environment.md)
-- [ADR 0010：macOSとWSLでHome Manager構成を共有する](adr/0010-share-home-manager-configuration-across-macos-and-wsl.md)
-- [ADR 0011：Neovimプラグインをlazy.nvimで管理する](adr/0011-manage-neovim-plugins-with-lazy-nvim.md)
-- [ADR 0012：Neovim開発ツールの責務を分ける](adr/0012-separate-neovim-tool-responsibilities.md)
-- [ADR 0013：Home ManagerのLaunchAgent適用処理を置き換える](adr/0013-override-home-manager-launchagent-activation.md)
-- [ADR 0014：Nix製GUIアプリをmacOS aliasで公開する](adr/0014-publish-nix-apps-as-macos-aliases.md)
-- [ADR 0015：外部依存を固定してRenovateで更新する](adr/0015-pin-and-automate-dependency-updates.md)
+- [Application configuration and operating policy](applications.md)
+- [ADR 0001: Distribute dotfiles through out-of-store symlinks](adr/0001-use-out-of-store-symlinks.md)
+- [ADR 0002: Separate Nix and Homebrew responsibilities](adr/0002-split-nix-and-homebrew-responsibilities.md)
+- [ADR 0003: Treat macOS as the primary environment](adr/0003-treat-macos-as-primary-environment.md)
+- [ADR 0004: Manage Agent Skills with Nix](adr/0004-manage-agent-skills-with-nix.md)
+- [ADR 0005: Manage language runtimes with Nix](adr/0005-manage-language-runtimes-with-nix.md)
+- [ADR 0006: Manage secrets encrypted with SOPS](adr/0006-manage-secrets-with-sops.md)
+- [ADR 0007: Build Japanese input around macSKK](adr/0007-build-japanese-input-around-macskk.md)
+- [ADR 0008: Share Vim-style navigation across applications](adr/0008-share-vim-style-navigation-across-apps.md)
+- [ADR 0009: Keep dotfiles specific to the personal environment](adr/0009-keep-dotfiles-specific-to-personal-environment.md)
+- [ADR 0010: Share Home Manager configuration across macOS and WSL](adr/0010-share-home-manager-configuration-across-macos-and-wsl.md)
+- [ADR 0011: Manage Neovim plugins with lazy.nvim](adr/0011-manage-neovim-plugins-with-lazy-nvim.md)
+- [ADR 0012: Separate Neovim development-tool responsibilities](adr/0012-separate-neovim-tool-responsibilities.md)
+- [ADR 0013: Override Home Manager LaunchAgent activation](adr/0013-override-home-manager-launchagent-activation.md)
+- [ADR 0014: Publish Nix GUI applications as macOS aliases](adr/0014-publish-nix-apps-as-macos-aliases.md)
+- [ADR 0015: Pin external dependencies and update them with Renovate](adr/0015-pin-and-automate-dependency-updates.md)

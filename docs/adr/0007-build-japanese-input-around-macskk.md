@@ -1,5 +1,3 @@
-# macSKKを中心に日本語入力を構成する
+# Build Japanese input around macSKK
 
-macSKKを日本語入力の中心にし、azoo-key-skkservを変換支援、Karabiner-Elementsを英数とかなの切り替え、macismをNeovimから英数へ戻す処理に使う。
-macOS標準の日本語入力だけを使えば構成は減るが、SKKによる入力とアプリ間で安定した入力切り替えを優先するため採用しない。
-辞書、カナ入力規則、キーバインド、起動設定はnix-darwinで再構成できる状態を保つ。
+Use macSKK as the center of Japanese input, with azoo-key-skkserv for conversion support, Karabiner-Elements to switch between alphanumeric and kana input, and macism to return to alphanumeric input from Neovim. Relying only on the macOS Japanese input method would reduce the configuration, but it would not prioritize SKK input and stable input switching between applications. Keep dictionaries, kana input rules, key bindings, and launch settings reconstructible through nix-darwin.

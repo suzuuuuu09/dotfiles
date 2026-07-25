@@ -1,22 +1,18 @@
-# 運用手順
+# Operating Procedures
 
-この文書は、対象環境を導入し、設定変更を適用し、変更箇所を検証するための手順をまとめる。
-個別アプリケーションの設定値は転記せず、変更時に参照する正本と適用経路を示す。
+This document describes how to bootstrap target environments, apply configuration changes, and verify changed areas. It does not transcribe individual application settings; it identifies the source of truth and application path to consult when making changes.
 
-## 前提条件
+## Prerequisites
 
-このリポジトリは個人環境向けであり、汎用的なdotfiles templateではない。
-ユーザー名、ホスト名、アプリケーションの配置先に環境固有の値が含まれる。
+This repository is for a personal environment, not a general-purpose dotfiles template. User names, host names, and application locations contain environment-specific values.
 
-Home Managerのリンクはcheckout先を`~/dotfiles`として構築する。
-別の場所へcloneする場合は、`dotfilesPath`を定義するNix moduleも同時に変更する必要がある。
+Home Manager links are built assuming a checkout at `~/dotfiles`. Cloning elsewhere requires changing the Nix module that defines `dotfilesPath` at the same time.
 
-SOPSで管理する設定を有効にする対象環境には、対応するage秘密鍵を`~/.config/sops/age/keys.txt`へ配置する。
-秘密鍵はリポジトリへ追加しない。
+Target environments that enable SOPS-managed configuration need the corresponding age private key at `~/.config/sops/age/keys.txt`. Never add the private key to the repository.
 
-## 初期導入
+## Bootstrap
 
-Nixでflakesを利用できる状態にしてから、固定されたパスへcloneする。
+Enable flakes in Nix, then clone the repository to its fixed path.
 
 ```bash
 git clone https://github.com/suzuuuuu09/dotfiles.git ~/dotfiles
@@ -24,42 +20,40 @@ cd ~/dotfiles
 nix flake check
 ```
 
-macOSでは、構成をbuildしてからnix-darwinで適用する。
+On macOS, build the configuration before applying it with nix-darwin.
 
 ```bash
 nix build --no-link .#darwinConfigurations.suzuMac.system
 sudo darwin-rebuild switch --flake .#suzuMac
 ```
 
-NixOS-WSLでは、system closureをbuildしてからNixOS構成を適用する。
+On NixOS-WSL, build the system closure before applying the NixOS configuration.
 
 ```bash
 nix build --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel
 sudo nixos-rebuild switch --flake .#suzuWsl
 ```
 
-WSLのHome Manager部分だけを評価するときは、`homeConfigurations.nixos`または`homeConfigurations."nixos@suzuWsl"`を使う。
-両方の出力は同じHome Manager構成を参照する。
+To evaluate only the WSL Home Manager portion, use `homeConfigurations.nixos` or `homeConfigurations."nixos@suzuWsl"`. Both outputs refer to the same Home Manager configuration.
 
-## 変更の適用
+## Applying changes
 
-変更方法は、ファイルがリンク済みdotfileかNix moduleかで異なる。
+How a change is applied depends on whether the file is a linked dotfile or a Nix module.
 
-| 変更対象 | 適用方法 | 直接の検証 |
+| Changed target | Application method | Direct verification |
 | --- | --- | --- |
-| リンク済みdotfile | 対象アプリケーションでreloadまたは再起動 | アプリケーション固有の構文検査または起動確認 |
-| `home/common/` | 対象環境のHome Managerまたはsystemをswitch | `nix flake check`と対象構成のbuild |
-| `home/darwin/`、`hosts/mac/` | `darwin-rebuild switch` | macOS systemのbuild |
-| `home/wsl/`、`hosts/wsl/` | `nixos-rebuild switch` | WSL systemのbuild |
-| `flake.nix`、`flake.lock`、overlays | 対象となるすべての構成をswitch | flake checksとmacOS、WSLのbuild |
-| `skills/`、agent skill sources | Home Managerを含む構成をswitch | Nix評価後に`~/.agents/skills`を確認 |
+| Linked dotfile | Reload or restart the target application | Application-specific syntax check or startup confirmation |
+| `home/common/` | Switch the target environment's Home Manager or system | `nix flake check` and the target configuration build |
+| `home/darwin/`, `hosts/mac/` | `darwin-rebuild switch` | macOS system build |
+| `home/wsl/`, `hosts/wsl/` | `nixos-rebuild switch` | WSL system build |
+| `flake.nix`, `flake.lock`, overlays | Switch all affected configurations | Flake checks and both macOS and WSL builds |
+| `skills/`, agent skill sources | Switch a configuration including Home Manager | After Nix evaluation, inspect `~/.agents/skills` |
 
-out-of-store symlinkのため、リンク済みdotfileの内容はNix rebuildを待たずに参照先へ反映される。
-パッケージ、リンク定義、SOPS template、agent skillsの構成を変えた場合は、Home Managerを再適用する。
+Because these are out-of-store symlinks, a linked dotfile is reflected at its destination without waiting for a Nix rebuild. Reapply Home Manager after changing packages, link definitions, SOPS templates, or agent-skill configuration.
 
-## Nix依存の更新
+## Updating Nix dependencies
 
-flake inputsを更新するときは、lockfileを更新してから両方の対象環境をbuildする。
+When updating flake inputs, update the lockfile and then build both target environments.
 
 ```bash
 nix flake update
@@ -68,34 +62,29 @@ nix build --no-link .#darwinConfigurations.suzuMac.system
 nix build --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel
 ```
 
-`flake.lock`にはNix、Home Manager、nix-darwin、NixOS-WSL、外部agent skillsなどの解決結果が含まれる。
-更新後は、変更したinputに近い構成だけでなくmacOSとWSLの両方を確認する。
-依存を固定し、更新提案をRenovateへ任せる判断は[ADR 0015](adr/0015-pin-and-automate-dependency-updates.md)に記録した。
+`flake.lock` records the resolution of Nix, Home Manager, nix-darwin, NixOS-WSL, and external agent skills. After updating it, verify both macOS and WSL as well as the configurations closest to the changed input. [ADR 0015](adr/0015-pin-and-automate-dependency-updates.md) records the decision to pin dependencies and leave update proposals to Renovate.
 
-## Homebrewの更新
+## Updating Homebrew
 
-Homebrewの管理対象は`.config/nix/home/darwin/homebrew.nix`で宣言する。
-activationでは自動更新とcleanupを行わない。
+Homebrew-managed applications are declared in `.config/nix/home/darwin/homebrew.nix`. Activation neither updates Homebrew automatically nor performs cleanup.
 
-更新前にdry runで対象を確認する。
+Confirm the affected targets with a dry run first.
 
 ```bash
 ./scripts/homebrew-update.sh --dry-run
 ```
 
-確認後、allowlistに含まれるformulaとcaskを更新する。
+Then update formulae and casks included in the allowlist.
 
 ```bash
 ./scripts/homebrew-update.sh
 ```
 
-`manualCasks`はスクリプトの対象外である。
-自動更新するcaskを増やす場合は、`managedCasks`へ置くだけでなく`upgradableCasks`へ明示的に追加する。
+`manualCasks` are outside the script's scope. Adding an automatically updated cask requires adding it explicitly to `upgradableCasks` as well as `managedCasks`.
 
-## Neovim pluginの復元
+## Restoring Neovim plugins
 
-Neovim pluginの解決結果は`.config/nvim/lazy-lock.json`で固定する。
-CIと同じ復元手順は次のとおり。
+Neovim plugin resolution is pinned in `.config/nvim/lazy-lock.json`. The CI-equivalent restoration procedure is:
 
 ```bash
 nix shell nixpkgs#neovim nixpkgs#git -c \
@@ -105,58 +94,50 @@ nix shell nixpkgs#neovim nixpkgs#git -c \
   nvim --headless "+qa"
 ```
 
-復元スクリプトはLazy.nvimを使ってlockfileの状態へ戻す。
-pluginを更新した場合は、変更されたlockfileも差分として確認する。
-NeovimプラグインをNixではなくlazy.nvimで復元する理由は[ADR 0011](adr/0011-manage-neovim-plugins-with-lazy-nvim.md)に記録した。
+The restoration script uses Lazy.nvim to restore the state in the lockfile. When updating plugins, review the changed lockfile as part of the diff. [ADR 0011](adr/0011-manage-neovim-plugins-with-lazy-nvim.md) records why plugins are restored through lazy.nvim instead of Nix.
 
-## 変更領域別の検証
+## Verification by change area
 
-リポジトリ全体の既定検証は`nix flake check`で実行する。
+The repository-wide default verification is `nix flake check`.
 
 ```bash
 nix flake check
 ```
 
-変更範囲が限定される場合も、まず直接影響する検証を実行し、flakeまたは共通moduleを変更した場合は対象構成のbuildを追加する。
+For a limited change, run the directly affected verification first. Add the target configuration build when changing a flake or common module.
 
-| 変更領域 | 最小の検証 |
+| Change area | Minimum verification |
 | --- | --- |
 | Nix | `nix flake check` |
 | macOS system | `nix build --no-link .#darwinConfigurations.suzuMac.system` |
 | NixOS-WSL | `nix build --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel` |
-| Neovim | plugin復元後に`nvim --headless "+qa"` |
-| WezTerm | `.github/workflows/wezterm-linter.yaml`と同じ設定読み込み |
+| Neovim | `nvim --headless "+qa"` after restoring plugins |
+| WezTerm | Load the configuration as in `.github/workflows/wezterm-linter.yaml` |
 | Homebrew manifest | `./scripts/homebrew-update.sh --dry-run` |
-| GitHub Actions | flakeの`actionlint` check |
-| Python製skill scripts | flakeの`ruff` check |
+| GitHub Actions | The flake's `actionlint` check |
+| Python skill scripts | The flake's `ruff` check |
 
-`nix fmt`はファイルを書き換える。
-既存の未コミット変更がある場合は、対象範囲を確認してから実行する。
+`nix fmt` rewrites files. When the worktree already has uncommitted changes, confirm its scope before running it.
 
-## シークレット
+## Secrets
 
-`.config/nix/secrets/secrets.yaml`は暗号化された状態でのみ管理する。
-通常の調査、レビュー、文書作成では内容を開かない。
+Manage `.config/nix/secrets/secrets.yaml` only in encrypted form. Do not open it during routine investigation, review, or documentation work.
 
-Home ManagerはSOPSのplaceholderから`.wakatime.cfg`を生成する。
-生成先のファイルとage秘密鍵はGitで管理しない。
+Home Manager generates `.wakatime.cfg` from a SOPS placeholder. Neither the generated file nor the age private key is managed by Git.
 
-GitHub Actionsのtokenや秘密鍵はGitHub Secretsからworkflowへ渡す。
-workflow、ログ、ローカルの雛形ファイルへ秘密値を埋め込まない。
+GitHub Actions tokens and private keys are supplied to workflows through GitHub Secrets. Do not put secret values in workflows, logs, or local template files.
 
-## 問題の切り分け
+## Troubleshooting
 
-設定変更が反映されない場合は、最初に適用経路を確認する。
+When a configuration change does not take effect, first verify its application path.
 
-1. `readlink`で対象が`~/dotfiles`を指しているか確認する。
-2. `.config/nix/home/common/dotfiles.nix`またはDarwin固有のlink定義に対象があるか確認する。
-3. リンク済みdotfileなら対象アプリケーションをreloadする。
-4. Nix moduleなら対象構成をbuildし、成功後にswitchする。
+1. Use `readlink` to confirm that the target points to `~/dotfiles`.
+2. Check whether the target appears in `.config/nix/home/common/dotfiles.nix` or in a Darwin-specific link definition.
+3. Reload the target application if it uses a linked dotfile.
+4. Build the target configuration and switch it after a successful build if it uses a Nix module.
 
-Nix評価に失敗する場合は、macOS用とWSL用の出力を分けてbuildする。
-一方だけが失敗する場合は、`home/common/`ではなくplatformまたはhost moduleの変更を先に確認する。
+When Nix evaluation fails, build the macOS and WSL outputs separately. If only one fails, inspect platform or host module changes before `home/common/`.
 
-Neovimが起動しない場合は、lockfileからpluginを復元してからheadless起動を実行する。
-Homebrewのアプリケーションが更新されない場合は、そのアプリケーションが`manualCasks`またはallowlist外に分類されていないか確認する。
+When Neovim fails to start, restore plugins from the lockfile and then run headless startup. If a Homebrew application does not update, confirm that it is not classified as a `manualCasks` entry or excluded from the allowlist.
 
-agent skillが見つからない場合は、`.config/nix/home/common/agent-skills.nix`のsourceと選択規則を確認し、Home Managerを含む構成を再適用する。
+If an agent skill is missing, inspect the sources and selection rules in `.config/nix/home/common/agent-skills.nix`, then reapply a configuration that includes Home Manager.

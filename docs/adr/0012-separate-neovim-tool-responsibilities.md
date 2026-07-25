@@ -1,6 +1,3 @@
-# Neovim開発ツールの責務を分ける
+# Separate Neovim development-tool responsibilities
 
-Nixは環境間で共有するCLIとランタイム、MasonはNeovim専用のLSP、debugger、補助ツール、Conformは保存時のformatを担当する。
-すべてをNixで管理するとエディタ専用ツールの変更にもシステム構成の更新が必要になり、すべてをMasonへ寄せるとシェルとエディタで利用する版が分岐するため、責務を一方へ統合しない。
-外部formatterがあるbufferではConformを優先してLSPのformat機能を無効にし、外部formatterがない場合だけLSPへフォールバックする。
-Masonの`generic_tools`に残る`uv`はNixとの重複であり、今後の整理対象とする。
+Nix provides CLI tools and runtimes shared between environments; Mason provides Neovim-specific LSP servers, debuggers, and auxiliary tools; Conform handles formatting on save. Managing everything in Nix would require system-configuration updates for editor-only tool changes, while placing everything in Mason would split versions used in the shell and editor, so responsibilities are not consolidated into either layer. Prefer Conform and disable LSP formatting for buffers with an external formatter; fall back to LSP formatting only when no external formatter is available. `uv` remaining in Mason's `generic_tools` duplicates Nix and is a future cleanup item.
