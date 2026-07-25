@@ -27,4 +27,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Prepare Renovate config for validator
+        run: cp .github/renovate.jsonc "$RUNNER_TEMP/renovate.json5"
       - uses: suzuki-shunsuke/github-action-renovate-config-validator@ee9f69e1f683ed0d08225086482b34fc9abe9300 # v2.1.0
+        with:
+          config_file_path: ${{ runner.temp }}/renovate.json5
