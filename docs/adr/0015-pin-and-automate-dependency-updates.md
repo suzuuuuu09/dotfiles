@@ -1,0 +1,5 @@
+# 外部依存を固定してRenovateで更新する
+
+Nix inputsは`flake.lock`、Neovimプラグインは`lazy-lock.json`、GitHub Actionsはcommit SHAで固定し、外部の最新版を実行時に無条件で取り込まない。
+更新をすべて手動にすると変更頻度は下がるが、依存が長期間古いまま残りやすいため、NixとGitHub Actionsの更新およびlockfile maintenanceはRenovateから提案する。
+Nix依存は検証を通過した更新を自動mergeできる一方、workflow自体を実行するGitHub Actionsの更新は自動mergeせず、人が差分を確認する。

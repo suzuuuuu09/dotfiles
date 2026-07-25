@@ -36,6 +36,7 @@ flowchart TD
 
 `flake.nix` は対象環境と検証処理の入口である。
 共通ユーザー環境はmacOSとWSLの両方から読み込み、OSやホストに依存する設定は個別のmoduleへ分離する。
+この共有境界を選んだ理由は[ADR 0010](adr/0010-share-home-manager-configuration-across-macos-and-wsl.md)に記録した。
 
 ## Flakeの出力
 
@@ -78,6 +79,16 @@ HomebrewはmacOS GUIアプリケーションと、Nixで扱いにくいmacOS固�
 activationではHomebrewの自動更新と一括削除を行わない。
 更新対象は`upgradableCasks`のallowlistで制限し、`scripts/homebrew-update.sh`から実行する。
 
+## macOS activationの例外
+
+Nixで導入したGUIアプリは、Home Managerのcopy処理を使わず、現在のsystem closureから`/Applications/Nix Apps`へmacOS aliasを作る。
+Spotlightから発見できる形を保ちながら、アプリ本体の正本をNix storeから分岐させないためである。
+この公開方法は[ADR 0014](adr/0014-publish-nix-apps-as-macos-aliases.md)に記録した。
+
+Home ManagerのLaunchAgent適用処理は、最近のmacOSで`launchctl bootout --wait`が失敗する回帰を避けるため独自実装へ置き換えている。
+前後のgenerationを比較して変更対象だけを停止して再登録し、利用先で変更されたplistは自動削除しない。
+この回避策と撤去条件は[ADR 0013](adr/0013-override-home-manager-launchagent-activation.md)に記録した。
+
 ## dotfileの配布
 
 Home Managerは、`~/dotfiles`からXDG設定ディレクトリとホームディレクトリへout-of-store symlinkを作る。
@@ -118,6 +129,7 @@ Codex自身の共通指示と質問ガイドは別経路で管理し、`codex/`�
 
 秘密値はSOPSで暗号化し、Home Managerのactivation時に必要な設定ファイルへ展開する。
 復号鍵はリポジトリ外の`~/.config/sops/age/keys.txt`に置く。
+暗号化した秘密値だけをリポジトリで管理する理由は[ADR 0006](adr/0006-manage-secrets-with-sops.md)に記録した。
 
 暗号化された`.config/nix/secrets/secrets.yaml`はGitで管理するが、内容を通常の調査や文書作成で読み取らない。
 GitHub Actionsで使う秘密値はGitHub Secretsから渡し、ローカル設定へ複製しない。
@@ -138,6 +150,13 @@ GitHub Actionsで使う秘密値はGitHub Secretsから渡し、ローカル設�
 WSLの構成はLinux runnerで別にbuildし、補助対象環境を再構成できる状態か確認する。
 WSLの将来的な保守水準は未決定であり、このCI構成を恒久的な保証とは位置づけていない。
 
+## 依存関係の固定と更新
+
+Nix inputs、Neovimプラグイン、GitHub Actionsは、それぞれlockfileまたはcommit SHAで解決結果を固定する。
+RenovateはNixとGitHub Actionsの更新およびlockfile maintenanceを提案する。
+Nix依存は検証後の自動mergeを許可するが、GitHub Actionsはworkflowの実行内容を変えるため人が差分を確認する。
+固定と更新の境界は[ADR 0015](adr/0015-pin-and-automate-dependency-updates.md)に記録した。
+
 ## 設計判断
 
 - [アプリケーション設定と操作方針](applications.md)
@@ -146,3 +165,13 @@ WSLの将来的な保守水準は未決定であり、このCI構成を恒久的
 - [ADR 0003：macOSを主環境として扱う](adr/0003-treat-macos-as-primary-environment.md)
 - [ADR 0004：Agent SkillsをNixで管理する](adr/0004-manage-agent-skills-with-nix.md)
 - [ADR 0005：言語ランタイムをNixで管理する](adr/0005-manage-language-runtimes-with-nix.md)
+- [ADR 0006：秘密値をSOPSで暗号化して管理する](adr/0006-manage-secrets-with-sops.md)
+- [ADR 0007：macSKKを中心に日本語入力を構成する](adr/0007-build-japanese-input-around-macskk.md)
+- [ADR 0008：Vim風の移動操作をアプリ間で共有する](adr/0008-share-vim-style-navigation-across-apps.md)
+- [ADR 0009：個人環境に特化する](adr/0009-keep-dotfiles-specific-to-personal-environment.md)
+- [ADR 0010：macOSとWSLでHome Manager構成を共有する](adr/0010-share-home-manager-configuration-across-macos-and-wsl.md)
+- [ADR 0011：Neovimプラグインをlazy.nvimで管理する](adr/0011-manage-neovim-plugins-with-lazy-nvim.md)
+- [ADR 0012：Neovim開発ツールの責務を分ける](adr/0012-separate-neovim-tool-responsibilities.md)
+- [ADR 0013：Home ManagerのLaunchAgent適用処理を置き換える](adr/0013-override-home-manager-launchagent-activation.md)
+- [ADR 0014：Nix製GUIアプリをmacOS aliasで公開する](adr/0014-publish-nix-apps-as-macos-aliases.md)
+- [ADR 0015：外部依存を固定してRenovateで更新する](adr/0015-pin-and-automate-dependency-updates.md)

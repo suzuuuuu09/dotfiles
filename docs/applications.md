@@ -98,6 +98,7 @@ WezTermの置き換え候補として、Fish、macSKK、UDEV Gothic、Nord相当
 Neovim、WezTerm、Herdr、AeroSpace、Yaziでは、可能な範囲でVim風の`h/j/k/l`を移動に使う。
 Caps LockはKarabiner-Elementsで左Controlへ変換する。
 これにより、アプリを切り替えても同じ移動とモード切り替えの感覚を保つ。
+この操作体系を選んだ理由は[ADR 0008](adr/0008-share-vim-style-navigation-across-apps.md)に記録した。
 
 ### 配色とフォント
 
@@ -134,6 +135,7 @@ Commandを長押ししたときは通常のCommandとして扱う。
 ### macSKKとazoo-key-skkserv
 
 macSKKを日本語入力の中心にする。
+日本語入力を複数のツールで構成する理由は[ADR 0007](adr/0007-build-japanese-input-around-macskk.md)に記録した。
 macSKKの設定はnix-darwinの`CustomUserPreferences`で宣言し、辞書とカナ入力規則はactivation時にアプリのコンテナへコピーする。
 辞書には一般語、地名、人名、固有名詞、絵文字のSKK辞書を含める。
 カナ入力規則の正本は[`kana-rule.conf`](../.config/macSKK/Settings/kana-rule.conf)である。
@@ -152,6 +154,7 @@ Neovimからはmacismを使い、Neovimがフォーカスを失ったときにma
 Neovimはメインエディタであり、`EDITOR`、`GIT_EDITOR`、`VISUAL`にも指定する。
 設定は`config`、`plugins`、`after`、スニペットに分割し、機能ごとに遅延読み込みする。
 プラグインの解決結果は[`lazy-lock.json`](../.config/nvim/lazy-lock.json)で固定し、起動時の自動更新確認は無効にする。
+プラグインをNix packageへ統合しない理由は[ADR 0011](adr/0011-manage-neovim-plugins-with-lazy-nvim.md)に記録した。
 
 mapleaderはSpace、maplocalleaderは`,`である。
 ウィンドウ移動には`Ctrl-h/j/k/l`を使い、削除や変更ではブラックホールレジスタを使う。
@@ -163,6 +166,8 @@ NixはmacOSとWSLで共有するCLIと基礎ツールを提供する。
 lazy.nvimはNeovimプラグインを管理する。
 Masonはエディタ専用のLSPやツールを実行時に導入する。
 Conformは保存時のフォーマットを担当し、必要に応じてLSPのフォーマットへフォールバックする。
+この責務境界は[ADR 0012](adr/0012-separate-neovim-tool-responsibilities.md)に記録した。
+Masonの`generic_tools`に残る`uv`はNixの共通パッケージと重複しており、今後の整理対象である。
 CopilotとSidekickもNeovimのAI機能として設定するが、利用の有無は作業ごとに選ぶ。
 
 ### VS Code

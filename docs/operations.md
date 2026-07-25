@@ -70,6 +70,7 @@ nix build --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel
 
 `flake.lock`にはNix、Home Manager、nix-darwin、NixOS-WSL、外部agent skillsなどの解決結果が含まれる。
 更新後は、変更したinputに近い構成だけでなくmacOSとWSLの両方を確認する。
+依存を固定し、更新提案をRenovateへ任せる判断は[ADR 0015](adr/0015-pin-and-automate-dependency-updates.md)に記録した。
 
 ## Homebrewの更新
 
@@ -106,6 +107,7 @@ nix shell nixpkgs#neovim nixpkgs#git -c \
 
 復元スクリプトはLazy.nvimを使ってlockfileの状態へ戻す。
 pluginを更新した場合は、変更されたlockfileも差分として確認する。
+NeovimプラグインをNixではなくlazy.nvimで復元する理由は[ADR 0011](adr/0011-manage-neovim-plugins-with-lazy-nvim.md)に記録した。
 
 ## 変更領域別の検証
 

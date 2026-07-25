@@ -1,0 +1,5 @@
+# Home ManagerのLaunchAgent適用処理を置き換える
+
+最近のmacOSでHome Managerの`launchctl bootout --wait`が失敗するため、Darwinのactivationでは既定の`setupLaunchAgents`を独自処理へ置き換える。
+適用のたびに全agentを再起動する方法は単純だが、無関係な常駐処理まで停止するため、前後世代のplistとdomainを比較し、追加、変更、削除されたagentだけを処理する。
+利用先のplistが旧世代から変更されている場合は削除せず、Home Manager側の回帰が解消して既定処理で同じ動作を確認できるまでこの置き換えを維持する。

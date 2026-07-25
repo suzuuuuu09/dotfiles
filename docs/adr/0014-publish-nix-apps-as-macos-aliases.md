@@ -1,0 +1,5 @@
+# Nix製GUIアプリをmacOS aliasで公開する
+
+Home Managerによるアプリケーションのコピーを無効にし、Nixで導入したGUIアプリはactivation時に`/Applications/Nix Apps`へmacOS aliasとして公開する。
+通常のsymlinkだけではSpotlightやLaunch Servicesから扱いにくく、アプリ本体をコピーするとNix storeを正本とする配置から分岐するため、aliasを使う。
+aliasの集合は現在のsystem closureから毎回作り直し、削除済みアプリを`/Applications/Nix Apps`へ残さない。

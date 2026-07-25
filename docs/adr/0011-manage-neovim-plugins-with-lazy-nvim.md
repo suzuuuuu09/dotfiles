@@ -1,0 +1,5 @@
+# Neovimプラグインをlazy.nvimで管理する
+
+Neovim本体と基礎CLIはNixで導入し、Neovimプラグインはlazy.nvimで読み込み、`lazy-lock.json`で解決結果を固定する。
+プラグインもNix packageとして管理すればNix評価へ閉じられるが、Neovim側の遅延読み込みと更新手順から外れるため採用しない。
+CIはlockfileからプラグインを復元してheadless起動し、Nix store外の配布経路を含めて再現できることを確認する。
