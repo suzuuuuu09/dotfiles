@@ -31,7 +31,7 @@ nix-darwinとHome Managerを中心に、アプリ設定、開発ツール、Code
 - `.config/{fish,nvim,wezterm,...}/`: 各アプリの設定
 - `codex/`: Codexの共通指示とガイド
 - `skills/`: ローカルのエージェントスキル
-- `scripts/`: Homebrew更新、Neovimプラグイン復元などの補助スクリプト
+- `scripts/`: Neovimプラグイン復元などの補助スクリプト
 - `.github/`: CI、Renovate、共通Action
 
 Home Managerのdotfilesリンクは、チェックアウト先を `~/dotfiles` として作成します。
@@ -80,8 +80,6 @@ nix shell nixpkgs#neovim nixpkgs#git -c \
 nix shell nixpkgs#neovim nixpkgs#git -c \
   nvim --headless "+qa"
 
-# Homebrew更新対象の確認
-./scripts/homebrew-update.sh --dry-run
 ```
 
 CIでは、Nix構成、Neovim、WezTerm、Renovate設定、GitHub Actionsを個別に検証します。
@@ -90,7 +88,7 @@ CIでは、Nix構成、Neovim、WezTerm、Renovate設定、GitHub Actionsを個�
 
 - Nix依存は `flake.lock`、Neovimプラグインは `.config/nvim/lazy-lock.json` で固定しています。
 - Homebrew cask、Masonで導入するツール、WezTermプラグインなど、一部は実行時に外部配布元へアクセスします。
-- `scripts/homebrew-update.sh` はNix設定内のallowlistだけを更新し、`--dry-run` で対象を確認できます。
+- Homebrewのmanagedなformula、cask、Mac App StoreアプリはmacOS構成の適用時に更新されます。
 
 ## シークレット
 

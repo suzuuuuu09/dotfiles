@@ -33,7 +33,7 @@ Configuration exposed where an application can read it while keeping the configu
 _Avoid_: managed package, generated configuration
 
 **Managed Application**:
-An application whose installed state is adjusted automatically when the configuration is applied.
+An application whose presence and version are maintained automatically. It may be updated when the configuration is applied or by its own updater.
 _Avoid_: manually managed application, configured application
 
 **Manual Application**:

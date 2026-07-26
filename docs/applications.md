@@ -137,7 +137,7 @@ This Git operating policy standardizes repository locations, keeps history linea
 
 ## macOS application management
 
-macOS GUI applications are not all subject to the same automation. [`homebrew.nix`](../.config/nix/home/darwin/homebrew.nix) separates formulae and casks into managed, manual, and update-allowed sets. Activation does not automatically update Homebrew or perform bulk removal. To avoid unintentionally removing manually managed applications, updates are isolated in [`homebrew-update.sh`](../scripts/homebrew-update.sh).
+macOS GUI applications are not all subject to the same automation. [`homebrew.nix`](../.config/nix/home/darwin/homebrew.nix) separates Homebrew packages into managed and manual sets. Applying the macOS configuration updates managed formulae, casks, and Mac App Store applications, while cleanup remains disabled so manually maintained applications are not removed. Self-updating casks use their own updater, and only exceptional casks are marked `greedy` individually.
 
 macSKK, azoo-key-skkserv, AeroSpace, WezTerm, Ghostty, and Herdr have macOS-specific installation paths. Karabiner-Elements, Vivaldi, Slack, Discord, Obsidian, and VS Code have their presence recorded in the manifest but are excluded from automated management. [ADR 0002](adr/0002-split-nix-and-homebrew-responsibilities.md) records why Nix and Homebrew responsibilities are separated.
 

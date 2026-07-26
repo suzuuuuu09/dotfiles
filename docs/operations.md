@@ -66,21 +66,15 @@ nix build --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel
 
 ## Updating Homebrew
 
-Homebrew-managed applications are declared in `.config/nix/home/darwin/homebrew.nix`. Activation neither updates Homebrew automatically nor performs cleanup.
+Homebrew-managed applications are declared in `.config/nix/home/darwin/homebrew.nix`. Applying the macOS configuration refreshes Homebrew metadata and upgrades managed formulae, casks, and Mac App Store applications. Cleanup remains disabled so applications outside the managed set are not removed.
 
-Confirm the affected targets with a dry run first.
-
-```bash
-./scripts/homebrew-update.sh --dry-run
-```
-
-Then update formulae and casks included in the allowlist.
+Apply the macOS configuration to update the managed Homebrew packages.
 
 ```bash
-./scripts/homebrew-update.sh
+darwin-rebuild switch --flake .#suzuMac
 ```
 
-`manualCasks` are outside the script's scope. Adding an automatically updated cask requires adding it explicitly to `upgradableCasks` as well as `managedCasks`.
+`manualCasks` remain outside automated installation, updates, and removal. Self-updating casks use their own update mechanism; a cask that cannot update itself and whose current version Homebrew cannot detect may be marked `greedy` individually in `managedCasks`.
 
 ## Restoring Neovim plugins
 
@@ -113,7 +107,7 @@ For a limited change, run the directly affected verification first. Add the targ
 | NixOS-WSL | `nix build --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel` |
 | Neovim | `nvim --headless "+qa"` after restoring plugins |
 | WezTerm | Load the configuration as in `.github/workflows/wezterm-linter.yaml` |
-| Homebrew manifest | `./scripts/homebrew-update.sh --dry-run` |
+| Homebrew manifest | `nix build --no-link .#darwinConfigurations.suzuMac.system` |
 | GitHub Actions | The flake's `actionlint` check |
 | Python skill scripts | The flake's `ruff` check |
 
@@ -138,6 +132,6 @@ When a configuration change does not take effect, first verify its application p
 
 When Nix evaluation fails, build the macOS and WSL outputs separately. If only one fails, inspect platform or host module changes before `home/common/`.
 
-When Neovim fails to start, restore plugins from the lockfile and then run headless startup. If a Homebrew application does not update, confirm that it is not classified as a `manualCasks` entry or excluded from the allowlist.
+When Neovim fails to start, restore plugins from the lockfile and then run headless startup. If a Homebrew application does not update, confirm that it is a managed application and check whether it relies on its own updater or needs an individual `greedy` setting.
 
 If an agent skill is missing, inspect the sources and selection rules in `.config/nix/home/common/agent-skills.nix`, then reapply a configuration that includes Home Manager.

@@ -35,7 +35,10 @@
     "homerow"
     "pear-devs/pear/pear-desktop"
     "battery"
-    "wezterm@nightly"
+    {
+      name = "wezterm@nightly";
+      greedy = true;
+    }
     "ghostty"
     "macskk"
     "gitusp/azoo-key-skkserv/azoo-key-skkserv"
@@ -62,15 +65,9 @@
     "visual-studio-code"
     "intellij-idea"
   ];
-
-  # Conservative allowlist for scripts/homebrew-update.sh.
-  upgradableCasks = [
-    "battery"
-    "localsend"
-  ];
 in {
   _module.args.homebrewManifest = {
-    inherit managedBrews managedCasks manualCasks upgradableCasks;
+    inherit managedBrews managedCasks manualCasks;
   };
 
   nix-homebrew = {
@@ -89,14 +86,14 @@ in {
     taps = homebrewTaps;
 
     onActivation = {
-      autoUpdate = false;
-      upgrade = false;
+      autoUpdate = true;
+      upgrade = true;
       extraEnv = {
         # Homebrew trust state is stored under XDG_CONFIG_HOME when set.
         # nix-darwin activation runs brew under sudo, so pass it explicitly.
         XDG_CONFIG_HOME = "/Users/${username}/.config";
       };
-      # 手動管理のアプリは消さない。更新は scripts/homebrew-update.sh に分離する。
+      # 手動管理のアプリは消さない。
       cleanup = "none";
     };
 

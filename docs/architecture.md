@@ -65,9 +65,8 @@ Nix manages CLI tools, development tools, shells, editors, and system configurat
 - **`managedBrews`**: Formulae installed by nix-darwin.
 - **`managedCasks`**: Casks installed by nix-darwin.
 - **`manualCasks`**: Casks whose presence is recorded but which are not operated automatically.
-- **`upgradableCasks`**: Casks allowed to be updated by the helper script.
 
-Activation does not automatically update Homebrew or remove applications in bulk. Updates are limited by the `upgradableCasks` allowlist and run through `scripts/homebrew-update.sh`.
+Activation refreshes Homebrew metadata and upgrades managed formulae, casks, and Mac App Store applications. Self-updating casks use their own updater, and only casks that need Homebrew to force an update are marked `greedy` individually. Cleanup remains disabled, so packages outside the managed set are not removed.
 
 ## macOS activation exceptions
 
