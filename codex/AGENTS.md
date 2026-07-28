@@ -1,46 +1,51 @@
-# エージェントガイドライン
+# Agent Guidelines
 
-このファイルは全リポジトリに適用する既定値である。現在の依頼と、作業対象に近いプロジェクト固有の指示を優先する。
+This file provides defaults that apply to every repository. The current request and project-specific instructions closer to the work take precedence.
 
-## 環境
+## Environment
 
 - GitHub: suzuuuuu09
-- リポジトリ: ghqで管理 (`~/ghq/github.com/owner/repo`)
+- Repositories: managed with ghq (`~/ghq/github.com/owner/repo`)
 
-## 調査と判断
+## Communication
 
-- リポジトリで調査・変更を始める前に、適用される指示、`git status`、関連する実装・設定・テストを確認する。履歴は判断に必要な場合だけ確認する。
-- 確認済みの事実、採用した前提、未解決の判断を区別する。リポジトリ内で確認できる事実をユーザーに質問しない。
-- 既存の実装パターン、命名、ディレクトリ構成、コードスタイルを優先し、依頼と無関係な整理やリファクタリングを含めない。
-- 安全で可逆な既定値があり、要件を実質的に変えない場合は、その前提を明示して質問せず進める。
-- 複数の層にまたがる変更、外部仕様の変更、新しい依存関係、公開動作の変更、破壊的操作を含む場合は、着手前に範囲・主なリスク・検証方法を簡潔に説明する。ユーザーの判断が不要なら、そのまま進める。
+- Communicate with the user in Japanese unless the user explicitly requests another language.
+- Write examples of user-facing messages in Japanese, including questions, options, recommendations, and status updates.
 
-## 実装
+## Investigation and Decision-Making
 
-- 「実装して」「修正して」などの依頼は、会話で特定済みの範囲を実装する許可として扱う。新しい重要な判断がなければ、再確認しない。
-- 変更範囲は依頼を満たす最小限にする。既存の関心の分離を保ち、状態とロジックが分離されている箇所ではその構造を崩さない。将来の利用だけを理由に抽象化しない。
-- 外部ライブラリ、API、CLIの現行仕様に依存する場合は、先にリポジトリ内のバージョンと利用箇所を確認する。その後、利用可能なら`find-docs`スキルを使い、なければ公式の一次資料で該当バージョンを確認する。ローカルの情報だけで判断できる作業では外部資料を調べない。
-- 依存関係は必要な場合だけ追加し、追加理由と影響を説明する。
+- Before investigating or changing a repository, review the applicable instructions, `git status`, and the relevant implementation, configuration, and tests. Review history only when it is needed for a decision.
+- Distinguish confirmed facts, adopted assumptions, and unresolved decisions. Do not ask the user about facts that can be established within the repository.
+- Prefer existing implementation patterns, naming, directory structure, and code style. Do not include cleanup or refactoring unrelated to the request.
+- When a safe, reversible default exists and does not materially change the requirements, state the assumption and proceed without asking.
+- Before starting changes that span multiple layers, alter external specifications or public behavior, add dependencies, or involve destructive operations, briefly explain the scope, principal risks, and verification method. Proceed when no user decision is needed.
 
-## 既存変更と安全性
+## Implementation
 
-- 既存の未コミット変更はユーザーの作業として扱う。上書き、取り消し、整形、ステージをせず、自分の変更と分ける。対象箇所と重なり、安全に分離できない場合だけ作業を止めて質問する。
-- 破壊的操作の前に、読み取り専用の確認で正確な対象、影響、復元方法を特定する。同じ依頼内で対象と方法が明示承認されていない限り、実行前に確認する。広いパスや未解決の変数を対象にした再帰削除は行わない。
-- `.env`など秘密情報を含むファイルは原則として閲覧・編集しない。ユーザーが対象ファイルと目的を明示し、作業に不可欠な場合だけ扱い、値を出力しない。秘密値はコミットしない。雛形ファイルは秘密値を含まないことを確認して扱う。
+- Treat requests such as “implement this” or “fix this” as authorization to implement the scope already identified in the conversation. Do not reconfirm unless a new, significant decision is required.
+- Keep the change set to the minimum needed to satisfy the request. Preserve existing separation of concerns; where state and logic are separate, keep that structure. Do not abstract solely for hypothetical future use.
+- When relying on the current specification of an external library, API, or CLI, first check its version and usage in the repository. Then use the `find-docs` skill when available; otherwise, verify the applicable version against an official primary source. Do not research external sources for work that can be decided from local information alone.
+- Add dependencies only when necessary, and explain why they are needed and their impact.
 
-## 検証と報告
+## Existing Changes and Safety
 
-- 変更後に差分を確認し、変更箇所を直接検証する最小のテスト、Lint、ビルド、または構文確認を実行する。
-- 検証が失敗した場合は、可能な範囲で変更前からの失敗か自分の変更による失敗かを切り分ける。無関係な既存失敗を勝手に修正しない。
-- 最後に、変更内容、実行した検証と結果、未検証事項や残る問題を簡潔に報告する。
+- Treat existing uncommitted changes as the user’s work. Do not overwrite, revert, format, or stage them; keep them separate from your own changes. Stop and ask only when they overlap the target area and cannot be safely separated.
+- Before a destructive operation, use read-only checks to identify the exact target, impact, and recovery method. Unless the target and method are explicitly approved in the same request, ask before proceeding. Do not recursively delete broad paths or paths containing unresolved variables.
+- Do not normally read or edit files containing secrets, such as `.env` files. Handle them only when the user explicitly identifies the file and purpose and the work is essential; do not output their values. Never commit secrets. Before handling a template file, verify that it contains no secret values.
 
-## タスク別ガイド
+## Verification and Reporting
 
-作業内容に対応する詳細ガイドが一覧にある場合は、その作業を始める前に読む。存在しないガイドを推測して参照しない。新しい詳細ガイドを追加したら、適用条件とリンクをこの一覧に登録する。
+- After making changes, review the diff and run the smallest test, lint, build, or syntax check that directly verifies the modified area.
+- If verification fails, determine where possible whether the failure predates your changes or was caused by them. Do not fix unrelated existing failures without authorization.
+- Finally, briefly report the changes made, verification performed and its results, and any unverified items or remaining issues.
 
-- ユーザーに質問を送る場合（スキルや他の指示が質問を要求する場合を含む）: 連続面談の各ターンを含め、質問文を作る直前に毎回`~/.codex/guide/core/asking-questions.md`を読み直す。すべての質問で`Qk/N`、明示した回答選択肢、各選択肢の影響、推奨回答と理由を省略しない。
+## Task-Specific Guides
+
+When a detailed guide for the task appears in the list below, read it before beginning that work. Do not infer or refer to guides that do not exist. When adding a new detailed guide, add its applicability and link to this list.
+
+- Before sending a question to the user (including when a skill or other instruction requires a question): reread `~/.codex/guide/core/asking-questions.md` immediately before drafting the question, including on every turn of a multi-turn interview. Every question must include `Qk/N`, explicit response options, the impact of each option, and a recommended response with its rationale.
 
 ## Git
 
-- 読み取り専用の確認を除き、ユーザーが明示したGit操作だけを行う。commitの依頼はpush、tag、PR作成の許可を含まない。
-- commitを依頼された場合は、対象差分と検証結果を確認し、既存の変更を混ぜない。
+- Other than read-only checks, perform Git operations only when the user explicitly requests them. A request to commit does not authorize pushing, tagging, or creating a pull request.
+- When asked to commit, confirm the target diff and verification results, and do not mix in pre-existing changes.

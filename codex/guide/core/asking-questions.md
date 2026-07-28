@@ -1,71 +1,71 @@
-# 質問するときのガイド
+# Guide for Asking Questions
 
-ユーザーへ質問を送るすべてのターンで、このガイドを使う。
-スキルが要求する面談、ユーザー回答を受けた後の次の質問、確認し直す質問も例外ではない。
+Use this guide on every turn that sends a question to the user.
+There are no exceptions for an interview required by a skill, the next question after receiving a user response, or a follow-up confirmation.
 
-## 最優先の形式
+## Highest-Priority Format
 
-質問は、連続面談の途中でも次の完全な形式を毎回使う。
-前の質問で完全な形式を使っていても、次の質問で番号、選択肢、影響、推奨理由を省略しない。
+Use the following complete format for every question, including during a multi-turn interview.
+Even if the previous question used the complete format, do not omit the number, options, impacts, or rationale for the recommendation in the next one.
 
 ```text
 Qk/N: 一つの判断を尋ねる質問
 
-- AまたはYes / OK: 選んだ場合の意味と主な影響
-- BまたはNo: 選んだ場合の意味と主な影響
+- A または Yes / OK: この選択肢の意味と主な影響
+- B または No: この選択肢の意味と主な影響
 
 推奨: 回答。具体的な理由。
 ```
 
-Yes / Noで答えられる文にするだけでは不十分である。
-Yes / No / OKを使う場合も、受け付ける回答を選択肢の行として明示する。
+It is not enough to phrase a question so it can be answered with Yes or No.
+When using Yes / No / OK, explicitly state the accepted responses as option lines.
 
-質問を送る直前に、次の4点を確認する。
+Immediately before sending a question, confirm all four of the following:
 
-- `Qk/N`がある。
-- 回答として使える選択肢が明記されている。
-- 各選択肢の意味と主な影響がある。
-- 推奨する回答と具体的な理由がある。
+- It includes `Qk/N`.
+- It states the available response options.
+- It explains what each option means and its main impact.
+- It states a recommended response and a specific reason.
 
-## 連続質問の番号
+## Numbering Consecutive Questions
 
-面談を始める前に、調査で判明した未解決の独立判断を数え、その時点の総数を`N`とする。
-分岐やユーザーの追加情報によって判断が増減した場合は、次の質問の前に総数を変更する理由を一文で伝え、以後は新しい`N`を使う。
-過去の質問番号は書き換えず、`N`を確定できないことを理由に`Qk/N`を省略しない。
+Before starting an interview, count the unresolved, independent decisions identified through investigation and use that total as `N`.
+If branching or additional user information changes the number of decisions, explain in one sentence why the total changed before the next question, then use the new `N` from that point onward.
+Do not rewrite previous question numbers or omit `Qk/N` because `N` cannot be finalized.
 
-## 質問が必要か判断する
+## Decide Whether a Question Is Needed
 
-質問前に、関連ファイル、設定、テスト、差分、必要な履歴を確認する。
+Before asking a question, inspect the relevant files, configuration, tests, diff, and any necessary history.
 
-次をすべて満たす場合は質問せず、採用した前提を明示して進める。
+Do not ask a question when all of the following are true; state the assumption you adopted and proceed.
 
-- 既存の実装や現在の会話から妥当な既定値を選べる。
-- 変更が依頼の範囲内で、安全かつ可逆である。
-- 選択によって公開動作、データ、安全性、権限、費用が大きく変わらない。
+- A reasonable default can be selected from the existing implementation or current conversation.
+- The change is within the requested scope, safe, and reversible.
+- The choice would not materially change public behavior, data, safety, permissions, or cost.
 
-調査後もユーザーの意図、優先順位、権限に関する判断が残り、回答によって結果が実質的に変わる場合だけ質問する。回答がなくても安全に進められる質問はしない。
-ユーザーまたはスキルが面談を明示的に要求した場合は、面談の各判断について質問すること自体は承認済みとして扱う。
+Ask only when, after investigation, a decision about the user's intent, priorities, or authority remains and the result would materially change based on the answer. Do not ask questions that can be safely progressed without an answer.
+When the user or a skill explicitly requests an interview, treat asking each decision during that interview as already authorized.
 
-## 質問の形式
+## Question Format
 
-- 一度に一つの判断だけを尋ねる。質問は一問でも`Q1/1`、複数の判断を順に尋ねる場合は`Q1/N`のように現在の番号を付ける。
-- 質問は、A / B / Cの選択肢形式、またはYes / No / OKで答えられる形式にする。自由回答を前提にしない。
-- A / B / Cでは各選択肢の意味と主な影響を示し、推奨する選択肢と推奨理由を明記する。
-- Yes / No / OKでは、承認する操作、対象、主な影響を具体的に示し、推奨する回答と理由を明記する。
-- 推奨が前提によって変わる場合は、その前提を推奨理由に含める。
-- 回答がないと進めない場合だけ作業を止める。
+- Ask about only one decision at a time. Use `Q1/1` even for a single question; when asking multiple decisions in sequence, use the current number, such as `Q1/N`.
+- Use either A / B / C options or a format answerable with Yes / No / OK. Do not assume a free-form response.
+- For A / B / C, explain what each option means and its main impact, and state the recommended option and rationale.
+- For Yes / No / OK, state the operation to approve, its target, and its main impact, then state the recommended response and rationale.
+- When the recommendation depends on assumptions, include them in the rationale.
+- Stop work only when it cannot proceed without an answer.
 
-### A / B / Cの例
+### A / B / C Example
 
-Q1/1: 保存先をどちらにしますか？
+Q1/1: 保存先はどちらにしますか？
 
 - A: ローカル保存。構成は単純ですが、単一ホスト向けです。
 - B: オブジェクトストレージ。運用は増えますが、複数ホストと耐久性に向きます。
 - C: 今回は設計だけに留め、実装を保留します。
 
-推奨: 本番で複数ホストを使う前提ならB。データ耐久性をアプリケーションホストから分離できるためです。
+推奨: 本番で複数ホストを使う前提なら B。データ耐久性をアプリケーションホストから分離できるためです。
 
-### Yes / No / OKの例
+### Yes / No / OK Example
 
 Q1/1: 列挙した再生成可能なキャッシュだけをゴミ箱へ移動してよいですか？
 
@@ -74,7 +74,7 @@ Q1/1: 列挙した再生成可能なキャッシュだけをゴミ箱へ移動�
 
 推奨: Yes。完全削除せず復元可能な方法で依頼を満たせるためです。
 
-## 回答後
+## After a Response
 
-- 回答を前提と変更範囲に反映し、同じ判断を再確認しない。
-- 次の独立した判断が必要になった場合だけ、番号を進めて一問尋ねる。
+- Apply the response to the assumptions and change scope, and do not reconfirm the same decision.
+- Advance the number and ask one question only when another independent decision becomes necessary.
