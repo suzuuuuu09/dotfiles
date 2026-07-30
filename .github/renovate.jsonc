@@ -36,7 +36,6 @@
 		},
 		{
 			"matchManagers": ["github-actions"],
-			"automerge": false,
 			"commitMessagePrefix": "📦 deps(actions): "
 		}
 	]
