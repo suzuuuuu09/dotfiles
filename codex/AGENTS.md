@@ -41,9 +41,10 @@ This file provides defaults that apply to every repository. The current request 
 
 ## Task-Specific Guides
 
-When a detailed guide for the task appears in the list below, read it before beginning that work. Do not infer or refer to guides that do not exist. When adding a new detailed guide, add its applicability and link to this list.
+Read listed guides at their stated triggers; do not infer, reference, or use unlisted guides. Add new guides with their trigger and path.
 
-- Before sending a question to the user (including when a skill or other instruction requires a question): reread `~/.codex/guide/core/asking-questions.md` immediately before drafting the question, including on every turn of a multi-turn interview. Every question must include `Qk/N`, explicit response options, the impact of each option, and a recommended response with its rationale.
+- **Questions:** Immediately before drafting every user-facing question—including each interview turn and any question required by other instructions—reread `~/.codex/guide/core/asking-questions.md`. Include `Qk/N`, explicit options with impacts, and a reasoned recommendation.
+- **Commits:** At the start of every commit workflow explicitly requested by the user, before staging or committing, reread `~/.codex/guide/core/git-commit.md` once. Apply its eligibility, boundary, and subject rules to every commit in that workflow.
 
 ## Git
 
