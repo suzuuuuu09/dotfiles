@@ -16,13 +16,23 @@ customCommands:
     key: C
     output: terminal
   - command: >-
-      set -l MODEL "gpt-5.6-luna"
-      set -l PROMPT "Commit all staged changes as exactly one commit. Do not inspect, stage, unstage, modify, or include unstaged or untracked changes. Do not split the staged changes or assess whether they form one logical unit. If there are no staged changes, exit without creating a commit. Read and follow ~/.codex/guide/core/git-commit.md except for its logical-unit eligibility and commit-boundary rules: the user explicitly directs that all staged changes form one commit. Inspect only the staged diff, choose a compliant commit subject, and create the commit. Do not push, tag, or create a pull request."
-      codex exec --sandbox danger-full-access --model "$MODEL" --config 'model_reasoning_effort="high"' "$PROMPT"
+      fish -c 'set -l MODEL gpt-5.6-luna;
+      set -l REASONING_EFFORT high;
+      set -l SANDBOX danger-full-access;
+      set -l PROMPT "Commit all staged changes as exactly one commit. Do not
+      inspect, stage, unstage, modify, or include unstaged or untracked changes.
+      Do not split the staged changes or assess whether they form one logical
+      unit. If there are no staged changes, exit without creating a commit. Read
+      and follow ~/.codex/guide/core/git-commit.md except for its logical-unit
+      eligibility and commit-boundary rules: the user explicitly directs that all
+      staged changes form one commit. Inspect only the staged diff, choose a
+      compliant commit subject, and create the commit. Do not push, tag, or
+      create a pull request.";
+      codex exec --sandbox "$SANDBOX" --model "$MODEL" --config
+      "model_reasoning_effort=\"$REASONING_EFFORT\"" "$PROMPT"'
     context: files
     key: <c-g>
     description: Commit staged changes with Codex (Luna)
     output: terminal
 # 起動時のポップアップを表示しない
 disableStartupPopups: true
-
