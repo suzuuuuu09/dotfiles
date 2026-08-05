@@ -2,7 +2,12 @@
 # Neovim plugin restoration script (Lazy.nvim is auto-installed by Lua config)
 # Usage: nvim-restore.sh <nvim-dotfiles-dir> <lazy-dir> <nvim-bin>
 
-set -e
+set -euo pipefail
+
+if [[ $# -lt 1 ]]; then
+  printf 'Usage: %s <nvim-dotfiles-dir> [lazy-dir] [nvim-bin]\n' "$0" >&2
+  exit 2
+fi
 
 NVIM_DOTFILES_DIR="$1"
 LAZY_DIR="${2:-$HOME/.local/share/nvim/lazy}"

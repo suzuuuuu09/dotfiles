@@ -5,8 +5,15 @@ result
 .config/karabiner/automatic_backups/
 .config/karabiner/assets/
 
+# macOS
+.DS_Store
+
 # Sops age Private key
 .config/sops/age/
+
+# Environment variables
+.env
+.env.*
 
 # Yazi Plugins and themes
 .config/yazi/plugins/
