@@ -25,6 +25,7 @@
     # hyperfine # ベンチマークツール
     gomi
     wakeonlan
+    pngpaste
 
     # Git tools
     delta
@@ -47,6 +48,7 @@
     uv # Python
     cxr
     bun
+    pnpm
     nodejs_24
     python3
     comma

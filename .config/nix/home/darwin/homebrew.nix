@@ -48,9 +48,10 @@
     "shottr"
     "codex-app"
     "tailscale-app"
+    "parsec"
   ];
 
-  # Kept out of Homebrew management on purpose.
+  # 自動更新せず、手動で管理する
   manualCasks = [
     "vivaldi"
     "raycast"
@@ -59,7 +60,6 @@
     "zoom"
     "karabiner-elements"
     "obsidian"
-    "parsec"
     "amical"
     "1password"
     "visual-studio-code"
@@ -105,7 +105,7 @@ in {
     # https://github.com/mas-cli/mas/issues/1221
     # masでインストールができないのでコメントアウト
     masApps = {
-      "RunCat" = 1429033973;
+      # "RunCat" = 1429033973;
       # "Microsoft Outlook" = 985367838;
     };
   };
