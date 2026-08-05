@@ -1,5 +1,5 @@
 local lsp_servers = {
-	"astro",
+	-- "astro",
 	"bashls",
 	"biome",
 	"clangd",

@@ -1,7 +1,7 @@
 return {
 	"vyfor/cord.nvim",
 	event = "VeryLazy",
-	enabled = true,
+	enabled = false,
 	---@module "cord"
 	---@type CordConfig
 	opts = {
