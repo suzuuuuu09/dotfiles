@@ -12,7 +12,12 @@ Pre-existing failures or warnings unrelated to the change do not block the commi
 
 ## Conventional Commit Format
 
-Use `<emoji> <type>(<scope>): <subject>` for the commit subject.
+Use one of the following forms for the commit subject:
+
+- `<emoji> <type>(<scope>): <subject>`
+- `<emoji> <type>: <subject>`
+
+The scope is optional. Include it only when it adds useful context.
 
 ### Types
 
@@ -26,6 +31,26 @@ Use `<emoji> <type>(<scope>): <subject>` for the commit subject.
 - `chore` = 🔧 Change configuration or development tooling.
 - `revert` = ⏪ Revert an earlier commit.
 - `deps` = 📦 Add or update dependencies.
+
+## Commit Message Content
+
+- Emphasize why the change is needed rather than restating what changed.
+- Omit the body when the subject already makes the reason self-evident.
+- When a body is needed, use it to explain only relevant details such as:
+  - A non-obvious reason for the change.
+  - A breaking change.
+  - Migration instructions or cautions.
+  - Related issues or pull requests.
+- Wrap body lines at 72 characters.
+- Use `-` for body list items. Do not use `*`.
+- Put issue or pull request references at the end of the message, using a footer such as `Closes #12` or `Refs #49`.
+
+A body is required, even when the subject is self-explanatory, for:
+
+- Breaking changes.
+- Security fixes.
+- Data migrations.
+- Revert commits.
 
 ## Commit Boundaries
 
