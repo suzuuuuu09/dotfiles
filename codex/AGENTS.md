@@ -43,6 +43,7 @@ This file provides defaults that apply to every repository. The current request 
 
 Read listed guides at their stated triggers; do not infer, reference, or use unlisted guides. Add new guides with their trigger and path.
 
+- **Project knowledge:** Immediately before investigating or modifying each repository, reread `~/.codex/guide/core/project-knowledge.md`. Follow its startup check and immediate-update rules throughout the work.
 - **Questions:** Immediately before drafting every user-facing question—including each interview turn and any question required by other instructions—reread `~/.codex/guide/core/asking-questions.md`. Include `Qk/N`, explicit options with impacts, and a reasoned recommendation.
 - **Commits:** At the start of every commit workflow explicitly requested by the user, before staging or committing, reread `~/.codex/guide/core/git-commit.md` once. Apply its eligibility, boundary, and subject rules to every commit in that workflow.
 
