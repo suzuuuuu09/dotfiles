@@ -9,6 +9,7 @@
 in {
   imports = [
     ./home-manager-launchd.nix
+    ./packages.nix
     ./ssh.nix
   ];
 

@@ -25,7 +25,6 @@
     # hyperfine # ベンチマークツール
     gomi
     wakeonlan
-    pngpaste
 
     # Git tools
     delta
