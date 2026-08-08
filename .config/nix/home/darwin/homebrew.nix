@@ -49,6 +49,7 @@
     "codex-app"
     "tailscale-app"
     "parsec"
+    "eqmac"
   ];
 
   # 自動更新せず、手動で管理する

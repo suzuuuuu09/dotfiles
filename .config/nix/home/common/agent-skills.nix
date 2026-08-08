@@ -106,10 +106,6 @@
           from = "mizchi";
           path = "meta/empirical-prompt-tuning";
         };
-        context7-cli = {
-          from = "context7";
-          path = "context7-cli";
-        };
         ui-ux-pro-max = {
           from = "ui-ux-pro-max";
           path = ".claude/skills/ui-ux-pro-max";
@@ -122,21 +118,6 @@
           from = "handoff";
           path = ".";
         };
-        /*
-           grilling = {
-          from = "mattpocock";
-          path = "productivity/grilling";
-
-          transform = {original, ...}: ''
-            ${original}
-
-            ## Notes
-
-            - When asking questions, provide options to make them easier to answer.
-            - Do not start implementation immediately after completing the design. After completing the design, you must request confirmation and proceed with implementation only after receiving explicit instructions from the user.
-          '';
-        };
-        */
         agent-browser = {
           from = "agent-browser";
           path = "agent-browser";
