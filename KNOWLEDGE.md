@@ -50,3 +50,11 @@ tap 全体を信頼する必要がなければ、cask 単位の trust を優先�
 設定を追加しただけではファイルは変わらず、`keymap.toml` の inline table のように整列対象外の構文もあるため、整形後の実ファイルを確認する。
 
 *Avoid*: formatter の設定だけを見て `=` の整列を断定する、または inline table も通常のエントリと同じように整列すると期待する。
+
+## Fish ネイティブプロンプト
+
+**Powerline の三角形は隣接セグメントの背景を引き継ぐ**
+Oh My Posh の `leading_diamond` は、先頭では透明背景＋現在セグメントの前景、境界では直前セグメントの背景＋現在セグメントの前景で描画する。Fish版ではセグメント描画時に直前の背景色を追跡し、`` のセルへ設定する。最後の `trailing_diamond` は現在セグメントの前景＋透明背景へ戻す。
+Enter の transient prompt は `\r` と `\n` の両方を専用ハンドラへ bind し、`fish_prompt` で一時描画した後 `fish_right_prompt` で状態を戻す。
+
+*Avoid*: 三角形を前景色だけで描画して直前セグメントの背景を落とす、または Enter を `commandline -f execute` だけにして transient prompt を省略する。

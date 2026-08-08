@@ -1,7 +1,3 @@
-if status is-interactive
-    set fish_greeting
-end
-
 # XDG Base Directory Specification
 set -q XDG_CONFIG_HOME || set -gx XDG_CONFIG_HOME $HOME/.config
 set -q XDG_DATA_HOME || set -gx XDG_DATA_HOME $HOME/.local/share
@@ -10,10 +6,14 @@ set -q XDG_CACHE_HOME || set -gx XDG_CACHE_HOME $HOME/.cache
 set -gx EDITOR nvim
 set -gx GIT_EDITOR nvim
 set -gx VISUAL nvim
-# Keep XDG-based tools like lazygit pointed at the dotfiles config tree.
-if not set -q XDG_CONFIG_HOME
-    set -gx XDG_CONFIG_HOME $HOME/.config
+
+# Non-interactive fish is used by scripts and tools that do not need prompt
+# rendering, aliases, bindings, or shell hooks.
+if not status is-interactive
+    return
 end
+
+set fish_greeting
 
 fish_config theme choose nord
 
@@ -26,6 +26,17 @@ end
 
 # tool_setup.fish を読み込む
 source "$FISH_CONFIG_DIR/tool_setup.fish"
+
+# Reproduce Oh My Posh's transient prompt and command acceptance behavior.
+bind \r __fish_prompt_enter_key_handler -M default
+bind \r __fish_prompt_enter_key_handler -M insert
+bind \r __fish_prompt_enter_key_handler -M visual
+bind \n __fish_prompt_enter_key_handler -M default
+bind \n __fish_prompt_enter_key_handler -M insert
+bind \n __fish_prompt_enter_key_handler -M visual
+bind \cc __fish_prompt_ctrl_c_key_handler -M default
+bind \cc __fish_prompt_ctrl_c_key_handler -M insert
+bind \cc __fish_prompt_ctrl_c_key_handler -M visual
 
 if status is-interactive
     # Commands to run in interactive sessions can go here

@@ -29,7 +29,7 @@ Home Manager exposes most shared configuration as out-of-store symlinks from `~/
 
 Fish is enabled in the shared user environment on macOS and WSL. It is the macOS login shell, WezTerm launch shell, and Neovim external shell; it is also the user's login shell on WSL.
 
-[`config.fish`](../.config/fish/config.fish) disables the interactive greeting and sets XDG directories, `EDITOR`, `GIT_EDITOR`, and `VISUAL`. The Fish Nord theme provides the prompt, while detailed completions and path settings are split into [`config/`](../.config/fish/config/). Short aliases and abbreviations invoke alternative CLIs such as `fd`, `rg`, `eza`, `zoxide`, and `fzf`.
+[`config.fish`](../.config/fish/config.fish) disables the interactive greeting and sets XDG directories, `EDITOR`, `GIT_EDITOR`, and `VISUAL`. Fish functions render the Nord prompt, while detailed completions and path settings are split into [`config/`](../.config/fish/config/). Short aliases and abbreviations invoke alternative CLIs such as `fd`, `rg`, `eza`, `zoxide`, and `fzf`.
 
 `rm` is aliased to `gomi` to prevent unintended permanent deletion. The `y` function changes to the directory selected when Yazi exits. `fzf` uses Nord colors and previews directories with `eza` and files with `bat`.
 
@@ -111,11 +111,11 @@ VS Code configuration remains in the repository as a backup and is currently unu
 
 ### Runtime management
 
-Nix is the source of truth for runtimes; [ADR 0005](adr/0005-manage-language-runtimes-with-nix.md) records this boundary. Common Nix packages include Node.js, Bun, Python, and uv to provide the same foundation on macOS and WSL. The `latest` setting in [`mise/config.toml`](../.config/mise/config.toml), Fish mise activation, and PATH configuration for nvm, nodebrew, and pyenv remain as former or fallback settings and are not maintained to the same level as Nix. Because current Fish configuration activates mise when it exists, moving to Nix-only runtime management requires separate cleanup.
+Nix is the source of truth for runtimes; [ADR 0005](adr/0005-manage-language-runtimes-with-nix.md) records this boundary. Common Nix packages include Node.js, Bun, Python, and uv to provide the same foundation on macOS and WSL. The `latest` setting in [`mise/config.toml`](../.config/mise/config.toml), mise itself, and PATH configuration for nvm, nodebrew, and pyenv remain as former or fallback settings and are not maintained to the same level as Nix. Fish no longer activates mise during startup, so these fallback tools do not add prompt startup cost.
 
 ## Supporting applications
 
-[`nord-detailed.omp.json`](../.config/oh-my-posh/themes/nord-detailed.omp.json) is the Fish prompt theme and displays OS, shell, memory, Node.js, Python, AWS, CMake, and other status using Nord colors. Zsh specifies the same theme name, but Fish remains the primary shell.
+Fish implements the primary prompt directly in Fish functions, preserving the Nord layout and its OS, shell, memory, language, cloud, Git, execution-time, time, root, path, and status indicators. It also reproduces the former Fish prompt's transient rendering and Enter/Ctrl-C repaint behavior. [`nord-detailed.omp.json`](../.config/oh-my-posh/themes/nord-detailed.omp.json) remains the prompt source for Zsh, which still initializes Oh My Posh independently.
 
 [`lazygit/config.yml`](../.config/lazygit/config.yml) uses a Japanese UI and delta's Nord pager and can be launched as a Herdr popup. Its file view invokes `czg` and `czg ai` to assist with commit messages. [`gh/config.yml`](../.config/gh/config.yml) defaults to HTTPS and interactive prompts and aliases `gh co` to `gh pr checkout`. This document does not handle the contents of credential-bearing `hosts.yml`.
 
