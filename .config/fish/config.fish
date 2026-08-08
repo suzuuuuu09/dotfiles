@@ -7,17 +7,18 @@ set -gx EDITOR nvim
 set -gx GIT_EDITOR nvim
 set -gx VISUAL nvim
 
+set -g FISH_CONFIG_DIR $HOME/.config/fish
+
 # Non-interactive fish is used by scripts and tools that do not need prompt
 # rendering, aliases, bindings, or shell hooks.
 if not status is-interactive
+    source "$FISH_CONFIG_DIR/config/path.fish"
     return
 end
 
 set fish_greeting
 
 fish_config theme choose nord
-
-set -g FISH_CONFIG_DIR $HOME/.config/fish
 
 # config/*.fish を読み込む
 for file in $FISH_CONFIG_DIR/config/*.fish
