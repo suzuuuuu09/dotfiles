@@ -1,5 +1,1 @@
-# zoxide
-zoxide init fish | source
-
-# direnv
-direnv hook fish | source
+# Tool integrations are loaded from config/*.fish by config.fish.
