@@ -118,6 +118,11 @@
       url = "git+https://gist.github.com/tegnike/09dbb98711d8b91e66de21611f5b88ff.git";
       flake = false;
     };
+
+    japanese-tech-writing-skill = {
+      url = "git+https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d.git";
+      flake = false;
+    };
   };
 
   outputs = {

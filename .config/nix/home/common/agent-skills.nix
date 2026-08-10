@@ -71,6 +71,11 @@
         path = inputs.handoff-skill;
         filter.maxDepth = 1;
       };
+
+      japanese-tech-writing = {
+        path = inputs.japanese-tech-writing-skill;
+        filter.maxDepth = 1;
+      };
       # +----------------------------------------------------------+
       # | ローカルパスから参照                                     |
       # +----------------------------------------------------------+
@@ -116,6 +121,10 @@
         };
         handoff = {
           from = "handoff";
+          path = ".";
+        };
+        japanese-tech-writing = {
+          from = "japanese-tech-writing";
           path = ".";
         };
         agent-browser = {

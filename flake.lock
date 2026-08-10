@@ -354,6 +354,22 @@
         "type": "github"
       }
     },
+    "japanese-tech-writing-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784869789,
+        "narHash": "sha256-FeqGir/xjx3h/72WwN0dXtppw6o4KpX9zEAeHGSaCLU=",
+        "ref": "refs/heads/main",
+        "rev": "c7189cdc9c2520be50418209834145bdf3a46e97",
+        "revCount": 6,
+        "type": "git",
+        "url": "https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d.git"
+      }
+    },
     "llm-agents": {
       "inputs": {
         "bun2nix": "bun2nix_2",
@@ -579,6 +595,7 @@
         "handoff-skill": "handoff-skill",
         "home-manager": "home-manager_2",
         "hunk": "hunk",
+        "japanese-tech-writing-skill": "japanese-tech-writing-skill",
         "llm-agents": "llm-agents",
         "mattpocock-skills": "mattpocock-skills",
         "mizchi-skills": "mizchi-skills",
