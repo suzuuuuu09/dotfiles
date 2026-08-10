@@ -53,8 +53,27 @@ tap 全体を信頼する必要がなければ、cask 単位の trust を優先�
 
 ## Fish ネイティブプロンプト
 
+**macOS では nix-darwin の Fish 初期化を重ねない**
+このリポジトリの Fish は dotfiles 側で PATH と対話設定を管理している。macOS で `programs.fish.enable = true` にすると、nix-darwin は空の `environment.shellInit`、`loginShellInit`、`interactiveShellInit` に対しても `foreign-env` を実行し、各回で Bash を起動する。さらに nix-homebrew の Fish integration は `brew shellenv` を実行する。WezTerm は `fish -l` を起動するため、これらがすべて起動経路に入る。
+Home Manager の direnv パッケージは `vendor_conf.d/direnv.fish` を提供するので、`tool_setup.fish` から同じ hook を再生成しない。
+
+*Avoid*: macOS でシステムFish統合を有効にしたままdotfilesの初期化を重ねる、またはdirenv hookをNixとFishの両方から読み込む。
+
+**Codex の利用枠は App Server の時間幅で分類し、プロンプトから同期取得しない**
+Codex CLI の `account/rateLimits/read` は `usedPercent` と `windowDurationMins` を返すが、`primary`/`secondary` の位置は固定の短期枠・週次枠を保証しない。5時間（300分）の枠が返らず、週次（10080分）だけ返ることもあるため、fish では時間幅で分類し、App Server への問い合わせはバックグラウンドで行ってローカルキャッシュだけを同期読込する。
+
+*Avoid*: `primary` を常に5時間枠と仮定する、または各プロンプト描画で `codex app-server` を起動して操作を約0.6秒待たせる。
+
 **Powerline の三角形は隣接セグメントの背景を引き継ぐ**
 Oh My Posh の `leading_diamond` は、先頭では透明背景＋現在セグメントの前景、境界では直前セグメントの背景＋現在セグメントの前景で描画する。Fish版ではセグメント描画時に直前の背景色を追跡し、`` のセルへ設定する。最後の `trailing_diamond` は現在セグメントの前景＋透明背景へ戻す。
 Enter の transient prompt は `\r` と `\n` の両方を専用ハンドラへ bind し、`fish_prompt` で一時描画した後 `fish_right_prompt` で状態を戻す。
 
 *Avoid*: 三角形を前景色だけで描画して直前セグメントの背景を落とす、または Enter を `commandline -f execute` だけにして transient prompt を省略する。
+
+## WezTerm
+
+**tabline の既定セクションは同期子プロセスを周期実行する**
+`michaelbrusegard/tabline.wez` の既定 `tabline_x` は RAM と CPU を表示する。macOS では更新時に `vm_stat`、`bash` 経由の `ps` と `awk`、`sysctl` を同期実行し、各コンポーネントの throttle は3秒である。起動と操作の待ち時間を優先する場合は、`sections.tabline_x` から `ram` と `cpu` を外す。
+文字列の組み込みテーマは `wezterm.color.get_builtin_schemes()` を列挙するため、同じ見た目を保つ必要がある場合は解決済みの配色テーブルを `options.theme` に渡すと設定読込コストを避けられる。
+
+*Avoid*: プラグインがローカルへclone済みなら、設定読込やステータス更新にもコストがないと仮定する。
