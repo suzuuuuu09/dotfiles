@@ -1,79 +1,91 @@
 # Project Knowledge
 
-このファイルには、コードや既存ドキュメントだけでは理由を追いにくく、将来の変更で再発しやすいプロジェクト固有の知識を記録する。
+This file records project-specific knowledge whose rationale is difficult to recover from code or existing documentation and that is likely to prevent repeated mistakes.
 
-## Nix とターゲット環境
+## Nix and target environments
 
-**共通パッケージは両ターゲットで評価できるものだけにする**
-`.config/nix/home/common/` は macOS と NixOS-WSL の両方から import されるため、macOS 専用パッケージは実行時に使われる場所が macOS だけでも WSL の評価を壊すことがある。
-`pngpaste` のような Darwin 専用パッケージは `.config/nix/home/darwin/` に置き、共通モジュールから移動した場合は Darwin と WSL の両方を検証する。
+**Keep shared packages evaluable on both targets**
+`.config/nix/home/common/` is imported by both macOS and NixOS-WSL, so a macOS-only package can break WSL evaluation even when it is used at runtime only on macOS.
+Place Darwin-only packages such as `pngpaste` in `.config/nix/home/darwin/`, and verify both Darwin and WSL after moving a module from the common configuration.
 
-*Avoid*: macOS 専用プラグインが使うパッケージだから `home/common/` に置いても WSL には影響しない、と仮定する。
+*Avoid*: assuming that a macOS-only package is harmless in `home/common/` because it is used by a plugin that runs only on macOS.
 
-**新規モジュールを検証する前に Git フレーク入力への収載を確認する**
-この flake の `self` は Git のソースツリーとして扱われるため、新しく作った未追跡ファイルが `nix build` から見えないことがある。
-新規モジュールが「存在しない」と言われた場合は、Nix の構文や import 経路を調べる前に `git status` とファイルの追跡状態を確認する。
+**Check Git flake inclusion before verifying a new module**
+This flake treats `self` as a Git source tree, so a newly created untracked file may not be visible to `nix build`.
+When a new module is reported as missing, check `git status` and the file's tracking state before investigating Nix syntax or the import path.
 
-## 固定している外部依存
+## Pinned external dependencies
 
-**Hunk の nixpkgs は root input と同期させない**
-`hunk` は `bun2nix` と `flake-parts` の評価中に `x86_64-darwin` まで列挙するため、root の新しい nixpkgs が同アーキテクチャのサポートを削除すると、ホストが `aarch64-darwin` でも評価に失敗する。
-現在は `flake.nix` の `hunk.inputs.nixpkgs` を `nixpkgs-26.05-darwin` に固定している。
-Hunk または nixpkgs を更新するときは、この独立した pin を保ったまま `nix build --no-link .#darwinConfigurations.suzuMac.system` と `nix flake check` を実行する。
+**Keep Hunk's nixpkgs independent from the root input**
+During evaluation of `bun2nix` and `flake-parts`, Hunk enumerates `x86_64-darwin`, so a newer root nixpkgs can fail evaluation when that architecture is removed even if the host is `aarch64-darwin`.
+`flake.nix` currently pins `hunk.inputs.nixpkgs` to `nixpkgs-26.05-darwin`.
+When updating Hunk or nixpkgs, keep this independent pin and run `nix build --no-link .#darwinConfigurations.suzuMac.system` and `nix flake check`.
 
-*Avoid*: `hunk.inputs.nixpkgs.follows = "nixpkgs"` に戻す、または専用 pin を理由の確認なしに更新する。
+*Avoid*: restoring `hunk.inputs.nixpkgs.follows = "nixpkgs"` or updating the dedicated pin without confirming the reason.
 
-**Codex は `llm-agents.nix` 由来のパッケージを使う**
-このリポジトリの `codex` は nixpkgs の `pkgs.codex` ではなく、`inputs.llm-agents.packages.${system}.codex` を参照する。
-Codex のバージョンや配布元を更新するときは `.config/nix/home/common/programs/codex.nix` のこの参照を維持し、生成された `home.packages` で実際の derivation を確認する。
+**Use the `llm-agents.nix` package for Codex**
+This repository's `codex` uses `inputs.llm-agents.packages.${system}.codex`, not `pkgs.codex` from nixpkgs.
+When updating the Codex version or distribution source, preserve this reference in `.config/nix/home/common/programs/codex.nix` and verify the actual derivation in the generated `home.packages`.
 
-## Agent Skills と macOS activation
+## Agent Skills and macOS activation
 
-**`~/.agents/skills` の管理マーカーを所有権の境界として扱う**
-`agent-skills-nix` は、非空の `~/.agents/skills` に `.agent-skills-managed.json` がない場合、そのディレクトリを未管理と判断して activation を停止する。
-既存の内容が旧 Nix Store へのリンクであれば、削除や強制上書きの前にディレクトリ全体を日時付きの隣接パスへ退避し、通常の `darwin-rebuild switch --flake .#suzuMac` を再実行する。
+**Avoid duplicate IDs when moving a personal skill to an external source**
+`skills.enableAll = ["personal"]` discovers every skill under `skills/`, so registering the same skill from a pinned external source makes agent-skills-nix fail evaluation with a duplicate ID.
+When the external source is the source of truth, exclude the local directory from `personal` or add an `idPrefix` to one of the sources.
 
-*Avoid*: 内容を確認せずに `AGENT_SKILLS_FORCE=1` を恒久設定する、または旧ディレクトリを先に削除する。
+**Treat the management marker in `~/.agents/skills` as the ownership boundary**
+When `~/.agents/skills` is non-empty and lacks `.agent-skills-managed.json`, `agent-skills-nix` treats the directory as unmanaged and stops activation.
+If the existing contents are links to an old Nix Store path, move the entire directory to a timestamped adjacent backup before deleting or force-overwriting it, then rerun the normal `darwin-rebuild switch --flake .#suzuMac`.
 
-**Homebrew の trust 設定は sudo activation 用の場所にも用意する**
-nix-darwin の activation 中は Homebrew が sudo 経由で実行されるため、対話ユーザーの trust 設定だけでは tap や cask の検証に使われないことがある。
-`.config/nix/home/darwin/homebrew.nix` では `XDG_CONFIG_HOME` を明示し、信頼する tap/cask を `/Users/<username>/.homebrew/trust.json` と `/Users/<username>/.config/homebrew/trust.json` の両方へ生成する。
-新しい外部 tap の formula/cask を追加するときは、managed リストと必要な trust リストを同じ変更で更新する。
-tap 全体を信頼する必要がなければ、cask 単位の trust を優先する。
+*Avoid*: permanently setting `AGENT_SKILLS_FORCE=1` without inspecting the contents, or deleting the old directory first.
 
-*Avoid*: activation の失敗を常に `HOMEBREW_NO_REQUIRE_TAP_TRUST` で無効化して済ませる。
+**Provide Homebrew trust configuration for sudo activation paths**
+During nix-darwin activation, Homebrew runs through sudo, so trust settings for the interactive user may not be used to verify taps or casks.
+`.config/nix/home/darwin/homebrew.nix` explicitly sets `XDG_CONFIG_HOME` and generates trusted tap/cask entries in both `/Users/<username>/.homebrew/trust.json` and `/Users/<username>/.config/homebrew/trust.json`.
+When adding a formula or cask from an external tap, update the managed list and the required trust list in the same change.
+If the whole tap does not need to be trusted, prefer trusting an individual cask.
 
-## フォーマッター
+*Avoid*: solving every activation failure by disabling trust checks with `HOMEBREW_NO_REQUIRE_TAP_TRUST`.
 
-**TOML の整形結果は Taplo の対象範囲まで確認する**
-`nix fmt` は treefmt 経由で Taplo も実行し、`.taplo.toml` の `align_entries = true` は通常の TOML エントリを整列する。
-設定を追加しただけではファイルは変わらず、`keymap.toml` の inline table のように整列対象外の構文もあるため、整形後の実ファイルを確認する。
+## Formatters
 
-*Avoid*: formatter の設定だけを見て `=` の整列を断定する、または inline table も通常のエントリと同じように整列すると期待する。
+**Check TOML formatting through Taplo's actual scope**
+`nix fmt` runs Taplo through treefmt, and `.taplo.toml` sets `align_entries = true` for ordinary TOML entries.
+Adding a setting alone may not change the file, and syntax outside the formatter's alignment scope, such as the inline table in `keymap.toml`, is not aligned in the same way.
+Inspect the actual file after formatting.
 
-## Fish ネイティブプロンプト
+*Avoid*: asserting how `=` is aligned from the formatter configuration alone, or expecting inline tables to align like ordinary entries.
 
-**macOS では nix-darwin の Fish 初期化を重ねない**
-このリポジトリの Fish は dotfiles 側で PATH と対話設定を管理している。macOS で `programs.fish.enable = true` にすると、nix-darwin は空の `environment.shellInit`、`loginShellInit`、`interactiveShellInit` に対しても `foreign-env` を実行し、各回で Bash を起動する。さらに nix-homebrew の Fish integration は `brew shellenv` を実行する。WezTerm は `fish -l` を起動するため、これらがすべて起動経路に入る。
-Home Manager の direnv パッケージは `vendor_conf.d/direnv.fish` を提供するので、`tool_setup.fish` から同じ hook を再生成しない。
+## Fish-native prompt
 
-*Avoid*: macOS でシステムFish統合を有効にしたままdotfilesの初期化を重ねる、またはdirenv hookをNixとFishの両方から読み込む。
+**Do not stack nix-darwin Fish initialization on macOS**
+This repository manages Fish's PATH and interactive behavior in the dotfiles.
+On macOS, enabling `programs.fish.enable = true` makes nix-darwin run `foreign-env` even for empty `environment.shellInit`, `loginShellInit`, and `interactiveShellInit`, starting Bash on every invocation.
+The nix-homebrew Fish integration also runs `brew shellenv`, and WezTerm starts `fish -l`, so all of these become part of the startup path.
+The Home Manager direnv package provides `vendor_conf.d/direnv.fish`; do not regenerate the same hook from `tool_setup.fish`.
 
-**Codex の利用枠は App Server の時間幅で分類し、プロンプトから同期取得しない**
-Codex CLI の `account/rateLimits/read` は `usedPercent` と `windowDurationMins` を返すが、`primary`/`secondary` の位置は固定の短期枠・週次枠を保証しない。5時間（300分）の枠が返らず、週次（10080分）だけ返ることもあるため、fish では時間幅で分類し、App Server への問い合わせはバックグラウンドで行ってローカルキャッシュだけを同期読込する。
+*Avoid*: enabling the system Fish integration while also stacking the dotfiles' initialization, or loading the direnv hook from both Nix and Fish.
 
-*Avoid*: `primary` を常に5時間枠と仮定する、または各プロンプト描画で `codex app-server` を起動して操作を約0.6秒待たせる。
+**Classify Codex usage limits by App Server window duration; do not fetch them synchronously from the prompt**
+Codex CLI's `account/rateLimits/read` returns `usedPercent` and `windowDurationMins`, but the positions of `primary` and `secondary` do not guarantee a fixed short-term or weekly window.
+The five-hour (300-minute) window may be absent while only the weekly (10080-minute) window is returned, so Fish classifies limits by duration and queries the App Server in the background while reading only the local cache synchronously.
 
-**Powerline の三角形は隣接セグメントの背景を引き継ぐ**
-Oh My Posh の `leading_diamond` は、先頭では透明背景＋現在セグメントの前景、境界では直前セグメントの背景＋現在セグメントの前景で描画する。Fish版ではセグメント描画時に直前の背景色を追跡し、`` のセルへ設定する。最後の `trailing_diamond` は現在セグメントの前景＋透明背景へ戻す。
-Enter の transient prompt は `\r` と `\n` の両方を専用ハンドラへ bind し、`fish_prompt` で一時描画した後 `fish_right_prompt` で状態を戻す。
+*Avoid*: assuming that `primary` is always the five-hour window, or starting `codex app-server` during every prompt render and adding roughly 0.6 seconds of latency.
 
-*Avoid*: 三角形を前景色だけで描画して直前セグメントの背景を落とす、または Enter を `commandline -f execute` だけにして transient prompt を省略する。
+**Powerline triangles inherit the background of the adjacent segment**
+Oh My Posh's `leading_diamond` uses a transparent background and the current segment's foreground at the start, then the previous segment's background and the current segment's foreground at boundaries.
+The Fish implementation tracks the previous background while rendering segments and assigns it to the `` cell.
+The final `trailing_diamond` restores the current segment's foreground with a transparent background.
+The transient prompt for Enter binds both `\r` and `\n` to a dedicated handler, renders the temporary prompt in `fish_prompt`, and restores the state in `fish_right_prompt`.
+
+*Avoid*: rendering the triangle with only the foreground color and losing the previous segment's background, or binding Enter only to `commandline -f execute` and omitting the transient prompt.
 
 ## WezTerm
 
-**tabline の既定セクションは同期子プロセスを周期実行する**
-`michaelbrusegard/tabline.wez` の既定 `tabline_x` は RAM と CPU を表示する。macOS では更新時に `vm_stat`、`bash` 経由の `ps` と `awk`、`sysctl` を同期実行し、各コンポーネントの throttle は3秒である。起動と操作の待ち時間を優先する場合は、`sections.tabline_x` から `ram` と `cpu` を外す。
-文字列の組み込みテーマは `wezterm.color.get_builtin_schemes()` を列挙するため、同じ見た目を保つ必要がある場合は解決済みの配色テーブルを `options.theme` に渡すと設定読込コストを避けられる。
+**The default tabline sections run synchronous child processes periodically**
+The default `tabline_x` in `michaelbrusegard/tabline.wez` displays RAM and CPU usage.
+On macOS, each update synchronously runs `vm_stat`, `ps` and `awk` through `bash`, and `sysctl`; each component is throttled for three seconds.
+When startup and interaction latency matter, remove `ram` and `cpu` from `sections.tabline_x`.
+The built-in string themes enumerate `wezterm.color.get_builtin_schemes()`, so pass the resolved color table to `options.theme` when the same appearance must be preserved while avoiding the configuration-load cost.
 
-*Avoid*: プラグインがローカルへclone済みなら、設定読込やステータス更新にもコストがないと仮定する。
+*Avoid*: assuming that cloning the plugin locally makes configuration loading and status updates cost-free.
