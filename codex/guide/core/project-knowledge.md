@@ -7,10 +7,10 @@ Use this guide to decide when and how to read or update the `KNOWLEDGE.md` file 
 After the applicable instructions direct you to this guide, complete these steps before any other repository investigation or modification:
 
 1. Read this guide.
-2. Read the repository-root `KNOWLEDGE.md` in full if it exists.
-3. If it does not exist, continue without creating it.
+2. Check whether the repository-root `KNOWLEDGE.md` exists.
+3. If it exists, read it in full. If it does not exist, continue without creating it.
 
-Complete this startup check each time you begin work in a repository, including when a conversation moves to another repository or resumes repository work later. Do not inspect implementation, run `git status`, or modify files until the check is complete.
+Complete this startup check when beginning a repository task. Repeat it before resuming the task after moving to another repository and returning, or after a break that may have discarded or replaced working context, including context compaction. Do not repeat it for another action during uninterrupted work on the same task in the same repository. Elapsed time, an ordinary conversation turn, or a recoverable tool failure does not by itself end uninterrupted work while the repository, task, and working context remain available. Do not inspect implementation, run `git status`, or modify files until the required check is complete.
 
 ## When a Lesson Is Ready
 
@@ -25,7 +25,7 @@ Evidence may come from reproduction, tests, inspected implementation, version-sp
 
 A lesson is not ready while it is still a hypothesis, under investigation, unreproduced, or supported only by a temporary workaround.
 
-As soon as a lesson becomes ready, update `KNOWLEDGE.md` before continuing the task. Do not defer the update until the end. Do not force an update at task completion when no lesson became ready.
+As soon as a lesson becomes ready, update `KNOWLEDGE.md` before continuing the task. Determining readiness includes evaluating the evidence against the criteria above and choosing the appropriate update to the entries already read at startup. Once that decision is complete, drafting and applying the update must be the next task-progress action; do not begin further investigation, implementation, or verification first. If existing-change safety rules prevent an immediate update, stop task progress and resolve that conflict instead of bypassing it or continuing with the update deferred. Do not defer the update until the end. Do not force an update at task completion when no lesson became ready.
 
 ## Choose the Update
 
@@ -39,6 +39,8 @@ As soon as a lesson becomes ready, update `KNOWLEDGE.md` before continuing the t
 A confirmed lesson update is a normal part of the current task; do not ask for permission solely because it changes `KNOWLEDGE.md`. Preserve existing user changes and follow the repository's existing-change safety rules if an update overlaps them.
 
 ## Write the Lesson
+
+Write all content added to or revised in `KNOWLEDGE.md` in English. Do not translate or rewrite unrelated existing content solely to enforce this rule.
 
 Record the lesson, not the incident. Keep it concise, project-specific, and actionable. Prefer this form when appropriate:
 
@@ -76,4 +78,4 @@ Do not record:
 
 ## Completion
 
-Include any `KNOWLEDGE.md` change in the final report with the other task changes. If no lesson became ready, leave the file untouched and do not create an empty one.
+Include any `KNOWLEDGE.md` change in the final report with the other task changes. If no lesson became ready, leave the file untouched, do not create an empty one, and state in the final report that no knowledge update was made. If the file was absent at startup, also state that it remains absent.
