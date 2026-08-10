@@ -10,6 +10,9 @@
     git
   ];
 
+  environment.etc."codex/config.toml".source =
+    self + /codex/config.toml;
+
   # Homebrew API からのインストールを無効化
   # environment.variables.HOMEBREW_NO_INSTALL_FROM_API = "1";
   # Homebrew の環境変数を設定して、API からのインストールを無効化
@@ -17,6 +20,7 @@
   #   HOMEBREW_NO_INSTALL_FROM_API=1
   # '';
 
+  # sudo を 指紋認証 (Touch ID) で使えるようにする
   security.pam.services.sudo_local = {
     touchIdAuth = true;
     reattach = true; # tmux内で必要

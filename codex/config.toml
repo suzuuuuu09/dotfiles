@@ -1,0 +1,25 @@
+model                  = "gpt-5.6-terra"
+model_verbosity        = "low"
+model_reasoning_effort = "high"
+
+sandbox_mode       = "danger-full-access"
+approval_policy    = "never"
+approvals_reviewer = "user"
+service_tier       = "default"
+
+[shell_environment_policy]
+inherit                  = "all"
+experimental_use_profile = true
+
+[tui]
+pet   = "disabled"
+theme = "nord"
+
+[features]
+hooks                           = true
+js_repl                         = false
+default_mode_request_user_input = true
+
+[notice]
+hide_full_access_warning    = true
+hide_rate_limit_model_nudge = true
