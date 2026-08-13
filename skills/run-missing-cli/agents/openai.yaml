@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run Missing CLI"
+  short_description: "Run missing CLI tools without permanent installation"
+  default_prompt: "Use $run-missing-cli to run a required CLI that is unavailable without permanently installing it."
