@@ -22,23 +22,13 @@ local config = wezterm.config_builder()
 -- 起動時に自動的に 'unix' ドメインに接続する
 -- これにより、ウィンドウを閉じても次回起動時に前回の状態が復元されます
 -- config.default_gui_startup_args = { "connect", "unix" }
-local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
-tabline.setup({
-	options = {
-		theme_overrides = {
-			tab = {
-				active = { fg = nord.snow_storm.brightest, bg = nord.frost.ocean },
-				inactive = { fg = nord.snow_storm.origin, bg = nord.polar_night.origin },
-				inactive_hover = { fg = nord.snow_storm.brightest, bg = nord.frost.ocean },
-			},
-		},
-	},
-})
-
 -- shellをfishにする
 config.default_prog = { "/etc/profiles/per-user/k25012kk/bin/fish", "-l" }
 config.automatically_reload_config = true
-config.font = wezterm.font("UDEV Gothic 35NFLG", {
+config.font = wezterm.font_with_fallback({
+	"UDEV Gothic 35NFLG",
+	"Symbols Nerd Font Mono",
+}, {
 	weight = "Regular",
 })
 config.harfbuzz_features = { "liga", "clig", "calt" } -- リガチャを有効にする
@@ -55,13 +45,15 @@ config.color_scheme = "nord"
 -- タイトルバーを非表示
 config.window_decorations = "RESIZE"
 -- タブバーの表示
-config.show_tabs_in_tab_bar = true
+config.enable_tab_bar = false
+config.show_tabs_in_tab_bar = false
 -- タブが一つの時は非表示
 -- config.hide_tab_bar_if_only_one_tab = true
 -- falseにするとタブバーの透過が効かなくなる
 -- config.use_fancy_tab_bar = false
 
 -- タブバーの透過
+
 config.window_frame = {
 	inactive_titlebar_bg = "none",
 	active_titlebar_bg = "none",
