@@ -277,6 +277,23 @@
         "url": "https://gist.github.com/tegnike/09dbb98711d8b91e66de21611f5b88ff.git"
       }
     },
+    "herdr-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785349282,
+        "narHash": "sha256-xAabhG1GpW6nOUt1TMTo8fX91lB71GkyaUuhmgYCWZA=",
+        "owner": "herdrdev",
+        "repo": "herdr",
+        "rev": "f6060cf682f69ef8302c25e8924c0b27aef7ae16",
+        "type": "github"
+      },
+      "original": {
+        "owner": "herdrdev",
+        "repo": "herdr",
+        "rev": "f6060cf682f69ef8302c25e8924c0b27aef7ae16",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -593,6 +610,7 @@
         "context7-skills": "context7-skills",
         "git-hooks": "git-hooks",
         "handoff-skill": "handoff-skill",
+        "herdr-skills": "herdr-skills",
         "home-manager": "home-manager_2",
         "hunk": "hunk",
         "japanese-tech-writing-skill": "japanese-tech-writing-skill",

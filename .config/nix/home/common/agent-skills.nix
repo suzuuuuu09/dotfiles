@@ -76,6 +76,11 @@
         path = inputs.japanese-tech-writing-skill;
         filter.maxDepth = 1;
       };
+
+      herdr = {
+        path = inputs.herdr-skills;
+        subdir = "skills";
+      };
       # +----------------------------------------------------------+
       # | ローカルパスから参照                                     |
       # +----------------------------------------------------------+
@@ -126,6 +131,10 @@
         japanese-tech-writing = {
           from = "japanese-tech-writing";
           path = ".";
+        };
+        herdr = {
+          from = "herdr";
+          path = "herdr";
         };
         agent-browser = {
           from = "agent-browser";

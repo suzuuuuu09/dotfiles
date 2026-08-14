@@ -114,6 +114,7 @@
       url = "github:iKora128/stop-ai-slop-jp/e09d32796f253a62693885757cea484c275d06f2";
       flake = false;
     };
+
     handoff-skill = {
       url = "git+https://gist.github.com/tegnike/09dbb98711d8b91e66de21611f5b88ff.git";
       flake = false;
@@ -121,6 +122,11 @@
 
     japanese-tech-writing-skill = {
       url = "git+https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d.git";
+      flake = false;
+    };
+
+    herdr-skills = {
+      url = "github:herdrdev/herdr/f6060cf682f69ef8302c25e8924c0b27aef7ae16";
       flake = false;
     };
   };
@@ -221,6 +227,50 @@
             --no-lambda-pattern-names \
             ${self}
 
+          touch "$out"
+        '';
+
+      shellcheck =
+        pkgs.runCommand "shellcheck" {
+          nativeBuildInputs = [pkgs.shellcheck];
+        } ''
+          shellcheck \
+            ${self}/scripts/*.sh \
+            ${self}/.config/aerospace/scripts/*.sh
+
+          touch "$out"
+        '';
+
+      fish-syntax =
+        pkgs.runCommand "fish-syntax-check" {
+          nativeBuildInputs = [pkgs.fish];
+        } ''
+          fish -n \
+            ${self}/.config/fish/config.fish \
+            ${self}/.config/fish/tool_setup.fish \
+            ${self}/.config/fish/config/*.fish \
+            ${self}/.config/fish/conf.d/*.fish \
+            ${self}/.config/fish/functions/*.fish
+
+          touch "$out"
+        '';
+
+      ruff =
+        pkgs.runCommand "ruff-check" {
+          nativeBuildInputs = [pkgs.ruff];
+        } ''
+          ruff check \
+            ${self}/skills/fetch-markdown/scripts \
+            ${self}/skills/timezone-utils/scripts
+
+          touch "$out"
+        '';
+
+      actionlint =
+        pkgs.runCommand "actionlint-check" {
+          nativeBuildInputs = [pkgs.actionlint];
+        } ''
+          actionlint ${self}/.github/workflows/*.yaml
           touch "$out"
         '';
     };
