@@ -50,6 +50,7 @@
     "tailscale-app"
     "parsec"
     "eqmac"
+    "thunderbird"
   ];
 
   # 自動更新せず、手動で管理する

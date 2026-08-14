@@ -4,7 +4,6 @@
     git
     neovim
     fish
-    oh-my-posh
     tmux
     # Homebrewの方でインストールする
     # herdr
@@ -20,6 +19,7 @@
     wget
     # tlrc # tldr
     curlie # curl の代替
+    jq
     ni # @antfu/ni
     direnv
     # hyperfine # ベンチマークツール
@@ -39,7 +39,6 @@
     # docker
     # docker-compose
     act # GitHub Actions をローカルで実行するツール
-    vhs
     ttyd
     just
     typescript # typescript-tools.nvimで必要
@@ -64,17 +63,12 @@
     # yt-dlp
     imagemagick
 
-    # joke tools
-    cowsay
-    figlet
-    lolcat
-    # nyancat
-
     # PDF Viewer
     tdf
 
     # Fonts
     udev-gothic
     udev-gothic-nf
+    nerd-fonts.symbols-only
   ];
 }
