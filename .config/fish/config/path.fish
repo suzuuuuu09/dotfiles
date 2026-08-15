@@ -16,6 +16,11 @@ end
 # Nix system binaries
 fish_add_path /run/current-system/sw/bin
 
+if test (uname) = Darwin
+    # Home Manager user packages
+    fish_add_path /etc/profiles/per-user/$USER/bin
+end
+
 # Node.js / npm / nvm
 set -x NVM_DIR $HOME/.nvm
 fish_add_path $HOME/.nodebrew/current/bin
