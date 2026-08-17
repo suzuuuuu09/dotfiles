@@ -129,6 +129,7 @@ alt-m = 'workspace M' # Music
 alt-n = 'workspace N' # Notes
 alt-s = 'workspace S' # Slack
 alt-t = 'workspace T' # Terminal
+alt-z = 'workspace Z' # Zoom
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = 'move-node-to-workspace 1'
@@ -147,6 +148,7 @@ alt-shift-m = 'move-node-to-workspace M' # Music
 alt-shift-n = 'move-node-to-workspace N' # Notes
 alt-shift-s = 'move-node-to-workspace S' # Slack
 alt-shift-t = 'move-node-to-workspace T' # Terminal
+alt-shift-z = 'move-node-to-workspace Z' # Zoom
 
 alt-shift-f = "fullscreen"
 

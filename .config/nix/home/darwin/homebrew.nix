@@ -32,7 +32,6 @@
   managedCasks = [
     "nikitabobko/tap/aerospace"
     "alt-tab"
-    "homerow"
     "pear-devs/pear/pear-desktop"
     "battery"
     {
@@ -51,21 +50,19 @@
     "parsec"
     "eqmac"
     "thunderbird"
+    "raycast"
+    "1password"
   ];
 
   # 自動更新せず、手動で管理する
   manualCasks = [
     "vivaldi"
-    "raycast"
     "discord"
     "slack"
     "zoom"
     "karabiner-elements"
     "obsidian"
     "amical"
-    "1password"
-    "visual-studio-code"
-    "intellij-idea"
   ];
 in {
   _module.args.homebrewManifest = {

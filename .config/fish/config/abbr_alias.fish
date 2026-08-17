@@ -32,6 +32,7 @@ alias rm gomi
 abbr -a br brew
 abbr -a bi "brew install"
 abbr -a bu "brew upgrade"
+abbr -a bui "brew uninstall"
 
 # +----------------------------------------------------------+
 # |                          Neovim                          |
