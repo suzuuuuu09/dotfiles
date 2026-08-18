@@ -89,3 +89,10 @@ When startup and interaction latency matter, remove `ram` and `cpu` from `sectio
 The built-in string themes enumerate `wezterm.color.get_builtin_schemes()`, so pass the resolved color table to `options.theme` when the same appearance must be preserved while avoiding the configuration-load cost.
 
 *Avoid*: assuming that cloning the plugin locally makes configuration loading and status updates cost-free.
+
+## Agent instructions
+
+**Keep project knowledge scoped to the KNOWLEDGE lifecycle**
+`codex/guide/core/project-knowledge.md` governs only the root `KNOWLEDGE.md` lifecycle. General investigation, implementation, and verification belong in `repository-work.md`, which invokes the project-knowledge startup and reuses it when already complete for the same repository, task, and working context.
+
+*Avoid*: merging general repository workflow into the project-knowledge guide to reduce pointer count.

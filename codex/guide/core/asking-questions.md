@@ -1,7 +1,7 @@
 # Guide for Asking Questions
 
-Use this guide on every turn that sends a question to the user.
-There are no exceptions for an interview required by a skill, the next question after receiving a user response, or a follow-up confirmation.
+Apply this guide on every turn that sends a question to the user. Applying it does not require rereading the file while its contents remain available in the current task's working context.
+There are no exceptions to applying it for an interview required by a skill, the next question after receiving a user response, or a follow-up confirmation.
 
 ## Highest-Priority Format
 

@@ -1,53 +1,24 @@
-# Agent Guidelines
+# Guidelines
 
-This file provides defaults that apply to every repository. The current request and project-specific instructions closer to the work take precedence.
+Repository defaults; the current request and closer project instructions take precedence.
 
-## Environment
+## Context
 
-- GitHub: suzuuuuu09
-- Repositories: managed with ghq (`~/ghq/github.com/owner/repo`)
+- GitHub: suzuuuuu09; ghq repositories: `~/ghq/github.com/owner/repo`.
+- Use Japanese unless the user explicitly requests another language; keep all user-facing examples (questions, options, recommendations, status updates) in Japanese.
 
-## Communication
+## Guardrails
 
-- Communicate with the user in Japanese unless the user explicitly requests another language.
-- Write examples of user-facing messages in Japanese, including questions, options, recommendations, and status updates.
+- Treat uncommitted changes as user work. Keep them separate; never overwrite, revert, format, or stage them. Stop and ask only when they overlap the target and cannot be safely separated.
+- Before destructive operations, identify the exact target, impact, and recovery method with read-only checks. Unless the same request explicitly approves both target and method, ask before proceeding. Never recursively delete broad paths or paths containing unresolved variables.
+- Read or edit secret-bearing files such as `.env` only when essential and the user identifies the file and purpose. Never output their values or commit secrets. Verify templates contain no secret values before handling them.
+- Git operations beyond read-only checks require the user's explicit request. A commit request does not authorize push, tag, or pull request creation. Before committing, confirm the target diff and verification results; exclude pre-existing changes.
 
-## Investigation and Decision-Making
+## Guides
 
-- Before investigating or changing a repository, review the applicable instructions, `git status`, and the relevant implementation, configuration, and tests. Review history only when it is needed for a decision.
-- Distinguish confirmed facts, adopted assumptions, and unresolved decisions. Do not ask the user about facts that can be established within the repository.
-- Prefer existing implementation patterns, naming, directory structure, and code style. Do not include cleanup or refactoring unrelated to the request.
-- When a safe, reversible default exists and does not materially change the requirements, state the assumption and proceed without asking.
-- Before starting changes that span multiple layers, alter external specifications or public behavior, add dependencies, or involve destructive operations, briefly explain the scope, principal risks, and verification method. Proceed when no user decision is needed.
+Use only guides explicitly listed here or by a triggered guide, and only at their triggers; never infer, reference, or use others. List trigger and path for additions.
 
-## Implementation
-
-- Treat requests such as “implement this” or “fix this” as authorization to implement the scope already identified in the conversation. Do not reconfirm unless a new, significant decision is required.
-- Keep the change set to the minimum needed to satisfy the request. Preserve existing separation of concerns; where state and logic are separate, keep that structure. Do not abstract solely for hypothetical future use.
-- When relying on the current specification of an external library, API, or CLI, first check its version and usage in the repository. Then use the `find-docs` skill when available; otherwise, verify the applicable version against an official primary source. Do not research external sources for work that can be decided from local information alone.
-- Add dependencies only when necessary, and explain why they are needed and their impact.
-
-## Existing Changes and Safety
-
-- Treat existing uncommitted changes as the user’s work. Do not overwrite, revert, format, or stage them; keep them separate from your own changes. Stop and ask only when they overlap the target area and cannot be safely separated.
-- Before a destructive operation, use read-only checks to identify the exact target, impact, and recovery method. Unless the target and method are explicitly approved in the same request, ask before proceeding. Do not recursively delete broad paths or paths containing unresolved variables.
-- Do not normally read or edit files containing secrets, such as `.env` files. Handle them only when the user explicitly identifies the file and purpose and the work is essential; do not output their values. Never commit secrets. Before handling a template file, verify that it contains no secret values.
-
-## Verification and Reporting
-
-- After making changes, review the diff and run the smallest test, lint, build, or syntax check that directly verifies the modified area.
-- If verification fails, determine where possible whether the failure predates your changes or was caused by them. Do not fix unrelated existing failures without authorization.
-- Finally, briefly report the changes made, verification performed and its results, and any unverified items or remaining issues.
-
-## Task-Specific Guides
-
-Read listed guides at their stated triggers; do not infer, reference, or use unlisted guides. Add new guides with their trigger and path.
-
-- **Project knowledge:** Immediately before investigating or modifying each repository, reread `~/.codex/guide/core/project-knowledge.md`. Follow its startup check and immediate-update rules throughout the work.
-- **Questions:** Immediately before drafting every user-facing question—including each interview turn and any question required by other instructions—reread `~/.codex/guide/core/asking-questions.md`. Include `Qk/N`, explicit options with impacts, and a reasoned recommendation.
-- **Commits:** At the start of every commit workflow explicitly requested by the user, before staging or committing, reread `~/.codex/guide/core/git-commit.md` once. Apply its eligibility, boundary, and subject rules to every commit in that workflow.
-
-## Git
-
-- Other than read-only checks, perform Git operations only when the user explicitly requests them. A request to commit does not authorize pushing, tagging, or creating a pull request.
-- When asked to commit, confirm the target diff and verification results, and do not mix in pre-existing changes.
+- **Repository work:** Except for the next bullet's root `KNOWLEDGE.md`-only work, read `~/.codex/guide/core/repository-work.md` once before any repository investigation or modification. Reuse it for the same repository, task, and working context; reread otherwise.
+- **Project knowledge only:** For work limited to reading or assessing root `KNOWLEDGE.md`, read `~/.codex/guide/core/project-knowledge.md` directly. An update, status check, or implementation triggers repository-work.
+- **Questions:** Before a task's first user-facing question, including required interviews, read `~/.codex/guide/core/asking-questions.md` once. Apply it to later questions without rereading; reread only after compaction or possible context loss. Include `Qk/N`, explicit options with impacts, and a reasoned recommendation.
+- **Commits:** At the start of every commit workflow explicitly requested by the user, read `~/.codex/guide/core/git-commit.md` once before staging or committing; apply its eligibility, boundary, and subject rules to every commit.
