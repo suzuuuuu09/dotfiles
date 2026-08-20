@@ -1,7 +1,9 @@
 function __fish_prompt_has_marker --description 'Check whether the current directory matches a prompt marker.'
+    set -l entries *
+
     for pattern in $argv
         if string match --quiet --regex '[*?\[]' -- "$pattern"
-            if string match --quiet -- "$pattern" *
+            if string match --quiet -- "$pattern" $entries
                 return 0
             end
         else if test -e "$pattern"
