@@ -1,40 +1,39 @@
-# ローカル Agent Skills
+# Local Agent Skills
 
-このディレクトリには、このリポジトリで管理する自作の Agent Skills を置いています。
-各スキルの詳細な動作規則は、それぞれの `SKILL.md` を参照してください。
+This directory contains custom Agent Skills developed for this repository.
+For detailed operation specifications of each skill, please refer to the respective `SKILL.md` files.
 
-## スキル一覧
+## Skill List
 
 | Skill | Description |
 | --- | --- |
-| [`astro-remark-rehype`](astro-remark-rehype) | Astro の remark / rehype プラグインの実装・テスト・検証を支援する。 |
-| [`browser-problem-solver`](browser-problem-solver) | ブラウザ上の問題解決と、解答作成・入力作業を支援する。 |
-| [`design-safe-ai-decisions`](design-safe-ai-decisions) | AI が関与する意思決定システムの評価・運用設計を支援する。 |
-| [`obsidian-agent-memory`](obsidian-agent-memory) | Obsidian を使ったエージェント記憶の読み出し・整理・書き戻しを管理する。 |
-| [`request-framework`](request-framework) | 依頼を目的・制約・出力・承認境界などに整理する。 |
-| [`run-missing-cli`](run-missing-cli) | 不足している CLI を永続インストールせず一時的に実行する経路を案内する。 |
+| [`astro-remark-rehype`](astro-remark-rehype) | Supports development, testing, and validation of Astro's remark/rehype plugin implementations. |
+| [`browser-problem-solver`](browser-problem-solver) | Assists in solving browser-related issues and in creating/inputting solutions. |
+| [`design-safe-ai-decisions`](design-safe-ai-decisions) | Supports evaluation and operational design of AI-assisted decision-making systems. |
+| [`obsidian-agent-memory`](obsidian-agent-memory) | Manages retrieval, organization, and rewriting of agent memories using Obsidian. |
+| [`request-framework`](request-framework) | Organizes requests by purpose, constraints, outputs, and approval boundaries. |
+| [`run-missing-cli`](run-missing-cli) | Guides temporary execution of missing CLIs without permanent installation. |
 
-## ディレクトリ構成
+## Directory Structure
 
 ```text
 skills/
 ├── README.md
 └── <skill-name>/
-    ├── SKILL.md              # 必須: スキル本体と発動条件
-    ├── agents/openai.yaml    # 任意: エージェント向けメタデータ
-    └── references/           # 任意: 詳細な手順や評価資料
+    ├── SKILL.md              # Required: Skill implementation and activation conditions
+    ├── agents/openai.yaml    # Optional: Agent metadata
+    └── references/           # Optional: Detailed procedures or evaluation materials
 ```
 
-`SKILL.md` の frontmatter にある `name` はスキルの ID として使われます。
-ディレクトリ名と `name` は一致させてください。
+The `name` field in the frontmatter of `SKILL.md` serves as the skill's unique identifier.
+Ensure the directory name and `name` field are consistent.
 
-## インストールと反映
+## Installation and Configuration
 
-ローカルスキルは Home Manager の `personal` ソースとして登録され、
-`~/.agents/skills` に配置されます。
-登録内容は [.config/nix/home/common/agent-skills.nix](../.config/nix/home/common/agent-skills.nix) で管理しています。
+Local skills are registered as Home Manager's `personal` source and placed in `~/.agents/skills`.
+Registration details are managed in [.config/nix/home/common/agent-skills.nix](../.config/nix/home/common/agent-skills.nix).
 
-変更を環境へ反映するには、対象環境の通常の Nix 更新を実行します。
+To apply changes, perform the standard Nix rebuild for the affected environment.
 
 ```bash
 # macOS
@@ -44,16 +43,15 @@ sudo darwin-rebuild switch --flake .#suzuMac
 sudo nixos-rebuild switch --flake .#suzuWsl
 ```
 
-反映後、`~/.agents/skills/<skill-name>` にスキルが配置されていることを確認できます。
-外部ソースから取得するスキルや明示的に選択するスキルは、各ソースの定義と選択を管理する
-`agent-skills.nix` 側で設定します。
+After applying changes, you can verify that the skill has been placed in `~/.agents/skills/<skill-name>`.
+Skills obtained from external sources or explicitly selected skills are managed and configured in the respective source definitions managed by `agent-skills.nix`.
 
-## 新しいスキルを追加するとき
+## When Adding New Skills
 
-1. `skills/<skill-name>/SKILL.md` を作成する。
-2. frontmatter に `name` と、発動条件を含む簡潔な `description` を記載する。
-3. 長い手順や評価方法は `references/` に分離し、`SKILL.md` からリンクする。
-4. 必要な場合だけ `agents/openai.yaml` などの補助ファイルを追加する。
-5. `nix flake check` を実行し、対象環境の再ビルドで配置を確認する。
+1. Create `skills/<skill-name>/SKILL.md`.
+2. Include `name` in the frontmatter along with a brief `description` specifying activation conditions.
+3. Separate detailed procedures or evaluation materials in `references/` and link from `SKILL.md`.
+4. Add auxiliary files like `agents/openai.yaml` only when necessary.
+5. Run `nix flake check` and perform the standard Nix rebuild for the affected environment to verify changes.
 
-スキルの説明には「いつ使うか」と「何をしないか」を含め、他のスキルと発動条件が重ならないようにします。
+Skill descriptions should include "when to use" and "what not to do", ensuring activation conditions do not overlap with other skills.
