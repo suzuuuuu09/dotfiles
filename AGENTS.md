@@ -47,6 +47,8 @@ Recent commits use short emoji-prefixed Conventional Commit style, often with a 
 
 ## Agent skills
 
+- When adding, removing, or renaming a local skill under `skills/`, or changing its purpose or activation conditions, update `skills/README.md` in the same change so the skill list and descriptions remain accurate.
+
 ### Issue tracker
 
 Issues and PRDs are tracked in this repository's GitHub Issues. See `docs/agents/issue-tracker.md`.
