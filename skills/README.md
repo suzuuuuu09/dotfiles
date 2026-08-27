@@ -5,9 +5,17 @@ For detailed operation specifications of each skill, please refer to the respect
 
 ## Skill List
 
+### Web
+
 | Skill | Description |
 | --- | --- |
-| [`astro-remark-rehype`](astro-remark-rehype) | Builds, tests, and debugs remark/rehype plugins used by Astro projects. |
+| [`astro-remark-rehype`](web/astro-remark-rehype) | Builds, tests, and debugs remark/rehype plugins used by Astro projects. |
+| [`panda-css`](web/panda-css) | Chooses the appropriate Panda CSS styling API for UI implementation and refactoring. |
+
+### General
+
+| Skill | Description |
+| --- | --- |
 | [`browser-problem-solver`](browser-problem-solver) | Assists in solving browser-related issues and in creating/inputting solutions. |
 | [`design-safe-ai-decisions`](design-safe-ai-decisions) | Supports evaluation and operational design of AI-assisted decision-making systems. |
 | [`nix-environment-doctor`](nix-environment-doctor) | Diagnoses command provenance, environment differences, and Nix activation failures. |
@@ -18,12 +26,10 @@ For detailed operation specifications of each skill, please refer to the respect
 ## Directory Structure
 
 ```text
-skills/
-├── README.md
-└── <skill-name>/
-    ├── SKILL.md              # Required: Skill implementation and activation conditions
-    ├── agents/openai.yaml    # Optional: Agent metadata
-    └── references/           # Optional: Detailed procedures or evaluation materials
+<skill-name>/
+├── SKILL.md              # Required: Skill implementation and activation conditions
+├── agents/openai.yaml    # Optional: Agent metadata
+└── references/           # Optional: Detailed procedures or evaluation materials
 ```
 
 The `name` field in the frontmatter of `SKILL.md` serves as the skill's unique identifier.
