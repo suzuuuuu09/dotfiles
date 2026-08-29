@@ -343,11 +343,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1787850956,
-        "narHash": "sha256-qJMo30gZIknRZAaJfWm9wi/UqJMAM3a561iP4/88jqU=",
+        "lastModified": 1787970368,
+        "narHash": "sha256-V+UovEv+d8sSSzP8y1Um2lJWTbCO0fgal5yNdRbDNys=",
         "owner": "modem-dev",
         "repo": "hunk",
-        "rev": "d96a860c28247afcc9dc34ed5fef30daea2f18af",
+        "rev": "4bb3f84fa59ce228a7e34a1ba116ef93a3aa423a",
         "type": "github"
       },
       "original": {
@@ -396,11 +396,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1787841814,
-        "narHash": "sha256-cAY2KaZSqc5lW9hYHWgnVL1Z/K49p9eKPxbJ8jEla0Y=",
+        "lastModified": 1787970581,
+        "narHash": "sha256-EAJZnS9fRP8QhkRUJOpOfk7lqsbV6cJUhKC48Hx//NQ=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "f18e879662c83037f9c8d6ff1965058eb194e0d1",
+        "rev": "5f98afd0b6aaad05cb0e0e0f6c491131932d0176",
         "type": "github"
       },
       "original": {
@@ -556,11 +556,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1787782150,
-        "narHash": "sha256-Fkny46hWRNJq/NGfkiD5LNXNhyyyFP+t6FQ7BJeuzt8=",
+        "lastModified": 1787940818,
+        "narHash": "sha256-vFzVv78WlyEbTyV5BbrnicnV159wC0YPOcBe3QagyBI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fcaf4be0e0e49a1e79f57e686716d8f5fcc4bbb0",
+        "rev": "f6107e546a5012172d93e79f1f7950da02ad798f",
         "type": "github"
       },
       "original": {
@@ -588,11 +588,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1787631388,
-        "narHash": "sha256-vMiXptXarfSdJb1Gkc+FYVOAibuBRj7qxGa8z68q1Uw=",
+        "lastModified": 1787814960,
+        "narHash": "sha256-PYZq1qzCJXC2zGI0mH07vrZBsw6DRBAOX0jN1pPtqOQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ac6b2166e7a9375683b8e98f860f273222337b16",
+        "rev": "c27cdad491a991b11ed731760aa2ef8db0cb0410",
         "type": "github"
       },
       "original": {
@@ -795,11 +795,11 @@
     "vercel-agent-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1787833105,
-        "narHash": "sha256-D+agUOd4xDQ3uHft1UjQwzg2BLQhLJoUegLQF+Qr2kg=",
+        "lastModified": 1787924167,
+        "narHash": "sha256-tTSJf53OQltUfxTH4hdqcnw5ywCjCZP8/JqQ593cyB8=",
         "owner": "vercel-labs",
         "repo": "agent-skills",
-        "rev": "20e89cc4bb256eb7b1fcbdc68f7175284709a847",
+        "rev": "063bee94c3f4df8453406c830b0a7df0f2860278",
         "type": "github"
       },
       "original": {
