@@ -145,9 +145,11 @@
     # TODO: 将来的にはArch Linuxもサポートする予定
     targetSystem = "aarch64-darwin";
     wslSystem = "x86_64-linux";
+    osSystem = "x86_64-linux";
     isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
     macUsername = "k25012kk";
     wslUsername = "nixos";
+    osUsername = "suzu";
     wslHostName = "suzuWsl";
 
     pkgs = nixpkgs.legacyPackages.${targetSystem};
@@ -176,6 +178,11 @@
     wslHomeImports = [
       ./.config/nix/home/common
       ./.config/nix/home/wsl
+    ];
+
+    osHomeImports = [
+      ./.config/nix/home/common
+      ./.config/nix/home/os
     ];
 
     wslHomeSharedModules = [
@@ -393,6 +400,44 @@
             };
 
             sharedModules = wslHomeSharedModules;
+          };
+        })
+      ];
+    };
+
+    nixosConfigurations.suzu = nixpkgs.lib.nixosSystem {
+      system = osSystem;
+
+      specialArgs = {
+        inherit self inputs;
+        username = osUsername;
+      };
+
+      modules = [
+        ./.config/nix/hosts/os
+        home-manager.nixosModules.home-manager
+
+        ({username, ...}: {
+          nixpkgs.overlays = sharedOverlays;
+
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = "backup";
+
+            extraSpecialArgs = {
+              inherit inputs username;
+              enableAgentSkills = true;
+              enableSops = false;
+            };
+
+            users.${username} = {
+              imports = osHomeImports;
+            };
+
+            sharedModules = [
+              inputs.nix-index-database.homeModules.nix-index
+            ];
           };
         })
       ];
