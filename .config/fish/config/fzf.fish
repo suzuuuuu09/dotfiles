@@ -1,7 +1,7 @@
 # fzfのデフォルトオプション設定
 set -gx FZF_DEFAULT_COMMAND "fd --hidden --strip-cwd-prefix --exclude .git"
 set -gx FZF_DEFAULT_OPTS "
-  --height=40% --reverse
+  --height=40%
   --preview '
     if test -d {}
       eza -a --tree --level=1 --icons --group-directories-first --color=always --ignore-glob=.DS_Store,.git {}
@@ -18,13 +18,3 @@ set -gx FZF_DEFAULT_OPTS "
 
 bind \co fzf-directory
 bind \cg fzf-ghq
-
-# set -gx FZF_CTRL_T_COMMAND "fd --type f"
-# set -gx FZF_ALT_C_COMMAND "fd --type d"
-
-# Nord theme for fzf
-# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-#     --color=fg:#e5e9f0,bg:#3b4252,hl:#81a1c1
-#     --color=fg+:#e5e9f0,bg+:#3b4252,hl+:#81a1c1
-#     --color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac
-#     --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b'

@@ -5,9 +5,5 @@ function fzf-ghq
         return
     end
 
-    if string match --quiet -- "$HOME/*" "$selected_repo"
-        set selected_repo (string replace -- "$HOME/" "~/" "$selected_repo")
-    end
-
     __fzf_cd "$selected_repo"
 end

@@ -76,9 +76,9 @@ The five-hour (300-minute) window may be absent while only the weekly (10080-min
 Oh My Posh's `leading_diamond` uses a transparent background and the current segment's foreground at the start, then the previous segment's background and the current segment's foreground at boundaries.
 The Fish implementation tracks the previous background while rendering segments and assigns it to the `` cell.
 The final `trailing_diamond` restores the current segment's foreground with a transparent background.
-The transient prompt for Enter binds both `\r` and `\n` to a dedicated handler, renders the temporary prompt in `fish_prompt`, and restores the state in `fish_right_prompt`.
+Fish 4.8's native `fish_transient_prompt` handles command acceptance and calls `fish_prompt --final-rendering` for the temporary prompt.
 
-*Avoid*: rendering the triangle with only the foreground color and losing the previous segment's background, or binding Enter only to `commandline -f execute` and omitting the transient prompt.
+*Avoid*: rendering the triangle with only the foreground color and losing the previous segment's background, or reintroducing manual Enter/Ctrl-C repaint state for a Fish version that provides the native transient prompt.
 
 ## WezTerm
 

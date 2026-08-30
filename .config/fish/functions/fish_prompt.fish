@@ -5,7 +5,16 @@ set -g __fish_git_prompt_show_informative_status no
 set -g __fish_git_prompt_showcolorhints no
 set -e __fish_git_prompt_showupstream
 
-function __fish_prompt_segment --argument-names previous_background background foreground text
+function __fish_prompt_segment --argument-names previous_background background foreground text padding
+    set -l prefix ' '
+    set -l suffix ' '
+    switch "$padding"
+        case no-leading
+            set prefix ''
+        case no-trailing
+            set suffix ''
+    end
+
     if test -n "$previous_background"
         set_color --background=$previous_background
         set_color --foreground=$background
@@ -16,44 +25,7 @@ function __fish_prompt_segment --argument-names previous_background background f
     printf ''
     set_color --background=$background
     set_color --foreground=$foreground
-    printf ' %s ' "$text"
-    set_color normal
-end
-
-function __fish_prompt_segment_no_trailing --argument-names previous_background background foreground text
-    if test -n "$previous_background"
-        set_color --background=$previous_background
-        set_color --foreground=$background
-    else
-        set_color --background=normal
-        set_color --foreground=$background
-    end
-    printf ''
-    set_color --background=$background
-    set_color --foreground=$foreground
-    printf ' %s' "$text"
-    set_color normal
-end
-
-function __fish_prompt_segment_no_leading --argument-names previous_background background foreground text
-    if test -n "$previous_background"
-        set_color --background=$previous_background
-        set_color --foreground=$background
-    else
-        set_color --background=normal
-        set_color --foreground=$background
-    end
-    printf ''
-    set_color --background=$background
-    set_color --foreground=$foreground
-    printf '%s ' "$text"
-    set_color normal
-end
-
-function __fish_prompt_end_segment --argument-names background
-    set_color --background=normal
-    set_color --foreground=$background
-    printf ''
+    printf '%s%s%s' "$prefix" "$text" "$suffix"
     set_color normal
 end
 
@@ -86,27 +58,6 @@ function __fish_prompt_language_icon --argument-names type
         case rust
             printf '\ue7a8'
     end
-end
-
-function __fish_prompt_git_segment --argument-names previous_background background foreground remote_url text
-    if test -n "$previous_background"
-        set_color --background=$previous_background
-        set_color --foreground=$background
-    else
-        set_color --background=normal
-        set_color --foreground=$background
-    end
-    printf ''
-    set_color --background=$background
-    set_color --foreground=$foreground
-    printf ' '
-    if test -n "$remote_url"
-        printf '\e]8;;%s\e\\\e]8;;\e\\' "$remote_url"
-    else
-        printf ' '
-    end
-    printf '%s ' "$text"
-    set_color normal
 end
 
 function __fish_prompt_duration --argument-names milliseconds --description 'Format command duration like Oh My Posh.'
@@ -158,7 +109,7 @@ function fish_prompt --description 'Render the native Nord prompt.'
     set previous_background $segment_background
 
     set segment_background '#88C0D0'
-    __fish_prompt_segment_no_trailing "$previous_background" $segment_background '#2E3440' ' fish'
+    __fish_prompt_segment "$previous_background" $segment_background '#2E3440' ' fish' no-trailing
     set previous_background $segment_background
 
     if test -n "$__fish_prompt_context_memory"
@@ -187,7 +138,7 @@ function fish_prompt --description 'Render the native Nord prompt.'
                 case node python
                     __fish_prompt_segment "$previous_background" $segment_background '#E5E9F0' "$language_text"
                 case '*'
-                    __fish_prompt_segment_no_leading "$previous_background" $segment_background '#E5E9F0' "$language_text"
+                    __fish_prompt_segment "$previous_background" $segment_background '#E5E9F0' "$language_text" no-leading
             end
             set previous_background $segment_background
         end
@@ -196,18 +147,21 @@ function fish_prompt --description 'Render the native Nord prompt.'
     set -l git_value (fish_git_prompt '%s')
     if test -n "$git_value"
         set segment_background '#A3BE8C'
-        set -l git_url
+        set -l git_icon ' '
         if test "$__fish_prompt_context_git_remote" = 1
-            set git_url "$__fish_prompt_context_git_url"
+            set git_icon (printf '\e]8;;%s\e\\\e]8;;\e\\' "$__fish_prompt_context_git_url")
         end
-        __fish_prompt_git_segment "$previous_background" $segment_background '#2E3440' "$git_url" "$git_value"
+        __fish_prompt_segment "$previous_background" $segment_background '#2E3440' "$git_icon$git_value"
         set previous_background $segment_background
     end
 
     set segment_background '#434C5E'
     set -l command_duration $CMD_DURATION[1]
     __fish_prompt_segment "$previous_background" $segment_background '#E5E9F0' (__fish_prompt_duration $command_duration)
-    __fish_prompt_end_segment $segment_background
+    set_color --background=normal
+    set_color --foreground=$segment_background
+    printf ''
+    set_color normal
 
     printf '\n'
     set_color '#EBCB8B'

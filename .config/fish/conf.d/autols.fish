@@ -4,7 +4,7 @@ function _install_autols --on-event autols_install
     end
 end
 
-function __autols_run --description 'Run autols command in interactive sessions.'
+function __autols --on-variable PWD --description 'Automatically ls when the $PWD changes.'
     if not status --is-interactive
         return
     end
@@ -16,15 +16,10 @@ function __autols_run --description 'Run autols command in interactive sessions.
     $autols_cmd
 end
 
-function __autols --on-variable PWD --description 'Automatically ls when the $PWD changes.'
-    __autols_run
-end
-
 function _uninstall_autols --on-event autols_uninstall
     set --erase autols_cmd
 
     functions --erase _install_autols
-    functions --erase __autols_run
     functions --erase __autols
     functions --erase _uninstall_autols
 end
