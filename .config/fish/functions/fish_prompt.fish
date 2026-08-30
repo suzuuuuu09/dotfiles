@@ -80,7 +80,7 @@ function __fish_prompt_language_icon --argument-names type
         case java
             printf '\ue738'
         case kotlin
-            printf 'K'
+            printf K
         case lua
             printf '\ue620'
         case rust

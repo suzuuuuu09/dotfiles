@@ -17,6 +17,7 @@ if not status is-interactive
 end
 
 set fish_greeting
+set -g fish_handle_reflow 0
 
 fish_config theme choose nord
 
