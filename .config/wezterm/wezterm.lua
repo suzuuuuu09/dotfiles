@@ -23,7 +23,13 @@ local config = wezterm.config_builder()
 -- これにより、ウィンドウを閉じても次回起動時に前回の状態が復元されます
 -- config.default_gui_startup_args = { "connect", "unix" }
 -- shellをfishにする
-config.default_prog = { "/etc/profiles/per-user/k25012kk/bin/fish", "-l" }
+if wezterm.target_triple:find("darwin") then
+	config.default_prog = {
+		"/etc/profiles/per-user/" .. os.getenv("USER") .. "/bin/fish",
+		"-l",
+	}
+end
+
 config.automatically_reload_config = true
 config.font = wezterm.font_with_fallback({
 	"UDEV Gothic 35NFLG",
@@ -36,9 +42,14 @@ config.font_size = 14.5
 config.use_ime = true
 config.scrollback_lines = 1000
 config.window_background_opacity = 0.8
-config.macos_window_background_blur = 20
 config.color_scheme = "nord"
 
+-- ウィンドウのぼかし
+if wezterm.target_triple:find("darwin") then
+	config.macos_window_background_blur = 20
+elseif wezterm.target_triple:find("linux") then
+	config.wayland_window_background_blur = true
+end
 ----------------------------------------------------
 -- Tab
 ----------------------------------------------------
