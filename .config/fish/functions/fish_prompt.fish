@@ -140,17 +140,7 @@ function __fish_prompt_duration --argument-names milliseconds --description 'For
 end
 
 function fish_prompt --description 'Render the native Nord prompt.'
-    # Repaint does not clear stale prompt content below the cursor by itself.
-    printf '\e[0J'
-
     if contains -- --final-rendering $argv
-        set_color '#EBCB8B'
-        printf ' '
-        set_color normal
-        return
-    end
-
-    if test "$__fish_prompt_transient" = 1
         set_color '#EBCB8B'
         printf ' '
         set_color normal
@@ -246,39 +236,6 @@ function fish_prompt --description 'Render the native Nord prompt.'
     printf '%s' $prompt_character
     set_color normal
     printf ' '
-end
-
-function fish_right_prompt
-    if test "$__fish_prompt_transient" = 1
-        set -g __fish_prompt_transient 0
-        return
-    end
-end
-
-function __fish_prompt_enter_key_handler --description 'Accept a command with the native transient prompt.'
-    if commandline --paging-mode
-        set -g __fish_prompt_transient 1
-        commandline --function repaint
-        commandline --function execute
-        return
-    end
-
-    if commandline --is-valid; or test -z (commandline --current-buffer | string trim -l | string collect)
-        set -g __fish_prompt_transient 1
-        commandline --function repaint
-    end
-
-    commandline --function execute
-end
-
-function __fish_prompt_ctrl_c_key_handler --description 'Cancel a command with the native transient prompt.'
-    if test -z (commandline --current-buffer | string collect)
-        return
-    end
-
-    set -g __fish_prompt_transient 1
-    commandline --function cancel-commandline
-    commandline --function repaint
 end
 
 function fish_title

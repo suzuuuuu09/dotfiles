@@ -13,5 +13,5 @@ function __fzf_cd --argument-names directory --description 'Put an fzf directory
 
     commandline --replace "cd -- $escaped_directory"
 
-    __fish_prompt_enter_key_handler
+    commandline --function execute
 end

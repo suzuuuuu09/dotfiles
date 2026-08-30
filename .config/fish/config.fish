@@ -18,6 +18,7 @@ end
 
 set fish_greeting
 set -g fish_handle_reflow 0
+set -g fish_transient_prompt 1
 
 fish_config theme choose nord
 
@@ -28,18 +29,3 @@ end
 
 # tool_setup.fish を読み込む
 source "$FISH_CONFIG_DIR/tool_setup.fish"
-
-# Reproduce Oh My Posh's transient prompt and command acceptance behavior.
-bind \r __fish_prompt_enter_key_handler -M default
-bind \r __fish_prompt_enter_key_handler -M insert
-bind \r __fish_prompt_enter_key_handler -M visual
-bind \n __fish_prompt_enter_key_handler -M default
-bind \n __fish_prompt_enter_key_handler -M insert
-bind \n __fish_prompt_enter_key_handler -M visual
-bind \cc __fish_prompt_ctrl_c_key_handler -M default
-bind \cc __fish_prompt_ctrl_c_key_handler -M insert
-bind \cc __fish_prompt_ctrl_c_key_handler -M visual
-
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-end
