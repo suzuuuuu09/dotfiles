@@ -55,7 +55,7 @@ jobs:
       - name: Print disk usage
         run: df -h
 
-  build-wsl:
+  build-linux:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     permissions:
@@ -73,7 +73,9 @@ jobs:
           skipPush: ${{ github.event_name == 'pull_request' }}
 
       - name: Build nixosConfigurations
-        run: nix build --show-trace --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel
+        run: |
+          nix build --show-trace --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel
+          nix build --show-trace --no-link .#nixosConfigurations.suzu.config.system.build.toplevel
 
       - name: Print disk usage
         run: df -h

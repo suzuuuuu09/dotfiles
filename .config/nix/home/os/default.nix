@@ -2,6 +2,7 @@
   imports = [
     ./packages.nix
     ./programs
+    ./onepassword.nix
   ];
 
   home = {

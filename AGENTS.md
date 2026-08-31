@@ -1,9 +1,9 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-This repository stores macOS dotfiles and agent-related helpers.
+This repository stores macOS, native NixOS, and NixOS-WSL dotfiles and agent-related helpers.
 
-- `.config/nix/`: nix-darwin and Home Manager modules, overlays, and secrets wiring.
+- `.config/nix/`: nix-darwin/NixOS and Home Manager modules, overlays, and secrets wiring.
 - `.config/nvim/`: Neovim configuration, plugins, LSP setup, snippets, and `lazy-lock.json`.
 - `.config/wezterm/`, `.config/fish/`, `.config/ghostty/`, `.config/yazi/`: per-app configuration.
 - `skills/`: local Codex skills and scripts.
@@ -17,6 +17,7 @@ This repo is validated through Nix and a few config-specific checks.
 
 - `nix flake check`: evaluates the flake and runs available checks.
 - `nix build .#darwinConfigurations.suzuMac.system`: builds the macOS system target used by CI.
+- `nix build .#nixosConfigurations.suzu.config.system.build.toplevel`: builds the native NixOS system target used by CI.
 - `nix shell nixpkgs#neovim nixpkgs#git -c ./scripts/nvim-restore.sh ~/.config/nvim`: restores Neovim plugins from `lazy-lock.json`.
 - `nix shell nixpkgs#neovim nixpkgs#git -c nvim --headless "+qa"`: smoke-tests Neovim startup.
 
@@ -29,7 +30,7 @@ This repo is validated through Nix and a few config-specific checks.
 ## Testing Guidelines
 There is no dedicated unit-test suite. Verify changes with the narrowest command that exercises the touched area.
 
-- Nix changes: `nix flake check` or the relevant `nix build` target.
+- Nix changes: `nix flake check` or the relevant macOS, native NixOS, or WSL `nix build` target.
 - Neovim changes: run the headless startup check above.
 - WezTerm changes: rely on the `wezterm-linter` workflow pattern when touching `.config/wezterm/**`.
 

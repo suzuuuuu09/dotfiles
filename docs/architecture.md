@@ -1,8 +1,8 @@
 # Architecture and Responsibilities
 
-This repository builds macOS and NixOS-WSL target environments from a single flake. Nix evaluates dependencies and system configuration, Home Manager assembles the shared user environment, and Homebrew supplements selected macOS applications.
+This repository builds macOS, native NixOS, and NixOS-WSL target environments from a single flake. Nix evaluates dependencies and system configuration, Home Manager assembles the shared user environment, and Homebrew supplements selected macOS applications.
 
-macOS is the current primary environment. NixOS-WSL is an auxiliary target environment for using the shared user environment while working with Unity and similar tools on Windows. Whether the WSL configuration will continue to receive maintenance at the same level as macOS is undecided. [ADR 0003](adr/0003-treat-macos-as-primary-environment.md) records the rationale for this maintenance boundary.
+macOS is the current primary environment. Native NixOS is a supported target environment for the desktop configuration. NixOS-WSL remains an auxiliary target environment for using the shared user environment while working with Unity and similar tools on Windows. Whether the WSL configuration will continue to receive maintenance at the same level as macOS is undecided. [ADR 0003](adr/0003-treat-macos-as-primary-environment.md) records the rationale for this maintenance boundary.
 
 ## Configuration flow
 
@@ -10,6 +10,7 @@ macOS is the current primary environment. NixOS-WSL is an auxiliary target envir
 flowchart TD
   Repo[dotfiles repository] --> Flake[flake.nix]
   Flake --> Darwin[darwinConfigurations.suzuMac]
+  Flake --> NixOS[nixosConfigurations.suzu]
   Flake --> WSL[nixosConfigurations.suzuWsl]
   Flake --> StandaloneHM[homeConfigurations]
   Flake --> Checks[formatter and checks]
@@ -17,6 +18,10 @@ flowchart TD
   Darwin --> MacHost[hosts/mac]
   MacHost --> DarwinSystem[home/darwin]
   Darwin --> CommonHome[home/common]
+
+  NixOS --> OSHost[hosts/os]
+  NixOS --> OSHome[home/os]
+  NixOS --> CommonHome
 
   WSL --> WSLHost[hosts/wsl]
   WSL --> WSLHome[home/wsl]
@@ -30,35 +35,39 @@ flowchart TD
   CommonHome --> AgentSkills[agent skills]
 ```
 
-`flake.nix` is the entry point for target environments and checks. Both macOS and WSL load the shared user environment; operating-system- and host-dependent settings are separated into individual modules. [ADR 0010](adr/0010-share-home-manager-configuration-across-macos-and-wsl.md) records why this sharing boundary was chosen.
+`flake.nix` is the entry point for target environments and checks. All target environments load the shared user environment; operating-system- and host-dependent settings are separated into individual modules. [ADR 0010](adr/0010-share-home-manager-configuration-across-macos-and-wsl.md) records why this sharing boundary was chosen.
 
 ## Flake outputs
 
 | Output | System | Responsibility |
 | --- | --- | --- |
 | `darwinConfigurations.suzuMac` | `aarch64-darwin` | macOS system and Home Manager configuration for the primary environment |
+| `nixosConfigurations.suzu` | `x86_64-linux` | Native NixOS desktop system and Home Manager configuration |
 | `nixosConfigurations.suzuWsl` | `x86_64-linux` | NixOS-WSL system and Home Manager configuration for the auxiliary target environment |
 | `homeConfigurations.nixos` | `x86_64-linux` | Standalone Home Manager output for the auxiliary target environment |
 | `homeConfigurations."nixos@suzuWsl"` | `x86_64-linux` | The same WSL Home Manager configuration, with a host-qualified output name |
 | `checks.aarch64-darwin.*` | `aarch64-darwin` | Formatters, static analysis, and shell and configuration validation run on the primary environment |
 
-On macOS, nix-darwin owns system configuration. On WSL, the NixOS-WSL module builds the foundation and Home Manager adds the user environment.
+On macOS, nix-darwin owns system configuration. On native NixOS, the host module owns system configuration and Home Manager adds the user environment. On WSL, the NixOS-WSL module builds the foundation and Home Manager adds the user environment.
 
 ## Nix module boundaries
 
 | Location | Responsibility |
 | --- | --- |
 | `.config/nix/hosts/` | Host-specific system entry points |
-| `.config/nix/home/common/` | Packages, programs, dotfiles, SOPS, and agent skills shared by both target environments |
+| `.config/nix/home/common/` | Packages, programs, dotfiles, SOPS, and agent skills shared by target environments |
 | `.config/nix/home/darwin/` | macOS user configuration, system defaults, Homebrew, and launchd |
+| `.config/nix/home/os/` | Native NixOS user configuration and desktop packages |
 | `.config/nix/home/wsl/` | WSL user name, home directory, and browser integration |
 | `.config/nix/overlays/` | Local packages shared through the flake |
 
-Place new configuration for only one target environment in its corresponding platform or host module. Use `home/common/` only when identical behavior is required in both target environments.
+Place new configuration for only one target environment in its corresponding platform or host module. Use `home/common/` only when identical behavior is required across target environments.
 
 ## Nix and Homebrew boundary
 
 Nix manages CLI tools, development tools, shells, editors, and system configuration. Homebrew supplements macOS GUI applications and macOS-specific tools that Nix does not handle well.
+
+Native NixOS manages the 1Password CLI and GUI through NixOS modules so the PolKit, CLI, and SSH agent integrations remain available. The native target does not use the Flatpak build for 1Password.
 
 `.config/nix/home/darwin/homebrew.nix` divides applications into the following sets:
 
@@ -111,7 +120,7 @@ The encrypted `.config/nix/secrets/secrets.yaml` is tracked by Git, but its cont
 
 | Change area | Main verification |
 | --- | --- |
-| Nix modules and flake | Formatter, Statix, deadnix, macOS build, and WSL build |
+| Nix modules and flake | Formatter, Statix, deadnix, macOS build, native NixOS build, and WSL build |
 | Shell scripts and Fish | ShellCheck and Fish syntax checks |
 | Python skill scripts | Ruff |
 | Neovim | Restore from `lazy-lock.json` and headless startup |
@@ -119,7 +128,7 @@ The encrypted `.config/nix/secrets/secrets.yaml` is tracked by Git, but its cont
 | GitHub Actions | actionlint and additional security linting |
 | Renovate | Configuration validator |
 
-Static checks are collected in flake checks for the current primary environment, macOS. The WSL configuration is built separately on a Linux runner to confirm that the auxiliary target environment can be reconstructed. Its future maintenance level is undecided, so this CI arrangement is not a permanent guarantee.
+Static checks are collected in flake checks for the current primary environment, macOS. The native NixOS and WSL configurations are built separately on a Linux runner to confirm that both Linux target environments can be reconstructed. WSL remains an auxiliary target environment, so this CI arrangement does not guarantee feature parity with macOS.
 
 ## Pinning and updates
 

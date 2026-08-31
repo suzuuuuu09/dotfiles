@@ -1,11 +1,12 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-This directory contains Nix-based macOS and Home Manager configuration fragments.
+This directory contains Nix-based macOS, native NixOS, WSL, and Home Manager configuration fragments.
 
-- `hosts/`: machine-specific system entrypoints for macOS and WSL.
-- `home/common/`: shared Home Manager settings used by both macOS and WSL.
+- `hosts/`: machine-specific system entrypoints for macOS, native NixOS, and WSL.
+- `home/common/`: shared Home Manager settings used across supported targets.
 - `home/darwin/`: macOS-specific Home Manager settings and macOS system modules. `default.nix` is the nix-darwin entrypoint and `home.nix` is the Home Manager entrypoint.
+- `home/os/`: native NixOS-specific Home Manager settings.
 - `home/wsl/`: WSL-specific Home Manager settings.
 - `overlays/`: custom package overlays for local package tweaks.
 - `secrets/`: SOPS-managed secret material. Do not inspect or edit secrets unless required.
@@ -16,6 +17,7 @@ Keep changes local to the relevant module and preserve the existing split betwee
 This repo is usually applied through the parent dotfiles flake.
 
 - `nix flake check`: evaluate the flake and run available checks.
+- `nix build .#nixosConfigurations.suzu.config.system.build.toplevel`: build the native NixOS system target.
 - `nh home switch` or `nh os switch`: activate Home Manager or nix-darwin, depending on the target.
 - `darwin-rebuild switch`: apply macOS system changes when not using `nh`.
 

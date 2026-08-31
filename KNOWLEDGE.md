@@ -4,9 +4,9 @@ This file records project-specific knowledge whose rationale is difficult to rec
 
 ## Nix and target environments
 
-**Keep shared packages evaluable on both targets**
-`.config/nix/home/common/` is imported by both macOS and NixOS-WSL, so a macOS-only package can break WSL evaluation even when it is used at runtime only on macOS.
-Place Darwin-only packages such as `pngpaste` in `.config/nix/home/darwin/`, and verify both Darwin and WSL after moving a module from the common configuration.
+**Keep shared packages evaluable across supported targets**
+`.config/nix/home/common/` is imported by macOS, native NixOS, and NixOS-WSL, so a platform-only package can break another target's evaluation even when it is used at runtime only on one platform.
+Place Darwin-only packages such as `pngpaste` in `.config/nix/home/darwin/`, and verify macOS, native NixOS, and WSL after moving a module from the common configuration.
 
 *Avoid*: assuming that a macOS-only package is harmless in `home/common/` because it is used by a plugin that runs only on macOS.
 
@@ -26,6 +26,11 @@ When updating Hunk or nixpkgs, keep this independent pin and run `nix build --no
 **Use the `llm-agents.nix` package for Codex**
 This repository's `codex` uses `inputs.llm-agents.packages.${system}.codex`, not `pkgs.codex` from nixpkgs.
 When updating the Codex version or distribution source, preserve this reference in `.config/nix/home/common/programs/codex.nix` and verify the actual derivation in the generated `home.packages`.
+
+**Use NixOS modules for native 1Password integration**
+The native NixOS target uses `programs._1password` and `programs._1password-gui` so the CLI, PolKit integration, and SSH agent can work together. The Flatpak build does not support the required SSH agent or desktop-app CLI integration.
+
+*Avoid*: replacing the native package with Flatpak merely because it launches; the missing integrations are silent until the CLI or SSH agent is used.
 
 ## Agent Skills and macOS activation
 

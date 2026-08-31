@@ -197,6 +197,7 @@
         inherit inputs;
         username = wslUsername;
         enableAgentSkills = true;
+        enableSops = true;
       };
 
       modules =
@@ -393,6 +394,7 @@
             extraSpecialArgs = {
               inherit inputs username;
               enableAgentSkills = true;
+              enableSops = true;
             };
 
             users.${username} = {
@@ -415,6 +417,7 @@
 
       modules = [
         ./.config/nix/hosts/os
+        ./.config/nix/hosts/os/onepassword.nix
         home-manager.nixosModules.home-manager
 
         ({username, ...}: {

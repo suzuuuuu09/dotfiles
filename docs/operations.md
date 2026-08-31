@@ -27,6 +27,13 @@ nix build --no-link .#darwinConfigurations.suzuMac.system
 sudo darwin-rebuild switch --flake .#suzuMac
 ```
 
+On native NixOS, build the system closure before applying the NixOS configuration.
+
+```bash
+nix build --no-link .#nixosConfigurations.suzu.config.system.build.toplevel
+sudo nixos-rebuild switch --flake .#suzu
+```
+
 On NixOS-WSL, build the system closure before applying the NixOS configuration.
 
 ```bash
@@ -35,6 +42,25 @@ sudo nixos-rebuild switch --flake .#suzuWsl
 ```
 
 To evaluate only the WSL Home Manager portion, use `homeConfigurations.nixos` or `homeConfigurations."nixos@suzuWsl"`. Both outputs refer to the same Home Manager configuration.
+
+## 1Password on native NixOS
+
+The native NixOS target installs the 1Password CLI and GUI through NixOS modules. The GUI starts silently at graphical login, and Home Manager configures SSH to use `~/.1password/agent.sock` for every host.
+
+After the first switch:
+
+1. Open 1Password and sign in.
+2. In Settings > Security, enable Unlock using system authentication if desired.
+3. In Settings > Developer, enable Integrate with 1Password CLI and Use the SSH Agent.
+4. Select the SSH key to use, choose Configure for SSH Agent, and keep only that key in `~/.config/1Password/ssh/agent.toml`.
+5. Confirm the integrations:
+
+   ```bash
+   op vault list
+   SSH_AUTH_SOCK="$HOME/.1password/agent.sock" ssh-add -l
+   ```
+
+The `agent.toml` file is machine-local because it contains account, vault, or item metadata. Do not add it to the repository. See the [1Password CLI integration](https://www.1password.dev/cli/app-integration) and [SSH agent configuration](https://www.1password.dev/ssh/agent/config) documentation for the GUI steps and key-selection syntax.
 
 ## Applying changes
 
@@ -45,24 +71,26 @@ How a change is applied depends on whether the file is a linked dotfile or a Nix
 | Linked dotfile | Reload or restart the target application | Application-specific syntax check or startup confirmation |
 | `home/common/` | Switch the target environment's Home Manager or system | `nix flake check` and the target configuration build |
 | `home/darwin/`, `hosts/mac/` | `darwin-rebuild switch` | macOS system build |
+| `home/os/`, `hosts/os/` | `nixos-rebuild switch --flake .#suzu` | native NixOS system build |
 | `home/wsl/`, `hosts/wsl/` | `nixos-rebuild switch` | WSL system build |
-| `flake.nix`, `flake.lock`, overlays | Switch all affected configurations | Flake checks and both macOS and WSL builds |
+| `flake.nix`, `flake.lock`, overlays | Switch all affected configurations | Flake checks and macOS, native NixOS, and WSL builds |
 | `skills/`, agent skill sources | Switch a configuration including Home Manager | After Nix evaluation, inspect `~/.agents/skills` |
 
 Because these are out-of-store symlinks, a linked dotfile is reflected at its destination without waiting for a Nix rebuild. Reapply Home Manager after changing packages, link definitions, SOPS templates, or agent-skill configuration.
 
 ## Updating Nix dependencies
 
-When updating flake inputs, update the lockfile and then build both target environments.
+When updating flake inputs, update the lockfile and then build all supported target environments.
 
 ```bash
 nix flake update
 nix flake check
 nix build --no-link .#darwinConfigurations.suzuMac.system
+nix build --no-link .#nixosConfigurations.suzu.config.system.build.toplevel
 nix build --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel
 ```
 
-`flake.lock` records the resolution of Nix, Home Manager, nix-darwin, NixOS-WSL, and external agent skills. After updating it, verify both macOS and WSL as well as the configurations closest to the changed input. [ADR 0015](adr/0015-pin-and-automate-dependency-updates.md) records the decision to pin dependencies and leave update proposals to Renovate.
+`flake.lock` records the resolution of Nix, Home Manager, nix-darwin, NixOS-WSL, and external agent skills. After updating it, verify macOS, native NixOS, and WSL as well as the configurations closest to the changed input. [ADR 0015](adr/0015-pin-and-automate-dependency-updates.md) records the decision to pin dependencies and leave update proposals to Renovate.
 
 ## Updating Homebrew
 
@@ -104,6 +132,7 @@ For a limited change, run the directly affected verification first. Add the targ
 | --- | --- |
 | Nix | `nix flake check` |
 | macOS system | `nix build --no-link .#darwinConfigurations.suzuMac.system` |
+| native NixOS | `nix build --no-link .#nixosConfigurations.suzu.config.system.build.toplevel` |
 | NixOS-WSL | `nix build --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel` |
 | Neovim | `nvim --headless "+qa"` after restoring plugins |
 | WezTerm | Load the configuration as in `.github/workflows/wezterm-linter.yaml` |
@@ -130,7 +159,7 @@ When a configuration change does not take effect, first verify its application p
 3. Reload the target application if it uses a linked dotfile.
 4. Build the target configuration and switch it after a successful build if it uses a Nix module.
 
-When Nix evaluation fails, build the macOS and WSL outputs separately. If only one fails, inspect platform or host module changes before `home/common/`.
+When Nix evaluation fails, build the macOS, native NixOS, and WSL outputs separately. If only one fails, inspect platform or host module changes before `home/common/`.
 
 When Neovim fails to start, restore plugins from the lockfile and then run headless startup. If a Homebrew application does not update, confirm that it is a managed application and check whether it relies on its own updater or needs an individual `greedy` setting.
 

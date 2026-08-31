@@ -8,12 +8,13 @@
 
 </div>
 
-macOS（Apple Silicon）とNixOS-WSL向けの個人用dotfilesです。
+macOS（Apple Silicon）、ネイティブ NixOS、NixOS-WSL向けの個人用dotfilesです。
 nix-darwinとHome Managerを中心に、アプリ設定、開発ツール、Codex向けスキルを管理しています。
 
 ## 対象
 
 - macOS: `darwinConfigurations.suzuMac`（`aarch64-darwin`）
+- NixOS: `nixosConfigurations.suzu`（`x86_64-linux`）
 - NixOS-WSL: `nixosConfigurations.suzuWsl`（`x86_64-linux`）
 - Home Manager: `homeConfigurations.nixos` / `homeConfigurations."nixos@suzuWsl"`
 
@@ -22,7 +23,7 @@ nix-darwinとHome Managerを中心に、アプリ設定、開発ツール、Code
 
 ## 構成
 
-- `flake.nix`: flake inputs、macOS / WSL構成、formatter、checks
+- `flake.nix`: flake inputs、macOS / NixOS / WSL構成、formatter、checks
 - `.config/nix/hosts/`: ホスト固有のnix-darwin / NixOS設定
 - `.config/nix/home/common/`: 共通のHome Manager設定
 - `.config/nix/home/darwin/`: macOS固有のHome Manager / nix-darwin設定
@@ -54,6 +55,10 @@ nix flake check
 nix build --no-link .#darwinConfigurations.suzuMac.system
 sudo darwin-rebuild switch --flake .#suzuMac
 
+# NixOS
+nix build --no-link .#nixosConfigurations.suzu.config.system.build.toplevel
+sudo nixos-rebuild switch --flake .#suzu
+
 # NixOS-WSL
 nix build --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel
 sudo nixos-rebuild switch --flake .#suzuWsl
@@ -73,6 +78,9 @@ nix fmt
 
 # macOSのシステム構成
 nix build --no-link .#darwinConfigurations.suzuMac.system
+
+# ネイティブ NixOS のシステム構成
+nix build --no-link .#nixosConfigurations.suzu.config.system.build.toplevel
 
 # Neovimプラグインの復元と起動確認
 nix shell nixpkgs#neovim nixpkgs#git -c \
