@@ -1,8 +1,8 @@
 {username, ...}: {
-	imports = [
-	  ./packages.nix
-		./programs
-	];
+  imports = [
+    ./packages.nix
+    ./programs
+  ];
 
   home = {
     inherit username;
