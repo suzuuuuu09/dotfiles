@@ -2,8 +2,7 @@
   pkgs,
   username,
   ...
-}:
-let
+}: let
   dictL = pkgs.skkDictionaries.l;
   dictProper = pkgs.skkDictionaries.propernoun;
   dictJinmei = pkgs.skkDictionaries.jinmei;
@@ -62,21 +61,21 @@ let
       {
         id = "macSKK のコピー";
         keyBindings = [
-          (mkBinding "hiragana" [ (mkInput "j" 262144 0) ])
-          (mkBinding "toggleKana" [ (mkInput "q" 0 0) ])
-          (mkBinding "toggleAndFixKana" [ (mkInput "q" 0 0) ])
-          (mkBinding "hankakuKana" [ (mkInput "q" 262144 0) ])
-          (mkBinding "direct" [ ])
-          (mkBinding "zenkaku" [ ])
-          (mkBinding "abbrev" [ (mkInput "/" 0 0) ])
-          (mkBinding "directAbbrev" [ (mkInput ";" 262144 0) ])
-          (mkBinding "japanese" [ (mkInput "q" 131072 0) ])
-          (mkBinding "stickyShift" [ (mkInput ";" 0 0) ])
-          (mkBinding "enter" [ (mkInput 36 0 655360) ])
-          (mkBinding "space" [ (mkInput 49 0 0) ])
-          (mkBinding "shiftSpace" [ (mkInput 49 131072 0) ])
-          (mkBinding "backwardCandidate" [ (mkInput "x" 0 0) ])
-          (mkBinding "tab" [ (mkInput 48 0 131072) ])
+          (mkBinding "hiragana" [(mkInput "j" 262144 0)])
+          (mkBinding "toggleKana" [(mkInput "q" 0 0)])
+          (mkBinding "toggleAndFixKana" [(mkInput "q" 0 0)])
+          (mkBinding "hankakuKana" [(mkInput "q" 262144 0)])
+          (mkBinding "direct" [])
+          (mkBinding "zenkaku" [])
+          (mkBinding "abbrev" [(mkInput "/" 0 0)])
+          (mkBinding "directAbbrev" [(mkInput ";" 262144 0)])
+          (mkBinding "japanese" [(mkInput "q" 131072 0)])
+          (mkBinding "stickyShift" [(mkInput ";" 0 0)])
+          (mkBinding "enter" [(mkInput 36 0 655360)])
+          (mkBinding "space" [(mkInput 49 0 0)])
+          (mkBinding "shiftSpace" [(mkInput 49 131072 0)])
+          (mkBinding "backwardCandidate" [(mkInput "x" 0 0)])
+          (mkBinding "tab" [(mkInput 48 0 131072)])
           (mkBinding "backspace" [
             (mkInput 51 0 655360)
             (mkInput "h" 262144 0)
@@ -105,14 +104,14 @@ let
             (mkInput 126 8388608 131072)
             (mkInput "p" 262144 0)
           ])
-          (mkBinding "startOfLine" [ (mkInput "a" 262144 0) ])
-          (mkBinding "endOfLine" [ (mkInput "e" 262144 0) ])
-          (mkBinding "unregister" [ (mkInput "x" 131072 0) ])
-          (mkBinding "registerPaste" [ (mkInput "y" 262144 0) ])
-          (mkBinding "reconvert" [ (mkInput "/" 262144 0) ])
-          (mkBinding "affix" [ (mkInput "." 131072 0) ])
-          (mkBinding "eisu" [ (mkInput 102 0 0) ])
-          (mkBinding "kana" [ (mkInput 104 0 0) ])
+          (mkBinding "startOfLine" [(mkInput "a" 262144 0)])
+          (mkBinding "endOfLine" [(mkInput "e" 262144 0)])
+          (mkBinding "unregister" [(mkInput "x" 131072 0)])
+          (mkBinding "registerPaste" [(mkInput "y" 262144 0)])
+          (mkBinding "reconvert" [(mkInput "/" 262144 0)])
+          (mkBinding "affix" [(mkInput "." 131072 0)])
+          (mkBinding "eisu" [(mkInput 102 0 0)])
+          (mkBinding "kana" [(mkInput 104 0 0)])
         ];
         version = 1;
       }
@@ -136,8 +135,7 @@ let
       }
     ];
   };
-in
-{
+in {
   system.defaults.CustomUserPreferences = {
     "net.mtgto.inputmethod.macSKK" = macSKKDefaults;
   };

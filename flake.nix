@@ -137,344 +137,296 @@
     };
   };
 
-  outputs =
-    {
-      self,
-      nix-darwin,
-      nixpkgs,
-      home-manager,
-      nixos-wsl,
-      nix-homebrew,
-      treefmt-nix,
-      git-hooks,
-      ...
-    }@inputs:
-    let
-      # TODO: 将来的にはArch Linuxもサポートする予定
-      targetSystem = "aarch64-darwin";
-      wslSystem = "x86_64-linux";
-      osSystem = "x86_64-linux";
-      isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
-      macUsername = "k25012kk";
-      wslUsername = "nixos";
-      osUsername = "suzu";
-      wslHostName = "suzuWsl";
+  outputs = {
+    self,
+    nix-darwin,
+    nixpkgs,
+    home-manager,
+    nixos-wsl,
+    nix-homebrew,
+    treefmt-nix,
+    git-hooks,
+    ...
+  } @ inputs: let
+    # TODO: 将来的にはArch Linuxもサポートする予定
+    targetSystem = "aarch64-darwin";
+    wslSystem = "x86_64-linux";
+    osSystem = "x86_64-linux";
+    isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
+    macUsername = "k25012kk";
+    wslUsername = "nixos";
+    osUsername = "suzu";
+    wslHostName = "suzuWsl";
 
-      systems = [
-        targetSystem
-        wslSystem
-      ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-      perSystem = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-          treefmtEval = treefmt-nix.lib.evalModule pkgs ./.config/nix/home/common/programs/treefmt.nix;
-          preCommitCheck = import ./.config/nix/home/common/programs/git-hooks.nix {
-            inherit git-hooks pkgs treefmtEval;
-            src = self;
-          };
-        in
-        {
-          inherit pkgs treefmtEval preCommitCheck;
-        }
-      );
-
-      wslPkgs = perSystem.${wslSystem}.pkgs;
-
-      localOverlays = [
-        (_final: prev: {
-          czg = prev.callPackage ./.config/nix/overlays/czg.nix { };
-          cxr = prev.callPackage ./.config/nix/overlays/cxr.nix { };
-          hunk = inputs.hunk.packages.${_final.stdenv.hostPlatform.system}.hunk;
-        })
-      ];
-
-      sharedOverlays = localOverlays;
-
-      wslHomeImports = [
-        ./.config/nix/home/common
-        ./.config/nix/home/wsl
-      ];
-
-      osHomeImports = [
-        ./.config/nix/home/common
-        ./.config/nix/home/os
-        inputs.plasma-manager.homeModules.plasma-manager
-      ];
-
-      wslHomeSharedModules = [
-        inputs.sops-nix.homeManagerModules.sops
-        inputs.nix-index-database.homeModules.nix-index
-      ];
-
-      wslHomeConfiguration = home-manager.lib.homeManagerConfiguration {
-        pkgs = wslPkgs;
-
-        extraSpecialArgs = {
-          inherit inputs;
-          username = wslUsername;
-          enableAgentSkills = true;
-          enableSops = true;
+    systems = [
+      targetSystem
+      wslSystem
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+    perSystem = forAllSystems (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        treefmtEval = treefmt-nix.lib.evalModule pkgs ./.config/nix/home/common/programs/treefmt.nix;
+        preCommitCheck = import ./.config/nix/home/common/programs/git-hooks.nix {
+          inherit git-hooks pkgs treefmtEval;
+          src = self;
         };
+      in {
+        inherit pkgs treefmtEval preCommitCheck;
+      }
+    );
 
-        modules = [
+    wslPkgs = perSystem.${wslSystem}.pkgs;
+
+    localOverlays = [
+      (_final: prev: {
+        czg = prev.callPackage ./.config/nix/overlays/czg.nix {};
+        cxr = prev.callPackage ./.config/nix/overlays/cxr.nix {};
+        hunk = inputs.hunk.packages.${_final.stdenv.hostPlatform.system}.hunk;
+      })
+    ];
+
+    sharedOverlays = localOverlays;
+
+    wslHomeImports = [
+      ./.config/nix/home/common
+      ./.config/nix/home/wsl
+    ];
+
+    osHomeImports = [
+      ./.config/nix/home/common
+      ./.config/nix/home/os
+      inputs.plasma-manager.homeModules.plasma-manager
+    ];
+
+    wslHomeSharedModules = [
+      inputs.sops-nix.homeManagerModules.sops
+      inputs.nix-index-database.homeModules.nix-index
+    ];
+
+    wslHomeConfiguration = home-manager.lib.homeManagerConfiguration {
+      pkgs = wslPkgs;
+
+      extraSpecialArgs = {
+        inherit inputs;
+        username = wslUsername;
+        enableAgentSkills = true;
+        enableSops = true;
+      };
+
+      modules =
+        [
           {
             nixpkgs.overlays = sharedOverlays;
           }
         ]
         ++ wslHomeImports
         ++ wslHomeSharedModules;
-      };
-    in
-    {
-      formatter = forAllSystems (system: perSystem.${system}.treefmtEval.config.build.wrapper);
+    };
+  in {
+    formatter = forAllSystems (system: perSystem.${system}.treefmtEval.config.build.wrapper);
 
-      checks.${targetSystem} =
-        let
-          inherit (perSystem.${targetSystem}) pkgs treefmtEval preCommitCheck;
-        in
+    checks.${targetSystem} = let
+      inherit (perSystem.${targetSystem}) pkgs treefmtEval preCommitCheck;
+    in {
+      pre-commit = preCommitCheck;
+      formatting = treefmtEval.config.build.check self;
+
+      statix =
+        pkgs.runCommand "statix-check"
         {
-          pre-commit = preCommitCheck;
-          formatting = treefmtEval.config.build.check self;
-
-          statix =
-            pkgs.runCommand "statix-check"
-              {
-                nativeBuildInputs = [ pkgs.statix ];
-              }
-              ''
-                statix check ${self}
-                touch "$out"
-              '';
-
-          deadnix =
-            pkgs.runCommand "deadnix-check"
-              {
-                nativeBuildInputs = [ pkgs.deadnix ];
-              }
-              ''
-                deadnix \
-                  --hidden \
-                  --fail \
-                  --no-lambda-arg \
-                  --no-lambda-pattern-names \
-                  ${self}
-
-                touch "$out"
-              '';
-
-          shellcheck =
-            pkgs.runCommand "shellcheck"
-              {
-                nativeBuildInputs = [ pkgs.shellcheck ];
-              }
-              ''
-                shellcheck \
-                  ${self}/scripts/*.sh \
-                  ${self}/.config/aerospace/scripts/*.sh
-
-                touch "$out"
-              '';
-
-          fish-syntax =
-            pkgs.runCommand "fish-syntax-check"
-              {
-                nativeBuildInputs = [ pkgs.fish ];
-              }
-              ''
-                fish -n \
-                  ${self}/.config/fish/config.fish \
-                  ${self}/.config/fish/tool_setup.fish \
-                  ${self}/.config/fish/config/*.fish \
-                  ${self}/.config/fish/conf.d/*.fish \
-                  ${self}/.config/fish/functions/*.fish
-
-                touch "$out"
-              '';
-
-          ruff =
-            pkgs.runCommand "ruff-check"
-              {
-                nativeBuildInputs = [ pkgs.ruff ];
-              }
-              ''
-                ruff check \
-                  ${self}/skills/fetch-markdown/scripts \
-                  ${self}/skills/timezone-utils/scripts
-
-                touch "$out"
-              '';
-
-          actionlint =
-            pkgs.runCommand "actionlint-check"
-              {
-                nativeBuildInputs = [ pkgs.actionlint ];
-              }
-              ''
-                actionlint ${self}/.github/workflows/*.yaml
-                touch "$out"
-              '';
-        };
-
-      devShells = forAllSystems (
-        system:
-        let
-          inherit (perSystem.${system}) pkgs preCommitCheck;
-        in
-        {
-          default = pkgs.mkShell {
-            inherit (preCommitCheck) shellHook;
-            packages = preCommitCheck.enabledPackages;
-          };
+          nativeBuildInputs = [pkgs.statix];
         }
-      );
+        ''
+          statix check ${self}
+          touch "$out"
+        '';
 
-      darwinConfigurations."suzuMac" = nix-darwin.lib.darwinSystem {
-        system = targetSystem;
+      deadnix =
+        pkgs.runCommand "deadnix-check"
+        {
+          nativeBuildInputs = [pkgs.deadnix];
+        }
+        ''
+          deadnix \
+            --hidden \
+            --fail \
+            --no-lambda-arg \
+            --no-lambda-pattern-names \
+            ${self}
 
-        specialArgs = {
-          inherit self inputs;
-          username = macUsername;
+          touch "$out"
+        '';
+
+      shellcheck =
+        pkgs.runCommand "shellcheck"
+        {
+          nativeBuildInputs = [pkgs.shellcheck];
+        }
+        ''
+          shellcheck \
+            ${self}/scripts/*.sh \
+            ${self}/.config/aerospace/scripts/*.sh
+
+          touch "$out"
+        '';
+
+      fish-syntax =
+        pkgs.runCommand "fish-syntax-check"
+        {
+          nativeBuildInputs = [pkgs.fish];
+        }
+        ''
+          fish -n \
+            ${self}/.config/fish/config.fish \
+            ${self}/.config/fish/tool_setup.fish \
+            ${self}/.config/fish/config/*.fish \
+            ${self}/.config/fish/conf.d/*.fish \
+            ${self}/.config/fish/functions/*.fish
+
+          touch "$out"
+        '';
+
+      ruff =
+        pkgs.runCommand "ruff-check"
+        {
+          nativeBuildInputs = [pkgs.ruff];
+        }
+        ''
+          ruff check \
+            ${self}/skills/fetch-markdown/scripts \
+            ${self}/skills/timezone-utils/scripts
+
+          touch "$out"
+        '';
+
+      actionlint =
+        pkgs.runCommand "actionlint-check"
+        {
+          nativeBuildInputs = [pkgs.actionlint];
+        }
+        ''
+          actionlint ${self}/.github/workflows/*.yaml
+          touch "$out"
+        '';
+    };
+
+    devShells = forAllSystems (
+      system: let
+        inherit (perSystem.${system}) pkgs preCommitCheck;
+      in {
+        default = pkgs.mkShell {
+          inherit (preCommitCheck) shellHook;
+          packages = preCommitCheck.enabledPackages;
         };
+      }
+    );
 
-        modules =
-          (nixpkgs.lib.optionals isDarwin [
-            ./.config/nix/hosts/mac
-          ])
-          ++ [
-            nix-homebrew.darwinModules.nix-homebrew
-            home-manager.darwinModules.home-manager
+    darwinConfigurations."suzuMac" = nix-darwin.lib.darwinSystem {
+      system = targetSystem;
 
-            (
-              {
-                pkgs,
-                username,
-                ...
-              }:
-              {
-                nixpkgs.overlays = sharedOverlays;
-
-                # Mac全体で永続的に使用するNixキャッシュ設定
-                nix.settings = {
-                  extra-substituters = [
-                    "https://suzuuuuu09.cachix.org"
-                    "https://nix-community.cachix.org"
-                    "https://cache.numtide.com"
-                  ];
-
-                  extra-trusted-public-keys = [
-                    "suzuuuuu09.cachix.org-1:+V6hB76qnQ1Ra3Lf9VZsQtszeZ9UyE39QvRHNtfYPXw="
-                    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-                    "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
-                  ];
-
-                  trusted-users = [
-                    "root"
-                    username
-                  ];
-                };
-
-                # cachix pushなどのコマンドを使用可能にする
-                environment.systemPackages = with pkgs; [
-                  cachix
-                ];
-
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  backupFileExtension = "backup";
-
-                  extraSpecialArgs = {
-                    inherit inputs username;
-                    enableAgentSkills = true;
-                  };
-
-                  users.${username} = {
-                    imports = [
-                      ./.config/nix/home/common
-                      ./.config/nix/home/darwin/home.nix
-                    ];
-                  };
-
-                  sharedModules = [
-                    inputs.sops-nix.homeManagerModules.sops
-                    inputs.nix-index-database.homeModules.nix-index
-                  ];
-                };
-              }
-            )
-          ];
+      specialArgs = {
+        inherit self inputs;
+        username = macUsername;
       };
 
-      homeConfigurations = {
-        "${wslUsername}" = wslHomeConfiguration;
-        "${wslUsername}@${wslHostName}" = wslHomeConfiguration;
-      };
-
-      nixosConfigurations.suzuWsl = nixpkgs.lib.nixosSystem {
-        system = wslSystem;
-
-        specialArgs = {
-          inherit inputs;
-          username = wslUsername;
-        };
-
-        modules = [
-          nixos-wsl.nixosModules.default
-          ./.config/nix/hosts/wsl
-          home-manager.nixosModules.home-manager
+      modules =
+        (nixpkgs.lib.optionals isDarwin [
+          ./.config/nix/hosts/mac
+        ])
+        ++ [
+          nix-homebrew.darwinModules.nix-homebrew
+          home-manager.darwinModules.home-manager
 
           (
             {
               pkgs,
               username,
               ...
-            }:
-            {
+            }: {
               nixpkgs.overlays = sharedOverlays;
+
+              # Mac全体で永続的に使用するNixキャッシュ設定
+              nix.settings = {
+                extra-substituters = [
+                  "https://suzuuuuu09.cachix.org"
+                  "https://nix-community.cachix.org"
+                  "https://cache.numtide.com"
+                ];
+
+                extra-trusted-public-keys = [
+                  "suzuuuuu09.cachix.org-1:+V6hB76qnQ1Ra3Lf9VZsQtszeZ9UyE39QvRHNtfYPXw="
+                  "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+                  "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+                ];
+
+                trusted-users = [
+                  "root"
+                  username
+                ];
+              };
+
+              # cachix pushなどのコマンドを使用可能にする
+              environment.systemPackages = with pkgs; [
+                cachix
+              ];
 
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
+                backupFileExtension = "backup";
 
                 extraSpecialArgs = {
                   inherit inputs username;
                   enableAgentSkills = true;
-                  enableSops = true;
                 };
 
                 users.${username} = {
-                  imports = wslHomeImports;
+                  imports = [
+                    ./.config/nix/home/common
+                    ./.config/nix/home/darwin/home.nix
+                  ];
                 };
 
-                sharedModules = wslHomeSharedModules;
+                sharedModules = [
+                  inputs.sops-nix.homeManagerModules.sops
+                  inputs.nix-index-database.homeModules.nix-index
+                ];
               };
             }
           )
         ];
+    };
+
+    homeConfigurations = {
+      "${wslUsername}" = wslHomeConfiguration;
+      "${wslUsername}@${wslHostName}" = wslHomeConfiguration;
+    };
+
+    nixosConfigurations.suzuWsl = nixpkgs.lib.nixosSystem {
+      system = wslSystem;
+
+      specialArgs = {
+        inherit inputs;
+        username = wslUsername;
       };
 
-      nixosConfigurations.suzu = nixpkgs.lib.nixosSystem {
-        system = osSystem;
+      modules = [
+        nixos-wsl.nixosModules.default
+        ./.config/nix/hosts/wsl
+        home-manager.nixosModules.home-manager
 
-        specialArgs = {
-          inherit self inputs;
-          username = osUsername;
-        };
-
-        modules = [
-          ./.config/nix/hosts/os
-          ./.config/nix/hosts/os/onepassword.nix
-          home-manager.nixosModules.home-manager
-
-          ({ username, ... }: {
+        (
+          {
+            pkgs,
+            username,
+            ...
+          }: {
             nixpkgs.overlays = sharedOverlays;
 
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              backupFileExtension = "backup";
 
               extraSpecialArgs = {
                 inherit inputs username;
@@ -483,16 +435,54 @@
               };
 
               users.${username} = {
-                imports = osHomeImports;
+                imports = wslHomeImports;
               };
 
-              sharedModules = [
-                inputs.sops-nix.homeManagerModules.sops
-                inputs.nix-index-database.homeModules.nix-index
-              ];
+              sharedModules = wslHomeSharedModules;
             };
-          })
-        ];
-      };
+          }
+        )
+      ];
     };
+
+    nixosConfigurations.suzu = nixpkgs.lib.nixosSystem {
+      system = osSystem;
+
+      specialArgs = {
+        inherit self inputs;
+        username = osUsername;
+      };
+
+      modules = [
+        ./.config/nix/hosts/os
+        ./.config/nix/hosts/os/onepassword.nix
+        home-manager.nixosModules.home-manager
+
+        ({username, ...}: {
+          nixpkgs.overlays = sharedOverlays;
+
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = "backup";
+
+            extraSpecialArgs = {
+              inherit inputs username;
+              enableAgentSkills = true;
+              enableSops = true;
+            };
+
+            users.${username} = {
+              imports = osHomeImports;
+            };
+
+            sharedModules = [
+              inputs.sops-nix.homeManagerModules.sops
+              inputs.nix-index-database.homeModules.nix-index
+            ];
+          };
+        })
+      ];
+    };
+  };
 }

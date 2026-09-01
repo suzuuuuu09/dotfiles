@@ -3,8 +3,7 @@
   lib,
   enableSops ? true,
   ...
-}:
-{
+}: {
   home = {
     stateVersion = "25.11";
 
@@ -20,11 +19,12 @@
 
   programs.home-manager.enable = true;
 
-  imports = [
-    ./programs
-    ./packages.nix
-    ./dotfiles.nix
-    ./agent-skills.nix
-  ]
-  ++ lib.optional enableSops ./sops.nix;
+  imports =
+    [
+      ./programs
+      ./packages.nix
+      ./dotfiles.nix
+      ./agent-skills.nix
+    ]
+    ++ lib.optional enableSops ./sops.nix;
 }

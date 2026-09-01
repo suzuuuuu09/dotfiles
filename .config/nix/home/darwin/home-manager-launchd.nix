@@ -2,15 +2,13 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   dstDir = "${config.home.homeDirectory}/Library/LaunchAgents";
-in
-{
+in {
   # Work around a Home Manager Darwin regression where `launchctl bootout --wait`
   # fails with "Unrecognized target specifier" for LaunchAgents on recent macOS.
   home.activation.setupLaunchAgents = lib.mkForce (
-    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    lib.hm.dag.entryAfter ["writeBoundary"] ''
       # Disable errexit to ensure we process all agents even if some fail
       set +e
 

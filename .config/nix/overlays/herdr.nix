@@ -7,8 +7,7 @@
   baseHerdr,
 }:
 baseHerdr.overrideAttrs (
-  old:
-  let
+  old: let
     darwinSdkRoot = "${stdenv.cc.fallback_sdk}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk";
     darwinDeveloperDir = "${stdenv.cc.fallback_sdk}/Platforms/MacOSX.platform/Developer";
     darwinXcodeSelect = writeShellScriptBin "xcode-select" ''
@@ -27,14 +26,15 @@ baseHerdr.overrideAttrs (
       echo "unsupported xcrun invocation: $*" >&2
       exit 1
     '';
-  in
-  {
-    patches = (old.patches or [ ]) ++ [
-      ./patches/herdr-skip-bench-init-when-disabled.patch
-    ];
+  in {
+    patches =
+      (old.patches or [])
+      ++ [
+        ./patches/herdr-skip-bench-init-when-disabled.patch
+      ];
 
     nativeBuildInputs =
-      (old.nativeBuildInputs or [ ])
+      (old.nativeBuildInputs or [])
       ++ lib.optionals stdenv.hostPlatform.isDarwin [
         cctools
         darwinXcodeSelect
@@ -42,7 +42,7 @@ baseHerdr.overrideAttrs (
       ];
 
     env =
-      (old.env or { })
+      (old.env or {})
       // {
         LIBGHOSTTY_VT_OPTIMIZE = "ReleaseFast";
         LIBGHOSTTY_VT_SIMD = "true";

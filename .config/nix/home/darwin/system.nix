@@ -5,8 +5,7 @@
   pkgs,
   username,
   ...
-}:
-{
+}: {
   environment.systemPackages = with pkgs; [
     git
   ];
@@ -83,16 +82,16 @@
         expose-group-apps = true;
         # ドックに表示するアプリ
         persistent-apps = [
-          { app = "/Applications/Vivaldi.app"; }
-          { app = "/Applications/WezTerm.app"; }
-          { app = "/Applications/Microsoft Teams.app"; }
-          { app = "/Applications/Slack.app"; }
-          { app = "/Applications/zoom.us.app"; }
-          { app = "/Applications/Obsidian.app"; }
-          { app = "/System/Applications/Utilities/Audio MIDI Setup.app"; }
-          { app = "/Applications/ChatGPT.app"; }
-          { app = "/Applications/Parsec.app"; }
-          { app = "/Applications/Discord.app"; }
+          {app = "/Applications/Vivaldi.app";}
+          {app = "/Applications/WezTerm.app";}
+          {app = "/Applications/Microsoft Teams.app";}
+          {app = "/Applications/Slack.app";}
+          {app = "/Applications/zoom.us.app";}
+          {app = "/Applications/Obsidian.app";}
+          {app = "/System/Applications/Utilities/Audio MIDI Setup.app";}
+          {app = "/Applications/ChatGPT.app";}
+          {app = "/Applications/Parsec.app";}
+          {app = "/Applications/Discord.app";}
         ];
         wvous-bl-corner = 2;
         wvous-br-corner = 11;
