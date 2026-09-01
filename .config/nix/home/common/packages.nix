@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     # Editors / Shells / Prompt
     git
-    neovim
     fish
     tmux
     # Homebrewの方でインストールする
@@ -36,12 +35,6 @@
     hunk
 
     # Dev tools
-    alejandra
-    clang-tools
-    nil
-    nixfmt
-    stylua
-    typos-lsp
     # docker
     # docker-compose
     act # GitHub Actions をローカルで実行するツール

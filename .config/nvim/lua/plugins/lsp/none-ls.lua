@@ -8,7 +8,6 @@ return {
 	},
 	opts = function()
 		local null_ls = require("null-ls")
-		local b = null_ls.builtins
 
 		return {
 			on_attach = function(client, bufnr)
@@ -16,14 +15,6 @@ return {
 				client.server_capabilities.documentRangeFormattingProvider = false
 			end,
 			sources = {
-				-- ╭─────────────────────────────────────────────────────────╮
-				-- │                        Formatter                        │
-				-- ╰─────────────────────────────────────────────────────────╯
-				b.formatting.stylua, -- lua formatter
-				-- b.formatting.black,    -- python formatter
-				b.formatting.clang_format, -- c/c++ formatter
-				-- b.formatting.beautysh, -- shell script formatter
-
 				-- ╭─────────────────────────────────────────────────────────╮
 				-- │                        Diagnostics                      │
 				-- ╰─────────────────────────────────────────────────────────╯

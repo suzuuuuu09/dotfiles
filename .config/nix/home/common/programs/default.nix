@@ -2,6 +2,7 @@
   imports = [
     ./czg
     ./npm
+    ./neovim
     ./codex.nix
     ./nh.nix
     ./pi.nix

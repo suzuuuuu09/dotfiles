@@ -41,8 +41,6 @@ return {
 					"4",
 					"--quote-style",
 					"AutoPreferDouble",
-					"--align-continuous-assignments",
-					"Always", -- これが '=' を揃える設定
 					"--call-parentheses",
 					"Always",
 				},

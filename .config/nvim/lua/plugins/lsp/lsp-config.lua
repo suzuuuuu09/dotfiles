@@ -8,7 +8,7 @@ local lsp_servers = {
 	"html",
 	"jsonls",
 	"lua_ls",
-	"nil_ls",
+	"nixd",
 	"pyright",
 	"ruff",
 	"svelte",
@@ -20,33 +20,9 @@ local lsp_servers = {
 	-- "ts_ls",
 }
 
-local null_ls_sources = {
-	"stylua",
-	"ruff", -- python linter
-	-- "black", -- python formatter
-	"cpplint", -- c/c++ linter
-	"clang_format", -- c/c++ formatter
-	"prettier", -- general formatter
-	"alejandra", -- Nix formatter
-	"kulala-fmt",
-}
-
-local generic_tools = {
-	"uv", -- python manager
-}
-
 ---@module "lazy"
 ---@type LazyPluginSpec[]
 return {
-	-- Mason core
-	{
-		"mason-org/mason.nvim",
-		event = "VeryLazy",
-		opts = {
-			PATH = "append",
-		},
-	},
-
 	-- LSP configuration
 	{
 		"neovim/nvim-lspconfig",
@@ -69,6 +45,10 @@ return {
 				vim.lsp.enable(server)
 			end ]]
 			local custom_on_attach = function(client, bufnr)
+				if client.name == "nixd" and client:supports_method("textDocument/inlayHint") then
+					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+				end
+
 				local status, conform = pcall(require, "conform")
 				if status then
 					local formatters = conform.list_formatters(bufnr)
@@ -88,48 +68,5 @@ return {
 				vim.lsp.enable(server)
 			end
 		end,
-	},
-
-	-- Mason LSP bridge
-	{
-		"mason-org/mason-lspconfig.nvim",
-		event = "VeryLazy",
-		dependencies = {
-			"mason-org/mason.nvim",
-			"neovim/nvim-lspconfig",
-			-- "hrsh7th/cmp-nvim-lsp",  -- capabilitiesのために必要
-		},
-		config = function()
-			local mason_lspconfig = require("mason-lspconfig")
-
-			mason_lspconfig.setup({
-				ensure_installed = lsp_servers,
-				automatic_enable = false,
-			})
-		end,
-	},
-
-	-- Mason null-ls bridge
-	{
-		"jay-babu/mason-null-ls.nvim",
-		event = "VeryLazy",
-		dependencies = {
-			"mason-org/mason.nvim",
-			"nvimtools/none-ls.nvim",
-		},
-		opts = {
-			ensure_installed = null_ls_sources,
-			automatic_installation = true,
-		},
-	},
-
-	-- Mason tool installer
-	{
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		event = "VeryLazy",
-		dependencies = { "mason-org/mason.nvim" },
-		opts = {
-			ensure_installed = generic_tools,
-		},
 	},
 }

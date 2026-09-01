@@ -95,7 +95,7 @@ CIでは、Nix構成、Neovim、WezTerm、Renovate設定、GitHub Actionsを個�
 ## 再現性に関する注意
 
 - Nix依存は `flake.lock`、Neovimプラグインは `.config/nvim/lazy-lock.json` で固定しています。
-- Homebrew cask、Masonで導入するツール、WezTermプラグインなど、一部は実行時に外部配布元へアクセスします。
+- Homebrew cask、WezTermプラグインなど、一部は実行時に外部配布元へアクセスします。
 - Homebrewのmanagedなformula、cask、Mac App StoreアプリはmacOS構成の適用時に更新されます。
 
 ## シークレット

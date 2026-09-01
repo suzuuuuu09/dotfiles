@@ -103,7 +103,7 @@ Neovim is the primary editor and is assigned to `EDITOR`, `GIT_EDITOR`, and `VIS
 
 The mapleader is Space and maplocalleader is `,`. `Ctrl-h/j/k/l` moves windows; deletions and changes use the black-hole register. `x` operations cut to the system clipboard without polluting the register used by normal deletion. Fish is Neovim's external shell, and an autocmd returns macSKK to alphanumeric input.
 
-LSP and development tools are split across layers. Nix supplies shared CLI and foundational tools on macOS and WSL, lazy.nvim manages Neovim plugins, Mason installs editor-specific LSP servers and tools at runtime, and Conform formats on save with LSP formatting as a fallback. [ADR 0012](adr/0012-separate-neovim-tool-responsibilities.md) records this boundary. `uv` in Mason's `generic_tools` duplicates a shared Nix package and is a future cleanup item. Copilot and Sidekick are configured as Neovim AI features, but their use is selected per task.
+LSP and development tools are split across layers. Nix supplies Neovim's LSP servers, formatters, linters, DAP adapters, shared CLI tools, and runtimes on macOS and WSL; lazy.nvim manages Neovim plugins; Lua configures and enables LSPs; and Conform formats on save with LSP formatting as a fallback. none-ls provides the remaining `cpplint` diagnostics. [ADR 0012](adr/0012-separate-neovim-tool-responsibilities.md) records this boundary. Copilot and Sidekick are configured as Neovim AI features, but their use is selected per task.
 
 ### VS Code
 
