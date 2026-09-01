@@ -1,4 +1,10 @@
-{config, lib, enableSops ? true, ...}: {
+{
+  config,
+  lib,
+  enableSops ? true,
+  ...
+}:
+{
   home = {
     stateVersion = "25.11";
 
@@ -19,5 +25,6 @@
     ./packages.nix
     ./dotfiles.nix
     ./agent-skills.nix
-  ] ++ lib.optional enableSops ./sops.nix;
+  ]
+  ++ lib.optional enableSops ./sops.nix;
 }

@@ -2,7 +2,8 @@
   pkgs,
   username,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./input-method.nix
@@ -26,7 +27,7 @@
   systemd.sleep.settings.Sleep = {
     AllowSuspend = "no";
     AllowHibernation = "no";
-    AllowHybirdSleep = "no";
+    AllowHybridSleep = "no";
     AllowSuspendThenHibernate = "no";
   };
 
@@ -89,6 +90,10 @@
     };
   };
 
+  programs.hyprland.enable = true;
+  services.flatpak.enable = true;
+  services.tailscale.enable = true;
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
   security.rtkit.enable = true;
@@ -97,7 +102,10 @@
   users.users.${username} = {
     isNormalUser = true;
     description = "suzu";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.fish;
     packages = with pkgs; [
       kdePackages.kate

@@ -3,14 +3,13 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
-  mkLink = path:
-    config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";
-in {
-  home.packages = with inputs.llm-agents.packages.${
-    pkgs.stdenv.hostPlatform.system
-  }; [
+  mkLink = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";
+in
+{
+  home.packages = with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
     codex
   ];
 

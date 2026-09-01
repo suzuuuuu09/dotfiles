@@ -16,7 +16,7 @@ git-hooks.lib.${pkgs.stdenv.hostPlatform.system}.run {
 
     # コミット対象のファイルだけをtreefmtへ渡す
     pass_filenames = true;
-    stages = ["pre-commit"];
+    stages = [ "pre-commit" ];
 
     settings = {
       # 整形が発生した場合はコミットを中止する

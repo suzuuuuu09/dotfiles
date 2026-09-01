@@ -5,13 +5,13 @@
   pkgs,
   username,
   ...
-}: {
+}:
+{
   environment.systemPackages = with pkgs; [
     git
   ];
 
-  environment.etc."codex/config.toml".source =
-    self + /codex/config.toml;
+  environment.etc."codex/config.toml".source = self + /codex/config.toml;
 
   # Homebrew API からのインストールを無効化
   # environment.variables.HOMEBREW_NO_INSTALL_FROM_API = "1";
@@ -83,16 +83,16 @@
         expose-group-apps = true;
         # ドックに表示するアプリ
         persistent-apps = [
-          {app = "/Applications/Vivaldi.app";}
-          {app = "/Applications/WezTerm.app";}
-          {app = "/Applications/Microsoft Teams.app";}
-          {app = "/Applications/Slack.app";}
-          {app = "/Applications/zoom.us.app";}
-          {app = "/Applications/Obsidian.app";}
-          {app = "/System/Applications/Utilities/Audio MIDI Setup.app";}
-          {app = "/Applications/ChatGPT.app";}
-          {app = "/Applications/Parsec.app";}
-          {app = "/Applications/Discord.app";}
+          { app = "/Applications/Vivaldi.app"; }
+          { app = "/Applications/WezTerm.app"; }
+          { app = "/Applications/Microsoft Teams.app"; }
+          { app = "/Applications/Slack.app"; }
+          { app = "/Applications/zoom.us.app"; }
+          { app = "/Applications/Obsidian.app"; }
+          { app = "/System/Applications/Utilities/Audio MIDI Setup.app"; }
+          { app = "/Applications/ChatGPT.app"; }
+          { app = "/Applications/Parsec.app"; }
+          { app = "/Applications/Discord.app"; }
         ];
         wvous-bl-corner = 2;
         wvous-br-corner = 11;
@@ -241,8 +241,14 @@
   nix = {
     enable = true;
     settings = {
-      experimental-features = ["nix-command" "flakes"];
-      trusted-users = ["root" username];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        username
+      ];
 
       # 容量節約のための設定
       auto-optimise-store = true;

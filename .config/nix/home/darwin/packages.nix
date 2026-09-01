@@ -1,5 +1,5 @@
 # MacOSでのみ使うパッケージを指定する
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = [
     pkgs.pngpaste
   ];
