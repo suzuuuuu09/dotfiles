@@ -152,17 +152,25 @@
     osUsername = "suzu";
     wslHostName = "suzuWsl";
 
-    pkgs = nixpkgs.legacyPackages.${targetSystem};
-    wslPkgs = nixpkgs.legacyPackages.${wslSystem};
+    systems = [
+      targetSystem
+      wslSystem
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+    perSystem = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+      treefmtEval =
+        treefmt-nix.lib.evalModule pkgs
+        ./.config/nix/home/common/programs/treefmt.nix;
+      preCommitCheck = import ./.config/nix/home/common/programs/git-hooks.nix {
+        inherit git-hooks pkgs treefmtEval;
+        src = self;
+      };
+    in {
+      inherit pkgs treefmtEval preCommitCheck;
+    });
 
-    treefmtEval =
-      treefmt-nix.lib.evalModule pkgs
-      ./.config/nix/home/common/programs/treefmt.nix;
-
-    preCommitCheck = import ./.config/nix/home/common/programs/git-hooks.nix {
-      inherit git-hooks pkgs treefmtEval;
-      src = self;
-    };
+    wslPkgs = perSystem.${wslSystem}.pkgs;
 
     localOverlays = [
       (_final: prev: {
@@ -210,9 +218,11 @@
         ++ wslHomeSharedModules;
     };
   in {
-    formatter.${targetSystem} = treefmtEval.config.build.wrapper;
+    formatter = forAllSystems (system: perSystem.${system}.treefmtEval.config.build.wrapper);
 
-    checks.${targetSystem} = {
+    checks.${targetSystem} = let
+      inherit (perSystem.${targetSystem}) pkgs treefmtEval preCommitCheck;
+    in {
       pre-commit = preCommitCheck;
       formatting = treefmtEval.config.build.check self;
 
@@ -283,10 +293,14 @@
         '';
     };
 
-    devShells.${targetSystem}.default = pkgs.mkShell {
-      inherit (preCommitCheck) shellHook;
-      packages = preCommitCheck.enabledPackages;
-    };
+    devShells = forAllSystems (system: let
+      inherit (perSystem.${system}) pkgs preCommitCheck;
+    in {
+      default = pkgs.mkShell {
+        inherit (preCommitCheck) shellHook;
+        packages = preCommitCheck.enabledPackages;
+      };
+    });
 
     darwinConfigurations."suzuMac" = nix-darwin.lib.darwinSystem {
       system = targetSystem;
