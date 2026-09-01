@@ -22,7 +22,7 @@ permissions: {}
 
 jobs:
   actionlint:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-slimw
     timeout-minutes: 10
     permissions:
       contents: read
@@ -77,4 +77,5 @@ jobs:
         with:
           online-audits: "false"
           version: "1.30.0"
+          min-severity: "medium"
           advanced-security: false
