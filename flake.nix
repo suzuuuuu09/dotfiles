@@ -379,6 +379,7 @@
                 extraSpecialArgs = {
                   inherit inputs username;
                   enableAgentSkills = true;
+                  enableSops = true;
                 };
 
                 users.${username} = {

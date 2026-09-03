@@ -89,7 +89,14 @@
     };
   };
 
-  programs.hyprland.enable = true;
+  programs = {
+    hyprland.enable = true;
+    fish.enable = true;
+
+    # Install firefox.
+    firefox.enable = true;
+  };
+
   services.flatpak.enable = true;
   services.tailscale.enable = true;
 
@@ -110,11 +117,6 @@
       kdePackages.kate
     ];
   };
-
-  programs.fish.enable = true;
-
-  # Install firefox.
-  programs.firefox.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

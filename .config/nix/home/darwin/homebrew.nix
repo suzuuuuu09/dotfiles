@@ -9,6 +9,7 @@
     "nikitabobko/tap"
     "pear-devs/pear"
     "mtgto/macskk"
+    "fayazara/tap"
   ];
 
   homebrewTaps =
@@ -33,6 +34,7 @@
     "nikitabobko/tap/aerospace"
     "alt-tab"
     "pear-devs/pear/pear-desktop"
+    "fayazara/tap/screendrop"
     "battery"
     {
       name = "wezterm@nightly";
