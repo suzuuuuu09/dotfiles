@@ -22,7 +22,7 @@ permissions: {}
 
 jobs:
   actionlint:
-    runs-on: ubuntu-slimw
+    runs-on: ubuntu-slim
     timeout-minutes: 10
     permissions:
       contents: read
