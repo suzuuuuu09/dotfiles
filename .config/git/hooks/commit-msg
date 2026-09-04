@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -eu
+
+config_dir=${XDG_CONFIG_HOME:-"$HOME/.config"}
+config_file="$config_dir/cargo-commitlint/commitlint.toml"
+
+if [ "$#" -lt 1 ]; then
+  echo "cargo-commitlint: commit message file is missing" >&2
+  exit 2
+fi
+
+if ! command -v cargo-commitlint >/dev/null 2>&1; then
+  echo "cargo-commitlint: executable not found; refusing the commit" >&2
+  exit 127
+fi
+
+if [ ! -r "$config_file" ]; then
+  echo "cargo-commitlint: config not found: $config_file" >&2
+  exit 78
+fi
+
+exec cargo-commitlint \
+  --config "$config_file" \
+  check \
+  --edit "$1"

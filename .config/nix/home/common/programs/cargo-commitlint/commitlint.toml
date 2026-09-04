@@ -1,0 +1,91 @@
+# Keep this file limited to the rules previously enforced by commitlint.
+defaultIgnores = true
+
+[rules.type-enum]
+level = 2
+applicable = "always"
+value = [
+    "feat",
+    "fix",
+    "update",
+    "docs",
+    "style",
+    "refactor",
+    "perf",
+    "test",
+    "build",
+    "ci",
+    "chore",
+    "revert",
+    "deps",
+]
+
+[rules.type-empty]
+level      = 2
+applicable = "never"
+value      = []
+
+[rules.subject-empty]
+level      = 2
+applicable = "never"
+value      = []
+
+[rules.header-max-length]
+level      = 2
+applicable = "always"
+value      = 100
+
+# cargo-commitlint defaults to additional conventional rules when omitted.
+[rules.body-leading-blank]
+level      = 0
+applicable = "always"
+value      = []
+
+[rules.body-max-line-length]
+level      = 0
+applicable = "always"
+value      = 0
+
+[rules.footer-leading-blank]
+level      = 0
+applicable = "always"
+value      = []
+
+[rules.footer-max-line-length]
+level      = 0
+applicable = "always"
+value      = 0
+
+[rules.header-full-stop]
+level      = 0
+applicable = "never"
+value      = "."
+
+[rules.header-trim]
+level      = 0
+applicable = "always"
+value      = []
+
+[rules.scope-case]
+level      = 0
+applicable = "always"
+value      = []
+
+[rules.subject-case]
+level      = 0
+applicable = "always"
+value      = []
+
+[rules.subject-full-stop]
+level      = 0
+applicable = "never"
+value      = "."
+
+[rules.type-case]
+level      = 0
+applicable = "always"
+value      = []
+
+[parser]
+header_pattern        = "^(?:\\p{Emoji_Presentation}|\\p{Emoji}\\uFE0F)?\\s?(?P<type>\\w+)(?:\\((?P<scope>[^)]*)\\))?(?P<breaking>!)?: (?P<subject>.*)$"
+header_correspondence = ["type", "scope", "subject"]

@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./czg
+    ./cargo-commitlint
     ./npm
     ./neovim
     ./codex.nix

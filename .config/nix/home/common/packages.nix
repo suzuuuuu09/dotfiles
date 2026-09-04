@@ -31,6 +31,7 @@
     ghq
     gh
     czg
+    cargo-commitlint
     jujutsu
     hunk
 

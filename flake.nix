@@ -180,6 +180,10 @@
 
     localOverlays = [
       (_final: prev: {
+        cargo-commitlint =
+          if builtins.hasAttr "cargo-commitlint" prev
+          then prev."cargo-commitlint"
+          else prev.callPackage ./.config/nix/overlays/cargo-commitlint.nix {};
         czg = prev.callPackage ./.config/nix/overlays/czg.nix {};
         cxr = prev.callPackage ./.config/nix/overlays/cxr.nix {};
         hunk = inputs.hunk.packages.${_final.stdenv.hostPlatform.system}.hunk;

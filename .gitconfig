@@ -15,6 +15,7 @@
 	autocrlf = false
 	pager = delta
 	editor = nvim
+	hooksPath = ~/.config/git/hooks
 [merge]
 	conflictStyle = zdiff3
 [interactive]
