@@ -10,6 +10,18 @@ if [ "$#" -lt 1 ]; then
   exit 2
 fi
 
+header=$(sed -n '1p' "$1")
+case "$header" in
+  Merge\ *|Revert\ *|WIP*|wip*|fixup!*|squash!*|"Initial commit"|"initial commit")
+    ;;
+  "✨ feat"*|"🐛 fix"*|"📝 docs"*|"💄 style"*|"♻️ refactor"*|"✅ test"*|"🔧 chore"*|"⚡️ perf"*|"⏪️ revert"*|"📦 deps"*|feat*|fix*|update*|docs*|style*|refactor*|perf*|test*|build*|ci*|chore*|revert*|deps*)
+    ;;
+  *)
+    echo "cargo-commitlint: gitmoji does not match commit type" >&2
+    exit 1
+    ;;
+esac
+
 if ! command -v cargo-commitlint >/dev/null 2>&1; then
   echo "cargo-commitlint: executable not found; refusing the commit" >&2
   exit 127
