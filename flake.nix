@@ -71,6 +71,11 @@
       inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
     };
 
+    herdr = {
+      url = "github:herdrdev/herdr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # +----------------------------------------------------------+
     # | Agent Skills                                             |
     # +----------------------------------------------------------+
@@ -184,6 +189,7 @@
           if builtins.hasAttr "cargo-commitlint" prev
           then prev."cargo-commitlint"
           else prev.callPackage ./.config/nix/overlays/cargo-commitlint.nix {};
+        herdr = inputs.herdr.packages.${_final.stdenv.hostPlatform.system}.default;
         czg = prev.callPackage ./.config/nix/overlays/czg.nix {};
         cxr = prev.callPackage ./.config/nix/overlays/cxr.nix {};
         hunk = inputs.hunk.packages.${_final.stdenv.hostPlatform.system}.hunk;

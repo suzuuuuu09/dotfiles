@@ -25,7 +25,6 @@
   # Installed by nix-darwin / Homebrew.
   managedBrews = [
     "mas"
-    "herdr"
     "felixkratz/formulae/borders"
     "bjarneo/cliamp/cliamp"
   ];

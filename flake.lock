@@ -278,6 +278,27 @@
         "url": "https://gist.github.com/tegnike/09dbb98711d8b91e66de21611f5b88ff.git"
       }
     },
+    "herdr": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1788633572,
+        "narHash": "sha256-A2KgWp1OH022rXXmyn+Mmm8xijMIVqtCgSLSajbP6WA=",
+        "owner": "herdrdev",
+        "repo": "herdr",
+        "rev": "50ce4ec2ddb8ec621a77d8773aa6df6d9e7441ff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "herdrdev",
+        "repo": "herdr",
+        "type": "github"
+      }
+    },
     "herdr-skills": {
       "flake": false,
       "locked": {
@@ -634,6 +655,7 @@
         "context7-skills": "context7-skills",
         "git-hooks": "git-hooks",
         "handoff-skill": "handoff-skill",
+        "herdr": "herdr",
         "herdr-skills": "herdr-skills",
         "home-manager": "home-manager_2",
         "hunk": "hunk",
@@ -653,6 +675,27 @@
         "ui-ux-pro-max-skills": "ui-ux-pro-max-skills",
         "vercel-agent-skills": "vercel-agent-skills",
         "vercel-skills": "vercel-skills"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "herdr",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783577481,
+        "narHash": "sha256-EWMxOWrJ031f8f/lrcEmhTRs4npw1/5N3Hcjin846c8=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "4cdea398dc491b082dccdce0fad1ed0b75fa3394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "sops-nix": {

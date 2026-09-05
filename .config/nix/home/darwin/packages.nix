@@ -2,5 +2,6 @@
 {pkgs, ...}: {
   home.packages = [
     pkgs.pngpaste
+    pkgs.herdr
   ];
 }
