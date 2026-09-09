@@ -26,6 +26,7 @@
     wakeonlan
 
     # Git tools
+    git-lfs
     delta
     lazygit
     ghq
