@@ -2,7 +2,8 @@
   lib,
   username,
   ...
-}: let
+}:
+let
   trustedHomebrewTaps = [
     "bjarneo/cliamp"
     "felixkratz/formulae"
@@ -12,11 +13,9 @@
     "fayazara/tap"
   ];
 
-  homebrewTaps =
-    trustedHomebrewTaps
-    ++ [
-      "gitusp/azoo-key-skkserv"
-    ];
+  homebrewTaps = trustedHomebrewTaps ++ [
+    "gitusp/azoo-key-skkserv"
+  ];
 
   trustedHomebrewCasks = [
     "gitusp/azoo-key-skkserv/azoo-key-skkserv"
@@ -40,6 +39,7 @@
       greedy = true;
     }
     "ghostty"
+    "figma"
     "macskk"
     "gitusp/azoo-key-skkserv/azoo-key-skkserv"
     "jordanbaird-ice"
@@ -53,6 +53,7 @@
     "thunderbird"
     "raycast"
     "1password"
+    "unity-hub"
   ];
 
   # 自動更新せず、手動で管理する
@@ -65,7 +66,8 @@
     "obsidian"
     "amical"
   ];
-in {
+in
+{
   _module.args.homebrewManifest = {
     inherit managedBrews managedCasks manualCasks;
   };

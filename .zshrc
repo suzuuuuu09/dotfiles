@@ -1,8 +1,3 @@
-export OH_MY_POSH_THEME="nord-detailed"
-
-# OhMyPosh Setup
-eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/themes/${OH_MY_POSH_THEME}.omp.json)"
-
 # zoxide Setup
 eval "$(zoxide init zsh)"
 
@@ -89,4 +84,3 @@ function ghq-fzf() {
 }
 zle -N ghq-fzf
 bindkey '^g' ghq-fzf
-

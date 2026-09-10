@@ -55,7 +55,7 @@ The prefix is `Ctrl-s`. `prefix+Shift-l` opens lazygit in a popup and `prefix+Sh
 
 ### tmux
 
-tmux configuration remains in the repository and is linked by Home Manager. It defines `Ctrl-a` as its prefix, pane navigation, and a Nord status line. However, daily use currently relies on Herdr rather than tmux, so this is retained configuration, not the active session-management path.
+tmux configuration remains in the repository but is no longer linked by Home Manager. It defines `Ctrl-a` as its prefix, pane navigation, and a Nord status line. Daily session management uses Herdr instead.
 
 ### Ghostty
 
@@ -71,7 +71,7 @@ Where possible, Neovim, WezTerm, Herdr, AeroSpace, and Yazi use Vim-style `h/j/k
 
 Nord is a preferred color scheme used to align the appearance of multiple applications; its dark background and contrast also aid everyday readability. UDEV Gothic is a preferred font, in part because it makes Japanese text and icons easy to read.
 
-Nord-derived settings are used in Neovim, WezTerm, VS Code, Fish, fzf, bat, btop, Yazi, lazygit, delta, and tmux. UDEV Gothic-family fonts are installed with Nix and selected in Neovim, WezTerm, and VS Code.
+Nord-derived settings are used in Neovim, WezTerm, VS Code, Fish, fzf, bat, btop, Yazi, lazygit, and delta. UDEV Gothic-family fonts are installed with Nix and selected in Neovim, WezTerm, and VS Code.
 
 ## Window management
 
@@ -115,7 +115,7 @@ Nix is the source of truth for runtimes; [ADR 0005](adr/0005-manage-language-run
 
 ## Supporting applications
 
-Fish implements the primary prompt directly in Fish functions, preserving the Nord layout and its OS, shell, memory, language, cloud, Git, execution-time, time, root, path, and status indicators. It also reproduces the former Fish prompt's transient rendering and Enter/Ctrl-C repaint behavior. [`nord-detailed.omp.json`](../.config/oh-my-posh/themes/nord-detailed.omp.json) remains the prompt source for Zsh, which still initializes Oh My Posh independently.
+Fish implements the primary prompt directly in Fish functions, preserving the Nord layout and its OS, shell, memory, language, cloud, Git, execution-time, time, root, path, and status indicators. It also reproduces the former Fish prompt's transient rendering and Enter/Ctrl-C repaint behavior. The former Oh My Posh theme remains in the repository as retained configuration, but neither Fish nor Zsh loads Oh My Posh.
 
 [`lazygit/config.yml`](../.config/lazygit/config.yml) uses a Japanese UI and delta's Nord pager and can be launched as a Herdr popup. Its file view invokes `czg` and `czg ai` to assist with commit messages. [`gh/config.yml`](../.config/gh/config.yml) defaults to HTTPS and interactive prompts and aliases `gh co` to `gh pr checkout`. This document does not handle the contents of credential-bearing `hosts.yml`.
 

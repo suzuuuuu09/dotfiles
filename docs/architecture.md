@@ -89,7 +89,7 @@ Home Manager creates out-of-store symlinks from `~/dotfiles` into XDG configurat
 
 The shared user environment links the following configuration:
 
-- Terminal and shell: Fish, WezTerm, Ghostty, tmux, and Oh My Posh.
+- Terminal and shell: Fish, WezTerm, and Ghostty.
 - Editors and development tools: Neovim, Git, GitHub CLI, lazygit, mise, cxr, and vde.
 - Interaction support: bat, btop, gomi, herdr, and Yazi.
 - Home-directory files: `.gitconfig`, `.zshrc`, `.zshenv`, and `.zprofile`.

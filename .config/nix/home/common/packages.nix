@@ -3,7 +3,6 @@
     # Editors / Shells / Prompt
     git
     fish
-    tmux
 
     # Shell tools
     bat
