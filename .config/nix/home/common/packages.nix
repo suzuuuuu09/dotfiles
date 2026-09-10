@@ -4,8 +4,6 @@
     git
     fish
     tmux
-    # Homebrewの方でインストールする
-    # herdr
 
     # Shell tools
     bat
