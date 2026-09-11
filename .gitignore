@@ -4,6 +4,7 @@ result
 # Karabiner
 .config/karabiner/automatic_backups/
 .config/karabiner/assets/
+.config/karabiner/node_modules/
 
 # macOS
 .DS_Store
