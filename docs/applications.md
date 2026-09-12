@@ -65,7 +65,7 @@ Ghostty is managed through Homebrew and its configuration file is linked. Its cu
 
 ### Cross-application key bindings
 
-Where possible, Neovim, WezTerm, Herdr, AeroSpace, and Yazi use Vim-style `h/j/k/l` navigation. Karabiner-Elements uses Caps Lock as a held navigation layer for the arrow keys. This keeps movement and mode switching familiar across applications. [ADR 0008](adr/0008-share-vim-style-navigation-across-apps.md) records the rationale.
+Where possible, Neovim, WezTerm, Herdr, AeroSpace, and Yazi use Vim-style `h/j/k/l` navigation. Karabiner-Elements uses Caps Lock as a persistent Navigation Mode for the arrow keys and deletion. This keeps movement and mode switching familiar across applications. [ADR 0008](adr/0008-share-vim-style-navigation-across-apps.md) records the rationale.
 
 ### Colors and fonts
 
@@ -85,7 +85,7 @@ JankyBorders starts after AeroSpace and marks the focused window with a border. 
 
 ### Karabiner-Elements
 
-Holding Caps Lock with `h/j/k/l` sends left/down/up/right arrow keys; pressing Caps Lock alone keeps its normal behavior. Pressing left Command alone sends alphanumeric mode; pressing right Command alone sends kana mode. Holding Command retains normal Command behavior. The standalone Command remapping is disabled in remote desktop applications so that the remote keyboard takes precedence.
+Caps Lock toggles Navigation Mode, and its LED shows whether the mode is active. In that mode, `h/j/k/l` sends left/down/up/right arrow keys and `d` sends Delete/Backspace. Shift, Option, and Command are preserved for selection, word movement, and line/document movement; Escape exits the mode and is also sent to the application. Other key input is blocked until Caps Lock or Escape exits the mode. Pressing left Command alone sends alphanumeric mode; pressing right Command alone sends kana mode. Holding Command retains normal Command behavior. The standalone Command remapping is disabled in remote desktop applications so that the remote keyboard takes precedence.
 
 ### macSKK and azoo-key-skkserv
 

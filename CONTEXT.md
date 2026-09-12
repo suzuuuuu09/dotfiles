@@ -43,3 +43,7 @@ _Avoid_: managed application, unmanaged application
 **Agent Skill Source**:
 An external or local collection of skills from which agent skills to use are selected.
 _Avoid_: agent skill, agent configuration
+
+**Navigation Mode**:
+A persistent keyboard state in which single-key navigation and editing commands replace normal text input, with a visible indicator showing whether the state is active.
+_Avoid_: operation mode, held navigation layer

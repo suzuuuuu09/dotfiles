@@ -4,134 +4,6 @@
       "complex_modifications": {
         "rules": [
           {
-            "description": "Layer - caps_lock-navigation",
-            "manipulators": [
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "caps_lock"
-                },
-                "to": [
-                  {
-                    "set_variable": {
-                      "name": "caps_lock-navigation",
-                      "value": 1
-                    }
-                  },
-                  {
-                    "set_variable": {
-                      "name": "__layer",
-                      "value": 1
-                    }
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_unless",
-                    "name": "caps_lock-navigation",
-                    "value": 1
-                  },
-                  {
-                    "type": "variable_unless",
-                    "name": "__layer",
-                    "value": 1
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "key_code": "caps_lock"
-                  }
-                ],
-                "to_after_key_up": [
-                  {
-                    "set_variable": {
-                      "name": "caps_lock-navigation",
-                      "value": 0
-                    }
-                  },
-                  {
-                    "set_variable": {
-                      "name": "__layer",
-                      "value": 0
-                    }
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "h"
-                },
-                "to": [
-                  {
-                    "key_code": "left_arrow"
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "caps_lock-navigation",
-                    "value": 1
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "j"
-                },
-                "to": [
-                  {
-                    "key_code": "down_arrow"
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "caps_lock-navigation",
-                    "value": 1
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "k"
-                },
-                "to": [
-                  {
-                    "key_code": "up_arrow"
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "caps_lock-navigation",
-                    "value": 1
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "l"
-                },
-                "to": [
-                  {
-                    "key_code": "right_arrow"
-                  }
-                ],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "caps_lock-navigation",
-                    "value": 1
-                  }
-                ]
-              }
-            ]
-          },
-          {
             "description": "[RDP] RDPアプリ以外では、コマンドキーを単体で押したときに、英数・かなキーを送信する。（左コマンドキーは英数、右コマンドキーはかな） (rev 3)",
             "manipulators": [
               {
@@ -211,6 +83,300 @@
                     ]
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "description": "Navigation Mode - Caps Lock toggles mode and LED shows its state",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "caps_lock",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "caps_lock"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "h",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "shift",
+                      "option",
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_arrow",
+                    "modifiers": [
+                      "caps_lock"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "j",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "shift",
+                      "option",
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "down_arrow",
+                    "modifiers": [
+                      "caps_lock"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "k",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "shift",
+                      "option",
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "up_arrow",
+                    "modifiers": [
+                      "caps_lock"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "l",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "shift",
+                      "option",
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "right_arrow",
+                    "modifiers": [
+                      "caps_lock"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "d",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "shift",
+                      "option",
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "delete_or_backspace",
+                    "modifiers": [
+                      "caps_lock"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "escape",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "shift",
+                      "option",
+                      "command"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "caps_lock"
+                  },
+                  {
+                    "key_code": "escape"
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "left_shift",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "from_event": true
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "right_shift",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "from_event": true
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "left_option",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "from_event": true
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "right_option",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "from_event": true
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "left_command",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "from_event": true
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "right_command",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "from_event": true
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "any": "key_code",
+                  "modifiers": {
+                    "mandatory": [
+                      "caps_lock"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": []
               }
             ]
           }
