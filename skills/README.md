@@ -19,7 +19,6 @@ For detailed operation specifications of each skill, please refer to the respect
 | [`browser-problem-solver`](browser-problem-solver) | Assists in solving browser-related issues and in creating/inputting solutions. |
 | [`design-safe-ai-decisions`](design-safe-ai-decisions) | Supports evaluation and operational design of AI-assisted decision-making systems. |
 | [`nix-environment-doctor`](nix-environment-doctor) | Diagnoses command provenance, environment differences, and Nix activation failures. |
-| [`obsidian-agent-memory`](obsidian-agent-memory) | Manages retrieval, organization, and rewriting of agent memories using Obsidian. |
 | [`request-framework`](request-framework) | Organizes requests by purpose, constraints, outputs, and approval boundaries. |
 | [`run-missing-cli`](run-missing-cli) | Guides temporary execution of missing CLIs without permanent installation. |
 
