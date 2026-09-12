@@ -3,7 +3,8 @@ name: 'Bot: Renovate'
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 * * * *'
+    - cron:  '17 * * * *'
+      timezone: 'Asia/Tokyo'
   push:
     branches:
       - main
