@@ -53,7 +53,6 @@ let
     "thunderbird"
     "raycast"
     "1password"
-    "unity-hub"
   ];
 
   # 自動更新せず、手動で管理する
