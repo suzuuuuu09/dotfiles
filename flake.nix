@@ -191,16 +191,43 @@
 
     wslPkgs = perSystem.${wslSystem}.pkgs;
 
+    # ponytail: dependency compatibility shim; remove when Hunk, Herdr, and nix-darwin use hostPlatform.
+    stdenvCompatibilityOverlay = _final: prev: {
+      stdenv = prev.stdenv // {
+        isLinux = prev.stdenv.hostPlatform.isLinux;
+        isDarwin = prev.stdenv.hostPlatform.isDarwin;
+      };
+    };
+
     localOverlays = [
+      stdenvCompatibilityOverlay
       (_final: prev: {
         cargo-commitlint =
           if builtins.hasAttr "cargo-commitlint" prev
           then prev."cargo-commitlint"
           else prev.callPackage ./.config/nix/overlays/cargo-commitlint.nix {};
-        herdr = inputs.herdr.packages.${_final.stdenv.hostPlatform.system}.default;
+        herdr =
+          let
+            herdrPkgs = import nixpkgs {
+              system = _final.stdenv.hostPlatform.system;
+              overlays = [
+                stdenvCompatibilityOverlay
+                inputs.herdr.inputs.rust-overlay.overlays.default
+              ];
+            };
+            rustToolchain = herdrPkgs.rust-bin.fromRustupToolchainFile "${inputs.herdr}/rust-toolchain.toml";
+          in
+          herdrPkgs.callPackage "${inputs.herdr}/nix/package.nix" {
+            rustPlatform = herdrPkgs.makeRustPlatform {
+              cargo = rustToolchain;
+              rustc = rustToolchain;
+            };
+          };
         czg = prev.callPackage ./.config/nix/overlays/czg.nix {};
         cxr = prev.callPackage ./.config/nix/overlays/cxr.nix {};
-        hunk = inputs.hunk.packages.${_final.stdenv.hostPlatform.system}.hunk;
+        hunk = _final.callPackage "${inputs.hunk}/nix/package.nix" {
+          bun2nix = inputs.hunk.inputs.bun2nix.packages.${_final.stdenv.hostPlatform.system}.default;
+        };
       })
     ];
 
