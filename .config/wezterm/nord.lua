@@ -28,10 +28,8 @@
 ---@field frost Nord.Palette.Frost
 ---@field aurora Nord.Palette.Aurora
 
-local M = {}
-
 --- @type Nord.Palette
-M = {
+return {
 	polar_night = {
 		origin = "#2e3440",
 		darkest = "#3b4252",
@@ -57,5 +55,3 @@ M = {
 		purple = "#b48ead",
 	},
 }
-
-return M
