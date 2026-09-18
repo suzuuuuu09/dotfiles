@@ -236,8 +236,6 @@
         })
       ];
 
-      sharedOverlays = localOverlays;
-
       wslHomeImports = [
         ./.config/nix/home/common
         ./.config/nix/home/wsl
@@ -249,7 +247,7 @@
         inputs.plasma-manager.homeModules.plasma-manager
       ];
 
-      wslHomeSharedModules = [
+      homeSharedModules = [
         inputs.sops-nix.homeManagerModules.sops
         inputs.nix-index-database.homeModules.nix-index
       ];
@@ -266,11 +264,11 @@
 
         modules = [
           {
-            nixpkgs.overlays = sharedOverlays;
+            nixpkgs.overlays = localOverlays;
           }
         ]
         ++ wslHomeImports
-        ++ wslHomeSharedModules;
+        ++ homeSharedModules;
       };
     in
     {
@@ -399,7 +397,7 @@
                 ...
               }:
               {
-                nixpkgs.overlays = sharedOverlays;
+                nixpkgs.overlays = localOverlays;
 
                 # Mac全体で永続的に使用するNixキャッシュ設定
                 nix.settings = {
@@ -444,10 +442,7 @@
                     ];
                   };
 
-                  sharedModules = [
-                    inputs.sops-nix.homeManagerModules.sops
-                    inputs.nix-index-database.homeModules.nix-index
-                  ];
+                  sharedModules = homeSharedModules;
                 };
               }
             )
@@ -479,7 +474,7 @@
               ...
             }:
             {
-              nixpkgs.overlays = sharedOverlays;
+              nixpkgs.overlays = localOverlays;
 
               home-manager = {
                 useGlobalPkgs = true;
@@ -495,7 +490,7 @@
                   imports = wslHomeImports;
                 };
 
-                sharedModules = wslHomeSharedModules;
+                sharedModules = homeSharedModules;
               };
             }
           )
@@ -516,7 +511,7 @@
           home-manager.nixosModules.home-manager
 
           ({ username, ... }: {
-            nixpkgs.overlays = sharedOverlays;
+            nixpkgs.overlays = localOverlays;
 
             home-manager = {
               useGlobalPkgs = true;
@@ -533,10 +528,7 @@
                 imports = osHomeImports;
               };
 
-              sharedModules = [
-                inputs.sops-nix.homeManagerModules.sops
-                inputs.nix-index-database.homeModules.nix-index
-              ];
+              sharedModules = homeSharedModules;
             };
           })
         ];
