@@ -1,7 +1,9 @@
-{config, ...}: let
+{ config, ... }:
+let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
   mkLink = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";
-in {
+in
+{
   # ~/.config/ の直下に置くもの
   xdg.configFile = {
     # +----------------------------------------------------------+
@@ -15,7 +17,7 @@ in {
     # 使わないけど一応残しておく
     # "zsh".source = mkLink ".config/zsh";
     "fish".source = mkLink ".config/fish";
-    "gh".source = mkLink ".config/gh";
+    # "gh".source = mkLink ".config/gh";
     "gomi".source = mkLink ".config/gomi";
     "lazygit".source = mkLink ".config/lazygit";
     "wezterm".source = mkLink ".config/wezterm";

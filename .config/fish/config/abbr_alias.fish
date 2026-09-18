@@ -84,9 +84,11 @@ switch (uname)
         abbr -a nix-build "darwin-rebuild build --flake ~/dotfiles#(scutil --get LocalHostName)"
         abbr -a nix-check "darwin-rebuild check --flake ~/dotfiles#(scutil --get LocalHostName)"
     case Linux
-        abbr -a nix-switch "sudo nixos-rebuild switch --flake ~/dotfiles#suzuWsl"
-        abbr -a nix-build "sudo nixos-rebuild build --flake ~/dotfiles#suzuWsl"
-        abbr -a nix-check "sudo nixos-rebuild check --flake ~/dotfiles#suzuWsl"
+        # Use the NixOS wrapper paths directly so these commands do not depend
+        # on direnv adding /run/wrappers/bin to PATH.
+        abbr -a nix-switch "/run/wrappers/bin/sudo /run/current-system/sw/bin/nixos-rebuild switch --flake ~/dotfiles#suzuWsl"
+        abbr -a nix-build "/run/wrappers/bin/sudo /run/current-system/sw/bin/nixos-rebuild build --flake ~/dotfiles#suzuWsl"
+        abbr -a nix-check "/run/wrappers/bin/sudo /run/current-system/sw/bin/nixos-rebuild check --flake ~/dotfiles#suzuWsl"
         alias open explorer.exe
         alias xdg-open explorer.exe
         alias pbcopy clip.exe

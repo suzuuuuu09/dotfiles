@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   imports = [
     ./czg
     ./cargo-commitlint
@@ -8,6 +8,7 @@
     ./nh.nix
     ./pi.nix
     ./direnv.nix
+    ./gh.nix
     # ./github-copilot.nix # 多分もう使わない
   ];
 }

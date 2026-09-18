@@ -13,10 +13,10 @@ switch (uname)
         fish_add_path /mnt/c/Windows/System32
 end
 
-# Nix system binaries
-fish_add_path /run/current-system/sw/bin
-
 if test (uname) = Darwin
+    # Nix system binaries
+    fish_add_path /run/current-system/sw/bin
+
     # Home Manager user packages
     fish_add_path /etc/profiles/per-user/$USER/bin
 end
