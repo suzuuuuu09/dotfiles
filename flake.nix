@@ -140,6 +140,14 @@
       url = "github:herdrdev/herdr/f6060cf682f69ef8302c25e8924c0b27aef7ae16";
       flake = false;
     };
+
+    # +----------------------------------------------------------+
+    # |                      Agent Plugins                       |
+    # +----------------------------------------------------------+
+    ponytail = {
+      url = "github:DietrichGebert/ponytail";
+      flake = false;
+    };
   };
 
   outputs = {
