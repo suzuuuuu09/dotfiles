@@ -1,18 +1,20 @@
 {
   inputs,
+  lib,
   pkgs,
   config,
   ...
 }:
 let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
+  codexPackage = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
   mkLink = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";
 in
 {
   home.packages =
-    (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
-      codex
-    ])
+    [
+      codexPackage
+    ]
     ++ [
       pkgs.nodejs
     ];
@@ -42,7 +44,7 @@ in
           };
 
           policy = {
-            installation = "AVAILABLE";
+            installation = "INSTALLED_BY_DEFAULT";
             authentication = "ON_INSTALL";
           };
 
@@ -51,4 +53,11 @@ in
       ];
     };
   };
+
+  home.activation.installPonytail = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if ! ${codexPackage}/bin/codex plugin list --marketplace personal --json \
+      | ${pkgs.jq}/bin/jq -e 'any(.installed[]; .pluginId == "ponytail@personal")' > /dev/null; then
+      ${codexPackage}/bin/codex plugin add ponytail@personal
+    fi
+  '';
 }
