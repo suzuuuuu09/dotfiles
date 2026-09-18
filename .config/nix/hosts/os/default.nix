@@ -107,6 +107,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
     isNormalUser = true;
+    uid = 1001;
     description = "suzu";
     extraGroups = [
       "networkmanager"
