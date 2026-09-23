@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     # Editors / Shells / Prompt
     git
@@ -43,7 +43,6 @@
     # mise
     uv # Python
     cxr
-    bun
     pnpm
     nodejs_24
     python3

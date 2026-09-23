@@ -2,7 +2,8 @@
   lib,
   username,
   ...
-}: let
+}:
+let
   trustedHomebrewTaps = [
     "bjarneo/cliamp"
     "felixkratz/formulae"
@@ -12,11 +13,9 @@
     "fayazara/tap"
   ];
 
-  homebrewTaps =
-    trustedHomebrewTaps
-    ++ [
-      "gitusp/azoo-key-skkserv"
-    ];
+  homebrewTaps = trustedHomebrewTaps ++ [
+    "gitusp/azoo-key-skkserv"
+  ];
 
   trustedHomebrewCasks = [
     "gitusp/azoo-key-skkserv/azoo-key-skkserv"
@@ -66,7 +65,8 @@
     "obsidian"
     "amical"
   ];
-in {
+in
+{
   _module.args.homebrewManifest = {
     inherit managedBrews managedCasks manualCasks;
   };

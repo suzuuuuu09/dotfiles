@@ -52,7 +52,7 @@ in
       };
     };
 
-    activation.installPonytail = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    activation.installPonytail = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       if ! ${codexPackage}/bin/codex plugin list --marketplace personal --json \
         | ${pkgs.jq}/bin/jq -e 'any(.installed[]; .pluginId == "ponytail@personal")' > /dev/null; then
         ${codexPackage}/bin/codex plugin add ponytail@personal

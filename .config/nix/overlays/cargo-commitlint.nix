@@ -20,7 +20,7 @@ rustPlatform.buildRustPackage rec {
     description = "Rust-based Conventional Commits message linter";
     homepage = "https://github.com/quinnjr/cargo-commitlint";
     license = lib.licenses.mit;
-    maintainers = [];
+    maintainers = [ ];
     mainProgram = "cargo-commitlint";
     platforms = lib.platforms.unix;
   };

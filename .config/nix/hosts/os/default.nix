@@ -2,7 +2,8 @@
   pkgs,
   username,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./input-method.nix

@@ -3,7 +3,7 @@ _: {
 
   programs = {
     # Nix
-    alejandra.enable = true;
+    nixfmt.enable = true;
 
     # Shell
     shfmt.enable = true;

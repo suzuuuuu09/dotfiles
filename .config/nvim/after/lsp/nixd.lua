@@ -9,7 +9,7 @@ return {
 				expr = ("import (builtins.getFlake %s).inputs.nixpkgs { }"):format(flake_ref),
 			},
 			formatting = {
-				command = { "alejandra" },
+				command = { "nixfmt" },
 			},
 		},
 	},

@@ -23,7 +23,7 @@ rustPlatform.buildRustPackage rec {
     description = "A tool to generate a directory structure from a YAML template.";
     homepage = "https://github.com/suzuuuuu09/cxr";
     license = lib.licenses.mit;
-    maintainers = [];
+    maintainers = [ ];
     mainProgram = "cxr";
     platforms = lib.platforms.unix;
   };

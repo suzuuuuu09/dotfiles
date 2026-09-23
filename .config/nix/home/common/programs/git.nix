@@ -1,6 +1,4 @@
-{ config, ... }:
-
-{
+{ config, ... }: {
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -46,6 +44,5 @@
 
   # Keep ~/.config/git as the repository directory link managed by dotfiles.nix.
   xdg.configFile."git/config".enable = false;
-  xdg.configFile."gh/git-config.inc".text =
-    config.xdg.configFile."git/config".text;
+  xdg.configFile."gh/git-config.inc".text = config.xdg.configFile."git/config".text;
 }

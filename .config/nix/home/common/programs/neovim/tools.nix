@@ -2,13 +2,13 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   programs.neovim = {
     enable = true;
     withPython3 = true;
     withRuby = true;
     extraPackages = with pkgs; [
-      alejandra
       bash-language-server
       biome
       clang-tools

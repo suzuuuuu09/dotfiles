@@ -111,7 +111,7 @@ VS Code configuration remains in the repository as a backup and is currently unu
 
 ### Runtime management
 
-Nix is the source of truth for runtimes; [ADR 0005](adr/0005-manage-language-runtimes-with-nix.md) records this boundary. Common Nix packages include Node.js, Bun, Python, and uv to provide the same foundation on macOS and WSL. The `latest` setting in [`mise/config.toml`](../.config/mise/config.toml), mise itself, and PATH configuration for nvm, nodebrew, and pyenv remain as former or fallback settings and are not maintained to the same level as Nix. Fish no longer activates mise during startup, so these fallback tools do not add prompt startup cost.
+Nix is the source of truth for runtimes; [ADR 0005](adr/0005-manage-language-runtimes-with-nix.md) records this boundary. Common Nix packages include Node.js, Python, and uv to provide the same foundation on macOS and WSL. The `latest` setting in [`mise/config.toml`](../.config/mise/config.toml), mise itself, and PATH configuration for nvm, nodebrew, and pyenv remain as former or fallback settings and are not maintained to the same level as Nix. Fish no longer activates mise during startup, so these fallback tools do not add prompt startup cost.
 
 ## Supporting applications
 

@@ -7,7 +7,8 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -22,9 +23,9 @@
       "usb_storage"
       "sd_mod"
     ];
-    initrd.kernelModules = [];
-    kernelModules = ["kvm-amd"];
-    extraModulePackages = [];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
   };
 
   fileSystems."/" = {
