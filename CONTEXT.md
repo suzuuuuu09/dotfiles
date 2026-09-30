@@ -47,3 +47,12 @@ _Avoid_: agent skill, agent configuration
 **Navigation Mode**:
 A persistent keyboard state in which single-key navigation and editing commands replace normal text input, with a visible indicator showing whether the state is active.
 _Avoid_: operation mode, held navigation layer
+
+**Google Account**:
+A Google identity whose mail, calendars, and files are accessed through an authorized connection.
+
+**Account Alias**:
+A user-chosen name identifying a Google account for agent requests. Example names do not constrain the names a user may choose.
+
+**Google Connection**:
+An authorization to access Google services for a particular Google account. Its authentication state is separate from reproducible environment configuration.
