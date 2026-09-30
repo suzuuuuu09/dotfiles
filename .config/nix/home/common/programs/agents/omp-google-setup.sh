@@ -105,7 +105,6 @@ jq \
 
 chmod 600 "$tmp_config"
 mv "$tmp_config" "$OMP_GOOGLE_MCP_CONFIG"
-tmp_config=""
 
 accounts="$(composio_get '/connected_accounts?limit=100')"
 IFS=',' read -r -a aliases <<<"$aliases_csv"
