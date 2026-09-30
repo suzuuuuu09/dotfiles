@@ -21,7 +21,7 @@ if [[ ! -f "$OMP_GOOGLE_SECRETS_FILE" ]]; then
   exit 1
 fi
 
-api_key="$($OMP_GOOGLE_API_KEY_COMMAND 2>/dev/null || true)"
+api_key="$("$OMP_GOOGLE_API_KEY_COMMAND" 2>/dev/null || true)"
 if [[ -z "$api_key" ]]; then
   if [[ ! -t 0 ]]; then
     printf 'composio_api_key is missing from the SOPS secrets file. Run omp-google-setup interactively once.\n' >&2
@@ -40,7 +40,7 @@ if [[ -z "$api_key" ]]; then
     | SOPS_AGE_KEY_FILE="$OMP_GOOGLE_SOPS_AGE_KEY_FILE" \
       sops set --value-stdin "$OMP_GOOGLE_SECRETS_FILE" "$secret_selector" >/dev/null
 
-  api_key="$($OMP_GOOGLE_API_KEY_COMMAND)"
+  api_key="$("$OMP_GOOGLE_API_KEY_COMMAND")"
   printf 'Saved composio_api_key to the SOPS-encrypted secrets file.\n'
 fi
 
@@ -67,7 +67,7 @@ session_payload="$(jq -nc \
   --arg toolkit "$toolkit" \
   '{
     user_id: $user_id,
-    toolkits: { enabled: [$toolkit] },
+    toolkits: { enable: [$toolkit] },
     multi_account: {
       enable: true,
       max_accounts_per_toolkit: 5,
@@ -85,7 +85,8 @@ tmp_config="$(mktemp)"
 trap 'rm -f "$base_config" "$tmp_config"' EXIT
 
 if [[ -f "$OMP_GOOGLE_MCP_CONFIG" ]]; then
-  jq -e 'type == "object"' "$OMP_GOOGLE_MCP_CONFIG" >"$base_config"
+  jq -e 'type == "object"' "$OMP_GOOGLE_MCP_CONFIG" >/dev/null
+  cp "$OMP_GOOGLE_MCP_CONFIG" "$base_config"
 else
   printf '{}\n' >"$base_config"
 fi
@@ -104,7 +105,7 @@ jq \
 
 chmod 600 "$tmp_config"
 mv "$tmp_config" "$OMP_GOOGLE_MCP_CONFIG"
-tmp_config="$(mktemp)"
+tmp_config=""
 
 accounts="$(composio_get '/connected_accounts?limit=100')"
 IFS=',' read -r -a aliases <<<"$aliases_csv"
