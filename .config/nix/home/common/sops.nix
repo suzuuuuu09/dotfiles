@@ -4,6 +4,7 @@
     defaultSopsFile = ../../secrets/secrets.yaml;
 
     secrets = {
+      composio_api_key = { };
       wakatime_api_key = { };
     };
 

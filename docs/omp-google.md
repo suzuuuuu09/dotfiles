@@ -6,12 +6,12 @@ Composio Connect用のMCP設定をHome Managerで生成する。GoogleのOAuth�
 
 Composio Connectの「Sessions & API Key」でconsumerキー（`ck_*`）を取得する。developer projectキー（`ak_*`）とは異なる。キーをチャット、シェルの引数、Nix式へ貼り付けない。
 
-ローカルで`sops .config/nix/secrets/secrets.yaml`を開き、`composio_consumer_api_key`へキーを登録する。保存後のファイルはSOPS暗号文とし、平文ファイルを追加しない。
+ローカルで`sops .config/nix/secrets/secrets.yaml`を開き、既存の`composio_api_key`へキーを登録する。保存後のファイルはSOPS暗号文とし、平文ファイルを追加しない。
 
 `.config/nix/home/common/sops.nix`の`sops.secrets`へ次の宣言を追加する。
 
 ```nix
-composio_consumer_api_key = { };
+composio_api_key = { };
 ```
 
 キーと宣言を揃えてから、通常のNix設定適用を行う。この宣言がない間はMCP設定を生成しないため、今回の変更だけで未登録の秘密によるactivation失敗は発生しない。

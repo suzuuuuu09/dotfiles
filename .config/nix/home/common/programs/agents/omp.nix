@@ -14,7 +14,7 @@ in
     claude-code
   ];
 
-  home.file.".omp/agent/mcp.json" = lib.mkIf (config.sops.secrets ? composio_consumer_api_key) {
+  home.file.".omp/agent/mcp.json" = lib.mkIf (config.sops.secrets ? composio_api_key) {
     text = builtins.toJSON {
       mcpServers.composio = {
         type = "http";
@@ -22,7 +22,7 @@ in
         # Keep disabled until explicit account selection is enforced for every write path.
         enabled = false;
         headers."x-consumer-api-key" =
-          "!${pkgs.coreutils}/bin/cat ${lib.escapeShellArg config.sops.secrets.composio_consumer_api_key.path}";
+          "!${pkgs.coreutils}/bin/cat ${lib.escapeShellArg config.sops.secrets.composio_api_key.path}";
       };
     };
   };

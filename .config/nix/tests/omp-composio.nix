@@ -30,7 +30,7 @@ let
       ];
     }).config;
   withoutKey = evaluate { };
-  withKey = evaluate { composio_consumer_api_key.path = "/run/secrets/composio key"; };
+  withKey = evaluate { composio_api_key.path = "/run/secrets/composio key"; };
   server = (builtins.fromJSON withKey.home.file.".omp/agent/mcp.json".text).mcpServers.composio;
 in
 assert !(withoutKey.home.file ? ".omp/agent/mcp.json");

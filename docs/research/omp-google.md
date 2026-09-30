@@ -34,6 +34,6 @@ Composio Connectを候補として、実際のツール定義・アカウント�
 
 ## 実装状態
 
-Home Managerは`sops.secrets.composio_consumer_api_key`が宣言された場合だけ、既定プロファイルのMCP設定を生成する。キーは実行時の秘密ファイルから読み、Composio接続は既定で無効にする。[登録手順と有効化条件](../omp-google.md)を参照する。
+Home Managerは`sops.secrets.composio_api_key`が宣言された場合だけ、既定プロファイルのMCP設定を生成する。キーは実行時の秘密ファイルから読み、Composio接続は既定で無効にする。[登録手順と有効化条件](../omp-google.md)を参照する。
 
 キーの登録・Nix設定のactivation・ログイン・Googleデータへのアクセスはまだ行っていない。全書き込み経路での対象指定の強制も未検証であり、完成条件は未達。
