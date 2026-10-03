@@ -6,13 +6,15 @@
     extra-substituters = [
       "https://suzuuuuu09.cachix.org"
       "https://nix-community.cachix.org"
-      "https://cache.numtide.com"
+      "https://cache.numtide.com" # llm-agents.nix
+      "https://herdr.cachix.org" # Herdr
     ];
 
     extra-trusted-public-keys = [
       "suzuuuuu09.cachix.org-1:+V6hB76qnQ1Ra3Lf9VZsQtszeZ9UyE39QvRHNtfYPXw="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" # llm-agents.nix
+      "herdr.cachix.org-1:3nH7IStRsS0ASfdonA0DCRR2ZrSCeWitZ7Kwew0cR4I=" # Herdr
     ];
   };
 
