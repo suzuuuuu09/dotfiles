@@ -39,6 +39,7 @@ return {
 				{ "<leader>ti", group = "Terminal by ID" },
 				{ "<leader>r", group = "Run", icon = " " },
 				{ "<leader>u", group = "UI", icon = " " },
+				{ "<leader>T", group = "Translate" },
 			},
 		}
 	end,
