@@ -16,15 +16,12 @@ function __fish_prompt_segment --argument-names previous_background background f
     end
 
     if test -n "$previous_background"
-        set_color --background=$previous_background
-        set_color --foreground=$background
+        set_color --background=$previous_background $background
     else
-        set_color --background=normal
-        set_color --foreground=$background
+        set_color --background=normal $background
     end
     printf ''
-    set_color --background=$background
-    set_color --foreground=$foreground
+    set_color --background=$background $foreground
     printf '%s%s%s' "$prefix" "$text" "$suffix"
     set_color normal
 end
@@ -158,8 +155,7 @@ function fish_prompt --description 'Render the native Nord prompt.'
     set segment_background '#434C5E'
     set -l command_duration $CMD_DURATION[1]
     __fish_prompt_segment "$previous_background" $segment_background '#E5E9F0' (__fish_prompt_duration $command_duration)
-    set_color --background=normal
-    set_color --foreground=$segment_background
+    set_color --background=normal $segment_background
     printf ''
     set_color normal
 
