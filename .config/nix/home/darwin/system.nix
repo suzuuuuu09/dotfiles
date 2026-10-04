@@ -23,6 +23,7 @@
   # sudo を 指紋認証 (Touch ID) で使えるようにする
   security.pam.services.sudo_local = {
     touchIdAuth = true;
+    reattach = true; # Herdr で sudo する場合に必要
   };
 
   system = {
