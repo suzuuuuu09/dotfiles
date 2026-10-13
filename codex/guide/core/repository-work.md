@@ -1,14 +1,5 @@
 # Repository Work
 
-## Startup
-
-Before `git status` or implementation, configuration, test, or history reads, ensure the Project Knowledge Guide startup is complete for this repository, task, and working context.
-
-- If complete, reuse it; reread neither the guide nor root `KNOWLEDGE.md`.
-- Otherwise, read `~/.codex/guide/core/project-knowledge.md` in full and complete its root `KNOWLEDGE.md` startup without batching later checks.
-
-Repeat after repository/task change or possible context loss.
-
 ## Investigate and Decide
 
 - Before work, review applicable instructions, `git status`, and relevant implementation, configuration, and tests; review history only when needed for a decision.

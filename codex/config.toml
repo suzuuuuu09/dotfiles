@@ -4,10 +4,10 @@ model_reasoning_effort = "high"
 # model_context_window           = 500000
 # model_auto_compact_token_limit = 400000
 
-sandbox_mode       = "danger-full-access"
-approval_policy    = "never"
-approvals_reviewer = "user"
 service_tier       = "default"
+approval_policy    = "on-request"
+approvals_reviewer = "auto_review"
+sandbox_mode       = "workspace-write"
 
 [shell_environment_policy]
 inherit                  = "all"
