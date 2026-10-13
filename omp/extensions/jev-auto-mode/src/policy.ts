@@ -451,8 +451,10 @@ export const PROTECTED_DIRECTORY_SEGMENTS: readonly string[] = [
   ".gnupg",
   ".husky",
   ".pi",
+  ".omp",
   ".claude",
   ".codex",
+  ".herdr",
 ];
 
 /** Path fragments that are security-relevant even outside the segments above. */
