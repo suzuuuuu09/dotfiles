@@ -28,9 +28,9 @@ fish_add_path $HOME/.nodebrew/current/bin
 # go
 fish_add_path $HOME/go/bin
 
-# pyenv / Python
-set -x PYENV_ROOT $HOME/.pyenv
-fish_add_path $PYENV_ROOT/shims
+# Remove retired pyenv shims from saved and inherited paths.
+set -U fish_user_paths (string match -v -- "$HOME/.pyenv/shims" $fish_user_paths)
+set -gx PATH (string match -v -- "$HOME/.pyenv/shims" $PATH)
 
 # Cursor Agent
 fish_add_path $HOME/.local/bin

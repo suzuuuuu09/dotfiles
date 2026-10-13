@@ -54,7 +54,13 @@ return {
 						"java " .. vim.fn.shellescape(full_class_name),
 					}, " && ")
 				end,
-				python = "python3 -u",
+				python = function()
+					if vim.fn.executable("uv") == 1 then
+						return "uv run python -u"
+					end
+
+					return "python3 -u"
+				end,
 				typescript = "bun run",
 				rust = {
 					"cd $dir &&",

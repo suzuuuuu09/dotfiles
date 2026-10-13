@@ -9,7 +9,7 @@ local lsp_servers = {
 	"jsonls",
 	"lua_ls",
 	"nixd",
-	"pyright",
+	"ty",
 	"ruff",
 	"svelte",
 	"taplo",

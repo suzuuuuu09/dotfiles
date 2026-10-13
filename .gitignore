@@ -30,3 +30,6 @@ result
 # Herdr
 .config/herdr/*
 !.config/herdr/config.toml
+
+# Python cache
+__pycache__/
