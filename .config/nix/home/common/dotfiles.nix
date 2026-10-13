@@ -38,5 +38,8 @@ in
     ".zshrc".source = mkLink ".zshrc";
     ".zshenv".source = mkLink ".zshenv";
     ".zprofile".source = mkLink ".zprofile";
+
+    # Local OMP Jev gate (kept outside the Nix store for fast iteration)
+    ".omp/agent/extensions/jev-auto-mode".source = mkLink "omp/extensions/jev-auto-mode";
   };
 }
