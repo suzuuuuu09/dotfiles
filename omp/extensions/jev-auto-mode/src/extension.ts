@@ -50,7 +50,6 @@ import {
 import {
   DEFAULT_SETTINGS,
   JevAutoModeStore,
-  isDisplayMode,
   isGateScope,
   isUncertainAction,
   parseThreshold,
@@ -60,7 +59,6 @@ import {
 import {
   buildConfirmationDialog,
   describeSettings,
-  DISPLAY_EXPLANATION,
   GATE_SCOPE_EXPLANATION,
   UNCERTAIN_EXPLANATION,
   formatRuleTable,
@@ -867,7 +865,7 @@ function toGateContext(ctx: ExtensionContext): GateContext {
     sessionManager: source.sessionManager ?? {},
     ui: ctx.ui as unknown as GateUi,
     signal: source.signal,
-    isProjectTrusted: source.isProjectTrusted,
+    isProjectTrusted: () => source.isProjectTrusted?.() ?? false,
   };
 }
 
