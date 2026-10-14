@@ -579,6 +579,22 @@
         "type": "github"
       }
     },
+    "omp-jev-auto-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791981026,
+        "narHash": "sha256-1tuDQYR6Ot9tpueo2H6pi495GJmn19zPwVhTFofClfk=",
+        "owner": "suzuuuuu09",
+        "repo": "omp-jev-auto-mode",
+        "rev": "355a1bd70136270ea87614015e0b11eff335c264",
+        "type": "github"
+      },
+      "original": {
+        "owner": "suzuuuuu09",
+        "repo": "omp-jev-auto-mode",
+        "type": "github"
+      }
+    },
     "plasma-manager": {
       "inputs": {
         "home-manager": [
@@ -639,6 +655,7 @@
         "nix-index-database": "nix-index-database",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_4",
+        "omp-jev-auto-mode": "omp-jev-auto-mode",
         "plasma-manager": "plasma-manager",
         "ponytail": "ponytail",
         "sops-nix": "sops-nix",

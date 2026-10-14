@@ -146,6 +146,11 @@
     # +----------------------------------------------------------+
     # |                      Agent Plugins                       |
     # +----------------------------------------------------------+
+    omp-jev-auto-mode = {
+      url = "github:suzuuuuu09/omp-jev-auto-mode";
+      flake = false;
+    };
+
     ponytail = {
       url = "github:DietrichGebert/ponytail";
       flake = false;
