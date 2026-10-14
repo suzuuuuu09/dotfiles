@@ -24,4 +24,13 @@ in
 
     file.".omp/agent/extensions/omp-jev-auto-mode".source = jevAutoMode;
   };
+
+  home.file.".omp/plugins/node_modules/omp-ponytail-caveman".source =
+    inputs.omp-ponytail-caveman;
+
+  home.file.".omp/plugins/package.json".text = builtins.toJSON {
+    name = "omp-plugins";
+    private = true;
+    dependencies.omp-ponytail-caveman = "file:${inputs.omp-ponytail-caveman}";
+  };
 }

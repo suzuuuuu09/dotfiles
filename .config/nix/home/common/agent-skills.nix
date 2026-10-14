@@ -17,6 +17,16 @@
 
     # スキルのソースを定義 (複数のソースを指定可能)
     sources = {
+      ponytail = {
+        path = inputs.ponytail;
+        subdir = "skills";
+      };
+
+      caveman = {
+        path = inputs.caveman;
+        subdir = "skills";
+      };
+
       # +----------------------------------------------------------+
       # | flake inputsから参照                                     |
       # +----------------------------------------------------------+
@@ -100,6 +110,14 @@
 
       # 外部からのスキルを使う
       explicit = {
+        ponytail = {
+          from = "ponytail";
+          path = "ponytail";
+        };
+        caveman = {
+          from = "caveman";
+          path = "caveman";
+        };
         frontend-design = {
           from = "anthropics";
           path = "frontend-design";

@@ -155,6 +155,16 @@
       url = "github:DietrichGebert/ponytail";
       flake = false;
     };
+
+    caveman = {
+      url = "github:juliusbrussee/caveman";
+      flake = false;
+    };
+
+    omp-ponytail-caveman = {
+      url = "github:phenome/omp-ponytail-caveman";
+      flake = false;
+    };
   };
 
   outputs =
