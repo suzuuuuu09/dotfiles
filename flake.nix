@@ -385,7 +385,18 @@
         in
         {
           default = pkgs.mkShell {
-            inherit (preCommitCheck) shellHook;
+            shellHook = ''
+              (
+                # pre-commit rejects even a global hooksPath during installation.
+                export GIT_CONFIG_PARAMETERS="''${GIT_CONFIG_PARAMETERS:+$GIT_CONFIG_PARAMETERS }'core.hooksPath='"
+                ${preCommitCheck.shellHook}
+
+                if [ ! -x "$(git rev-parse --git-path hooks/pre-commit)" ]; then
+                  ${pkgs.pre-commit}/bin/pre-commit install -c .pre-commit-config.yaml || exit
+                  git config --local core.hooksPath "$(git rev-parse --git-common-dir)/hooks"
+                fi
+              )
+            '';
             packages = preCommitCheck.enabledPackages;
           };
         }

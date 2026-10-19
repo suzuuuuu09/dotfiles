@@ -92,7 +92,10 @@
 
   programs = {
     hyprland.enable = true;
-    fish.enable = true;
+    fish = {
+      enable = true;
+      generateCompletions = false;
+    };
 
     # Install firefox.
     firefox.enable = true;
