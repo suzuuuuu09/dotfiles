@@ -20,6 +20,9 @@ abbr -a pbp pbpaste
 
 abbr -a o open
 
+# Pipe Abbreviations
+pipeabbr C pbcopy
+
 # Aliases to alternative tools
 alias find fd
 alias grep "rg --color=always"
