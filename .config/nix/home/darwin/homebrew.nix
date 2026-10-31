@@ -8,7 +8,6 @@ let
     "bjarneo/cliamp"
     "felixkratz/formulae"
     "nikitabobko/tap"
-    "pear-devs/pear"
     "mtgto/macskk"
     "fayazara/tap"
   ];
@@ -31,7 +30,6 @@ let
   managedCasks = [
     "nikitabobko/tap/aerospace"
     "alt-tab"
-    "pear-devs/pear/pear-desktop"
     "fayazara/tap/screendrop"
     "battery"
     {

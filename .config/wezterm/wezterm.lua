@@ -38,7 +38,7 @@ config.font = wezterm.font_with_fallback({
 	weight = "Regular",
 })
 config.harfbuzz_features = { "liga", "clig", "calt" } -- リガチャを有効にする
-config.font_size = 14.5
+config.font_size = 13
 config.use_ime = true
 config.scrollback_lines = 1000
 config.window_background_opacity = 0.8
