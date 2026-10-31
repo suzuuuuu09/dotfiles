@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
   ...
 }:
@@ -31,6 +32,18 @@ in
       ".omp/agent/jev-auto-mode.json".source = mkLink "omp/agent/jev-auto-mode.json";
     };
   };
+
+  # OMP also discovers extension directories with a .backup suffix.
+  home.activation.archiveJevAutoModeBackup = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    backup="$HOME/.omp/agent/extensions/omp-jev-auto-mode.backup"
+    archive=${lib.escapeShellArg "${config.xdg.stateHome}/omp/extension-backups"}
+
+    if [[ -e "$backup" || -L "$backup" ]]; then
+      run mkdir -p "$archive"
+      run ${pkgs.coreutils}/bin/mv --backup=numbered -T -- \
+        "$backup" "$archive/omp-jev-auto-mode"
+    fi
+  '';
 
   home.file.".omp/plugins/node_modules/omp-ponytail-caveman".source = inputs.omp-ponytail-caveman;
 
