@@ -54,7 +54,6 @@ bash:
 steeringMode: all
 tools:
   approval:
-    bash: allow
     eval: deny
   approvalMode: write
 dev:
