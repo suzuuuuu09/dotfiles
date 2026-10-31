@@ -1,0 +1,23 @@
+{
+  "enabled": true,
+  "timeoutMs": 4000,
+  "maxRetries": 1,
+  "safeCommands": [
+    "td today",
+    "td inbox",
+    "td task list*",
+    "td project list*",
+    "composio search*",
+    "composio list*",
+    "composio tools*",
+    "pdfinfo*",
+    "pdftoppm*"
+  ],
+  "allowedCommands": [],
+  "disallowedCommands": [],
+  "extraProtectedPaths": [],
+  "maxStateCharacters": 120000,
+  "uncertain": "ask",
+  "gateScope": "all",
+  "thresholds": {}
+}
