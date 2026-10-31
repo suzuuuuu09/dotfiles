@@ -1,0 +1,31 @@
+{
+  "pins": {
+    "omp-jev-auto-mode": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "suzuuuuu09",
+        "repo": "omp-jev-auto-mode"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "4bc48cac37be8ace29e0a553eef3f8c937584576",
+      "url": "https://github.com/suzuuuuu09/omp-jev-auto-mode/archive/4bc48cac37be8ace29e0a553eef3f8c937584576.tar.gz",
+      "hash": "sha256-laV1XyepQHqjXbR5MYiSTfEp56gEOG6Ut+VYVMuPE7w="
+    },
+    "omp-ponytail-caveman": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "phenome",
+        "repo": "omp-ponytail-caveman"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "51319d4092e1f4f3ff26b92dff8381716556ceb4",
+      "url": "https://github.com/phenome/omp-ponytail-caveman/archive/51319d4092e1f4f3ff26b92dff8381716556ceb4.tar.gz",
+      "hash": "sha256-1luhFL9ZGka9hT9QwpJ9hVbxHkfcq7EbQ+JAaPhbuj8="
+    }
+  },
+  "version": 8
+}

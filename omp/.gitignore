@@ -4,3 +4,7 @@
 !agent/
 !agent/config.yml
 !agent/jev-auto-mode.json
+!plugins/
+!plugins/npins/
+!plugins/npins/default.nix
+!plugins/npins/sources.json

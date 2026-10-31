@@ -7,12 +7,16 @@ on:
     paths:
       - "**/*.nix"
       - "flake.lock"
+      - "skills/registry/sources.lock.json"
+      - "omp/plugins/npins/sources.json"
       - ".github/workflows/nix-build.yaml"
       - ".github/actions/setup-nix/action.yaml"
   pull_request:
     paths:
       - "**/*.nix"
       - "flake.lock"
+      - "skills/registry/sources.lock.json"
+      - "omp/plugins/npins/sources.json"
       - ".github/workflows/nix-build.yaml"
       - ".github/actions/setup-nix/action.yaml"
   workflow_dispatch:

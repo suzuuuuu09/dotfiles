@@ -1,0 +1,100 @@
+name: 'Bot: Agent Sources'
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 0 * * *'
+      timezone: 'Asia/Tokyo'
+  # Merge uses default-branch code, never PR code/artifacts, and checks the exact CI head SHA.
+  workflow_run: # zizmor: ignore[dangerous-triggers]
+    workflows: ['CI: Nix Build']
+    types: [completed]
+    branches: ['deps/agent-sources']
+
+concurrency:
+  group: agent-sources-${{ github.event_name }}
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  update:
+    if: github.event_name != 'workflow_run'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.SUZUUUUU09_RENOVATE_CLIENT_ID }}
+          private-key: ${{ secrets.SUZUUUUU09_RENOVATE_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Setup Nix
+        uses: ./.github/actions/setup-nix
+        with:
+          skipPush: 'true'
+
+      - name: Update source locks
+        run: |
+          nix run .#skills-sources-lock
+          nix shell --inputs-from . nixpkgs#npins -c npins -d omp/plugins/npins update
+
+      - name: Create update pull request
+        id: pull-request
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          branch: deps/agent-sources
+          add-paths: |
+            skills/registry/sources.lock.json
+            omp/plugins/npins/sources.json
+          commit-message: '📦 deps(agents): keep skill and plugin sources current'
+          title: '📦 deps(agents): update skill and plugin sources'
+          body: |
+            Updates the Agent Skills Source Registry and OMP npins locks.
+            Sources explicitly pinned to a commit remain fixed.
+            Automatically merges after CI: Nix Build succeeds for this revision.
+          labels: dependencies
+
+  merge:
+    if: >-
+      github.event_name == 'workflow_run' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'deps/agent-sources' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.SUZUUUUU09_RENOVATE_CLIENT_ID }}
+          private-key: ${{ secrets.SUZUUUUU09_RENOVATE_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Merge the verified revision
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_REPO: ${{ github.repository }}
+          VERIFIED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          number=$(gh pr list --head deps/agent-sources --base main --state open --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            gh pr merge "$number" --squash --match-head-commit "$VERIFIED_SHA"
+          fi

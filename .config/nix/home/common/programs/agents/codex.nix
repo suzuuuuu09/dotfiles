@@ -8,7 +8,11 @@
 let
   dotfilesPath = "${config.home.homeDirectory}/dotfiles";
   codexPackage = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
-  ponytailSource = toString inputs.ponytail;
+  skillSources = inputs.agent-skills.lib.agent-skills.sourcesFromLock {
+    manifestsDir = ../../../../../../skills/registry/sources;
+    lockFile = ../../../../../../skills/registry/sources.lock.json;
+  };
+  ponytailSource = toString skillSources.ponytail.path;
   # Codex 0.159/0.160 skip hooks for root AgentPlugin manifests.
   ponytailPlugin = builtins.path {
     path = ponytailSource;

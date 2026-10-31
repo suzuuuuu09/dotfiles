@@ -83,88 +83,6 @@
     # +----------------------------------------------------------+
     agent-skills.url = "github:Kyure-A/agent-skills-nix";
 
-    vercel-skills = {
-      url = "github:vercel-labs/skills";
-      flake = false;
-    };
-
-    vercel-agent-skills = {
-      url = "github:vercel-labs/agent-skills";
-      flake = false;
-    };
-
-    anthropics-skills = {
-      url = "github:anthropics/skills";
-      flake = false;
-    };
-
-    agent-browser = {
-      url = "github:vercel-labs/agent-browser";
-      flake = false;
-    };
-
-    context7-skills = {
-      url = "github:upstash/context7/574fc642ab4ba6e178b56f436928cb564349cf57";
-      flake = false;
-    };
-
-    mattpocock-skills = {
-      url = "github:mattpocock/skills";
-      flake = false;
-    };
-
-    mizchi-skills = {
-      url = "github:mizchi/skills/89c1b34018ba0d85a770c065ba22f83a8d004d34";
-      flake = false;
-    };
-
-    ui-ux-pro-max-skills = {
-      url = "github:nextlevelbuilder/ui-ux-pro-max-skill/b7e3af80f6e331f6fb456667b82b12cade7c9d35";
-      flake = false;
-    };
-
-    stop-ai-slop-jp-skills = {
-      url = "github:iKora128/stop-ai-slop-jp/e09d32796f253a62693885757cea484c275d06f2";
-      flake = false;
-    };
-
-    handoff-skill = {
-      url = "git+https://gist.github.com/tegnike/09dbb98711d8b91e66de21611f5b88ff.git";
-      flake = false;
-    };
-
-    japanese-tech-writing-skill = {
-      url = "git+https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d.git";
-      flake = false;
-    };
-
-    herdr-skills = {
-      url = "github:herdrdev/herdr/f6060cf682f69ef8302c25e8924c0b27aef7ae16";
-      flake = false;
-    };
-
-    # +----------------------------------------------------------+
-    # |                      Agent Plugins                       |
-    # +----------------------------------------------------------+
-    omp-jev-auto-mode = {
-      url = "github:suzuuuuu09/omp-jev-auto-mode";
-      flake = false;
-    };
-
-    ponytail = {
-      url = "github:DietrichGebert/ponytail";
-      flake = false;
-    };
-
-    caveman = {
-      url = "github:juliusbrussee/caveman";
-      flake = false;
-    };
-
-    omp-ponytail-caveman = {
-      url = "github:phenome/omp-ponytail-caveman";
-      flake = false;
-    };
   };
 
   outputs =
@@ -289,6 +207,24 @@
       };
     in
     {
+      apps = forAllSystems (
+        system:
+        let
+          sourceLockProgram = inputs.agent-skills.lib.agent-skills.mkSourceLockProgram {
+            inherit (perSystem.${system}) pkgs;
+            manifestsDir = "skills/registry/sources";
+            lockFile = "skills/registry/sources.lock.json";
+          };
+        in
+        {
+          skills-sources-lock = {
+            type = "app";
+            meta.description = "Update locked Agent Skill Sources";
+            program = "${sourceLockProgram}/bin/skills-sources-lock";
+          };
+        }
+      );
+
       formatter = forAllSystems (system: perSystem.${system}.treefmtEval.config.build.wrapper);
 
       checks.${targetSystem} =
@@ -305,7 +241,8 @@
                 nativeBuildInputs = [ pkgs.statix ];
               }
               ''
-                statix check ${self}
+                # Keep the generated npins importer unchanged.
+                statix check --ignore '**/omp/plugins/npins/default.nix' ${self}
                 touch "$out"
               '';
 

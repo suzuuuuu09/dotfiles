@@ -9,7 +9,10 @@ OMPから保存した設定変更もdotfilesの差分になります。
 既存ファイルをバックアップしてから通常のNix設定反映を行ってください。
 
 Jev拡張のリンク保存修正とテストは`omp-jev-auto-mode`リポジトリで管理します。
-flake入力はその修正を含むcommitに固定します。
+ソースは `plugins/npins/sources.json` にリビジョンとハッシュを固定します。
+`npins -d omp/plugins/npins update omp-jev-auto-mode` で個別更新できます
+（リポジトリルートで `nix shell --inputs-from . nixpkgs#npins` を使用）。
+`omp-ponytail-caveman` も同じロックで管理します。
 
 Herdr連携拡張はHerdr自身が管理します。必要な場合は`herdr integration install omp`で
 導入してください。
