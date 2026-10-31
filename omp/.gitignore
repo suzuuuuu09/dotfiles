@@ -1,0 +1,6 @@
+*
+!.gitignore
+!README.md
+!agent/
+!agent/config.yml
+!agent/jev-auto-mode.json

@@ -1,9 +1,12 @@
 {
+  config,
   inputs,
   pkgs,
   ...
 }:
 let
+  dotfilesPath = "${config.home.homeDirectory}/dotfiles";
+  mkLink = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${path}";
   llmAgentsPackages = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
   typesafeSdk = pkgs.fetchzip {
     url = "https://registry.npmjs.org/@typesafe-ai/sdk/-/sdk-0.6.0.tgz";
@@ -22,7 +25,11 @@ in
       omp
     ];
 
-    file.".omp/agent/extensions/omp-jev-auto-mode".source = jevAutoMode;
+    file = {
+      ".omp/agent/extensions/omp-jev-auto-mode".source = jevAutoMode;
+      ".omp/agent/config.yml".source = mkLink "omp/agent/config.yml";
+      ".omp/agent/jev-auto-mode.json".source = mkLink "omp/agent/jev-auto-mode.json";
+    };
   };
 
   home.file.".omp/plugins/node_modules/omp-ponytail-caveman".source = inputs.omp-ponytail-caveman;

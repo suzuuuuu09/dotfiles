@@ -598,11 +598,11 @@
     "omp-jev-auto-mode": {
       "flake": false,
       "locked": {
-        "lastModified": 1792558482,
-        "narHash": "sha256-SVUohGh6x/L1im+irFhwsz0zktC/mMtwNpVWkZBm83I=",
+        "lastModified": 1793456319,
+        "narHash": "sha256-laV1XyepQHqjXbR5MYiSTfEp56gEOG6Ut+VYVMuPE7w=",
         "owner": "suzuuuuu09",
         "repo": "omp-jev-auto-mode",
-        "rev": "e8957748c8b0ab2137deadb663f9b1385ad69bbf",
+        "rev": "4bc48cac37be8ace29e0a553eef3f8c937584576",
         "type": "github"
       },
       "original": {

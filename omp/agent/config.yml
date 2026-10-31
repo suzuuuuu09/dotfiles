@@ -1,0 +1,65 @@
+modelRoles:
+  commit: openai-codex/gpt-5.6-luna:high
+  slow: google-antigravity/gemini-3.8-flash:high
+  smol: google-antigravity/gemini-3.8-flash:high
+  web: google-antigravity/gemini-3.8-flash:high
+  judge: typesafe/jev-preview
+  default: openai-codex/gpt-6.1-sol:low
+symbolPreset: nerd
+composer:
+  shape: claude
+theme:
+  dark: titanium
+  light: light
+setupVersion: 2
+retry:
+  fallbackChains:
+    web:
+      - web/perplexity
+      - google/gemini-2.5-flash
+      - anthropic/claude-haiku-4-5
+      - xai/grok-4.5
+      - web/zai
+      - web/exa
+      - web/tinyfish
+      - web/jina
+      - web/kagi
+      - web/tavily
+      - web/firecrawl
+      - web/brave
+      - web/kimi
+      - web/parallel
+      - web/synthetic
+      - web/searxng
+      - web/startpage
+      - web/duckduckgo
+      - web/ecosia
+      - web/google
+      - web/mojeek
+      - web/public
+      - google-antigravity/gemini-2.5-flash
+      - openai-codex/gpt-5.6
+      - openai-codex/gpt-5.5
+      - xai-oauth/grok-4.5
+      - web/ollama
+colorBlindMode: false
+codexResets:
+  autoRedeem: "no"
+edit:
+  mode: hashline
+bashInterceptor:
+  enabled: true
+bash:
+  direnv: auto
+steeringMode: all
+tools:
+  approval:
+    bash: allow
+    eval: deny
+  approvalMode: write
+dev:
+  autoqaConsent: granted
+todo:
+  enabled: true
+github:
+  enabled: false
