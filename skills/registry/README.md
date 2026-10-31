@@ -23,15 +23,25 @@ nix shell --inputs-from . nixpkgs#npins -c npins -d omp/plugins/npins update
 この方法なら `pin.at` による固定も維持されます。次は `ponytail` の例です。
 
 ```sh
-work_dir=$(mktemp -d)
-mkdir "$work_dir/sources"
-cp skills/registry/sources/ponytail.nix "$work_dir/sources/"
-nix run .#skills-sources-lock -- \
-  --manifest-dir "$work_dir/sources" --lock-file "$work_dir/updated.json"
-jq --slurpfile update "$work_dir/updated.json" \
-  '.manifests += $update[0].manifests | .npins.pins += $update[0].npins.pins' \
-  skills/registry/sources.lock.json > "$work_dir/merged.json"
-# 上のコマンドがすべて成功し、差分を確認してから置き換える。
+work_dir=$(mktemp -d) && (
+  set -eu
+  mkdir "$work_dir/sources"
+  cp skills/registry/sources/ponytail.nix "$work_dir/sources/"
+  nix run .#skills-sources-lock -- \
+    --manifest-dir "$work_dir/sources" --lock-file "$work_dir/updated.json"
+  jq --slurpfile update "$work_dir/updated.json" \
+    '.manifests += $update[0].manifests | .npins.pins += $update[0].npins.pins' \
+    skills/registry/sources.lock.json > "$work_dir/merged.tmp"
+  mv "$work_dir/merged.tmp" "$work_dir/merged.json"
+)
+diff -u skills/registry/sources.lock.json "$work_dir/merged.json"
+```
+
+途中で失敗すると候補の `merged.json` は生成されず、元のロックは変わりません。
+`diff` は差分がある場合に終了コード1を返します。
+生成が成功し、表示された差分を確認した後に、次のコマンドを別途実行します。
+
+```sh
 cp "$work_dir/merged.json" skills/registry/sources.lock.json
 ```
 
