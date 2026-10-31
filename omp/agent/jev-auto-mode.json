@@ -10,8 +10,7 @@
     "composio search*",
     "composio list*",
     "composio tools*",
-    "pdfinfo*",
-    "pdftoppm*"
+    "pdfinfo*"
   ],
   "allowedCommands": [],
   "disallowedCommands": [],
