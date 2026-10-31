@@ -11,18 +11,20 @@ on:
     paths:
       - '.github/renovate.jsonc'
       - '.github/workflows/renovate.yaml'
+      - 'scripts/renovate-agent-sources.sh'
 
 concurrency:
   group: renovate
   cancel-in-progress: false
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   renovate:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: read
     steps:
       - name: Create GitHub App token
         id: app-token
@@ -46,11 +48,16 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Run Renovate
-        uses: renovatebot/github-action@43b963bf5dd5e57f1f95c59765a018d782870211 # v46.3.11
+      - name: Setup Nix
+        uses: ./.github/actions/setup-nix
         with:
-          token: ${{ steps.app-token.outputs.token }}
+          skipPush: 'true'
+      - name: Run Renovate
+        run: nix shell --inputs-from . nixpkgs#renovate nixpkgs#npins nixpkgs#jq -c renovate
         env:
+          RENOVATE_TOKEN: ${{ steps.app-token.outputs.token }}
+          RENOVATE_BINARY_SOURCE: global
+          RENOVATE_ALLOWED_COMMANDS: '["^bash scripts/renovate-agent-sources[.]sh$"]'
           LOG_LEVEL: debug
           RENOVATE_REPOSITORIES: 'suzuuuuu09/dotfiles'
           NODE_OPTIONS: '--max-old-space-size=4096'

@@ -52,6 +52,16 @@ nix shell --inputs-from . nixpkgs#npins -c \
   npins -d omp/plugins/npins update omp-jev-auto-mode
 ```
 
-日次・手動のGitHub Actionsも同じ全件更新コマンドを使い、変更がある場合は
-更新PRを作成します。対象コミットのmacOS／LinuxのNix CIが成功してから
-自動マージします。ロックのJSONだけが変わるPRでもNix CIが起動します。
+自動更新は既存の日次・手動のRenovateで行います。2種類のlockをカスタム
+マネージャーで読み、SHA固定のSkillと凍結したnpinsエントリーを除外して、
+更新を1つのPRにまとめます。`scripts/renovate-agent-sources.sh` は更新後のSHAを
+変えず、公式npinsでURLとハッシュだけを再生成します。
+
+対象コミットのCIが成功すると、次回のRenovate実行で自動マージします。
+ロックのJSONだけが変わるPRでもmacOS／LinuxのNix CIが起動します。
+後処理の検証は次のコマンドで実行できます。
+
+```sh
+nix shell --inputs-from . nixpkgs#python3 nixpkgs#jq -c \
+  python3 scripts/test_renovate_agent_sources.py
+```
