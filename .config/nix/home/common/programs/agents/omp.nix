@@ -25,9 +25,11 @@ in
       omp
     ];
 
-    file.".omp/agent/extensions/omp-jev-auto-mode".source = jevAutoMode;
-    file.".omp/agent/config.yml".source = mkLink "omp/agent/config.yml";
-    file.".omp/agent/jev-auto-mode.json".source = mkLink "omp/agent/jev-auto-mode.json";
+    file = {
+      ".omp/agent/extensions/omp-jev-auto-mode".source = jevAutoMode;
+      ".omp/agent/config.yml".source = mkLink "omp/agent/config.yml";
+      ".omp/agent/jev-auto-mode.json".source = mkLink "omp/agent/jev-auto-mode.json";
+    };
   };
 
   home.file.".omp/plugins/node_modules/omp-ponytail-caveman".source = inputs.omp-ponytail-caveman;
