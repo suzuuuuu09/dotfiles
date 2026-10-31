@@ -16,90 +16,20 @@
     enable = true;
 
     # スキルのソースを定義 (複数のソースを指定可能)
-    sources = {
-      ponytail = {
-        path = inputs.ponytail;
-        subdir = "skills";
+    sources =
+      (inputs.agent-skills.lib.agent-skills.sourcesFromLock {
+        manifestsDir = ../../../../skills/registry/sources;
+        lockFile = ../../../../skills/registry/sources.lock.json;
+      })
+      // {
+        # +----------------------------------------------------------+
+        # | ローカルパスから参照                                     |
+        # +----------------------------------------------------------+
+        # 自作のスキル
+        personal = {
+          path = "${inputs.self}/skills";
+        };
       };
-
-      caveman = {
-        path = inputs.caveman;
-        subdir = "skills";
-      };
-
-      # +----------------------------------------------------------+
-      # | flake inputsから参照                                     |
-      # +----------------------------------------------------------+
-      # Vercelのスキル
-      vercel = {
-        path = inputs.vercel-skills;
-        subdir = "skills";
-      };
-
-      # Vercel Agentのスキル
-      v-agent = {
-        path = inputs.vercel-agent-skills;
-        subdir = "skills";
-      };
-
-      # Anthropicsのスキル
-      anthropics = {
-        path = inputs.anthropics-skills;
-        subdir = "skills";
-      };
-
-      agent-browser = {
-        path = inputs.agent-browser;
-        subdir = "skills";
-      };
-
-      context7 = {
-        path = inputs.context7-skills;
-        subdir = "skills";
-      };
-
-      mattpocock = {
-        path = inputs.mattpocock-skills;
-        subdir = "skills";
-      };
-
-      mizchi = {
-        path = inputs.mizchi-skills;
-      };
-
-      ui-ux-pro-max = {
-        path = inputs.ui-ux-pro-max-skills;
-        # NOTE: シムリンクのscriptsを使うため、リポジトリ全体を source root にする
-        subdir = ".";
-      };
-
-      stop-ai-slop-jp = {
-        path = inputs.stop-ai-slop-jp-skills;
-        subdir = ".";
-      };
-
-      handoff = {
-        path = inputs.handoff-skill;
-        filter.maxDepth = 1;
-      };
-
-      japanese-tech-writing = {
-        path = inputs.japanese-tech-writing-skill;
-        filter.maxDepth = 1;
-      };
-
-      herdr = {
-        path = inputs.herdr-skills;
-        subdir = "skills";
-      };
-      # +----------------------------------------------------------+
-      # | ローカルパスから参照                                     |
-      # +----------------------------------------------------------+
-      # 自作のスキル
-      personal = {
-        path = "${inputs.self}/skills";
-      };
-    };
 
     # 使うスキルを指定 (sourcesのキーを参照)
     skills = {
