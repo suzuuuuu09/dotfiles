@@ -31,8 +31,8 @@ jobs:
       - name: Test CI path selection
         run: jq -en -L .github/scripts -f .github/scripts/test-ci-paths.jq
 
-      - name: Test merge workflow safeguards
-        run: bash .github/scripts/test-renovate-merge.sh
+      - name: Test merge authorization
+        run: python3 .github/scripts/test-merge-authorization.py
 
       - name: Select checks for changed files
         id: paths

@@ -4,53 +4,45 @@ on:
   # Only trusted base-branch steps run; PR code is never checked out or executed.
   pull_request_target: # zizmor: ignore[dangerous-triggers]
     branches: [main]
-    types: [opened, reopened, synchronize, ready_for_review]
+    types: [opened, reopened, synchronize, ready_for_review, labeled, unlabeled, edited]
 
 concurrency:
   group: renovate-merge-${{ github.event.pull_request.number }}
   cancel-in-progress: false
+  queue: max
 
 permissions: {}
 
 jobs:
-  enable-auto-merge:
+  manage-auto-merge:
     if: >-
-      github.event.pull_request.user.login == 'suzuuuuu09-renovate[bot]' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
-      startsWith(github.event.pull_request.head.ref, 'renovate/') &&
-      !github.event.pull_request.draft
+      (contains(github.event.pull_request.labels.*.name, 'automerge') ||
+       (github.event.action == 'unlabeled' && github.event.label.name == 'automerge'))
     runs-on: ubuntu-24.04
     timeout-minutes: 5
+    permissions:
+      contents: read
     steps:
+      - name: Checkout trusted main branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+
       - name: Create GitHub App token
         id: app-token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         with:
           client-id: ${{ secrets.SUZUUUUU09_RENOVATE_CLIENT_ID }}
           private-key: ${{ secrets.SUZUUUUU09_RENOVATE_PRIVATE_KEY }}
-          permission-administration: read
           permission-contents: write
           permission-pull-requests: write
           permission-workflows: write
 
-      - name: Verify required checks and enable auto-merge
+      - name: Apply merge authorization
         shell: bash
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           GH_REPO: ${{ github.repository }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          gh api "repos/$GH_REPO/contents/.github/main-protection.json?ref=main" \
-            --jq '.content | @base64d' > "$RUNNER_TEMP/expected-protection.json"
-
-          gh api "repos/$GH_REPO/branches/main/protection" \
-            | jq -e --slurpfile expected "$RUNNER_TEMP/expected-protection.json" '
-              .required_status_checks as $actual
-              | .enforce_admins.enabled and $actual.strict
-                and ($expected[0].required_status_checks.checks | length > 0)
-                and all($expected[0].required_status_checks.checks[];
-                  . as $check | any($actual.checks[];
-                    .context == $check.context and .app_id == $check.app_id))'
-
-          gh pr merge "$PR_NUMBER" --auto --squash --match-head-commit "$HEAD_SHA"
+        run: bash .github/scripts/merge-authorization.sh

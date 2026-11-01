@@ -1,0 +1,5 @@
+paths:
+  .github/workflows/renovate-merge.yaml:
+    ignore:
+      # shortcut: actionlint does not yet recognize queue, remove when supported.
+      - 'unexpected key "queue" for "concurrency" section'
