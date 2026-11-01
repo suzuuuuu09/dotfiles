@@ -120,6 +120,14 @@ else:
         )
 
     def test_label_removal_revokes_a_pending_merge(self):
+        workflow = (SCRIPT.parent.parent / "workflows/renovate-merge.yaml").read_text()
+        self.assertIn("  pull_request_target:", workflow)
+        self.assertRegex(workflow, r"(?m)^    types: \[[^\n]*\bunlabeled\b")
+        self.assertNotRegex(
+            workflow, r"github\.event\.(?:action|label|pull_request\.labels)"
+        )
+        self.assertIn("run: bash .github/scripts/merge-authorization.sh", workflow)
+
         self.assertEqual(
             self.handle("unlabeled", labels=[], auto_merge={"enabled_by": "app"}),
             [["pr", "merge", "123", "--disable-auto"]],

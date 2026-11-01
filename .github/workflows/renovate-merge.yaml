@@ -15,10 +15,8 @@ permissions: {}
 
 jobs:
   manage-auto-merge:
-    if: >-
-      github.event.pull_request.head.repo.full_name == github.repository &&
-      (contains(github.event.pull_request.labels.*.name, 'automerge') ||
-       (github.event.action == 'unlabeled' && github.event.label.name == 'automerge'))
+    # Keep label decisions in the handler so removal events cannot be filtered out.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:

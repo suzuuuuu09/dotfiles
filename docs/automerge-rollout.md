@@ -33,8 +33,8 @@
    ```sh
    gh api --paginate 'repos/suzuuuuu09/dotfiles/pulls?state=open&per_page=100' \
      --jq '.[] | select(.user.login == "suzuuuuu09-renovate[bot]" and .head.repo.full_name == "suzuuuuu09/dotfiles") | .number'
-   gh pr edit <番号> --repo suzuuuuuu09/dotfiles --add-label automerge
-   gh pr view <番号> --repo suzuuuuuu09/dotfiles --json autoMergeRequest,state
+   gh pr edit <番号> --repo suzuuuuu09/dotfiles --add-label automerge
+   gh pr view <番号> --repo suzuuuuu09/dotfiles --json autoMergeRequest,state
    ```
 
    ラベルが既に付いている場合、付け直してもイベントは発生しない。
