@@ -36,6 +36,7 @@ jobs:
 
       - name: Select checks for changed files
         id: paths
+        shell: bash
         run: |
           git diff --name-only --no-renames -z HEAD^1 HEAD \
             | jq -Rs 'split("\u0000") | map(select(length > 0))' \

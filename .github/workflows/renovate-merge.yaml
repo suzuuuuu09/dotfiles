@@ -34,13 +34,23 @@ jobs:
           permission-workflows: write
 
       - name: Verify required checks and enable auto-merge
+        shell: bash
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           GH_REPO: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          gh api "repos/$GH_REPO/branches/main/protection/required_status_checks" \
-            | jq -e '.strict and any(.checks[]; .context == "required-ci" and .app_id == 15368)'
+          gh api "repos/$GH_REPO/contents/.github/main-protection.json?ref=main" \
+            --jq '.content | @base64d' > "$RUNNER_TEMP/expected-protection.json"
+
+          gh api "repos/$GH_REPO/branches/main/protection" \
+            | jq -e --slurpfile expected "$RUNNER_TEMP/expected-protection.json" '
+              .required_status_checks as $actual
+              | .enforce_admins.enabled and $actual.strict
+                and ($expected[0].required_status_checks.checks | length > 0)
+                and all($expected[0].required_status_checks.checks[];
+                  . as $check | any($actual.checks[];
+                    .context == $check.context and .app_id == $check.app_id))'
 
           gh pr merge "$PR_NUMBER" --auto --squash --match-head-commit "$HEAD_SHA"

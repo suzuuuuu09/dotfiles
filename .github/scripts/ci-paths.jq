@@ -25,6 +25,7 @@ def ci_paths:
     renovate: affected([
       "^\\.github/renovate\\.jsonc$",
       "^\\.github/workflows/(renovate|renovate-config-validator)\\.yaml$",
+      "^\\.github/actions/setup-nix/action\\.yaml$",
       "^scripts/(renovate-agent-sources\\.sh|test_renovate_agent_sources\\.py)$"
     ]),
     actions: affected(["^\\.github/(workflows|actions)/"])

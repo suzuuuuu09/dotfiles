@@ -26,6 +26,6 @@ def check($files; $expected):
   check([".github/workflows/renovate.yaml"]; ["renovate", "actions"]),
   check([".github/workflows/renovate-config-validator.yaml"]; ["renovate", "actions"]),
   check([".github/workflows/renovate-merge.yaml"]; ["actions"]),
-  check([".github/actions/setup-nix/action.yaml"]; ["nix", "nvim", "wezterm", "actions"]),
+  check([".github/actions/setup-nix/action.yaml"]; ["nix", "nvim", "wezterm", "renovate", "actions"]),
   check([".config/nvim/deleted.lua", ".config/wezterm/new name.lua"]; ["nvim", "wezterm"])
 ] | all

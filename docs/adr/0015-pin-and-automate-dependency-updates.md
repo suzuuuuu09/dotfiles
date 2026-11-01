@@ -25,9 +25,10 @@ lock refresh script. No additional GitHub App or secrets are needed.
 Renovate only creates and rebases PRs (`automerge = false`). A separate
 `renovate-merge.yaml` workflow enables GitHub auto-merge for same-repository PRs
 from the Renovate App, using the existing App credentials so merge events still
-trigger workflows. It refuses to enable auto-merge without the `required-ci`
-branch protection check. Keeping the merge decision in GitHub avoids waiting
-for another daily Renovate run after CI succeeds.
+trigger workflows. It refuses to enable auto-merge unless branch protection
+matches the required contexts and App IDs declared on `main`. Keeping the merge
+decision in GitHub avoids waiting for another daily Renovate run after CI
+succeeds.
 
 `pull-request.yaml` selects the relevant reusable CI workflows and always runs
 `required-ci`, which fails if any selected workflow fails or is cancelled. This
