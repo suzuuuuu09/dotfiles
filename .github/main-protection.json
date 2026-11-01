@@ -1,0 +1,14 @@
+{
+  "required_status_checks": {
+    "strict": true,
+    "checks": [
+      { "context": "required-ci", "app_id": 15368 },
+      { "context": "CodeRabbit", "app_id": 347564 },
+      { "context": "Socket Security: Pull Request Alerts", "app_id": 156372 },
+      { "context": "Socket Security: Project Report", "app_id": 156372 }
+    ]
+  },
+  "enforce_admins": true,
+  "required_pull_request_reviews": null,
+  "restrictions": null
+}

@@ -8,15 +8,11 @@ on:
       - .github/workflows/wezterm-linter.yaml
       - .github/actions/setup-nix/action.yaml
       - .config/wezterm/**
-  pull_request:
-    paths:
-      - .github/workflows/wezterm-linter.yaml
-      - .github/actions/setup-nix/action.yaml
-      - .config/wezterm/**
+  workflow_call:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: wezterm-linter-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:

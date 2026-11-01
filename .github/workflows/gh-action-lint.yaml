@@ -7,14 +7,11 @@ on:
     paths:
       - ".github/workflows/**"
       - ".github/actions/**"
-  pull_request:
-    paths:
-      - ".github/workflows/**"
-      - ".github/actions/**"
+  workflow_call:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: gh-action-lint-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 # デフォルト権限を空にし、jobごとに付与する
