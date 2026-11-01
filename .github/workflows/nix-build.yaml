@@ -11,18 +11,11 @@ on:
       - "omp/plugins/npins/sources.json"
       - ".github/workflows/nix-build.yaml"
       - ".github/actions/setup-nix/action.yaml"
-  pull_request:
-    paths:
-      - "**/*.nix"
-      - "flake.lock"
-      - "skills/registry/sources.lock.json"
-      - "omp/plugins/npins/sources.json"
-      - ".github/workflows/nix-build.yaml"
-      - ".github/actions/setup-nix/action.yaml"
+  workflow_call:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: nix-build-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:

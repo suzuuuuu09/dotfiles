@@ -11,18 +11,11 @@ on:
       - "flake.nix"
       - ".github/workflows/nix-nvim.yaml"
       - ".github/actions/setup-nix/action.yaml"
-  pull_request:
-    paths:
-      - ".config/nvim/**"
-      - "scripts/nvim-restore.sh"
-      - "flake.lock"
-      - "flake.nix"
-      - ".github/workflows/nix-nvim.yaml"
-      - ".github/actions/setup-nix/action.yaml"
+  workflow_call:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: nix-nvim-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:

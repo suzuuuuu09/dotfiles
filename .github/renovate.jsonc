@@ -8,8 +8,8 @@
 	"github-actions": {
 		"enabled": true
 	},
-	"automerge": true,
-	"automergeSchedule": ["* 0-23 * * *"],
+	"automerge": false,
+	"rebaseWhen": "behind-base-branch",
 	"labels": ["dependencies", "renovate"],
 	"timezone": "Asia/Tokyo",
 	"lockFileMaintenance": {
@@ -50,8 +50,6 @@
 			"matchFileNames": ["skills/registry/sources.lock.json", "omp/plugins/npins/sources.json"],
 			"groupName": "agent sources",
 			"commitMessagePrefix": "📦 deps(agents): ",
-			"platformAutomerge": false,
-			"ignoreTests": false,
 			"postUpgradeTasks": {
 				"commands": ["bash scripts/renovate-agent-sources.sh"],
 				"fileFilters": ["skills/registry/sources.lock.json", "omp/plugins/npins/sources.json"],

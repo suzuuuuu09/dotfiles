@@ -10,16 +10,10 @@ on:
       - .github/workflows/renovate.yaml
       - scripts/renovate-agent-sources.sh
       - scripts/test_renovate_agent_sources.py
-  pull_request:
-    paths:
-      - .github/workflows/renovate-config-validator.yaml
-      - .github/renovate.jsonc
-      - .github/workflows/renovate.yaml
-      - scripts/renovate-agent-sources.sh
-      - scripts/test_renovate_agent_sources.py
+  workflow_call:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: renovate-config-validator-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:

@@ -1,0 +1,46 @@
+name: 'Bot: Merge Renovate PR'
+
+on:
+  # Only trusted base-branch steps run; PR code is never checked out or executed.
+  pull_request_target: # zizmor: ignore[dangerous-triggers]
+    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review]
+
+concurrency:
+  group: renovate-merge-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  enable-auto-merge:
+    if: >-
+      github.event.pull_request.user.login == 'suzuuuuu09-renovate[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      startsWith(github.event.pull_request.head.ref, 'renovate/') &&
+      !github.event.pull_request.draft
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.SUZUUUUU09_RENOVATE_CLIENT_ID }}
+          private-key: ${{ secrets.SUZUUUUU09_RENOVATE_PRIVATE_KEY }}
+          permission-administration: read
+          permission-contents: write
+          permission-pull-requests: write
+          permission-workflows: write
+
+      - name: Verify required checks and enable auto-merge
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          gh api "repos/$GH_REPO/branches/main/protection/required_status_checks" \
+            | jq -e '.strict and any(.checks[]; .context == "required-ci" and .app_id == 15368)'
+
+          gh pr merge "$PR_NUMBER" --auto --squash --match-head-commit "$HEAD_SHA"

@@ -1,0 +1,93 @@
+name: 'CI: Pull request'
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  changes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      nix: ${{ steps.paths.outputs.nix }}
+      nvim: ${{ steps.paths.outputs.nvim }}
+      wezterm: ${{ steps.paths.outputs.wezterm }}
+      renovate: ${{ steps.paths.outputs.renovate }}
+      actions: ${{ steps.paths.outputs.actions }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Test CI path selection
+        run: jq -en -L .github/scripts -f .github/scripts/test-ci-paths.jq
+
+      - name: Test merge workflow safeguards
+        run: bash .github/scripts/test-renovate-merge.sh
+
+      - name: Select checks for changed files
+        id: paths
+        run: |
+          git diff --name-only --no-renames -z HEAD^1 HEAD \
+            | jq -Rs 'split("\u0000") | map(select(length > 0))' \
+            | jq -r -L .github/scripts \
+              'include "ci-paths"; ci_paths | to_entries[] | "\(.key)=\(.value)"' \
+            >> "$GITHUB_OUTPUT"
+
+  nix:
+    needs: changes
+    if: needs.changes.outputs.nix == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/nix-build.yaml
+
+  nvim:
+    needs: changes
+    if: needs.changes.outputs.nvim == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/nix-nvim.yaml
+
+  wezterm:
+    needs: changes
+    if: needs.changes.outputs.wezterm == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/wezterm-linter.yaml
+
+  renovate:
+    needs: changes
+    if: needs.changes.outputs.renovate == 'true'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/renovate-config-validator.yaml
+
+  actions:
+    needs: changes
+    if: needs.changes.outputs.actions == 'true'
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/gh-action-lint.yaml
+
+  required-ci:
+    needs: [changes, nix, nvim, wezterm, renovate, actions]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require successful checks
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          jq -e '.changes.result == "success" and all(.[]; .result == "success" or .result == "skipped")' \
+            <<< "$RESULTS"
