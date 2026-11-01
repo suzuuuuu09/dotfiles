@@ -22,7 +22,43 @@
 		"labels": ["security"],
 		"schedule": ["at any time"]
 	},
+	"customManagers": [
+		{
+			"customType": "jsonata",
+			"fileFormat": "json",
+			"managerFilePatterns": [
+				"/^skills/registry/sources\\.lock\\.json$/"
+			],
+			"matchStrings": [
+				"($root := $; $each(npins.pins, function($pin, $name) { $lookup($root.manifests, $name).pin.at = null ? {\"depName\": $name, \"packageName\": ($pin.repository.type = \"GitHub\" ? \"https://github.com/\" & $pin.repository.owner & \"/\" & $pin.repository.repo : $pin.repository.url), \"currentValue\": $pin.branch, \"currentDigest\": $pin.revision, \"datasource\": \"git-refs\"} : undefined }))"
+			]
+		},
+		{
+			"customType": "jsonata",
+			"fileFormat": "json",
+			"managerFilePatterns": [
+				"/^omp/plugins/npins/sources\\.json$/"
+			],
+			"matchStrings": [
+				"$each(pins, function($pin, $name) { $pin.frozen ? undefined : {\"depName\": $name, \"packageName\": ($pin.repository.type = \"GitHub\" ? \"https://github.com/\" & $pin.repository.owner & \"/\" & $pin.repository.repo : $pin.repository.url), \"currentValue\": $pin.branch, \"currentDigest\": $pin.revision, \"datasource\": \"git-refs\"} })"
+			]
+		}
+	],
 	"packageRules": [
+		{
+			"matchManagers": ["custom.jsonata"],
+			"matchFileNames": ["skills/registry/sources.lock.json", "omp/plugins/npins/sources.json"],
+			"groupName": "agent sources",
+			"commitMessagePrefix": "📦 deps(agents): ",
+			"platformAutomerge": false,
+			"ignoreTests": false,
+			"postUpgradeTasks": {
+				"commands": ["bash scripts/renovate-agent-sources.sh"],
+				"fileFilters": ["skills/registry/sources.lock.json", "omp/plugins/npins/sources.json"],
+				"executionMode": "branch"
+			}
+		},
+
 		// flake inputsがコミットハッシュで固定されているものは更新しない
 		{
 			"matchManagers": ["nix"],

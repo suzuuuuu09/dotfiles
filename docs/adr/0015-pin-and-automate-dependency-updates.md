@@ -10,12 +10,22 @@ These repositories no longer belong in the root flake inputs; the agent-skills-n
 library itself remains a flake input. Both locks preserve resolved revisions and
 hashes, and evaluation never resolves a branch to its latest revision.
 
-Renovate's Nix manager does not maintain these locks. The Agent Sources workflow
-updates them daily and on manual dispatch, using the existing Renovate GitHub App
-to create an update PR that triggers CI. It merges only after CI: Nix Build passes
-for that exact head commit; a later head commit cannot be merged by an older run.
-This explicit CI gate is needed even without required branch checks. Commit-pinned
-Skill Sources retain `pin.at` in their manifests and stay fixed during updates.
-Renovate continues to update flake inputs and SHA-pinned workflow actions.
+Renovate's Nix manager does not maintain these locks. Two JSONata custom managers
+extract their branch references and commit digests, excluding Skill Sources with
+`pin.at` and frozen npins entries. Renovate groups updates into one Agent Sources
+PR. A post-upgrade script runs the official `npins update --partial` to refresh
+URLs and hashes for the exact revisions Renovate selected; it never advances
+branches itself. Only the two source locks are included in the generated changes.
+
+The existing daily Renovate workflow runs Renovate, npins, and jq in one Nix shell
+from the repository's pinned nixpkgs. This avoids a separate Docker environment
+for post-upgrade tools. The self-hosted command allowlist permits only the source
+lock refresh script. No additional GitHub App or secrets are needed.
+
+Agent Sources use Renovate-managed automerge (`platformAutomerge = false`,
+`ignoreTests = false`). Renovate checks the current revision's CI results before
+merging on a subsequent run, including when branch protection does not require
+checks. The Nix CI triggers on both lock paths. Other dependency rules and manual
+update commands remain in place.
 
 See `skills/registry/README.md` for full and individual source update commands.
