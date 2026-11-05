@@ -271,16 +271,16 @@
     "pins": {
       "agent-browser": {
         "branch": "main",
-        "hash": "sha256-OlNEEl0slPZYouaxTcCg6An4lHJmgD9CeZrjrpZA8gA=",
+        "hash": "sha256-oK+D7R+jxR2gZ9CvwqiGJB5rUDA1sDON1AzpdCbi9ho=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "agent-browser",
           "type": "GitHub"
         },
-        "revision": "6682da310c75bed8af340b39cc10b7f71bded155",
+        "revision": "71850a021c5cb694513d720d61c156dd317d63cf",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/agent-browser/archive/6682da310c75bed8af340b39cc10b7f71bded155.tar.gz"
+        "url": "https://github.com/vercel-labs/agent-browser/archive/71850a021c5cb694513d720d61c156dd317d63cf.tar.gz"
       },
       "anthropics": {
         "branch": "main",
@@ -438,16 +438,16 @@
       },
       "vercel": {
         "branch": "main",
-        "hash": "sha256-V4T+uKBm7Fe5vU5X/z6gzzsBAwlLh2YGxCZYctPxYdQ=",
+        "hash": "sha256-IknOGjSczICbpqxWRoH5YYffg8VT5YCT5EdXUGuLssU=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "skills",
           "type": "GitHub"
         },
-        "revision": "9197d919034d19010ae303cf96bf19ad087dd4be",
+        "revision": "cabe07254cddf16a3a650253f0ba03d543d8a86e",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/skills/archive/9197d919034d19010ae303cf96bf19ad087dd4be.tar.gz"
+        "url": "https://github.com/vercel-labs/skills/archive/cabe07254cddf16a3a650253f0ba03d543d8a86e.tar.gz"
       }
     },
     "version": 8
