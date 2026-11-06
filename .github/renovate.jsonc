@@ -11,7 +11,7 @@
 	"automerge": false,
 	"rebaseWhen": "behind-base-branch",
 	"labels": ["dependencies"],
-	"addLabels": ["renovate", "automerge"],
+	"addLabels": ["renovate"],
 	"timezone": "Asia/Tokyo",
 	"lockFileMaintenance": {
 		"enabled": true,

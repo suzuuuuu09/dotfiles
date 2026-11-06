@@ -4,30 +4,24 @@ on:
   # Only trusted base-branch steps run; PR code is never checked out or executed.
   pull_request_target: # zizmor: ignore[dangerous-triggers]
     branches: [main]
-    types: [opened, reopened, synchronize, ready_for_review, labeled, unlabeled, edited]
+    types: [opened, reopened, synchronize, ready_for_review, edited]
 
 concurrency:
   group: renovate-merge-${{ github.event.pull_request.number }}
   cancel-in-progress: false
-  queue: max
 
 permissions: {}
 
 jobs:
-  manage-auto-merge:
-    # Keep label decisions in the handler so removal events cannot be filtered out.
-    if: github.event.pull_request.head.repo.full_name == github.repository
+  enable-auto-merge:
+    if: >-
+      github.event.pull_request.user.login == 'suzuuuuu09-renovate[bot]' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      startsWith(github.event.pull_request.head.ref, 'renovate/') &&
+      !github.event.pull_request.draft
     runs-on: ubuntu-24.04
     timeout-minutes: 5
-    permissions:
-      contents: read
     steps:
-      - name: Checkout trusted main branch
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: main
-          persist-credentials: false
-
       - name: Create GitHub App token
         id: app-token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
@@ -38,9 +32,11 @@ jobs:
           permission-pull-requests: write
           permission-workflows: write
 
-      - name: Apply merge authorization
+      - name: Enable auto-merge
         shell: bash
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           GH_REPO: ${{ github.repository }}
-        run: bash .github/scripts/merge-authorization.sh
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: gh pr merge "$PR_NUMBER" --auto --squash --match-head-commit "$HEAD_SHA"
