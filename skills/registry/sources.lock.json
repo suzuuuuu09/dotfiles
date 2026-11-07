@@ -271,42 +271,42 @@
     "pins": {
       "agent-browser": {
         "branch": "main",
-        "hash": "sha256-bDluLjiAl7dCedy0aU6xQWZh7ak+JQJRALvZU19pUSA=",
+        "hash": "sha256-j4uLsEJpZiPXaCznfuAKW2LDbp8HBycwdFsTgMBZJv0=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "agent-browser",
           "type": "GitHub"
         },
-        "revision": "d86ca4bb374b30b2500e3977b9d1c94185a89e33",
+        "revision": "d44f6989bf5e9a9a1c6dd6d97175f8c33b138eca",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/agent-browser/archive/d86ca4bb374b30b2500e3977b9d1c94185a89e33.tar.gz"
+        "url": "https://github.com/vercel-labs/agent-browser/archive/d44f6989bf5e9a9a1c6dd6d97175f8c33b138eca.tar.gz"
       },
       "anthropics": {
         "branch": "main",
-        "hash": "sha256-MkCOANBAqCc1WmNf7S8PsyAphGJAIzEXGyCm8RrCR9M=",
+        "hash": "sha256-dRCZrNarCCJFuvATgfW6qmwwVS5HGFXNVGOhbVZd7LA=",
         "repository": {
           "owner": "anthropics",
           "repo": "skills",
           "type": "GitHub"
         },
-        "revision": "ca45fc496a3436251f191354091d557da31c15b5",
+        "revision": "2c5958ecac7cee2b583967a2c4981d0f4a75c579",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/anthropics/skills/archive/ca45fc496a3436251f191354091d557da31c15b5.tar.gz"
+        "url": "https://github.com/anthropics/skills/archive/2c5958ecac7cee2b583967a2c4981d0f4a75c579.tar.gz"
       },
       "caveman": {
         "branch": "main",
-        "hash": "sha256-AjIzHPREdqrIflIFtciVc7ZNXyrYhGv3SlAi0cf72Ks=",
+        "hash": "sha256-V3+UtzgdtNyVDHck+DGflVpb0G9ljwU7TNUoLOVQDsY=",
         "repository": {
           "owner": "juliusbrussee",
           "repo": "caveman",
           "type": "GitHub"
         },
-        "revision": "4bf8898b31c93326a5e5d90999241a1c15b52ed2",
+        "revision": "c310c9d300df13a1dd9f5c086120ffd857a164a1",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/juliusbrussee/caveman/archive/4bf8898b31c93326a5e5d90999241a1c15b52ed2.tar.gz"
+        "url": "https://github.com/juliusbrussee/caveman/archive/c310c9d300df13a1dd9f5c086120ffd857a164a1.tar.gz"
       },
       "context7": {
         "branch": "master",
