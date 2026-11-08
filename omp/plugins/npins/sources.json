@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "b044d22680636ba916dae64e4c9074e9e0e375c3",
-      "url": "https://github.com/suzuuuuu09/omp-jev-auto-mode/archive/b044d22680636ba916dae64e4c9074e9e0e375c3.tar.gz",
-      "hash": "sha256-KSYeS6d1cRTl3DaoZWU04t1NvZ+/0JSWlPPYsSpTRX0="
+      "revision": "e376f3660cdd76fc3556d05bd291af213b6e5307",
+      "url": "https://github.com/suzuuuuu09/omp-jev-auto-mode/archive/e376f3660cdd76fc3556d05bd291af213b6e5307.tar.gz",
+      "hash": "sha256-kNKRwptv76xRl2NgCvcTxhY5Hgxq6W8THJS5OpwUmGk="
     },
     "omp-ponytail-caveman": {
       "type": "Git",
