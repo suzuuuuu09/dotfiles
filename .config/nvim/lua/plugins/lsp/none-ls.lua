@@ -1,30 +1,14 @@
 return {
 	"nvimtools/none-ls.nvim",
 	event = { "BufReadPre", "BufNewFile" },
-	lazy = true,
 	dependencies = {
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvimtools/none-ls-extras.nvim" },
 	},
 	opts = function()
-		local null_ls = require("null-ls")
-
 		return {
-			on_attach = function(client, bufnr)
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentRangeFormattingProvider = false
-			end,
 			sources = {
-				-- ╭─────────────────────────────────────────────────────────╮
-				-- │                        Diagnostics                      │
-				-- ╰─────────────────────────────────────────────────────────╯
-				-- require("none-ls.diagnostics.ruff"), -- python linter
-				require("none-ls.diagnostics.cpplint"), -- c/c++ linter
-
-				-- ╭─────────────────────────────────────────────────────────╮
-				-- │                      Code Actions                       │
-				-- ╰─────────────────────────────────────────────────────────╯
-				-- require("none-ls.code_actions.typos"), -- typo suggestions
+				require("none-ls.diagnostics.cpplint"),
 			},
 		}
 	end,
