@@ -35,7 +35,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename symbol" }))
 
-		vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, vim.tbl_extend("force", opts, { desc = "Format buffer" }))
+		vim.keymap.set("n", "<leader>lf", "<CMD>Format<CR>", vim.tbl_extend("force", opts, { desc = "Format buffer" }))
 
 		vim.keymap.set("n", "[d", function()
 			vim.diagnostic.jump({ count = -1, float = true })

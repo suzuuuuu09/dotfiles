@@ -20,8 +20,6 @@
       nixd
       nixfmt
       prettier
-      prettierd
-      pyright
       python3Packages.debugpy
       ruff
       rustfmt

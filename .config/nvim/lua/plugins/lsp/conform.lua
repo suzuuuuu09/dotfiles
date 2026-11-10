@@ -1,4 +1,4 @@
-local js_formatters = { "biome", "prettier", "prettierd", stop_after_first = true }
+local js_formatters = { "biome", "prettier", stop_after_first = true }
 local python_formatters = { "ruff_fix", "ruff_format", "ruff_organize_imports" }
 local nix_formatters = { "nixfmt" }
 
