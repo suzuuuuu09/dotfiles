@@ -110,7 +110,7 @@ Neovim plugin resolution is pinned in `.config/nvim/lazy-lock.json`. The CI-equi
 
 ```bash
 nix shell nixpkgs#neovim nixpkgs#git -c \
-  ./scripts/nvim-restore.sh ~/.config/nvim
+  ./scripts/nvim-restore.sh
 
 nix shell nixpkgs#neovim nixpkgs#git -c \
   nvim --headless "+qa"

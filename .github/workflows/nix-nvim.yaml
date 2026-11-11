@@ -44,7 +44,7 @@ jobs:
 
       - name: Restore Neovim plugins
         run: |
-          nix shell nixpkgs#neovim nixpkgs#git -c ./scripts/nvim-restore.sh ~/.config/nvim
+          nix shell nixpkgs#neovim nixpkgs#git -c ./scripts/nvim-restore.sh
 
       - name: Check Neovim configuration
         run: |

@@ -1,25 +1,14 @@
 #!/usr/bin/env bash
 # Neovim plugin restoration script (Lazy.nvim is auto-installed by Lua config)
-# Usage: nvim-restore.sh <nvim-dotfiles-dir> <lazy-dir> <nvim-bin>
+# Restore plugins for the active Neovim configuration.
 
 set -euo pipefail
 
-if [[ $# -lt 1 ]]; then
-  printf 'Usage: %s <nvim-dotfiles-dir> [lazy-dir] [nvim-bin]\n' "$0" >&2
+if [[ $# -ne 0 ]]; then
+  printf 'Usage: %s\n' "$0" >&2
   exit 2
 fi
 
-NVIM_DOTFILES_DIR="$1"
-LAZY_DIR="${2:-$HOME/.local/share/nvim/lazy}"
-NVIM_BIN="${3:-nvim}"
-
-LAZY_LOCK="$NVIM_DOTFILES_DIR/lazy-lock.json"
-LAZY_LOCK_TIMESTAMP="$LAZY_DIR/.lazy-lock-timestamp"
-
-if [[ -f $LAZY_LOCK ]]; then
-  echo "📦 Restoring Neovim plugins from lazy-lock.json..."
-  "$NVIM_BIN" --headless "+Lazy! restore" +qa
-  mkdir -p "$LAZY_DIR"
-  touch "$LAZY_LOCK_TIMESTAMP"
-  echo "✅ Neovim plugins restored!"
-fi
+echo "📦 Restoring Neovim plugins from lazy-lock.json..."
+nvim --headless "+Lazy! restore" +qa
+echo "✅ Neovim plugins restored!"

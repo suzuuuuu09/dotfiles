@@ -26,6 +26,3 @@ fish_config theme choose nord
 for file in $FISH_CONFIG_DIR/config/*.fish
     source $file
 end
-
-# tool_setup.fish を読み込む
-source "$FISH_CONFIG_DIR/tool_setup.fish"
