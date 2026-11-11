@@ -1,7 +1,5 @@
 {
   config,
-  lib,
-  enableSops ? true,
   ...
 }:
 {
@@ -25,6 +23,6 @@
     ./packages.nix
     ./dotfiles.nix
     ./agent-skills.nix
-  ]
-  ++ lib.optional enableSops ./sops.nix;
+    ./sops.nix
+  ];
 }

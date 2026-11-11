@@ -84,7 +84,7 @@ nix build --no-link .#nixosConfigurations.suzu.config.system.build.toplevel
 
 # Neovimプラグインの復元と起動確認
 nix shell nixpkgs#neovim nixpkgs#git -c \
-  ./scripts/nvim-restore.sh ~/.config/nvim
+  ./scripts/nvim-restore.sh
 nix shell nixpkgs#neovim nixpkgs#git -c \
   nvim --headless "+qa"
 

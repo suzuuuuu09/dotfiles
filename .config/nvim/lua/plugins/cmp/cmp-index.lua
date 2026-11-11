@@ -1,11 +1,18 @@
+local function format_color(ctx)
+	local doc = ctx.item.documentation or ""
+	if type(doc) == "table" then
+		doc = doc.value or ""
+	end
+
+	return require("nvim-highlight-colors").format(doc, { kind = ctx.kind })
+end
+
 return {
 	"saghen/blink.cmp",
 	version = "1.*",
 	event = { "InsertEnter", "CmdlineEnter" },
 	dependencies = {
 		"L3MON4D3/LuaSnip",
-		"rafamadriz/friendly-snippets",
-		"moyiz/blink-emoji.nvim",
 		{ "brenoprata10/nvim-highlight-colors" },
 	},
 	config = function()
@@ -43,16 +50,7 @@ return {
 							kind_icon = {
 								ellipsis = false,
 								text = function(ctx)
-									-- nvim-highlight-colors による色の取得
-									local item = ctx.item
-									-- documentation または label から色情報を抽出
-									local doc = item.documentation or ""
-									-- documentation が table の場合（LSP仕様）に対応
-									if type(doc) == "table" then
-										doc = doc.value or ""
-									end
-
-									local color_item = require("nvim-highlight-colors").format(doc, { kind = ctx.kind })
+									local color_item = format_color(ctx)
 
 									if color_item and color_item.abbr ~= "" then
 										return color_item.abbr .. ctx.icon_gap
@@ -60,13 +58,7 @@ return {
 									return ctx.kind_icon .. ctx.icon_gap
 								end,
 								highlight = function(ctx)
-									local item = ctx.item
-									local doc = item.documentation or ""
-									if type(doc) == "table" then
-										doc = doc.value or ""
-									end
-
-									local color_item = require("nvim-highlight-colors").format(doc, { kind = ctx.kind })
+									local color_item = format_color(ctx)
 
 									if color_item and color_item.abbr_hl_group then
 										return color_item.abbr_hl_group

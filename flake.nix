@@ -193,8 +193,6 @@
         extraSpecialArgs = {
           inherit inputs;
           username = wslUsername;
-          enableAgentSkills = true;
-          enableSops = true;
         };
 
         modules = [
@@ -283,7 +281,6 @@
               ''
                 fish -n \
                   ${self}/.config/fish/config.fish \
-                  ${self}/.config/fish/tool_setup.fish \
                   ${self}/.config/fish/config/*.fish \
                   ${self}/.config/fish/conf.d/*.fish \
                   ${self}/.config/fish/functions/*.fish
@@ -297,9 +294,7 @@
                 nativeBuildInputs = [ pkgs.ruff ];
               }
               ''
-                ruff check \
-                  ${self}/skills/fetch-markdown/scripts \
-                  ${self}/skills/timezone-utils/scripts
+                ruff check ${self}/scripts/*.py
 
                 touch "$out"
               '';
@@ -396,8 +391,6 @@
 
                   extraSpecialArgs = {
                     inherit inputs username;
-                    enableAgentSkills = true;
-                    enableSops = true;
                   };
 
                   users.${username} = {
@@ -447,8 +440,6 @@
 
                 extraSpecialArgs = {
                   inherit inputs username;
-                  enableAgentSkills = true;
-                  enableSops = true;
                 };
 
                 users.${username} = {
@@ -485,8 +476,6 @@
 
               extraSpecialArgs = {
                 inherit inputs username;
-                enableAgentSkills = true;
-                enableSops = true;
               };
 
               users.${username} = {
