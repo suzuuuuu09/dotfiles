@@ -3,10 +3,11 @@ set -gx FZF_DEFAULT_COMMAND "fd --hidden --strip-cwd-prefix --exclude .git"
 set -gx FZF_DEFAULT_OPTS "
   --height=40%
   --preview '
-    if test -d {}
-      eza -a --tree --level=1 --icons --group-directories-first --color=always --ignore-glob=.DS_Store,.git {}
+    set -l preview_path (string replace --regex '^~/' \"\$HOME/\" {})
+    if test -d \"\$preview_path\"
+      eza -a --tree --level=1 --icons --group-directories-first --color=always --ignore-glob=.DS_Store,.git \"\$preview_path\"
     else
-      bat --style=numbers --color=always --line-range :500 {}
+      bat --style=numbers --color=always --line-range :500 \"\$preview_path\"
     end
   '
 	--color=fg:#e5e9f0,bg:-1,hl:#81a1c1
