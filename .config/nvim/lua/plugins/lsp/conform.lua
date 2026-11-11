@@ -51,17 +51,6 @@ return {
 			lsp_format = "fallback",
 			quiet = false,
 		},
-		--[[ format_on_save = function(bufnr)
-			local ft = vim.bo[bufnr].filetype
-
-			-- もし formatters_by_ft に設定があるファイルなら、LSP は使わない
-			if opts.formatters_by_ft[ft] then
-				return { timeout_ms = 2000, lsp_format = "never" }
-			end
-
-			-- それ以外のファイルは LSP 整形を使う
-			return { timeout_ms = 2000, lsp_format = "fallback" }
-		end, ]]
 	},
 	config = function(_, opts)
 		require("conform").setup(opts)

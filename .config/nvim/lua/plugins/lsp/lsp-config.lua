@@ -32,18 +32,6 @@ return {
 				capabilities = require("blink.cmp").get_lsp_capabilities(),
 			})
 
-			--[[ -- すべてのLSPに共通の設定
-			vim.lsp.config("*", {
-				root_markers = { ".git" },
-			})
-
-			local lang_servers = {
-				"lua_ls",
-			}
-			
-		  for _, server in ipairs(lang_servers) do
-				vim.lsp.enable(server)
-			end ]]
 			local custom_on_attach = function(client, bufnr)
 				if client.name == "nixd" and client:supports_method("textDocument/inlayHint") then
 					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
