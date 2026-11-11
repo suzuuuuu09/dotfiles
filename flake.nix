@@ -65,7 +65,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    llm-agents.url = "github:numtide/llm-agents.nix";
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
 
     hunk = {
       url = "github:modem-dev/hunk";
@@ -81,7 +85,10 @@
     # +----------------------------------------------------------+
     # | Agent Skills                                             |
     # +----------------------------------------------------------+
-    agent-skills.url = "github:Kyure-A/agent-skills-nix";
+    agent-skills = {
+      url = "github:Kyure-A/agent-skills-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 
