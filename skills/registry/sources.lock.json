@@ -271,16 +271,16 @@
     "pins": {
       "agent-browser": {
         "branch": "main",
-        "hash": "sha256-4+BO6EjsXjRXNcaav9+tIN+jnKA+6M1XhyIiBEo4wuk=",
+        "hash": "sha256-+hmbSIgTqs5uZW7j0hAhz/9Fd24Np80DfoccqN4fGF4=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "agent-browser",
           "type": "GitHub"
         },
-        "revision": "51b6f8a40c6f1b330f4f2021b1af154ebc6be464",
+        "revision": "1cc19526f3641c8543d55aa6700e7c55b37ac356",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/agent-browser/archive/51b6f8a40c6f1b330f4f2021b1af154ebc6be464.tar.gz"
+        "url": "https://github.com/vercel-labs/agent-browser/archive/1cc19526f3641c8543d55aa6700e7c55b37ac356.tar.gz"
       },
       "anthropics": {
         "branch": "main",
@@ -360,16 +360,16 @@
       },
       "mattpocock": {
         "branch": "main",
-        "hash": "sha256-3vhd77xfZjKUYJsIwPFevIZPUAzUgZXr0RYj5NQrBwk=",
+        "hash": "sha256-AYSRCvBL8TDDdW3rgKu2T7gl4YYDoDId0jYbabEFyfs=",
         "repository": {
           "owner": "mattpocock",
           "repo": "skills",
           "type": "GitHub"
         },
-        "revision": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+        "revision": "5863806dd4e15c63174bee4e7515a4256792ecfa",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/mattpocock/skills/archive/4ae2317ddb22b046e26455e4f9c9b3aaaf62212d.tar.gz"
+        "url": "https://github.com/mattpocock/skills/archive/5863806dd4e15c63174bee4e7515a4256792ecfa.tar.gz"
       },
       "mizchi": {
         "branch": "main",
