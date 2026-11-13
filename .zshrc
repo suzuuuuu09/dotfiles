@@ -8,19 +8,6 @@ eval "$(/usr/libexec/path_helper)"
 
 export PATH="$HOME/.bun/bin:$PATH"
 
-# zsh-autosuggestionsとzsh-syntax-highlightingの設定
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Enable complementary features
-# autoload -U compinit
-# compinit
-if typebrew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  source $(brew --predix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  autoload -U +X compinit && compinit
-fi
-
 # Fill the selected part of the completion list
 zstyle ':completion:*' menu select
 
@@ -66,6 +53,7 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 zinit light zsh-users/zsh-completions
+autoload -U +X compinit && compinit
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zdharma/history-search-multi-word

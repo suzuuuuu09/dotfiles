@@ -109,7 +109,6 @@
       targetSystem = "aarch64-darwin";
       wslSystem = "x86_64-linux";
       osSystem = "x86_64-linux";
-      isDarwin = nixpkgs.lib.hasSuffix "darwin" targetSystem;
       macUsername = "k25012kk";
       wslUsername = "nixos";
       osUsername = "suzu";
@@ -349,69 +348,66 @@
           username = macUsername;
         };
 
-        modules =
-          (nixpkgs.lib.optionals isDarwin [
-            ./.config/nix/hosts/mac
-          ])
-          ++ [
-            nix-homebrew.darwinModules.nix-homebrew
-            home-manager.darwinModules.home-manager
+        modules = [
+          ./.config/nix/hosts/mac
+          nix-homebrew.darwinModules.nix-homebrew
+          home-manager.darwinModules.home-manager
 
-            (
-              {
-                pkgs,
-                username,
-                ...
-              }:
-              {
-                nixpkgs.overlays = localOverlays;
+          (
+            {
+              pkgs,
+              username,
+              ...
+            }:
+            {
+              nixpkgs.overlays = localOverlays;
 
-                # Mac全体で永続的に使用するNixキャッシュ設定
-                nix.settings = {
-                  extra-substituters = [
-                    "https://suzuuuuu09.cachix.org"
-                    "https://nix-community.cachix.org"
-                    "https://cache.numtide.com"
-                  ];
-
-                  extra-trusted-public-keys = [
-                    "suzuuuuu09.cachix.org-1:+V6hB76qnQ1Ra3Lf9VZsQtszeZ9UyE39QvRHNtfYPXw="
-                    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-                    "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
-                  ];
-
-                  trusted-users = [
-                    "root"
-                    username
-                  ];
-                };
-
-                # cachix pushなどのコマンドを使用可能にする
-                environment.systemPackages = with pkgs; [
-                  cachix
+              # Mac全体で永続的に使用するNixキャッシュ設定
+              nix.settings = {
+                extra-substituters = [
+                  "https://suzuuuuu09.cachix.org"
+                  "https://nix-community.cachix.org"
+                  "https://cache.numtide.com"
                 ];
 
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  backupFileExtension = "backup";
+                extra-trusted-public-keys = [
+                  "suzuuuuu09.cachix.org-1:+V6hB76qnQ1Ra3Lf9VZsQtszeZ9UyE39QvRHNtfYPXw="
+                  "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+                  "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+                ];
 
-                  extraSpecialArgs = {
-                    inherit inputs username;
-                  };
+                trusted-users = [
+                  "root"
+                  username
+                ];
+              };
 
-                  users.${username} = {
-                    imports = [
-                      ./.config/nix/home/common
-                      ./.config/nix/home/darwin/home.nix
-                    ];
-                  };
+              # cachix pushなどのコマンドを使用可能にする
+              environment.systemPackages = with pkgs; [
+                cachix
+              ];
 
-                  sharedModules = homeSharedModules;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "backup";
+
+                extraSpecialArgs = {
+                  inherit inputs username;
                 };
-              }
-            )
-          ];
+
+                users.${username} = {
+                  imports = [
+                    ./.config/nix/home/common
+                    ./.config/nix/home/darwin/home.nix
+                  ];
+                };
+
+                sharedModules = homeSharedModules;
+              };
+            }
+          )
+        ];
       };
 
       homeConfigurations = {
