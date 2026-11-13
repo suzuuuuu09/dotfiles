@@ -271,16 +271,16 @@
     "pins": {
       "agent-browser": {
         "branch": "main",
-        "hash": "sha256-+hmbSIgTqs5uZW7j0hAhz/9Fd24Np80DfoccqN4fGF4=",
+        "hash": "sha256-Zlsd/1D3FsCe1UlwHs4sLqBzskBs7oI7KuHZgVhfgBA=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "agent-browser",
           "type": "GitHub"
         },
-        "revision": "1cc19526f3641c8543d55aa6700e7c55b37ac356",
+        "revision": "2f533ec7d74cd9b1925cc86fb0c6872b03745be0",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/agent-browser/archive/1cc19526f3641c8543d55aa6700e7c55b37ac356.tar.gz"
+        "url": "https://github.com/vercel-labs/agent-browser/archive/2f533ec7d74cd9b1925cc86fb0c6872b03745be0.tar.gz"
       },
       "anthropics": {
         "branch": "main",
@@ -297,16 +297,16 @@
       },
       "caveman": {
         "branch": "main",
-        "hash": "sha256-I/pMhDvXZp8KOGhWRCNeSIz+3z4ag1m6wdo6kl+JbXs=",
+        "hash": "sha256-HcNc+iyIL/K4JOBBsJAS2eh0vcpW3CwL5CQMqY0LMh0=",
         "repository": {
           "owner": "juliusbrussee",
           "repo": "caveman",
           "type": "GitHub"
         },
-        "revision": "3dc497a7f858c774d6e15b25e8c6120ef3a0eda8",
+        "revision": "b4ee71d557d96e3cbc14f88fa6e953a1362865f5",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/juliusbrussee/caveman/archive/3dc497a7f858c774d6e15b25e8c6120ef3a0eda8.tar.gz"
+        "url": "https://github.com/juliusbrussee/caveman/archive/b4ee71d557d96e3cbc14f88fa6e953a1362865f5.tar.gz"
       },
       "context7": {
         "branch": "master",
@@ -438,16 +438,16 @@
       },
       "vercel": {
         "branch": "main",
-        "hash": "sha256-K4xCSpt8jnkTx8FDEa2cXrzMjpRkYOwTiFqPap6iCYU=",
+        "hash": "sha256-ADvbHoiYUSsvXAjEGKwE4cAjnl1Fk3ztr2UthP/dLHM=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "skills",
           "type": "GitHub"
         },
-        "revision": "e781cb4d07433dfe1d19e924ed45cc61738c55ec",
+        "revision": "b716f9dc2ba36b6aa8f0080615e5a3a6caeac63b",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/skills/archive/e781cb4d07433dfe1d19e924ed45cc61738c55ec.tar.gz"
+        "url": "https://github.com/vercel-labs/skills/archive/b716f9dc2ba36b6aa8f0080615e5a3a6caeac63b.tar.gz"
       }
     },
     "version": 8
