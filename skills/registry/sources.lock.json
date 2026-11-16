@@ -297,16 +297,16 @@
       },
       "caveman": {
         "branch": "main",
-        "hash": "sha256-HcNc+iyIL/K4JOBBsJAS2eh0vcpW3CwL5CQMqY0LMh0=",
+        "hash": "sha256-1X2DjYa4xqO1ZqwxdFjCmaypp0+HYncEpXaut4i9LkE=",
         "repository": {
           "owner": "juliusbrussee",
           "repo": "caveman",
           "type": "GitHub"
         },
-        "revision": "b4ee71d557d96e3cbc14f88fa6e953a1362865f5",
+        "revision": "9b243662ff98d392bc0a95b865a554583d71be75",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/juliusbrussee/caveman/archive/b4ee71d557d96e3cbc14f88fa6e953a1362865f5.tar.gz"
+        "url": "https://github.com/juliusbrussee/caveman/archive/9b243662ff98d392bc0a95b865a554583d71be75.tar.gz"
       },
       "context7": {
         "branch": "master",
@@ -438,16 +438,16 @@
       },
       "vercel": {
         "branch": "main",
-        "hash": "sha256-ADvbHoiYUSsvXAjEGKwE4cAjnl1Fk3ztr2UthP/dLHM=",
+        "hash": "sha256-/Zz/qAxdWz1OhgqHAFjgZoLY59G7ixgNA5C07nlkMFo=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "skills",
           "type": "GitHub"
         },
-        "revision": "b716f9dc2ba36b6aa8f0080615e5a3a6caeac63b",
+        "revision": "50894c1d98bc45ca1ab127213e59d6525065b5e7",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/skills/archive/b716f9dc2ba36b6aa8f0080615e5a3a6caeac63b.tar.gz"
+        "url": "https://github.com/vercel-labs/skills/archive/50894c1d98bc45ca1ab127213e59d6525065b5e7.tar.gz"
       }
     },
     "version": 8
