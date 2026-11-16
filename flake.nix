@@ -148,10 +148,16 @@
         stdenvCompatibilityOverlay
         (_final: prev: {
           cargo-commitlint =
-            if builtins.hasAttr "cargo-commitlint" prev then
-              prev."cargo-commitlint"
-            else
-              prev.callPackage ./.config/nix/overlays/cargo-commitlint.nix { };
+            (
+              if builtins.hasAttr "cargo-commitlint" prev then
+                prev."cargo-commitlint"
+              else
+                prev.callPackage ./.config/nix/overlays/cargo-commitlint.nix { }
+            ).overrideAttrs
+              (old: {
+                nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ prev.pkg-config ];
+                buildInputs = (old.buildInputs or [ ]) ++ [ prev.libgit2 ];
+              });
           herdr =
             let
               herdrPkgs = import nixpkgs {
