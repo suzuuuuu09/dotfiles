@@ -20,6 +20,12 @@ let
     mkdir -p "$out/node_modules/@typesafe-ai"
     ln -s ${typesafeSdk} "$out/node_modules/@typesafe-ai/sdk"
   '';
+  ompMobile = pkgs.runCommand "omp-mobile" { } ''
+    mkdir -p "$out/node_modules/ws" "$out/node_modules/qrcode-generator"
+    cp -R ${pluginSources.omp-mobile.outPath}/. "$out/"
+    cp -R ${pluginSources.omp-mobile-ws.outPath}/. "$out/node_modules/ws/"
+    cp -R ${pluginSources.omp-mobile-qrcode-generator.outPath}/. "$out/node_modules/qrcode-generator/"
+  '';
 in
 {
   home = {
@@ -48,10 +54,12 @@ in
 
   home.file.".omp/plugins/node_modules/omp-ponytail-caveman".source =
     pluginSources.omp-ponytail-caveman.outPath;
+  home.file.".omp/plugins/node_modules/omp-mobile".source = ompMobile;
 
   home.file.".omp/plugins/package.json".text = builtins.toJSON {
     name = "omp-plugins";
     private = true;
+    dependencies.omp-mobile = "file:${ompMobile}";
     dependencies.omp-ponytail-caveman = "file:${pluginSources.omp-ponytail-caveman}";
   };
 }

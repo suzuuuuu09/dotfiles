@@ -44,13 +44,13 @@ let
     "musescore"
     "localsend"
     "shottr"
-    "codex-app"
     "tailscale-app"
     "parsec"
     "eqmac"
     "thunderbird"
     "raycast"
     "1password"
+    "google-gemini"
   ];
 
   # 自動更新せず、手動で管理する
@@ -61,7 +61,6 @@ let
     "zoom"
     "karabiner-elements"
     "obsidian"
-    "amical"
   ];
 in
 {
