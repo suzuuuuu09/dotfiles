@@ -13,6 +13,24 @@
       "url": "https://github.com/suzuuuuu09/omp-jev-auto-mode/archive/e376f3660cdd76fc3556d05bd291af213b6e5307.tar.gz",
       "hash": "sha256-kNKRwptv76xRl2NgCvcTxhY5Hgxq6W8THJS5OpwUmGk="
     },
+    "omp-mobile": {
+      "type": "Url",
+      "url": "https://registry.npmjs.org/omp-mobile/-/omp-mobile-0.4.4.tgz",
+      "unpack": true,
+      "hash": "sha256-aDoyWMFPEtzId2hwDmkwFSfKE+p7+lsdAKpRWwRXCU4="
+    },
+    "omp-mobile-qrcode-generator": {
+      "type": "Url",
+      "url": "https://registry.npmjs.org/qrcode-generator/-/qrcode-generator-2.0.4.tgz",
+      "unpack": true,
+      "hash": "sha256-nL7DxnuqIBtRRnC+0NuIlD3F20+YP7uNPmfKdB7zFv0="
+    },
+    "omp-mobile-ws": {
+      "type": "Url",
+      "url": "https://registry.npmjs.org/ws/-/ws-8.18.3.tgz",
+      "unpack": true,
+      "hash": "sha256-+o96RaViEX6JAoRI5JCLDJDcIXj+XbaH0+wSM9F2pBw="
+    },
     "omp-ponytail-caveman": {
       "type": "Git",
       "repository": {
