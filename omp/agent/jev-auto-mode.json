@@ -1,5 +1,5 @@
 {
-  "enabled": true,
+  "enabled": false,
   "timeoutMs": 4000,
   "maxRetries": 1,
   "safeCommands": [

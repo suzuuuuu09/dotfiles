@@ -38,6 +38,8 @@ There is no dedicated unit-test suite. Verify changes with the narrowest command
 Recent commits use short emoji-prefixed Conventional Commit style, often with a scope, for example `✨ feat(nvim): ...` or `🔧 chore(nix): ...`.
 
 - Keep commit messages focused and descriptive.
+- Run commits with hooks enabled. Bypassing hooks with `--no-verify`, `SKIP`, or a `core.hooksPath` override requires explicit user approval for that bypass.
+- If a hook fails, stop the commit and report the cause and output; resolve it within the authorized scope or ask the user how to proceed.
 - PRs should explain what changed, why it changed, and how it was verified.
 - Include screenshots only for visible UI or terminal presentation changes.
 

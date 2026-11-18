@@ -19,7 +19,6 @@ theme = "nord"
 
 [features]
 hooks                           = true
-js_repl                         = false
 default_mode_request_user_input = true
 
 [notice]

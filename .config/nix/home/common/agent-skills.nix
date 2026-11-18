@@ -33,7 +33,21 @@
     skills = {
       enableAll = [
         "personal"
-        "mattpocock"
+      ];
+
+      enable = [
+        "engineering/code-review"
+        "engineering/codebase-design"
+        "engineering/diagnosing-bugs"
+        "engineering/domain-modeling"
+        "engineering/grill-with-docs"
+        "engineering/implement"
+        "engineering/pr"
+        "engineering/research"
+        "engineering/tdd"
+        "productivity/grill-me"
+        "productivity/grilling"
+        "productivity/writing-for-agents"
       ];
 
       # 外部からのスキルを使う

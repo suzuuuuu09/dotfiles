@@ -4,14 +4,14 @@ modelRoles:
   smol: google-antigravity/gemini-3.8-flash:high
   web: google-antigravity/gemini-3.8-flash:high
   judge: typesafe/jev-preview
-  default: openai-codex/gpt-6.1-sol:low
+  default: google-antigravity/gemini-4-hydrogen-high:high
 symbolPreset: nerd
 composer:
   shape: claude
 theme:
   dark: titanium
   light: light
-setupVersion: 2
+setupVersion: 3
 retry:
   fallbackChains:
     web:
@@ -38,13 +38,13 @@ retry:
       - web/mojeek
       - web/public
       - google-antigravity/gemini-2.5-flash
-      - openai-codex/gpt-5.6
-      - openai-codex/gpt-5.5
+      - openai-codex/gpt-5.6-sol
       - xai-oauth/grok-4.5
       - web/ollama
 colorBlindMode: false
 codexResets:
-  autoRedeem: "no"
+  autoRedeem5h: "no"
+  autoRedeemWeekly: "no"
 edit:
   mode: hashline
 bashInterceptor:

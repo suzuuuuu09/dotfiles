@@ -20,7 +20,6 @@ For detailed operation specifications of each skill, please refer to the respect
 | [`deepseek-delegate`](deepseek-delegate) | Delegates a bounded coding task to OpenCode with DeepSeek Free; Codex reviews and verifies the result. |
 | [`design-safe-ai-decisions`](design-safe-ai-decisions) | Supports evaluation and operational design of AI-assisted decision-making systems. |
 | [`nix-environment-doctor`](nix-environment-doctor) | Diagnoses command provenance, environment differences, and Nix activation failures. |
-| [`request-framework`](request-framework) | Organizes requests by purpose, constraints, outputs, and approval boundaries. |
 | [`run-missing-cli`](run-missing-cli) | Guides temporary execution of missing CLIs without permanent installation. |
 
 ## Directory Structure

@@ -27,10 +27,12 @@ Repository defaults; the current request and closer project instructions take pr
 - Use blank lines to separate logically distinct blocks; keep tightly related statements together.
 - Separate clear semantic phases within a function with meaningful vertical spacing as you write; do not rely on a formatter to supply it.
 
+## Questions
+
+- Ask only when a material decision cannot be resolved from the request or available evidence. Use a short question for a simple confirmation. For multiple decisions, use `Qk/N`; when comparing options, explain their main impacts and give a reasoned recommendation.
+
 ## Guides
 
 Use only guides explicitly listed here or by a triggered guide, and only at their triggers; never infer, reference, or use others. List trigger and path for additions.
 
-- **Repository work:** Read `~/.codex/guide/core/repository-work.md` once before any repository investigation or modification. Reuse it for the same repository, task, and working context; reread otherwise.
-- **Questions:** Before a task's first user-facing question, including required interviews, read `~/.codex/guide/core/asking-questions.md` once. Apply it to later questions without rereading; reread only after compaction or possible context loss. Include `Qk/N`, explicit options with impacts, and a reasoned recommendation.
 - **Commits:** At the start of every commit workflow explicitly requested by the user, read `~/.codex/guide/core/git-commit.md` once before staging or committing; apply its eligibility, boundary, and subject rules to every commit.
