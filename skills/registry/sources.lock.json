@@ -271,16 +271,16 @@
     "pins": {
       "agent-browser": {
         "branch": "main",
-        "hash": "sha256-B9QjljpGht+tnis/t3agh6TrgBG/T6urDQ1rhN5hU2A=",
+        "hash": "sha256-nGt0tsvN2gX9zczqe1eKFmS9ocVHtnDnw7jcbTbBL54=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "agent-browser",
           "type": "GitHub"
         },
-        "revision": "b06e2533ba9b3823b8a96c859d455cb55f4d7893",
+        "revision": "9648798b28a15940a005e02a2fe39b3e65f8f59f",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/agent-browser/archive/b06e2533ba9b3823b8a96c859d455cb55f4d7893.tar.gz"
+        "url": "https://github.com/vercel-labs/agent-browser/archive/9648798b28a15940a005e02a2fe39b3e65f8f59f.tar.gz"
       },
       "anthropics": {
         "branch": "main",
