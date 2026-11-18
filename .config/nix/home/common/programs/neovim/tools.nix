@@ -27,6 +27,7 @@
       svelte-language-server
       tailwindcss-language-server
       taplo
+      ty
       typstyle
       typos-lsp
       vscode-langservers-extracted

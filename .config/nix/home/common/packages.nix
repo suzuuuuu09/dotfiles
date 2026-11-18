@@ -49,16 +49,16 @@
     comma
 
     # Surveillance tools
-    bottom
-    btop
+    # bottom
+    # btop
     yazi
 
     # Media tools
-    ffmpeg
+    # ffmpeg
     # NOTE: インストール時にdenoをインストールするため除外
     # 仮にインストールするなら、homebrewでインストールすることを検討
     # yt-dlp
-    imagemagick
+    # imagemagick
 
     # PDF Viewer
     tdf
