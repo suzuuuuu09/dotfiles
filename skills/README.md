@@ -23,6 +23,7 @@ For detailed operation specifications of each skill, please refer to the respect
 | [`nix-environment-doctor`](nix-environment-doctor) | Diagnoses command provenance, environment differences, and Nix activation failures. |
 | [`prune-redundant-tests`](prune-redundant-tests) | Reviews existing tests for overlapping regression coverage and preserves independent guarantees. |
 | [`run-missing-cli`](run-missing-cli) | Guides temporary execution of missing CLIs without permanent installation. |
+| [`storage-cleanup`](storage-cleanup) | Audits and cleans shared developer caches and checks Nix garbage collection. |
 
 ## Directory Structure
 
