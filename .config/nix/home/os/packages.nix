@@ -3,8 +3,6 @@
     wezterm
     slack
     discord
-    herdr
-
     #Hyprland
     waybar
     fuzzel

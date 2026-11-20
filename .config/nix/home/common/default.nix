@@ -21,6 +21,7 @@
   imports = [
     ./programs
     ./packages.nix
+    ./ai-tools.nix
     ./dotfiles.nix
     ./agent-skills.nix
     ./sops.nix

@@ -31,7 +31,6 @@
     czg
     cargo-commitlint
     jujutsu
-    hunk
 
     # Dev tools
     # docker

@@ -7,14 +7,12 @@
       "https://suzuuuuu09.cachix.org"
       "https://nix-community.cachix.org"
       "https://cache.numtide.com" # llm-agents.nix
-      "https://herdr.cachix.org" # Herdr
     ];
 
     extra-trusted-public-keys = [
       "suzuuuuu09.cachix.org-1:+V6hB76qnQ1Ra3Lf9VZsQtszeZ9UyE39QvRHNtfYPXw="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" # llm-agents.nix
-      "herdr.cachix.org-1:3nH7IStRsS0ASfdonA0DCRR2ZrSCeWitZ7Kwew0cR4I=" # Herdr
     ];
   };
 
@@ -68,17 +66,6 @@
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
       inputs.treefmt-nix.follows = "treefmt-nix";
-    };
-
-    hunk = {
-      url = "github:modem-dev/hunk";
-      # hunk's flake-parts still evaluates x86_64-darwin, which 26.11 dropped.
-      inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
-    };
-
-    herdr = {
-      url = "github:herdrdev/herdr";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # +----------------------------------------------------------+
@@ -135,7 +122,7 @@
 
       wslPkgs = perSystem.${wslSystem}.pkgs;
 
-      # ponytail: dependency compatibility shim; remove when Hunk, Herdr, and nix-darwin use hostPlatform.
+      # ponytail: dependency compatibility shim; remove when nix-darwin uses hostPlatform.
       stdenvCompatibilityOverlay = _final: prev: {
         stdenv = prev.stdenv // {
           isLinux = prev.stdenv.hostPlatform.isLinux;
@@ -157,28 +144,8 @@
                 nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ prev.pkg-config ];
                 buildInputs = (old.buildInputs or [ ]) ++ [ prev.libgit2 ];
               });
-          herdr =
-            let
-              herdrPkgs = import nixpkgs {
-                system = _final.stdenv.hostPlatform.system;
-                overlays = [
-                  stdenvCompatibilityOverlay
-                  inputs.herdr.inputs.rust-overlay.overlays.default
-                ];
-              };
-              rustToolchain = herdrPkgs.rust-bin.fromRustupToolchainFile "${inputs.herdr}/rust-toolchain.toml";
-            in
-            herdrPkgs.callPackage "${inputs.herdr}/nix/package.nix" {
-              rustPlatform = herdrPkgs.makeRustPlatform {
-                cargo = rustToolchain;
-                rustc = rustToolchain;
-              };
-            };
           czg = prev.callPackage ./.config/nix/overlays/czg.nix { };
           cxr = prev.callPackage ./.config/nix/overlays/cxr.nix { };
-          hunk = _final.callPackage "${inputs.hunk}/nix/package.nix" {
-            bun2nix = inputs.hunk.inputs.bun2nix.packages.${_final.stdenv.hostPlatform.system}.default;
-          };
         })
       ];
 
