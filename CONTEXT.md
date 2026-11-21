@@ -56,3 +56,6 @@ A user-chosen name identifying a Google account for agent requests. Example name
 
 **Google Connection**:
 An authorization to access Google services for a particular Google account. Its authentication state is separate from reproducible environment configuration.
+
+**Auto-merge Authorization**:
+Permission to merge a proposed repository change automatically after its required checks pass, without another manual merge decision. It applies only while the proposal remains unmerged.

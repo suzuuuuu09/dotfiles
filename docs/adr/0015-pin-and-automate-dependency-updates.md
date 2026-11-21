@@ -46,3 +46,34 @@ check. Existing PRs need to be rebased after deployment so the new PR workflow
 runs and reports `required-ci`.
 
 See `skills/registry/README.md` for full and individual source update commands.
+
+## Agreed simplification (not implemented)
+
+The following policy choices are agreed as a design only. Implementation,
+GitHub label creation, publication, and branch protection changes are explicitly
+deferred. The deployed implementation remains as described above.
+
+- The `renovate` label identifies the update source. A separate `automerge` label
+  grants Auto-merge Authorization to non-draft PRs from this repository,
+  regardless of author. Removing it withdraws a pending reservation, without
+  reverting an already merged change. Label additions and removals must both
+  be handled.
+- Renovate PRs receive `automerge` automatically, including vulnerability
+  updates. Use additive labeling so the security label cannot replace the
+  authorization label. Existing Renovate PRs must be included in the rollout.
+- `required-ci` and both Socket checks remain mandatory for all PRs. CodeRabbit
+  remains available as an advisory review; merging does not wait for it.
+- The merge workflow stops comparing branch protection on every PR. Protection
+  is verified when its configuration is applied or changed, and GitHub enforces
+  it at merge time. Remove administration-read from the merge workflow token
+  and remove the policy-comparison-specific tests. This deliberately gives up
+  the workflow's additional refusal to reserve a merge after an administrator
+  removes protection.
+- Keep strict up-to-date protection, the daily schedule and manual execution.
+  Also run the existing Renovate workflow on every push to `main`, including
+  dependency merges, so remaining PRs can rebase without waiting for the next
+  daily run. More Renovate and follow-up CI executions are an accepted cost.
+
+Keep the existing GitHub App authentication, same-repository scope, and
+conditional CI selection. Renovate itself continues to use `automerge = false`;
+GitHub performs the actual merge after the required checks pass.
