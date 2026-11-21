@@ -1,0 +1,5 @@
+background-opacity = 0.8
+background-blur = 20
+macos-titlebar-style = hidden
+window-padding-x = 8
+window-padding-y = 8
