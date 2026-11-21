@@ -6,7 +6,11 @@ _: {
     nixfmt.enable = true;
 
     # Shell
-    shfmt.enable = true;
+    shfmt = {
+      enable = true;
+      indent_size = 2;
+      simplify = true;
+    };
 
     # NeovimなどのLua
     stylua.enable = true;
