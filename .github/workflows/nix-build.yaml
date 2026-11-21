@@ -71,7 +71,6 @@ jobs:
 
       - name: Build nixosConfigurations
         run: |
-          nix build --show-trace --no-link .#nixosConfigurations.suzuWsl.config.system.build.toplevel
           nix build --show-trace --no-link .#nixosConfigurations.suzu.config.system.build.toplevel
 
       - name: Print disk usage
