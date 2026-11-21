@@ -5,7 +5,7 @@ git:
       # pager: delta --dark --paging=never
 gui:
   language: "ja"
-  showIcons: true
+  nerdFontsVersion: "3"
 customCommands:
   - command: czg ai
     context: files
