@@ -302,7 +302,7 @@
                 ${preCommitCheck.shellHook}
 
                 if [ ! -x "$(git rev-parse --git-path hooks/pre-commit)" ]; then
-                  ${pkgs.pre-commit}/bin/pre-commit install -c .pre-commit-config.yaml || exit
+                  ${preCommitCheck.config.package}/bin/pre-commit install -c .pre-commit-config.yaml || exit
                   git config --local core.hooksPath "$(git rev-parse --git-common-dir)/hooks"
                 fi
               )
