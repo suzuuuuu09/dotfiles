@@ -297,16 +297,16 @@
       },
       "caveman": {
         "branch": "main",
-        "hash": "sha256-qG7njZgc+JCg+AAVNcFmOYjWMIAy73q4BociYG+WsEw=",
+        "hash": "sha256-hGYcJ7r2O/uEAmAfpox7Owht4LN8Rk2kn1y8BSMWpFk=",
         "repository": {
           "owner": "juliusbrussee",
           "repo": "caveman",
           "type": "GitHub"
         },
-        "revision": "a192894723a8f47e7f504c7b5041967ff1f18e55",
+        "revision": "70f4f34e834893ea9af9f4fc6022266bd56d18b1",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/juliusbrussee/caveman/archive/a192894723a8f47e7f504c7b5041967ff1f18e55.tar.gz"
+        "url": "https://github.com/juliusbrussee/caveman/archive/70f4f34e834893ea9af9f4fc6022266bd56d18b1.tar.gz"
       },
       "context7": {
         "branch": "master",
@@ -386,16 +386,16 @@
       },
       "ponytail": {
         "branch": "main",
-        "hash": "sha256-PhPtZbeX2wBp19GtWRy+fV93+fFYZe5S487eXPDl/us=",
+        "hash": "sha256-5m6JW3U6EMYUg4YVLh7nRRTWGY3shrFQ0wK0bediVFc=",
         "repository": {
           "owner": "DietrichGebert",
           "repo": "ponytail",
           "type": "GitHub"
         },
-        "revision": "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846",
+        "revision": "ebd8654c2c627f721eb8f9c0d1bd4090a29f9e10",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/DietrichGebert/ponytail/archive/96608e078b2d5ea607c5c3b8b5a54d1c1fba6846.tar.gz"
+        "url": "https://github.com/DietrichGebert/ponytail/archive/ebd8654c2c627f721eb8f9c0d1bd4090a29f9e10.tar.gz"
       },
       "stop-ai-slop-jp": {
         "branch": "main",
