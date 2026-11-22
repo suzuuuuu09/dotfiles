@@ -1,5 +1,7 @@
 background-opacity = 0.8
 background-blur = 20
+font-size = 12.5
 macos-titlebar-style = hidden
+theme = nord
 window-padding-x = 8
 window-padding-y = 8

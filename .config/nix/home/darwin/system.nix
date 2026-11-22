@@ -84,7 +84,8 @@
         # ドックに表示するアプリ
         persistent-apps = [
           { app = "/Applications/Vivaldi.app"; }
-          { app = "/Applications/WezTerm.app"; }
+          # { app = "/Applications/WezTerm.app"; }
+          { app = "/Applications/Ghostty.app"; }
           { app = "/Applications/Microsoft Teams.app"; }
           { app = "/Applications/Slack.app"; }
           { app = "/Applications/zoom.us.app"; }
