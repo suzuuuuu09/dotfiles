@@ -7,7 +7,6 @@ opt.clipboard = "unnamedplus"
 
 -- 基本設定
 opt.number = true -- 行番号を表示
-opt.relativenumber = true -- 相対番号表示
 opt.cursorcolumn = true -- カーソルの列を強調
 opt.cursorline = true -- カーソルの行を強調
 opt.guifont = "UDEV Gothic 35NFLG Regular" -- フォント

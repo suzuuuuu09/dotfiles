@@ -14,6 +14,7 @@
       clang-tools
       cpplint
       fish-lsp
+      imagemagick
       jdt-language-server
       kulala-fmt
       lua-language-server
