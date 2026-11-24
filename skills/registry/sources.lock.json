@@ -271,16 +271,16 @@
     "pins": {
       "agent-browser": {
         "branch": "main",
-        "hash": "sha256-BsnL2q29HhtehBcUoNh1K9Qkvv3BCP2ita3lIa1oFGQ=",
+        "hash": "sha256-JFVKgvvtWsDtfUTnspvKPef47IRFI32sN2UPv2VP4Ro=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "agent-browser",
           "type": "GitHub"
         },
-        "revision": "0a923358ea989d7602f0d06507ad3447c62ffe9b",
+        "revision": "5759f6bb2cdf3d8cf0670b0996a8793972a4628e",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/agent-browser/archive/0a923358ea989d7602f0d06507ad3447c62ffe9b.tar.gz"
+        "url": "https://github.com/vercel-labs/agent-browser/archive/5759f6bb2cdf3d8cf0670b0996a8793972a4628e.tar.gz"
       },
       "anthropics": {
         "branch": "main",
@@ -297,16 +297,16 @@
       },
       "caveman": {
         "branch": "main",
-        "hash": "sha256-P4mDycyDkmIAnuT4mA68551lfg3YdZiJQMYiOWeg68U=",
+        "hash": "sha256-eQioS8/CUPiXnkTzada7pWO4cu/Ru9Hfzi6xmdULxO0=",
         "repository": {
           "owner": "juliusbrussee",
           "repo": "caveman",
           "type": "GitHub"
         },
-        "revision": "b89752f6bca5a26bfde8b019813554241800ca99",
+        "revision": "47c61be2d10a354f0c5cbe2b90959d24c06b16c6",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/juliusbrussee/caveman/archive/b89752f6bca5a26bfde8b019813554241800ca99.tar.gz"
+        "url": "https://github.com/juliusbrussee/caveman/archive/47c61be2d10a354f0c5cbe2b90959d24c06b16c6.tar.gz"
       },
       "context7": {
         "branch": "master",
@@ -360,16 +360,16 @@
       },
       "mattpocock": {
         "branch": "main",
-        "hash": "sha256-fc5+qmchp1IQ/rQP1olWKC1eC4VdYhaB7YYzC3+JBe0=",
+        "hash": "sha256-kn99yoU6xzp3FydMJtiPdKz1uvUMkuIugr6xwJd1lwg=",
         "repository": {
           "owner": "mattpocock",
           "repo": "skills",
           "type": "GitHub"
         },
-        "revision": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
+        "revision": "d65391149dbb5fe76478e76fa8d5122b2aa5a70e",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/mattpocock/skills/archive/abeeaf95660ba9e8b7c753eb38f441ca707a8823.tar.gz"
+        "url": "https://github.com/mattpocock/skills/archive/d65391149dbb5fe76478e76fa8d5122b2aa5a70e.tar.gz"
       },
       "mizchi": {
         "branch": "main",
