@@ -271,16 +271,16 @@
     "pins": {
       "agent-browser": {
         "branch": "main",
-        "hash": "sha256-KS1GdQJS08DVbnzSGN2py28Sgey6E7ohkBPZU4q6rho=",
+        "hash": "sha256-l6sOl6Ah5/H/tJpK6C+2YAEnayB7lbJne34xeYuJYZc=",
         "repository": {
           "owner": "vercel-labs",
           "repo": "agent-browser",
           "type": "GitHub"
         },
-        "revision": "f0a98351ec920bd826b22c98dacf8414f04b9832",
+        "revision": "52c1c08b7769e99f3ca43b8f8e0bbdb5970bf127",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/vercel-labs/agent-browser/archive/f0a98351ec920bd826b22c98dacf8414f04b9832.tar.gz"
+        "url": "https://github.com/vercel-labs/agent-browser/archive/52c1c08b7769e99f3ca43b8f8e0bbdb5970bf127.tar.gz"
       },
       "anthropics": {
         "branch": "main",
@@ -297,16 +297,16 @@
       },
       "caveman": {
         "branch": "main",
-        "hash": "sha256-eQioS8/CUPiXnkTzada7pWO4cu/Ru9Hfzi6xmdULxO0=",
+        "hash": "sha256-CsrSd7i/6+wkGAIDa29KpkYaaJgzhRhAGNnbEFgJ9Fk=",
         "repository": {
           "owner": "juliusbrussee",
           "repo": "caveman",
           "type": "GitHub"
         },
-        "revision": "47c61be2d10a354f0c5cbe2b90959d24c06b16c6",
+        "revision": "e74a11ccdb38b98d15c9f9545787c907dd15f0ab",
         "submodules": false,
         "type": "Git",
-        "url": "https://github.com/juliusbrussee/caveman/archive/47c61be2d10a354f0c5cbe2b90959d24c06b16c6.tar.gz"
+        "url": "https://github.com/juliusbrussee/caveman/archive/e74a11ccdb38b98d15c9f9545787c907dd15f0ab.tar.gz"
       },
       "context7": {
         "branch": "master",
